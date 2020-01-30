@@ -6,4 +6,13 @@
 	<select id="selectOne" resultType="test">
 		select * from test where test_id = '123123'
 	</select>
+	<insert id="insert">
+		insert into test values
+		(seq_test.nextval, #{text}, sysdate)
+	</insert>
+	
+ 	<select id="selectAll" resultType="test">	
+		select * from test 
+		order by 3 desc
+	</select>
 </mapper>

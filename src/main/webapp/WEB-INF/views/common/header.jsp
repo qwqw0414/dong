@@ -31,12 +31,12 @@
 	          회원
 	        </a>
 	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-	          <a class="dropdown-item" href="#">회원가입</a>
-	          <a class="dropdown-item" href="#">로그인</a>
-	          <a class="dropdown-item" href="#">비밀번호 찾기</a>
-	          <a class="dropdown-item" href="#">아이디 찾기</a>
-	          <a class="dropdown-item" href="#">내 정보</a>
-	          <a class="dropdown-item" href="#">회원 탈퇴</a>
+	          <a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberEnroll.do">회원가입</a>
+	          <a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberLogin.do">로그인</a>
+	          <a class="dropdown-item" href="${pageContext.request.contextPath}/member/findPassword.do">비밀번호 찾기</a>
+	          <a class="dropdown-item" href="${pageContext.request.contextPath}/member/findId.do">아이디 찾기</a>
+	          <a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberView.do">내 정보</a>
+	          <a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberBye.do">회원 탈퇴</a>
 	        </div>
 	      </li>
 

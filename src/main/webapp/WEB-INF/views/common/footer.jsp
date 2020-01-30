@@ -9,7 +9,6 @@
         background-color: rgba(81, 235, 42, 0.747);
     }
 </style>
-sss
 <footer>
 
 </footer>

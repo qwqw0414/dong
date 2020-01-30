@@ -1,5 +1,7 @@
 package com.pro.dong.test.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,16 @@ public class TestServiceImpl implements TestService{
 	@Override
 	public Test selectOne() {
 		return testDAO.selectOne();
+	}
+
+	@Override
+	public int insert(String text) {
+		return testDAO.insert(text);
+	}
+
+	@Override
+	public List<Test> selectAll() {
+		return testDAO.selectAll();
 	}
 	
 }
