@@ -17,36 +17,56 @@ public class MemberController {
 	@Autowired
 	MemberService ms;
 	
-	@RequestMapping("/memberEnroll.do")
-	public void memberEnroll() {
-		
-	}
-	
+// 민호 시작 ==========================
 	@RequestMapping("/memberLogin.do")
 	public void memberLogin() {
 		
 	}
 	
+//========================== 민호 끝
+	
+// 하진 시작 ==========================
+	@RequestMapping("/memberBye.do")
+	public void memberBye() {
+		
+	}
+//========================== 하진 끝
+	
+// 근호 시작 ==========================
+	
+//========================== 근호 끝
+	
+// 지은 시작 ==========================
 	@RequestMapping("/findPassword.do")
 	public void findPassword() {
 		
 	}
 	
+//========================== 지은 끝
+	
+// 예찬 시작 ==========================
+	@RequestMapping("/memberEnroll.do")
+	public void memberEnroll() {
+		
+	}
+	
+//========================== 예찬 끝
+	
+// 주영 시작 ==========================
 	@RequestMapping("/findId.do")
 	public void findId() {
 		
 	}
 	
+//========================== 주영 끝
+	
+// 현규 시작 ==========================
 	@RequestMapping("/memberView.do")
 	public void memberView() {
 		
 	}
 	
-	@RequestMapping("/memberBye.do")
-	public void memberBye() {
-		
-	}
-	
-	
+//========================== 현규 끝
+
 	
 }
