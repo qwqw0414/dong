@@ -12,7 +12,7 @@
         <button class="btn btn-outline-secondary" type="button">작성</button>
       </div>
     </div>
-
+	ㄱㄷㄱㄷㄱㄷ
     <div id="testShow"></div>
   </div>
 </div>
