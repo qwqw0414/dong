@@ -12,7 +12,7 @@
         <button class="btn btn-outline-secondary" type="button">작성</button>
       </div>
     </div>
-
+	<!-- 근호 풀 확인중 -->
     <div id="testShow"></div>
   </div>
 </div>
