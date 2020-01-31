@@ -3,8 +3,10 @@ package com.pro.dong.member.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pro.dong.member.model.service.MemberService;
 
@@ -16,6 +18,9 @@ public class MemberController {
 	
 	@Autowired
 	MemberService ms;
+	
+	@Autowired
+	BCryptPasswordEncoder passwordEncoder;
 	
 // 민호 시작 ==========================
 	@RequestMapping("/memberLogin.do")
@@ -46,8 +51,18 @@ public class MemberController {
 	
 // 예찬 시작 ==========================
 	@RequestMapping("/memberEnroll.do")
-	public void memberEnroll() {
+	public void memberEnroll() {}
+	
+	//아이디 중복검사
+	@RequestMapping("/idDuplicate")
+	@ResponseBody
+	public String idDuplicate(String memberId) {
 		
+		log.debug("memberId="+memberId);
+		
+		int result = ms.idDuplicate(memberId);
+		
+		return result+""; 
 	}
 	
 //========================== 예찬 끝

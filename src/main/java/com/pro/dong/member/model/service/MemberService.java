@@ -1,6 +1,7 @@
 package com.pro.dong.member.model.service;
 
 public interface MemberService {
+
 	// 민호 시작 ==========================
 	
 	//==========================  민호 끝
@@ -18,6 +19,7 @@ public interface MemberService {
 	//==========================  지은 끝
 	
 	// 예찬 시작 ==========================
+	int idDuplicate(String memberId);
 	
 	//==========================  예찬 끝
 	

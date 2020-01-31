@@ -31,7 +31,10 @@ public class MemberDAOImpl implements MemberDAO{
 	//==========================  지은 끝
 	
 	// 예찬 시작 ==========================
-	
+	@Override
+	public int idDuplicate(String memberId) {
+		return sst.selectOne("idDuplicate", memberId);
+	}
 	//==========================  예찬 끝
 	
 	// 주영 시작 ==========================

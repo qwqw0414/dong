@@ -14,6 +14,7 @@ public class MemberServiceImpl implements MemberService{
 	
 	@Autowired
 	MemberDAO md;
+
 	
 	// 민호 시작 ==========================
 	
@@ -32,6 +33,10 @@ public class MemberServiceImpl implements MemberService{
 	//==========================  지은 끝
 	
 	// 예찬 시작 ==========================
+	@Override
+	public int idDuplicate(String memberId) {
+		return md.idDuplicate(memberId);
+	}
 	
 	//==========================  예찬 끝
 	

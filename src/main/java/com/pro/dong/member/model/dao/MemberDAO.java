@@ -1,6 +1,7 @@
 package com.pro.dong.member.model.dao;
 
 public interface MemberDAO {
+
 	
 	// 민호 시작 ==========================
 	
@@ -19,6 +20,7 @@ public interface MemberDAO {
 	//==========================  지은 끝
 	
 	// 예찬 시작 ==========================
+	int idDuplicate(String memberId);
 	
 	//==========================  예찬 끝
 	

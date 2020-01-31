@@ -21,7 +21,9 @@
 	<!-- ==========================  지은 끝 -->
 	
 	<!-- 예찬 시작 ========================== -->
-	
+	<select id="idDuplicate" resultType="_int">
+		select count(*) from member where member_id = #{memberId}
+	</select>
 	<!-- ==========================  예찬 끝 -->
 	
 	<!-- 주영 시작 ========================== -->
