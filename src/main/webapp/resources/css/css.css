@@ -1,1 +1,17 @@
 @charset "UTF-8";
+footer{
+    margin-top: 200px;
+    height: 200px;
+}
+footer .line{
+    border: 1px rgb(95, 95, 95) solid;
+    width: 100%;
+}
+section{
+	margin: auto;
+	
+}
+section h1{
+	text-align: center;
+	
+}
