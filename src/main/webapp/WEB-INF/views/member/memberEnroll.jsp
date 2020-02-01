@@ -118,34 +118,51 @@ $(()=>{
     var $sido = $("#memberEnroll #sido");
     var $sigungu = $("#memberEnroll #sigungu");
     var $dong = $("#memberEnroll #dong");
-
     //회원 가입
     $("#memberEnroll #btn-enroll").click(()=>{
-        var member = {memberId:$memberId.val(),
-                      password:$password.val(),
-                      memberName:$memberName.val(),
-                      gender:$gender.val(),
-                      phone:$phone.val(),
-                      year:$year.val(),
-                      month:$month.val(),
-                      date:$date.val(),
-                      sido:$sido.val(),
-                      sigungu:$sigungu.val(),
-                      dong:$dong.val()};
-        
+
+        var birth = "";
+        birth += $year.val();
+
+        if($month.val().length < 2)
+            birth += ("0"+$month.val());
+        else
+            birth += (""+$month.val());
+
+        if($date.val().length < 2)
+            birth += ("0"+$date.val());
+        else
+            birth += (""+$date.val());
+
+        console.log(birth);
+
         $.ajax({
             url: "${pageContext.request.contextPath}/member/memberEnrollEnd",
-            data: member,
+            data: {memberId:$memberId.val(),
+                   password:$password.val(),
+                   memberName:$memberName.val(),
+                   gender:$gender.val(),
+                   phone:$phone.val(),
+                   birth:birth,
+                   sido:$sido.val(),
+                   sigungu:$sigungu.val(),
+                   dong:$dong.val()},
             dataType: "json",
             success : data =>{
-                console.log(data);
+                if(data == 1){
+                    if(confirm("회원가입 완료되었습니다.로그인창으로 이동하시겠습니까?")){
+                        location.href = "${pageContext.request.contextPath}/member/memberLogin.do";
+                    }else{
+                        location.href = "${pageContext.request.contextPath}/";
+                    }
+                }
+                else{
+                    alert("실패");
+                    location.href = "${pageContext.request.contextPath}/";
+                }
             },
             error : (x,s,e) =>{
                 console.log("실패",x,s,e);
-            },
-            complete : data =>{
-
-                
             }
         })
                        

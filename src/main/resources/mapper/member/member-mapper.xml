@@ -27,6 +27,18 @@
 	<select id="idDuplicate" resultType="_int">
 		select count(*) from member where member_id = #{memberId}
 	</select>
+	<insert id="insertMember" parameterType="member">
+		insert into member values(#{memberId}, #{password}, #{memberName}, #{gender}, #{birth}, #{phone}, default)
+	</insert>
+	<insert id="insertAddress" parameterType="address">
+		insert into address values(#{memberId}, #{sido}, #{sigungu}, #{dong})
+	</insert>
+	<insert id="insertValid">
+		insert into member_valid values(#{memberId},default,default)
+	</insert>
+	<insert id="insertPoint">
+		insert into point values(#{memberId},default)
+	</insert>
 	<!-- ==========================  예찬 끝 -->
 	
 	<!-- 주영 시작 ========================== -->
