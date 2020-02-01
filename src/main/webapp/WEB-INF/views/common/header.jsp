@@ -33,8 +33,14 @@
 	          회원
 	        </a>
 	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+	        
 	          <a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberEnroll.do">회원가입</a>
-	          <a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberLogin.do">로그인</a>
+	       	 <c:if test="${memberLoggedIn == null }">	
+	          	<a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberLogin.do">로그인</a>
+	         </c:if>
+	         <c:if test="${memberLoggedIn != null }">
+				<a  class="dropdown-item" href="${pageContext.request.contextPath }/member/memberLogOut.do">로그아웃</a>
+	         </c:if>
 	          <a class="dropdown-item" href="${pageContext.request.contextPath}/member/findPassword.do">비밀번호 찾기</a>
 	          <a class="dropdown-item" href="${pageContext.request.contextPath}/member/findId.do">아이디 찾기</a>
 	          <a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberView.do">내 정보</a>

@@ -11,6 +11,7 @@
   
   <typeAliases>
 	<package name="com.pro.dong.test.model.vo"/>
+	<package name="com.pro.dong.member.model.vo"/>
   </typeAliases>
   
 </configuration>

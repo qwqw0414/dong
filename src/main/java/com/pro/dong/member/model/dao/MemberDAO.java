@@ -1,5 +1,7 @@
 package com.pro.dong.member.model.dao;
 
+import com.pro.dong.member.model.vo.Member;
+
 public interface MemberDAO {
 
 	
@@ -12,6 +14,7 @@ public interface MemberDAO {
 	//==========================  하진 끝
 	
 	// 근호 시작 ==========================
+	Member selectLoginMember(String memberId);
 	
 	//==========================  근호 끝
 	
@@ -21,7 +24,7 @@ public interface MemberDAO {
 	
 	// 예찬 시작 ==========================
 	int idDuplicate(String memberId);
-	
+
 	//==========================  예찬 끝
 	
 	// 주영 시작 ==========================

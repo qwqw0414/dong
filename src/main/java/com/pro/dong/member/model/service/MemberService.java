@@ -1,5 +1,7 @@
 package com.pro.dong.member.model.service;
 
+import com.pro.dong.member.model.vo.Member;
+
 public interface MemberService {
 
 	// 민호 시작 ==========================
@@ -11,7 +13,7 @@ public interface MemberService {
 	//==========================  하진 끝
 	
 	// 근호 시작 ==========================
-	
+	Member selectLoginMember(String memberId);
 	//==========================  근호 끝
 	
 	// 지은 시작 ==========================
@@ -20,7 +22,7 @@ public interface MemberService {
 	
 	// 예찬 시작 ==========================
 	int idDuplicate(String memberId);
-	
+
 	//==========================  예찬 끝
 	
 	// 주영 시작 ==========================

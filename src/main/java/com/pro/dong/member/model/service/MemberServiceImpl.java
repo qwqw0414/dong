@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pro.dong.member.model.dao.MemberDAO;
+import com.pro.dong.member.model.vo.Member;
 
 @Service
 public class MemberServiceImpl implements MemberService{
@@ -25,7 +26,10 @@ public class MemberServiceImpl implements MemberService{
 	//==========================  하진 끝
 	
 	// 근호 시작 ==========================
-	
+	@Override
+	public Member selectLoginMember(String memberId) {
+		return md.selectLoginMember(memberId);
+	}
 	//==========================  근호 끝
 	
 	// 지은 시작 ==========================
@@ -37,7 +41,6 @@ public class MemberServiceImpl implements MemberService{
 	public int idDuplicate(String memberId) {
 		return md.idDuplicate(memberId);
 	}
-	
 	//==========================  예찬 끝
 	
 	// 주영 시작 ==========================

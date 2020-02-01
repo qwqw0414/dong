@@ -1,15 +1,23 @@
 package com.pro.dong.member.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.pro.dong.member.model.service.MemberService;
+import com.pro.dong.member.model.vo.Member;
 
+@SessionAttributes(value= {"memberLoggedIn"})
 @Controller
 @RequestMapping("/member")
 public class MemberController {
@@ -22,13 +30,51 @@ public class MemberController {
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
 	
-// 민호 시작 ==========================
+// 근호 시작 ==========================
 	@RequestMapping("/memberLogin.do")
 	public void memberLogin() {
 		
 	}
+	@RequestMapping("/memberLoginId.do")
+	public ModelAndView memberLoginId(@RequestParam String memberId, @RequestParam String password,
+			ModelAndView mav, HttpSession session) {
+
+	Member m = ms.selectLoginMember(memberId);
+	log.debug("m={}", m);
 	
-//========================== 민호 끝
+	String msg = "";
+	String loc = "/";
+	if(m == null) {
+		msg = "존재하지 않는 아이디입니다.";
+		loc = "/member/memberLogin.do";
+	}
+	else {
+		if(password.equals(m.getPassword())) {
+			msg = "로그인 성공";
+			mav.addObject("memberLoggedIn", m);
+		}
+		else {
+			msg = "비밀번호가 틀렸습니다.";
+		}
+	}
+	log.debug("password={}",password);
+	//2.view모델처리
+	mav.addObject("msg", msg);
+	mav.addObject("loc", loc);
+	
+	mav.setViewName("common/msg");
+	
+	return mav;
+	}
+	@RequestMapping("/memberLogOut.do")
+	public String memberLogOut(SessionStatus sessionStatus) {
+		if(!sessionStatus.isComplete()) {
+			sessionStatus.setComplete();
+		}
+		return "redirect:/";
+	}
+
+//==========================근호 끝
 	
 // 하진 시작 ==========================
 	@RequestMapping("/memberBye.do")
@@ -37,9 +83,9 @@ public class MemberController {
 	}
 //========================== 하진 끝
 	
-// 근호 시작 ==========================
+// 민호 시작 ==========================
 	
-//========================== 근호 끝
+//========================== 민호 끝
 	
 // 지은 시작 ==========================
 	@RequestMapping("/findPassword.do")

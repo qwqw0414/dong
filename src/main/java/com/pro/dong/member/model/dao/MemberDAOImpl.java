@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.pro.dong.member.model.vo.Member;
+
 @Repository
 public class MemberDAOImpl implements MemberDAO{
 	
@@ -23,7 +25,10 @@ public class MemberDAOImpl implements MemberDAO{
 	//==========================  하진 끝
 	
 	// 근호 시작 ==========================
-	
+	@Override
+	public Member selectLoginMember(String memberId) {
+		return sst.selectOne("member.selectLoginMember", memberId);
+	}
 	//==========================  근호 끝
 	
 	// 지은 시작 ==========================
