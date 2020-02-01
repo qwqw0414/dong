@@ -1,20 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <style>
-#memberEnroll .enroll-form{width: 450px; height: 360px; margin: auto; margin-top: 50px}
+#memberEnroll .enroll-form{width: 450px; margin: auto;}
+#memberEnroll .enroll-map{width: 600px; margin: auto;}
 #memberEnroll .enroll-form input{margin-top: 40px;}
 #memberEnroll .enroll-form select{margin-top: 40px;}
 #memberEnroll h1{font-weight: bolder;}
-#memberEnroll .enroll-btn{margin-top: 0px;}
-#memberEnroll .enroll-btn button{width: 180px;}
-#memberEnroll .enroll-btn .btn-pre{position: relative; left: -44px;}
-#memberEnroll .enroll-btn .btn-next{position: relative; left: 44px;}
-#memberEnroll #msg{font-size: 1.6em; margin-top: 40px; height: 60px;}
+#memberEnroll .enroll-btn{margin-top: 50px;}
+#memberEnroll .enroll-btn button{width: 230px;}
+#memberEnroll #msg{font-size: 1.6em; margin: 40px 0 40px; height: 60px;}
+#memberEnroll #page-2{margin-top: -20px; margin-bottom: 30px;}
+#memberEnroll #page-3{margin-top: -20px; margin-bottom: 30px;}
 #memberEnroll #page-2{display: none;}
 #memberEnroll #btn-2{display: none;}
-#memberEnroll #page-2{margin-top: -20px; margin-bottom: 30px;}
+#memberEnroll #page-3{display: none;}
+#memberEnroll #btn-3{display: none;}
+#memberEnroll #page-4{display: none;}
+#memberEnroll #btn-4{display: none;}
 </style>
-
+<style>
+#memberEnroll .map_wrap {position:relative;width:100%;height:350px;}
+#memberEnroll .title {font-weight:bold;display:block;}
+#memberEnroll .hAddr {position:absolute;left:10px;top:10px;border-radius: 2px;background:#fff;background:rgba(255,255,255,0.8);z-index:1;padding:5px;}
+#memberEnroll #centerAddr {display:block;margin-top:2px;font-weight: normal;}
+#memberEnroll .bAddr {padding:5px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+</style>
 <div id="memberEnroll" class="text-center">
 
     <h1>회원가입을 진행합니다.</h1>
@@ -22,31 +32,64 @@
 
     <div class="enroll-form" id="page-1">
         <input type="hidden" id="valid-Id" value="0">
-        <input type="text" id="memberId" placeholder="사용할 아이디를 입력해주세요." class="form-control form-control-lg" maxlength="14">
-        <input type="password" id="password" placeholder="비밀번호를 입력해주세요." class="form-control form-control-lg" maxlength="16">
-        <input type="password" id="password-check" placeholder="비밀번호를 한번 더 입력해주세요." class="form-control form-control-lg" maxlength="16">
+        <input type="text" id="memberId" placeholder="ID" class="form-control form-control-lg" maxlength="14">
+        <input type="password" id="password" placeholder="Password" class="form-control form-control-lg" maxlength="16">
+        <input type="password" id="password-check" placeholder="Password Check" class="form-control form-control-lg" maxlength="16">
     </div>
 
     <div class="enroll-form" id="page-2">
         <input type="text" id="memberName" placeholder="성명을 입력해주세요." class="form-control form-control-lg" maxlength="8">
-        <select id="gender" class="form-control form-control-lg">
-            <option value="" disabled hidden selected>성별을 선택해주세요.</option>
+        <select id="gender" class="custom-select custom-select-lg">
+            <option disabled hidden selected>성별을 선택해주세요.</option>
             <option value="M">남</option>
             <option value="F">여</option>
         </select>
-        <input type="text" id="birth" placeholder="생년월일을 입력해주세요." class="form-control form-control-lg" maxlength="8">
-        <input type="text" id="phone" placeholder="연락처를 입력해주세요." class="form-control form-control-lg" maxlength="8">
-        
+        <div class="input-group">
+            <select id="year" class="custom-select custom-select-lg"></select>
+            <select id="month" class="custom-select custom-select-lg">
+                <option disabled hidden selected>월</option>
+            </select>
+            <select id="date" class="custom-select custom-select-lg">
+                <option disabled hidden selected>일</option>
+            </select>
+        </div>
+        <input type="text" id="phone" placeholder="연락처를 입력해주세요. ( - 제외)" class="form-control form-control-lg" maxlength="13">
+    </div>
+
+    <div class="enroll-map" id="page-3">
+        <button id="btn-searchAddress" class="btn btn-info btn-block">위치 검색</button>
+        <div class="input-group">
+            <input type="text" id="sido" value="" class="form-control form-control text-center" readonly>
+            <input type="text" id="sigungu" value="" class="form-control form-control text-center" readonly>
+            <input type="text" id="dong" value="" class="form-control form-control text-center" readonly>
+        </div>
+        <div class="map_wrap">
+            <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+            <div class="hAddr">
+                <span class="title">지도중심기준 행정동 주소정보</span>
+                <span id="centerAddr"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="enroll-form" id="page-4">
+        이메일 인증 추가 예정
     </div>
 
     <div class="enroll-btn" id="btn-1">
-        <button class="btn btn-outline-primary btn-lg btn-pre" id="btn-cancel">가입 취소</button>
-        <button class="btn btn-outline-primary btn-lg btn-next" id="next-page2">다음 단계</button>
+        <button class="btn btn-outline-primary btn-lg" id="next-page2">다음 단계로 진행<br>( 1 / 4 )</button>
+    </div>
+    
+    <div class="enroll-btn" id="btn-2">
+        <button class="btn btn-outline-primary btn-lg" id="next-page3">다음 단계로 진행<br>( 2 / 4 )</button>
     </div>
 
-    <div class="enroll-btn" id="btn-2">
-        <button class="btn btn-outline-primary btn-lg btn-pre" id="pre-page1">이전 단계</button>
-        <button class="btn btn-outline-primary btn-lg btn-next" id="next-page3">다음 단계</button>
+    <div class="enroll-btn" id="btn-3">
+        <button class="btn btn-outline-primary btn-lg" id="next-page4">다음 단계로 진행<br>( 3 / 4 )</button>
+    </div>
+
+    <div class="enroll-btn" id="btn-4">
+        <button class="btn btn-outline-primary btn-lg" id="btn-enroll">회원 가입 완료<br>( 4 / 4 )</button>
     </div>
 </div>
 
@@ -54,27 +97,62 @@
 $(()=>{
     var $page_1 = $("#memberEnroll #page-1");
     var $page_2 = $("#memberEnroll #page-2");
+    var $page_3 = $("#memberEnroll #page-3");
+    var $page_4 = $("#memberEnroll #page-4");
     var $btn_1 = $("#memberEnroll #btn-1");
     var $btn_2 = $("#memberEnroll #btn-2");
+    var $btn_3 = $("#memberEnroll #btn-3");
+    var $btn_4 = $("#memberEnroll #btn-4");
 
     var $msg = $("#memberEnroll #msg");
     var $memberId = $("#memberEnroll #memberId");
     var $validId = $("#memberEnroll #valid-Id");
     var $password = $("#memberEnroll #password");
     var $passwordChk = $("#memberEnroll #password-check");
-    
-    var memberId;
-    var password;
+    var $memberName = $("#memberEnroll #memberName");
+    var $gender = $("#memberEnroll #gender");
+    var $phone = $("#memberEnroll #phone");
+    var $year = $("#memberEnroll #year");
+    var $month = $("#memberEnroll #month");
+    var $date = $("#memberEnroll #date");
+    var $sido = $("#memberEnroll #sido");
+    var $sigungu = $("#memberEnroll #sigungu");
+    var $dong = $("#memberEnroll #dong");
+
+    //회원 가입
+    $("#memberEnroll #btn-enroll").click(()=>{
+        var member = {memberId:$memberId.val(),
+                      password:$password.val(),
+                      memberName:$memberName.val(),
+                      gender:$gender.val(),
+                      phone:$phone.val(),
+                      year:$year.val(),
+                      month:$month.val(),
+                      date:$date.val(),
+                      sido:$sido.val(),
+                      sigungu:$sigungu.val(),
+                      dong:$dong.val()};
+        
+        $.ajax({
+            url: "${pageContext.request.contextPath}/member/memberEnrollEnd",
+            data: member,
+            dataType: "json",
+            success : data =>{
+                console.log(data);
+            },
+            error : (x,s,e) =>{
+                console.log("실패",x,s,e);
+            },
+            complete : data =>{
+
+                
+            }
+        })
+                       
+    });
 
     //페이지 전환
     $("#memberEnroll #next-page2").click(()=>{
-        $page_1.hide();
-        $btn_1.hide();
-        $page_2.show();
-        $btn_2.show();
-        changeMsg("step2");
-        return;
-
         if($validId.val() != 1){
             changeMsg("check_id",'f');
             changeForm($memberId,'f');
@@ -96,21 +174,80 @@ $(()=>{
             $passwordChk.focus();
             return;
         }
-
-
+        $page_1.hide();
+        $btn_1.hide();
+        $page_2.show();
+        $btn_2.show();
+        changeMsg("step2");
+        insertYear($year);
     });
 
-    $("#pre-page1").click(()=>{prePage(1)});
-    $("#pre-page2").click(()=>{prePage(2)});
-    $("#pre-page3").click(()=>{prePage(3)});
+    $("#memberEnroll #next-page3").click(()=>{
 
-    function prePage(page){
-        $("#page-"+page).show();
-        $("#page-"+(page+1)).hide();
-        $("#btn-"+page).show();
-        $("#btn-"+(page+1)).hide();
-    }
+        var regExp = /^[가-힣]{2,5}$/;
+        if(!regExp.test($memberName.val())){
+            changeMsg("check_name",'f');
+            changeForm($memberName,'f');
+            $memberName.focus();
+            return;
+        }
 
+        if($gender.val() == null){
+            changeMsg("check_gender",'f');
+            changeForm($gender,'f');
+            $gender.focus();
+            return;
+        }
+
+        if($year.val() == null){
+            changeMsg("check_birth",'f');
+            changeForm($year,'f');
+            $year.focus();
+            return;
+        }
+
+        if($month.val() == null){
+            changeMsg("check_birth",'f');
+            changeForm($month,'f');
+            $month.focus();
+            return;
+        }
+
+        if($date.val() == null){
+            changeMsg("check_birth",'f');
+            changeForm($date,'f');
+            $date.focus();
+            return;
+        }
+
+        regExp = /01{1}[016789]{1}[0-9]{7,8}/;
+        if(!regExp.test($phone.val())){
+            changeMsg("check_phone",'f');
+            changeForm($phone,'f');
+            $phone.focus();
+            return;
+        }
+        $page_2.hide();
+        $btn_2.hide();
+        $page_3.show();
+        $btn_3.show();
+        changeMsg("step3");
+    });
+    
+    $("#memberEnroll #next-page4").click(()=>{
+        if($sido.val().length == 0){
+            changeMsg("",'f');
+            return;
+        }
+
+        changeMsg("step4");
+
+        $page_3.hide();
+        $btn_3.hide();
+        $page_4.show();
+        $btn_4.show();
+    })
+    
     // 아이디 유효성 검사
     $memberId.keyup((e)=>{
         var regExp = /^[a-z][a-z\d]{5,14}$/;
@@ -188,6 +325,30 @@ $(()=>{
 
     });
 
+    $memberName.keyup(()=>{
+        changeMsg("");
+        changeForm($memberName);
+    })
+    $gender.blur(()=>{
+        changeMsg("");
+        changeForm($gender);
+    })
+    $year.blur(()=>{
+        changeMsg("");
+        changeForm($year);
+    })
+    $month.blur(()=>{
+        changeMsg("");
+        changeForm($month);
+    })
+    $date.blur(()=>{
+        changeMsg("");
+        changeForm($date);
+    })
+    $phone.keyup(()=>{
+        changeMsg("");
+        changeForm($phone);
+    })
 
     // 가입 취소 버튼 액션
     $("#btn-cancel").click(()=>{
@@ -244,11 +405,165 @@ $(()=>{
             case "valid_passwordChk":$msg.html("비밀번호가 일치합니다.");break;
             case "invalid":$msg.html("다시 한번 확인해주세요.");break;
             case "step2":$msg.html("가입에 필요한 개인 정보를 입력해주세요.");break;
+            case "check_name":$msg.html("본인 성명을 입력해주세요");break;
+            case "check_gender":$msg.html("본인 성별을 선택해주세요.");break;
+            case "check_birth":$msg.html("본인 생년월일을 선택해주세요.");break;
+            case "check_phone":$msg.html("연락 가능한 번호를 입력해주세요. ('-' 제외)");break;
+            case "step3":$msg.html("본인이 거주하는 위치를 알려주세요.");break;
+            case "step4":$msg.html("본인 확인을 위해 이메일 인증을 시작합니다.");break;
         }
 
     }
 
+    // 년, 월, 일 동적 처리
+    function insertYear($obj){
+        let title = "<option disabled hidden selected>년</option>";
+        $obj.html(title);
+
+        var now = new Date().getFullYear();
+
+        for(var i = 0; i < 100; i++){
+            $obj.append("<option value='"+(now-i)+"'>"+(now-i)+"년</option>");
+        }
+    }
+
+    function insertMonth($obj){
+        for(var i = 1; i <= 12; i++){
+            $obj.append("<option value='"+(i)+"'>"+(i)+"월</option>");
+        }
+    }
+
+    function insertDate($obj, month){
+        $obj.html("");
+        for(var i = 1; i <= 31; i++){
+            if(i > 29 && month == 2) return;
+            if(i > 30 && (month == 4 || month == 6 || month == 9 || month == 11)) return;
+            $obj.append("<option value='"+(i)+"'>"+(i)+"일</option>");
+        }
+    }
+
+    $year.blur(()=>{
+        if($year.val() != null)
+            insertMonth($month);
+    });
+    $month.blur(()=>{
+        if($month.val() != null)
+            insertDate($date, $month.val());
+    });
+
+    // 위치 정보 저장하기
+    function setAddress(address){
+        addrArr = address.split(" ");
+        console.log(addrArr);
+        
+        $sido.val(addrArr[0]);
+        $sigungu.val(addrArr[1]);
+        $dong.val(addrArr[2]);
+    }
+
+    // 위치 정보 가져오기
+    
+    $("#memberEnroll #btn-searchAddress").click(()=>{
+        var latitude;
+        var longitude;
+    
+        if(navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(function(position){
+                latitude = position.coords.latitude;
+                longitude = position.coords.longitude;
+    
+                console.log(latitude);
+                console.log(longitude);
+    
+                kakoMap(latitude,longitude);
+            });
+        }else{
+            alert("gps를 지원하지 않는 브라우저 입니다. 크롬을 사용하거라.")
+        }
+    
+    });
+
+    function kakoMap(latitude,longitude){
+    
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+        mapOption = {
+            center: new kakao.maps.LatLng(latitude, longitude), // 지도의 중심좌표
+            level: 5 // 지도의 확대 레벨
+        };  
+    
+        // 지도를 생성합니다    
+        var map = new kakao.maps.Map(mapContainer, mapOption); 
+    
+        // 주소-좌표 변환 객체를 생성합니다
+        var geocoder = new kakao.maps.services.Geocoder();
+    
+        var marker = new kakao.maps.Marker(), // 클릭한 위치를 표시할 마커입니다
+            infowindow = new kakao.maps.InfoWindow({zindex:1}); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
+    
+        // 현재 지도 중심좌표로 주소를 검색해서 지도 좌측 상단에 표시합니다
+        searchAddrFromCoords(map.getCenter(), displayCenterInfo);
+    
+        // 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
+        kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+            searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
+                if (status === kakao.maps.services.Status.OK) {
+                    var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
+                    detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
+                    
+                    var content = '<div class="bAddr">' +
+                                    '<span class="title">법정동 주소정보</span>' + 
+                                    detailAddr + 
+                                '</div>';
+    
+                    // 마커를 클릭한 위치에 표시합니다 
+                    marker.setPosition(mouseEvent.latLng);
+                    marker.setMap(map);
+    
+                    // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
+                    infowindow.setContent(content);
+                    infowindow.open(map, marker);
+                }   
+            });
+        });
+    
+        // 중심 좌표나 확대 수준이 변경됐을 때 지도 중심 좌표에 대한 주소 정보를 표시하도록 이벤트를 등록합니다
+        kakao.maps.event.addListener(map, 'idle', function() {
+            searchAddrFromCoords(map.getCenter(), displayCenterInfo);
+        });
+    
+        function searchAddrFromCoords(coords, callback) {
+            // 좌표로 행정동 주소 정보를 요청합니다
+            geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);         
+        }
+    
+        function searchDetailAddrFromCoords(coords, callback) {
+            // 좌표로 법정동 상세 주소 정보를 요청합니다
+            geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
+        }
+    
+        // 지도 좌측상단에 지도 중심좌표에 대한 주소정보를 표출하는 함수입니다
+        function displayCenterInfo(result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+                var infoDiv = document.getElementById('centerAddr');
+    
+                for(var i = 0; i < result.length; i++) {
+                    // 행정동의 region_type 값은 'H' 이므로
+                    if (result[i].region_type === 'H') {
+                        infoDiv.innerHTML = result[i].address_name;
+                        setAddress(result[i].address_name);
+                        break;
+                    }
+                }
+            }    
+        }
+    }
 });
+
+
+
+
+
+
 </script>
 
 
