@@ -30,11 +30,21 @@ public class MemberController {
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
 	
-// 근호 시작 ==========================
+// 민호 시작 ==========================
 	@RequestMapping("/memberLogin.do")
 	public void memberLogin() {
 		
 	}
+//==========================민호 끝
+	
+// 하진 시작 ==========================
+	@RequestMapping("/memberBye.do")
+	public void memberBye() {
+		
+	}
+//========================== 하진 끝
+	
+// 근호 시작 ==========================
 	@RequestMapping("/memberLoginId.do")
 	public ModelAndView memberLoginId(@RequestParam String memberId, @RequestParam String password,
 			ModelAndView mav, HttpSession session) {
@@ -73,19 +83,7 @@ public class MemberController {
 		}
 		return "redirect:/";
 	}
-
-//==========================근호 끝
-	
-// 하진 시작 ==========================
-	@RequestMapping("/memberBye.do")
-	public void memberBye() {
-		
-	}
-//========================== 하진 끝
-	
-// 민호 시작 ==========================
-	
-//========================== 민호 끝
+//========================== 근호 끝
 	
 // 지은 시작 ==========================
 	@RequestMapping("/findPassword.do")
