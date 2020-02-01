@@ -59,12 +59,18 @@ public class MemberController {
 		loc = "/member/memberLogin.do";
 	}
 	else {
-		if(password.equals(m.getPassword())) {
+		
+		String enp = passwordEncoder.encode(m.getPassword());
+		m.setPassword(enp);
+		log.debug("enp={}",enp);
+		
+		if(passwordEncoder.matches(password, m.getPassword())) {
 			msg = "로그인 성공";
 			mav.addObject("memberLoggedIn", m);
 		}
 		else {
 			msg = "비밀번호가 틀렸습니다.";
+			loc = "/member/memberLogin.do";
 		}
 	}
 	log.debug("password={}",password);
