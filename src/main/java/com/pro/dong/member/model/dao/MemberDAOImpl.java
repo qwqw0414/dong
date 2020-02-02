@@ -1,5 +1,7 @@
 package com.pro.dong.member.model.dao;
 
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,7 +63,10 @@ public class MemberDAOImpl implements MemberDAO{
 	//==========================  예찬 끝
 	
 	// 주영 시작 ==========================
-	
+	@Override
+	public Member selectMemberByName(Map<String, String> map) {
+		return sst.selectOne("member.selectMemberByName", map);
+	}
 	//==========================  주영 끝
 	
 	// 현규 시작 ==========================

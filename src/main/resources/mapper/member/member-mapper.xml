@@ -42,7 +42,12 @@
 	<!-- ==========================  예찬 끝 -->
 	
 	<!-- 주영 시작 ========================== -->
+	<resultMap type="member" id="memberMap"></resultMap>
 	
+	<select id="selectMemberByName" resultMap="memberMap">
+		select * from member 
+		where member_name = #{name} and email = #{email} 
+	</select>
 	<!-- ==========================  주영 끝 -->
 	
 	<!-- 현규 시작 ========================== -->

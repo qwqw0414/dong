@@ -1,5 +1,7 @@
 package com.pro.dong.member.model.service;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +64,10 @@ public class MemberServiceImpl implements MemberService{
 	//==========================  예찬 끝
 	
 	// 주영 시작 ==========================
-	
+	@Override
+	public Member selectMemberByName(Map<String, String> map) {
+		return md.selectMemberByName(map);
+	}
 	//==========================  주영 끝
 	
 	// 현규 시작 ==========================
