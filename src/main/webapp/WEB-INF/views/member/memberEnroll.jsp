@@ -474,9 +474,19 @@ $(()=>{
         addrArr = address.split(" ");
         console.log(addrArr);
         
+        var dongIndex = 0;
+
+        addrArr.forEach(addr => {
+            dongIndex++;
+            if(addr.substr(addr.length-1,1)=='동'){
+                console.log(addr);
+                return;
+            }
+        });
+
         $sido.val(addrArr[0]);
         $sigungu.val(addrArr[1]);
-        $dong.val(addrArr[2]);
+        $dong.val(addrArr[dongIndex-1]);
     }
 
     // 위치 정보 가져오기
