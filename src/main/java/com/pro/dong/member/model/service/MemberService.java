@@ -11,6 +11,8 @@ public interface MemberService {
 	
 	// 하진 시작 ==========================
 	int byeMember(String memberId);
+	
+	Member selectDeleteOne(String memberId);
 	//==========================  하진 끝
 	
 	// 근호 시작 ==========================
