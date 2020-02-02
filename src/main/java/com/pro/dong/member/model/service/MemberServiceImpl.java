@@ -25,7 +25,15 @@ public class MemberServiceImpl implements MemberService{
 	//==========================  민호 끝
 	
 	// 하진 시작 ==========================
+	@Override
+	public int byeMember(String memberId) {
+		return md.byeMember(memberId);
+	}
 	
+	@Override
+	public Member selectDeleteOne(String memberId) {
+		return md.selectDeleteOne(memberId);
+	}
 	//==========================  하진 끝
 	
 	// 근호 시작 ==========================

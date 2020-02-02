@@ -24,7 +24,15 @@ public class MemberDAOImpl implements MemberDAO{
 	//==========================  민호 끝
 	
 	// 하진 시작 ==========================
+	@Override
+	public int byeMember(String memberId) {
+		return sst.delete("member.byeMember", memberId);
+	}
 	
+	@Override
+	public Member selectDeleteOne(String memberId) {
+		return sst.selectOne("member.selectDeleteOne", memberId);
+	}
 	//==========================  하진 끝
 	
 	// 근호 시작 ==========================

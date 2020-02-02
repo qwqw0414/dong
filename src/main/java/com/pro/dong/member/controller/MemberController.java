@@ -38,17 +38,59 @@ public class MemberController {
 	BCryptPasswordEncoder passwordEncoder;
 	
 // 민호 시작 ==========================
-	@RequestMapping("/memberLogin.do")
-	public void memberLogin() {
+	@RequestMapping("/chargePoint.do")
+	public void chargePoint() {
 		
 	}
+	
 //==========================민호 끝
 	
 // 하진 시작 ==========================
+	
 	@RequestMapping("/memberBye.do")
-	public void memberBye() {
-		
+	public ModelAndView memberBye(ModelAndView mav) {
+		mav.setViewName("/member/memberBye");
+		return mav;
 	}
+	
+	@RequestMapping("/memberByeForm.do")
+	public ModelAndView memberBye(@RequestParam("memberId") String memberId,
+									@RequestParam("password") String password,
+									ModelAndView mav) {
+		
+		
+		int result = ms.byeMember(memberId);
+		 
+		log.debug("memberId={}",memberId);
+		String msg = "";
+		String loc = "/";
+	
+		if(result < 0) {
+			msg = "회원 탈퇴 실패";
+		}
+		else {
+			Member m = ms.selectDeleteOne(memberId);
+			log.debug("member객체야@@@@@@@@@@@@@@={}",m);
+			
+			//비밀번호에 따른 분기				사용자가 입력	db에 있는 비번
+			if(passwordEncoder.matches(password, m.getPassword())) {
+				msg="회원 탈퇴 성공";
+			}
+			else {
+				msg="비밀번호가 틀렸습니다.";
+			}
+			mav.addObject("msg", msg);
+			mav.addObject("loc", loc);
+			
+			mav.setViewName("common/msg");
+		}
+		
+		return mav;
+	}
+	
+	
+	
+	
 //========================== 하진 끝
 	
 // 근호 시작 ==========================
