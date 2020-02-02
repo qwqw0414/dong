@@ -37,10 +37,11 @@ public class MemberController {
 	BCryptPasswordEncoder passwordEncoder;
 	
 // 민호 시작 ==========================
-	@RequestMapping("/memberLogin.do")
-	public void memberLogin() {
+	@RequestMapping("/chargePoint.do")
+	public void chargePoint() {
 		
 	}
+	
 //==========================민호 끝
 	
 // 하진 시작 ==========================
