@@ -41,10 +41,39 @@ public class MemberController {
 //==========================민호 끝
 	
 // 하진 시작 ==========================
+	
 	@RequestMapping("/memberBye.do")
-	public void memberBye() {
-		
+	public ModelAndView memberBye(ModelAndView mav) {
+		mav.setViewName("/member/memberBye");
+		return mav;
 	}
+	
+	@RequestMapping("/memberByeForm.do")
+	public ModelAndView memberBye(@RequestParam("memberId") String memberId,
+									ModelAndView mav) {
+		
+		int result = ms.byeMember(memberId);
+		log.debug("memberId@@@@@@@@@@@@@@@@@={}",memberId);
+		String msg = "";
+		String loc = "/";
+		
+		if(result < 0) {
+			msg = "회원 탈퇴 실패";
+		}
+		else {
+			msg = "회원 탈퇴 성공";
+			mav.addObject("msg", msg);
+			mav.addObject("loc", loc);
+			
+			mav.setViewName("common/msg");
+		}
+		
+		return mav;
+	}
+	
+	
+	
+	
 //========================== 하진 끝
 	
 // 근호 시작 ==========================
