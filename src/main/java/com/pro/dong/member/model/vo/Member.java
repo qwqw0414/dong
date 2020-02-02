@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Date;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,7 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Member implements Serializable{
+public @Data class Member implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private String memberId;
@@ -23,6 +24,7 @@ public class Member implements Serializable{
 	private String gender;
 	private String birth;
 	private String phone;
+	private String email;
 	private Date enrollDate;
 	
 }

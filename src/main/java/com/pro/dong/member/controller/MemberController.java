@@ -1,7 +1,9 @@
 package com.pro.dong.member.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -190,6 +192,20 @@ public class MemberController {
 	@RequestMapping("/findId.do")
 	public void findId() {
 		
+	}
+	
+	@RequestMapping("/findIdEnd.do")
+	public ModelAndView findIdEnd(ModelAndView mav) {
+		
+		System.out.println("sdsd");
+		
+		mav.addObject("msg", "안녕");
+		mav.addObject("loc", "/");
+		mav.setViewName("common/msg");
+		
+		//Map<String, String> map = new HashMap<>();
+		
+		return mav;
 	}
 	
 //========================== 주영 끝
