@@ -64,9 +64,9 @@ public class MemberController {
 	}
 	else {
 		
-		String enp = passwordEncoder.encode(m.getPassword());
+		/*String enp = passwordEncoder.encode(m.getPassword());
 		m.setPassword(enp);
-		log.debug("enp={}",enp);
+		log.debug("enp={}",enp);*/
 		
 		if(passwordEncoder.matches(password, m.getPassword())) {
 			msg = "로그인 성공";
