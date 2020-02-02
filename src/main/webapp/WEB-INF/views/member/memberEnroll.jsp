@@ -445,6 +445,7 @@ $(()=>{
     }
 
     function insertMonth($obj){
+        $obj.html("");
         for(var i = 1; i <= 12; i++){
             $obj.append("<option value='"+(i)+"'>"+(i)+"월</option>");
         }
