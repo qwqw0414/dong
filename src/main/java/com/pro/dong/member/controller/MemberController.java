@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.pro.dong.member.model.exception.MemberException;
 import com.pro.dong.member.model.service.MemberService;
 import com.pro.dong.member.model.vo.Address;
 import com.pro.dong.member.model.vo.Member;
@@ -122,22 +123,33 @@ public class MemberController {
 	@RequestMapping("/memberEnrollEnd")
 	@ResponseBody
 	public String memberEnrollEnd(Member member, Address address) {
-		
-//		비밀번호 암호화
-		member.setPassword(passwordEncoder.encode(member.getPassword()));
-		
-		int result = ms.insertMember(member);
-		
-		if(result > 0) {
-			result = ms.insertAddress(address);
-		}
-		
-		if(result > 0) {
-			result = ms.insertPoint(member.getMemberId());
-		}
-		
-		if(result > 0) {
-			result = ms.insertValid(member.getMemberId());
+		int result = 0;
+		try {
+//		    비밀번호 암호화
+			member.setPassword(passwordEncoder.encode(member.getPassword()));
+			
+			result = ms.insertMember(member);
+			
+			if(result > 0) {
+				result = ms.insertAddress(address);
+			}else {
+				throw new MemberException("회원가입 오류");
+			}
+			
+			if(result > 0) {
+				result = ms.insertPoint(member.getMemberId());
+			}else {
+				throw new MemberException("회원가입 오류");
+			}
+			
+			if(result > 0) {
+				result = ms.insertValid(member.getMemberId());
+			}else {
+				throw new MemberException("회원가입 오류");
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 		return result+"";
