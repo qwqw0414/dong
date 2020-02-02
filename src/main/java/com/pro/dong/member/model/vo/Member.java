@@ -24,6 +24,7 @@ public @Data class Member implements Serializable{
 	private String gender;
 	private String birth;
 	private String phone;
+	private String email;
 	private Date enrollDate;
 	
 }
