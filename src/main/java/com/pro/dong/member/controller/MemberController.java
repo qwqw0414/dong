@@ -251,7 +251,6 @@ public class MemberController {
 // 현규 시작 ==========================
 	@RequestMapping("/memberView.do")
 	public void memberView() {
-		System.out.println(11);
 	}
 	
 //========================== 현규 끝
