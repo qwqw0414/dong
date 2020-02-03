@@ -228,6 +228,12 @@ public class MemberController {
 				throw new MemberException("회원가입 오류");
 			}
 			
+			if(result > 0) {
+				result = ms.createShop(member.getMemberId());
+			}else {
+				throw new MemberException("회원가입 오류");
+			}
+			
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

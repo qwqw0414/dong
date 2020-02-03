@@ -51,7 +51,7 @@
 		select count(*) from member where member_id = #{memberId}
 	</select>
 	<insert id="insertMember" parameterType="member">
-		insert into member values(#{memberId}, #{password}, #{memberName}, #{gender}, #{birth}, #{phone}, null, default)
+		insert into member values(#{memberId}, #{password}, #{memberName}, #{gender}, #{birth}, #{phone}, #{email}, default)
 	</insert>
 	<insert id="insertAddress" parameterType="address">
 		insert into address values(#{memberId}, #{sido}, #{sigungu}, #{dong})
@@ -61,6 +61,9 @@
 	</insert>
 	<insert id="insertPoint">
 		insert into point values(#{memberId},default)
+	</insert>
+	<insert id="createShop">
+		insert into shop values(seq_shop.nextval, #{memberId}, 'shop'||seq_shop_name.nextval, null, null, default)
 	</insert>
 	<!-- ==========================  예찬 끝 -->
 	
