@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,11 +46,29 @@ public class MemberController {
 	public ModelAndView chargePoint(ModelAndView mav, HttpServletRequest request) {
 		
 		Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
-		Map<String, String> result = ms.selectMemberPoints(memberLoggedIn);
-		mav.addObject("map", result);
+		Map<String, String> memberInfo = ms.selectMemberPoints(memberLoggedIn);
+		mav.addObject("map", memberInfo);
 		mav.setViewName("member/chargePoint");
 		return mav;
-		
+
+	}
+	@RequestMapping("/updatePoint")
+	@ResponseBody
+	public Map<String, String> updatePoint(ModelAndView mav, @RequestParam("pointAmount") int pointAmount, @RequestParam("memberId") String memberId, HttpServletRequest request) {
+		log.debug("pointAmount={}",pointAmount);
+		log.debug("memberId={}",memberId);
+		Map<String, String> map = new HashMap<>();
+		map.put("pointAmount", pointAmount+"");
+		map.put("memberId", memberId);
+		int result = ms.updatePoint(map);
+		log.debug("result",result);
+		Map<String, String> memberInfo = null;
+		if(result>0) {
+			Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
+			memberInfo = ms.selectMemberPoints(memberLoggedIn);
+		} 
+		log.debug("memberInfo={}",memberInfo);
+		return memberInfo;
 	}
 	
 //==========================민호 끝
@@ -74,8 +93,10 @@ public class MemberController {
 		String msg = "";
 		String loc = "/";
 	
-		
-		if(result > 0) {
+		if(result < 0) {
+			msg = "회원 탈퇴 실패";
+		}
+		else {
 			Member m = ms.selectDeleteOne(memberId);
 			log.debug("member객체야@@@@@@@@@@@@@@={}",m);
 			
@@ -90,9 +111,6 @@ public class MemberController {
 			mav.addObject("loc", loc);
 			
 			mav.setViewName("common/msg");
-		}
-		else {
-		msg = "회원 탈퇴 실패";
 		}
 		
 		return mav;
@@ -260,28 +278,21 @@ public class MemberController {
 	
 // 주영 시작 ==========================
 	@RequestMapping("/findId.do")
-	public String findId() {
-		log.debug("jsp 연결 성공");
+	public void findId() {
 		
-		return "member/findId";
 	}
 	
 	
-	@RequestMapping("/findIdEnd")
+	@RequestMapping("/findIdEnd.do")
 	@ResponseBody
-	public Member findIdEnd(@RequestParam("memberName") String memberName, @RequestParam("email") String email) {
+	public Member findIdEnd(@RequestParam("memberName") String name, @RequestParam("memberEmail") String email) {
 		
-		Member member = new Member();
-		member.setMemberName(memberName);
-		member.setEmail(email);
+		Map<String, String> map = new HashMap<>();
+		map.put("name", name);
+		map.put("email", email);
 		
-		Member m = ms.selectMemberByName(member);
-		log.debug("m={}",m);
-		Member nullM = new Member();
-		if(m == null) {
-			log.debug("nullM={}",nullM);
-			return nullM;
-		}
+		Member m = ms.selectMemberByName(map);
+		
 		return m;
 	}
 	
@@ -289,7 +300,12 @@ public class MemberController {
 	
 // 현규 시작 ==========================
 	@RequestMapping("/memberView.do")
-	public void memberView() {
+	public ModelAndView memberView(HttpSession session, ModelAndView mav) {
+		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
+		mav = new ModelAndView();
+		mav.addObject("member",ms.selectOneMember(memberLoggedIn.getMemberId()));
+		mav.setViewName("member/memberView");
+		return mav;
 	}
 	
 //========================== 현규 끝

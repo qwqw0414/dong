@@ -20,9 +20,15 @@ public class MemberDAOImpl implements MemberDAO{
 	SqlSessionTemplate sst;
 	
 	// 민호 시작 ==========================
+
 	@Override
 	public Map<String, String> selectMemberPoints(Member memberLoggedIn) {
 		return sst.selectOne("member.selectMemberPoints", memberLoggedIn);
+	}
+	@Override
+	public int updatePoint(Map<String, String> map) {
+		log.debug("map={}",map);
+		return sst.insert("member.updatePoint", map);
 	}
 	//==========================  민호 끝
 	
@@ -84,13 +90,20 @@ public class MemberDAOImpl implements MemberDAO{
 	
 	// 주영 시작 ==========================
 	@Override
-	public Member selectMemberByName(Member member) {
-		return sst.selectOne("member.selectMemberByName", member);
+	public Member selectMemberByName(Map<String, String> map) {
+		return sst.selectOne("member.selectMemberByName", map);
 	}
 	//==========================  주영 끝
 
+
+
+
 	
 	// 현규 시작 ==========================
+	@Override
+	public Member selectOneMember(String memberId) {
+		return sst.selectOne("member.selectOneMember", memberId);
+	}
 	
 	//==========================  현규 끝
 }
