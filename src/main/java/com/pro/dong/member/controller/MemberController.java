@@ -58,33 +58,36 @@ public class MemberController {
 									@RequestParam("password") String password,
 									ModelAndView mav) {
 		
-		
-		int result = ms.byeMember(memberId);
-		 
-		log.debug("memberId={}",memberId);
+		Member m = ms.selectDeleteOne(memberId);
+		log.debug("member객체야@@@@@@@@@@@@@@={}",m);
+
 		String msg = "";
 		String loc = "/";
-	
 		
-		if(result > 0) {
-			Member m = ms.selectDeleteOne(memberId);
-			log.debug("member객체야@@@@@@@@@@@@@@={}",m);
+		if(m != null) {
 			
 			//비밀번호에 따른 분기				사용자가 입력	db에 있는 비번
 			if(passwordEncoder.matches(password, m.getPassword())) {
-				msg="회원 탈퇴 성공";
+				int result = ms.byeMember(memberId);
+				log.debug("memberId={}",memberId);
+				
+				if(result>0)
+					msg="회원 탈퇴 성공";
+				
 			}
 			else {
 				msg="비밀번호가 틀렸습니다.";
 			}
-			mav.addObject("msg", msg);
-			mav.addObject("loc", loc);
 			
-			mav.setViewName("common/msg");
 		}
 		else {
-		msg = "회원 탈퇴 실패";
+			msg = "회원 탈퇴 실패";
 		}
+		
+		mav.addObject("msg", msg);
+		mav.addObject("loc", loc);
+		
+		mav.setViewName("common/msg");
 		
 		return mav;
 	}
