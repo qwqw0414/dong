@@ -21,7 +21,17 @@ public class MemberServiceImpl implements MemberService{
 
 	
 	// 민호 시작 ==========================
+
+	@Override
+	public Map<String, String> selectMemberPoints(Member memberLoggedIn) {
+		return md.selectMemberPoints(memberLoggedIn);
+	}
 	
+	@Override
+	public int updatePoint(Map<String, String>map) {
+		return md.updatePoint(map);
+	}
+
 	//==========================  민호 끝
 	
 	// 하진 시작 ==========================
@@ -86,6 +96,8 @@ public class MemberServiceImpl implements MemberService{
 		return md.selectMemberByName(map);
 	}
 	//==========================  주영 끝
+
+
 
 	
 	// 현규 시작 ==========================

@@ -3,6 +3,9 @@ package com.pro.dong.member.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -11,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,8 +43,32 @@ public class MemberController {
 	
 // 민호 시작 ==========================
 	@RequestMapping("/chargePoint.do")
-	public void chargePoint() {
+	public ModelAndView chargePoint(ModelAndView mav, HttpServletRequest request) {
 		
+		Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
+		Map<String, String> memberInfo = ms.selectMemberPoints(memberLoggedIn);
+		mav.addObject("map", memberInfo);
+		mav.setViewName("member/chargePoint");
+		return mav;
+
+	}
+	@RequestMapping("/updatePoint")
+	@ResponseBody
+	public Map<String, String> updatePoint(ModelAndView mav, @RequestParam("pointAmount") int pointAmount, @RequestParam("memberId") String memberId, HttpServletRequest request) {
+		log.debug("pointAmount={}",pointAmount);
+		log.debug("memberId={}",memberId);
+		Map<String, String> map = new HashMap<>();
+		map.put("pointAmount", pointAmount+"");
+		map.put("memberId", memberId);
+		int result = ms.updatePoint(map);
+		log.debug("result",result);
+		Map<String, String> memberInfo = null;
+		if(result>0) {
+			Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
+			memberInfo = ms.selectMemberPoints(memberLoggedIn);
+		} 
+		log.debug("memberInfo={}",memberInfo);
+		return memberInfo;
 	}
 	
 //==========================민호 끝
@@ -100,7 +128,7 @@ public class MemberController {
 	}
 	@RequestMapping("/memberLoginId.do")
 	public ModelAndView memberLoginId(@RequestParam String memberId, @RequestParam String password,
-			ModelAndView mav, HttpSession session) {
+			ModelAndView mav, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 	Member m = ms.selectLoginMember(memberId);
 	log.debug("m={}", m);
@@ -120,6 +148,29 @@ public class MemberController {
 		if(passwordEncoder.matches(password, m.getPassword())) {
 			msg = "로그인 성공";
 			mav.addObject("memberLoggedIn", m);
+
+			//아이디저장
+			String saveId = request.getParameter("saveId");
+			log.debug("saveId={}",saveId);
+			//체크한경우
+			if(saveId != null) {
+				Cookie c = new Cookie("saveId", memberId);
+				c.setMaxAge(7*24*60*60);//7일후 소멸함
+				c.setPath("/");
+//				request.setAttribute("c", c);
+				response.addCookie(c);
+				log.debug("ccccccc={}", c);
+				
+			}
+			//체크하지 않은 경우
+			else {
+				Cookie c = new Cookie("saveId", memberId);
+				c.setMaxAge(0);
+				c.setPath("/");
+				//request.setAttribute("c", c);
+				log.debug("ccccccc={}", c);
+			}
+			
 		}
 		else {
 			msg = "비밀번호가 틀렸습니다.";
