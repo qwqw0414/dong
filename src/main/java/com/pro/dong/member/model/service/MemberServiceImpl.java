@@ -93,9 +93,12 @@ public class MemberServiceImpl implements MemberService{
 		return md.selectMemberByName(member);
 	}
 	//==========================  주영 끝
+<<<<<<< HEAD
+=======
 
 
 
+>>>>>>> 263e97969892af3951c947a2869925626b3cc6d7
 	
 	// 현규 시작 ==========================
 	

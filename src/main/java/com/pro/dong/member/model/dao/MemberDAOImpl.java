@@ -92,7 +92,6 @@ public class MemberDAOImpl implements MemberDAO{
 		return sst.selectOne("member.selectMemberByName", member);
 	}
 	//==========================  주영 끝
-
 	
 	// 현규 시작 ==========================
 	
