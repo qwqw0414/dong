@@ -146,6 +146,8 @@ public class MemberController {
 		if(passwordEncoder.matches(password, m.getPassword())) {
 			msg = "로그인 성공";
 			mav.addObject("memberLoggedIn", m);
+
+			
 		}
 		else {
 			msg = "비밀번호가 틀렸습니다.";
