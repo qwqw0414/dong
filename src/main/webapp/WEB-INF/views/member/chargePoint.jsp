@@ -3,11 +3,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <%
-	Member memberLoggedIn = (Member)request.getSession().getAttribute("memeberLoggedIn");
+	Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
 	Map<String, String> map = (Map<String,String>)request.getAttribute("map");
 	
 %>
 <script>
+function test1(){
+	var pointAmount = $("#pointAmount").val();
+	console.log(pointAmount);
+	var memberId = "<%=memberLoggedIn.getMemberId()%>";
+	console.log(memberId);
+	$.ajax({
+    	url: "${pageContext.request.contextPath}/member/updatePoint",
+    	data: {pointAmount:pointAmount,
+    		memberId:memberId},
+    	type: "POST",
+    	success: data=>{
+    		console.log(data);
+    		var pointUpdated = data.POINT;
+    		$("#memberPoint").val(pointUpdated);
+    	},
+    	error : (x, s, e) => {
+			console.log("ajax 요청 실패!");
+		}
+    });//end of ajax
+}
+
+
 function chargePoint(){
 	var IMP = window.IMP; // 생략가능
     IMP.init('imp29966768'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
@@ -57,8 +79,7 @@ if ( rsp.success ) {
             msg += '카드 승인번호 : ' + rsp.apply_num;
 
             alert(msg);
-            var memberPoint = $("#memberPoint").val();
-            memberPoint.val(memberPoint+pointAmount);
+            
         } else {
         }
     });
@@ -84,11 +105,11 @@ if ( rsp.success ) {
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">${memberLoggedIn.memberName }(${memberLoggedIn.memberId })님의 포인트 현황</h5>
-        <p class="card-text" id="memberPoint">${map.POINT } 점</p>
+        <input class="card-text" id="memberPoint" value="${map.POINT }" readonly/>점<br>
         <input type="number" name="pointAmount" id="pointAmount" min="0" max="100000"/>&nbsp;<button class="btn btn-warning" onclick="chargePoint();">충전하기</button>
       </div>
     </div>
   </div>
  </div>
-
+<button onclick="test1();">포인트 충전 실험</button>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

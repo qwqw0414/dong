@@ -10,6 +10,9 @@ public interface MemberService {
 	// 민호 시작 ==========================
 	Map<String, String> selectMemberPoints(Member memberLoggedIn);
 	
+	int updatePoint(Map<String, String> map);
+
+	
 	//==========================  민호 끝
 	
 	// 하진 시작 ==========================
@@ -45,6 +48,7 @@ public interface MemberService {
 	// 주영 시작 ==========================
 	Member selectMemberByName(Map<String, String> map);
 
+	
 	
 	//==========================  주영 끝
 	

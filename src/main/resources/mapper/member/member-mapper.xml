@@ -13,7 +13,10 @@
 		on m.member_id = a. member_id
 		where m.member_id = #{memberId}
 	</select>
-	
+	<insert id="updatePoint" parameterType="map">
+		insert into point_status 
+		values(seq_point_status.nextval, #{memberId}, #{pointAmount}, 'I', default)
+	</insert>
 	<!-- ==========================  민호 끝 -->
 	
 	<!-- 하진 시작 ========================== -->

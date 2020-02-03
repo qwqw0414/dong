@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,11 +44,30 @@ public class MemberController {
 	public ModelAndView chargePoint(ModelAndView mav, HttpServletRequest request) {
 		
 		Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
-		Map<String, String> result = ms.selectMemberPoints(memberLoggedIn);
-		mav.addObject("map", result);
+		Map<String, String> memberInfo = ms.selectMemberPoints(memberLoggedIn);
+		mav.addObject("map", memberInfo);
 		mav.setViewName("member/chargePoint");
 		return mav;
 		
+	}
+	
+	@RequestMapping("/updatePoint")
+	@ResponseBody
+	public Map<String, String> updatePoint(ModelAndView mav, @RequestParam("pointAmount") int pointAmount, @RequestParam("memberId") String memberId, HttpServletRequest request) {
+		log.debug("pointAmount={}",pointAmount);
+		log.debug("memberId={}",memberId);
+		Map<String, String> map = new HashMap<>();
+		map.put("pointAmount", pointAmount+"");
+		map.put("memberId", memberId);
+		int result = ms.updatePoint(map);
+		log.debug("result",result);
+		Map<String, String> memberInfo = null;
+		if(result>0) {
+			Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
+			memberInfo = ms.selectMemberPoints(memberLoggedIn);
+		} 
+		log.debug("memberInfo={}",memberInfo);
+		return memberInfo;
 	}
 	
 //==========================민호 끝
