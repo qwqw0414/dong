@@ -9,6 +9,7 @@ public interface MemberDAO {
 
 	
 	// 민호 시작 ==========================
+	Map<String, String> selectMemberPoints(Member memberLoggedIn);
 	
 	//==========================  민호 끝
 	
@@ -43,6 +44,7 @@ public interface MemberDAO {
 	// 주영 시작 ==========================
 	Member selectMemberByName(Map<String, String> map);
 	//==========================  주영 끝
+
 	
 	// 현규 시작 ==========================
 	

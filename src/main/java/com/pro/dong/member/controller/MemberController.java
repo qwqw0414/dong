@@ -3,6 +3,7 @@ package com.pro.dong.member.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -39,7 +40,13 @@ public class MemberController {
 	
 // 민호 시작 ==========================
 	@RequestMapping("/chargePoint.do")
-	public void chargePoint() {
+	public ModelAndView chargePoint(ModelAndView mav, HttpServletRequest request) {
+		
+		Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
+		Map<String, String> result = ms.selectMemberPoints(memberLoggedIn);
+		mav.addObject("map", result);
+		mav.setViewName("member/chargePoint");
+		return mav;
 		
 	}
 	
