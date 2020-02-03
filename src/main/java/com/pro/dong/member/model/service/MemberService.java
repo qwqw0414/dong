@@ -22,6 +22,8 @@ public interface MemberService {
 	//==========================  근호 끝
 	
 	// 지은 시작 ==========================
+	Member selectMember(Map<String, String> map);
+	int passwordUpdate(String memberId);
 	
 	//==========================  지은 끝
 	
