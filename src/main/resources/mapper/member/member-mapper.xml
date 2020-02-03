@@ -5,14 +5,6 @@
 <mapper namespace="member">
 
 	<!-- 민호 시작 ========================== -->
-	<select id="selectMemberPoints" resultType="map" parameterType="member">
-		select M.*, p.point, a.sido, a.sigungu, a.dong 
-		from member M join point P 
-		on m.member_id = p.member_id
-		join address A
-		on m.member_id = a. member_id
-		where m.member_id = #{memberId}
-	</select>
 	
 	<!-- ==========================  민호 끝 -->
 	
@@ -51,7 +43,7 @@
 		select count(*) from member where member_id = #{memberId}
 	</select>
 	<insert id="insertMember" parameterType="member">
-		insert into member values(#{memberId}, #{password}, #{memberName}, #{gender}, #{birth}, #{phone}, #{email}, default)
+		insert into member values(#{memberId}, #{password}, #{memberName}, #{gender}, #{birth}, #{phone}, null, default)
 	</insert>
 	<insert id="insertAddress" parameterType="address">
 		insert into address values(#{memberId}, #{sido}, #{sigungu}, #{dong})
@@ -62,20 +54,22 @@
 	<insert id="insertPoint">
 		insert into point values(#{memberId},default)
 	</insert>
-	<insert id="createShop">
-		insert into shop values(seq_shop.nextval, #{memberId}, 'shop'||seq_shop_name.nextval, null, null, default)
-	</insert>
 	<!-- ==========================  예찬 끝 -->
 	
 	<!-- 주영 시작 ========================== -->
-	<select id="selectMemberByName" resultType="member" parameterType="member">
+	<resultMap type="member" id="memberMap"></resultMap>
+	
+	<select id="selectMemberByName" resultMap="memberMap">
 		select * from member 
-		where member_name = #{memberName} and email = #{email} 
+		where member_name = #{name} and email = #{email} 
 	</select>
 	<!-- ==========================  주영 끝 -->
 	
 	<!-- 현규 시작 ========================== -->
-	
+	<select id="selectOneMember" resultMap="memberMap">
+	select * from member
+	where member_id = #{memberId}
+	</select>
 	<!-- ==========================  현규 끝 -->
 
 </mapper>

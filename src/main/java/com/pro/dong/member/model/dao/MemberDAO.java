@@ -9,7 +9,6 @@ public interface MemberDAO {
 
 	
 	// 민호 시작 ==========================
-	Map<String, String> selectMemberPoints(Member memberLoggedIn);
 	
 	//==========================  민호 끝
 	
@@ -42,20 +41,17 @@ public interface MemberDAO {
 
 	int insertPoint(String memberId);
 
-	int createShop(String memberId);
+
 
 	//==========================  예찬 끝
 	
 	// 주영 시작 ==========================
-	Member selectMemberByName(Member member);
+	Member selectMemberByName(Map<String, String> map);
 	//==========================  주영 끝
-<<<<<<< HEAD
-=======
 
-
->>>>>>> 263e97969892af3951c947a2869925626b3cc6d7
 	
 	// 현규 시작 ==========================
+	Member selectOneMember(String memberId);
 	
 	//==========================  현규 끝
 	

@@ -21,10 +21,7 @@ public class MemberServiceImpl implements MemberService{
 
 	
 	// 민호 시작 ==========================
-	@Override
-	public Map<String, String> selectMemberPoints(Member memberLoggedIn) {
-		return md.selectMemberPoints(memberLoggedIn);
-	}
+	
 	//==========================  민호 끝
 	
 	// 하진 시작 ==========================
@@ -81,27 +78,22 @@ public class MemberServiceImpl implements MemberService{
 	public int insertPoint(String memberId) {
 		return md.insertPoint(memberId);
 	}
-	@Override
-	public int createShop(String memberId) {
-		return md.createShop(memberId);
-	}
 	//==========================  예찬 끝
 
 	// 주영 시작 ==========================
 	@Override
-	public Member selectMemberByName(Member member) {
-		return md.selectMemberByName(member);
+	public Member selectMemberByName(Map<String, String> map) {
+		return md.selectMemberByName(map);
 	}
 	//==========================  주영 끝
-<<<<<<< HEAD
-=======
 
-
-
->>>>>>> 263e97969892af3951c947a2869925626b3cc6d7
 	
 	// 현규 시작 ==========================
 	
+	@Override
+	public Member selectOneMember(String memberId) {
+		return md.selectOneMember(memberId);
+	}
 	//==========================  현규 끝
 	
 }
