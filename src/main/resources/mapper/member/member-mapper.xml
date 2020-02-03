@@ -5,6 +5,14 @@
 <mapper namespace="member">
 
 	<!-- 민호 시작 ========================== -->
+	<select id="selectMemberPoints" resultType="map" parameterType="member">
+		select M.*, p.point, a.sido, a.sigungu, a.dong 
+		from member M join point P 
+		on m.member_id = p.member_id
+		join address A
+		on m.member_id = a. member_id
+		where m.member_id = #{memberId}
+	</select>
 	
 	<!-- ==========================  민호 끝 -->
 	
@@ -57,11 +65,9 @@
 	<!-- ==========================  예찬 끝 -->
 	
 	<!-- 주영 시작 ========================== -->
-	<resultMap type="member" id="memberMap"></resultMap>
-	
-	<select id="selectMemberByName" resultMap="memberMap">
+	<select id="selectMemberByName" resultType="member" parameterType="member">
 		select * from member 
-		where member_name = #{name} and email = #{email} 
+		where member_name = #{memberName} and email = #{email} 
 	</select>
 	<!-- ==========================  주영 끝 -->
 	
