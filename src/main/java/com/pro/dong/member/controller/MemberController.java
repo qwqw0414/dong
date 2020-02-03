@@ -48,9 +48,8 @@ public class MemberController {
 		mav.addObject("map", memberInfo);
 		mav.setViewName("member/chargePoint");
 		return mav;
-		
+
 	}
-	
 	@RequestMapping("/updatePoint")
 	@ResponseBody
 	public Map<String, String> updatePoint(ModelAndView mav, @RequestParam("pointAmount") int pointAmount, @RequestParam("memberId") String memberId, HttpServletRequest request) {
@@ -92,8 +91,10 @@ public class MemberController {
 		String msg = "";
 		String loc = "/";
 	
-		
-		if(result > 0) {
+		if(result < 0) {
+			msg = "회원 탈퇴 실패";
+		}
+		else {
 			Member m = ms.selectDeleteOne(memberId);
 			log.debug("member객체야@@@@@@@@@@@@@@={}",m);
 			
@@ -108,9 +109,6 @@ public class MemberController {
 			mav.addObject("loc", loc);
 			
 			mav.setViewName("common/msg");
-		}
-		else {
-		msg = "회원 탈퇴 실패";
 		}
 		
 		return mav;
@@ -278,7 +276,12 @@ public class MemberController {
 	
 // 현규 시작 ==========================
 	@RequestMapping("/memberView.do")
-	public void memberView() {
+	public ModelAndView memberView(HttpSession session, ModelAndView mav) {
+		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
+		mav = new ModelAndView();
+		mav.addObject("member",ms.selectOneMember(memberLoggedIn.getMemberId()));
+		mav.setViewName("member/memberView");
+		return mav;
 	}
 	
 //========================== 현규 끝

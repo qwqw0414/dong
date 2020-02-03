@@ -5,6 +5,7 @@
 <mapper namespace="member">
 
 	<!-- 민호 시작 ========================== -->
+
 	<select id="selectMemberPoints" resultType="map" parameterType="member">
 		select M.*, p.point, a.sido, a.sigungu, a.dong 
 		from member M join point P 
@@ -17,6 +18,7 @@
 		insert into point_status 
 		values(seq_point_status.nextval, #{memberId}, #{pointAmount}, 'I', default)
 	</insert>
+
 	<!-- ==========================  민호 끝 -->
 	
 	<!-- 하진 시작 ========================== -->
@@ -77,7 +79,10 @@
 	<!-- ==========================  주영 끝 -->
 	
 	<!-- 현규 시작 ========================== -->
-	
+	<select id="selectOneMember" resultMap="memberMap">
+	select * from member
+	where member_id = #{memberId}
+	</select>
 	<!-- ==========================  현규 끝 -->
 
 </mapper>
