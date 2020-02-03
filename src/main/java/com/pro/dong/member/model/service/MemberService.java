@@ -1,5 +1,7 @@
 package com.pro.dong.member.model.service;
 
+import java.util.Map;
+
 import com.pro.dong.member.model.vo.Address;
 import com.pro.dong.member.model.vo.Member;
 
@@ -18,6 +20,8 @@ public interface MemberService {
 	//==========================  근호 끝
 	
 	// 지은 시작 ==========================
+	Member selectMember(Map<String, String> map);
+	int passwordUpdate(String memberId);
 	
 	//==========================  지은 끝
 	
@@ -31,6 +35,8 @@ public interface MemberService {
 	int insertValid(String memberId);
 
 	int insertPoint(String memberId);
+
+
 
 	//==========================  예찬 끝
 	

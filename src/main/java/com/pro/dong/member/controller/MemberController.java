@@ -100,10 +100,30 @@ public class MemberController {
 	
 // 지은 시작 ==========================
 	@RequestMapping("/findPassword.do")
-	public void findPassword() {
+	public void findPassword() {}
+	
+	@RequestMapping("/findPasswordEnd.do")
+	@ResponseBody
+	public Member findPasswordEnd(@RequestParam String memberId, @RequestParam String email, ModelAndView mav, HttpSession session) {
 		
+		Map<String,String> map = new HashMap<>();
+		map.put("memberId",memberId);
+		map.put("email",email);
+		Member member = ms.selectMember(map);
+		log.debug("memberId",memberId);
+		log.debug("email",email);
+		return member;
 	}
 	
+	@RequestMapping("/member/passwordUpdate.do")
+	@ResponseBody
+	public ModelAndView passwordUpdate(String memberId, ModelAndView mav) {
+		int result = ms.passwordUpdate(memberId);
+		
+		mav.addObject("result", result);
+		
+		return mav;
+	}
 //========================== 지은 끝
 	
 // 예찬 시작 ==========================
