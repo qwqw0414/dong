@@ -268,12 +268,7 @@ public class MemberController {
 	
 // 현규 시작 ==========================
 	@RequestMapping("/memberView.do")
-	public ModelAndView memberView(HttpSession session, ModelAndView mav) {
-		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
-		mav = new ModelAndView();
-		mav.addObject("member",ms.selectOneMember(memberLoggedIn.getMemberId()));
-		mav.setViewName("member/memberView");
-		return mav;
+	public void memberView() {
 	}
 	
 //========================== 현규 끝

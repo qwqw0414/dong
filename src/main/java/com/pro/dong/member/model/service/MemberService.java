@@ -45,7 +45,6 @@ public interface MemberService {
 	// 주영 시작 ==========================
 <<<<<<< HEAD
 	Member selectMemberByName(Map<String, String> map);
-
 	
 	//==========================  주영 끝
 =======
@@ -53,7 +52,6 @@ public interface MemberService {
 >>>>>>> bf54d64a334b9e0d953e032dcdd9bc49e0689636
 	
 	// 현규 시작 ==========================
-	Member selectOneMember(String memberId);
 	
 	//==========================  현규 끝
 }

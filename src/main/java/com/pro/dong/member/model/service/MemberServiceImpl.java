@@ -89,14 +89,9 @@ public class MemberServiceImpl implements MemberService{
 		return md.selectMemberByName(member);
 	}
 	//==========================  주영 끝
-
 	
 	// 현규 시작 ==========================
 	
-	@Override
-	public Member selectOneMember(String memberId) {
-		return md.selectOneMember(memberId);
-	}
 	//==========================  현규 끝
 	
 }

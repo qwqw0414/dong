@@ -49,10 +49,8 @@ public interface MemberDAO {
 	// 주영 시작 ==========================
 	Member selectMemberByName(Member member);
 	//==========================  주영 끝
-
 	
 	// 현규 시작 ==========================
-	Member selectOneMember(String memberId);
 	
 	//==========================  현규 끝
 	
