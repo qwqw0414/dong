@@ -81,6 +81,10 @@ public class MemberServiceImpl implements MemberService{
 	public int insertPoint(String memberId) {
 		return md.insertPoint(memberId);
 	}
+	@Override
+	public int createShop(String memberId) {
+		return md.createShop(memberId);
+	}
 	//==========================  예찬 끝
 
 	// 주영 시작 ==========================
@@ -89,6 +93,12 @@ public class MemberServiceImpl implements MemberService{
 		return md.selectMemberByName(member);
 	}
 	//==========================  주영 끝
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> 263e97969892af3951c947a2869925626b3cc6d7
 	
 	// 현규 시작 ==========================
 	

@@ -42,13 +42,18 @@ public interface MemberDAO {
 
 	int insertPoint(String memberId);
 
-
+	int createShop(String memberId);
 
 	//==========================  예찬 끝
 	
 	// 주영 시작 ==========================
 	Member selectMemberByName(Member member);
 	//==========================  주영 끝
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 263e97969892af3951c947a2869925626b3cc6d7
 	
 	// 현규 시작 ==========================
 	
