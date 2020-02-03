@@ -6,6 +6,7 @@
 <footer>
     <div class="line">
     </div>
+    <div><img src="${pageContext.request.contextPath}/resources/images/footer.PNG" /></div>
 </footer>
 </body>
 </html>

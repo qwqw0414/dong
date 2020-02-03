@@ -2,33 +2,41 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
 <h1>아이디 찾기</h1>
-<div id="formDiv">
-	<form id="findIdFrm" method="post">
+<div id="form-idSearch">
   	<div class="form-group">
     	<label for="exampleInputEmail1">이름</label>
-    	<input type="text" class="form-control" name="memberName" id="memberName" aria-describedby="emailHelp" required>
+    	<input type="text" class="form-control" name="name" id="memberName" aria-describedby="emailHelp">
   	</div>
   	<div class="form-group">
     	<label for="exampleInputPassword1">이메일</label>
-    	<input type="email" class="form-control" name="memberEmail" id="memberEmail" required>
+    	<input type="email" class="form-control" name="email" id="memberEmail">
   	</div>
-  	<button type="submit" class="btn btn-primary btn-findId">아이디찾기</button>
-	</form>
+  	<button type="button" class="btn btn-primary btn-findId">아이디찾기</button>
 </div>
 <div id="findId-result"></div>
 
 <script>
-	$("#findIdFrm .btn-findId").click(function(){
-		$("#formDiv").hide();
+	$("#form-idSearch .btn-findId").click(function(){
+		
+		var name = $("#memberName").val().trim();
+		var email = $("#memberEmail").val().trim();
+		
+		if(name.length == 0 || email.length == 0){
+			alert("모두 입력해");
+			return false;
+		}
+		
+		$("#form-idSearch").hide();
 		$.ajax({
-			url : "${pageContext.request.contextPath}/member/findIdEnd.do",
-			data : $("#findIdFrm").serialize(),
+			url : "${pageContext.request.contextPath}/member/findIdEnd",
+			data : {memberName : name,
+					email : email},
 			dataType : "json",
 			type : "GET", 
 			success : data => {
-				console.log(data);
-				var findId = $("<h1></h1>");
-				if(data == null){
+				//console.log(data);
+				var findId = $("<h2></h2>");
+				if(data.memberId == null){
 					findId.append("입력하신 정보의 회원은 존재하지 않습니다.");
 				}
 				else{

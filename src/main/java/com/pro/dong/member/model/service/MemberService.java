@@ -8,6 +8,7 @@ import com.pro.dong.member.model.vo.Member;
 public interface MemberService {
 
 	// 민호 시작 ==========================
+	Map<String, String> selectMemberPoints(Member memberLoggedIn);
 	
 	//==========================  민호 끝
 	
@@ -42,10 +43,14 @@ public interface MemberService {
 	//==========================  예찬 끝
 	
 	// 주영 시작 ==========================
+<<<<<<< HEAD
 	Member selectMemberByName(Map<String, String> map);
 
 	
 	//==========================  주영 끝
+=======
+	Member selectMemberByName(Member member);
+>>>>>>> bf54d64a334b9e0d953e032dcdd9bc49e0689636
 	
 	// 현규 시작 ==========================
 	Member selectOneMember(String memberId);
