@@ -27,12 +27,18 @@
 	width: 100%;
 	text-align: center;
 }
+#bogiImg{
+	width:20px;
+	height: 20px;
+}
 </style> 
 
 <body>
 <header>
 <div id="headerImgDiv">
-	<img id="headerImg" src="${pageContext.request.contextPath}/resources/images/header.PNG"/>
+	<a href="${pageContext.request.contextPath}">
+		<img id="headerImg" src="${pageContext.request.contextPath}/resources/images/header.PNG"/>
+	</a>
 	</div>
 	<nav class="navbar navbar-expand-md navbar-light bg-light">
 	 
@@ -40,15 +46,6 @@
 	    <span class="navbar-toggler-icon"></span>
 	  </button>
 	  
-	  <div class="input-group mb-3">
-  		<input type="text" class="form-control" placeholder="검색어를 입력하세요." aria-label="Recipient's username" aria-describedby="basic-addon2">
-  		<div class="input-group-append">
-    		<span class="input-group-text" id="basic-addon2">
-    			<%-- <img id="headerImg" src="${pageContext.request.contextPath}/resources/images/bogi.png"/> --%>
-    		</span>
-  		</div>
-	  </div>
-	
 	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	    <ul class="navbar-nav mr-auto">
 
@@ -78,6 +75,14 @@
 	    </ul>
 	  </div>
 	</nav>
+	<div class="input-group mb-3">
+  		<input type="text" class="form-control" placeholder="검색어를 입력하세요." aria-label="Recipient's username" aria-describedby="basic-addon2">
+  		<div class="input-group-append">
+    		<span class="input-group-text" id="basic-addon2">
+    			<img id="bogiImg" src="${pageContext.request.contextPath}/resources/images/bogi.png"/>
+    		</span>
+  		</div>
+	  </div>
 </header>
 <section>
 	<div class="container" id="section">
