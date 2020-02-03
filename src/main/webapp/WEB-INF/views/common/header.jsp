@@ -31,7 +31,7 @@
 	
 	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	    <ul class="navbar-nav mr-auto">
-
+			<!-- 회원 -->
 	      <li class="nav-item dropdown">
 	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	          회원
@@ -52,6 +52,28 @@
 	          <a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberBye.do">회원 탈퇴</a>
 	        </div>
 	      </li>
+
+		  <!-- 커뮤니티 -->
+		  <li class="nav-item dropdown">
+	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	          커뮤니티
+	        </a>
+	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+	          <a class="dropdown-item" href="${pageContext.request.contextPath}/board/boardList.do">게시글</a>
+	        </div>
+		  </li>
+		  
+		  <!-- 커뮤니티 -->
+		  <li class="nav-item dropdown">
+	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	          상점
+	        </a>
+	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+	        
+	          <a class="dropdown-item" href="${pageContext.request.contextPath}/shop/shopView.do">내 상점</a>
+
+	        </div>
+		  </li>
 
 	    </ul>
 	  </div>
