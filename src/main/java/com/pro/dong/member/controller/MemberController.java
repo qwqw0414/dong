@@ -167,7 +167,7 @@ public class MemberController {
 				Cookie c = new Cookie("saveId", memberId);
 				c.setMaxAge(0);
 				c.setPath("/");
-				//request.setAttribute("c", c);
+				response.addCookie(c);
 				log.debug("ccccccc={}", c);
 			}
 			
