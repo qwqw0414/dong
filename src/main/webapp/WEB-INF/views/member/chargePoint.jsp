@@ -57,7 +57,8 @@ if ( rsp.success ) {
             msg += '카드 승인번호 : ' + rsp.apply_num;
 
             alert(msg);
-            
+            var memberPoint = $("#memberPoint").val();
+            memberPoint.val(memberPoint+pointAmount);
         } else {
         }
     });
@@ -83,7 +84,7 @@ if ( rsp.success ) {
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">${memberLoggedIn.memberName }(${memberLoggedIn.memberId })님의 포인트 현황</h5>
-        <p class="card-text">${map.POINT } 점</p>
+        <p class="card-text" id="memberPoint">${map.POINT } 점</p>
         <input type="number" name="pointAmount" id="pointAmount" min="0" max="100000"/>&nbsp;<button class="btn btn-warning" onclick="chargePoint();">충전하기</button>
       </div>
     </div>
