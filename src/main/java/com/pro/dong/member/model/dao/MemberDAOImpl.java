@@ -85,8 +85,13 @@ public class MemberDAOImpl implements MemberDAO{
 		return sst.selectOne("member.selectMemberByName", map);
 	}
 	//==========================  주영 끝
+
 	
 	// 현규 시작 ==========================
+	@Override
+	public Member selectOneMember(String memberId) {
+		return sst.selectOne("member.selectOneMember", memberId);
+	}
 	
 	//==========================  현규 끝
 }

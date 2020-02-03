@@ -43,10 +43,12 @@ public interface MemberService {
 	
 	// 주영 시작 ==========================
 	Member selectMemberByName(Map<String, String> map);
+
 	
 	//==========================  주영 끝
 	
 	// 현규 시작 ==========================
+	Member selectOneMember(String memberId);
 	
 	//==========================  현규 끝
 }
