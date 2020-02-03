@@ -65,10 +65,8 @@ public class MemberController {
 		String msg = "";
 		String loc = "/";
 	
-		if(result < 0) {
-			msg = "회원 탈퇴 실패";
-		}
-		else {
+		
+		if(result > 0) {
 			Member m = ms.selectDeleteOne(memberId);
 			log.debug("member객체야@@@@@@@@@@@@@@={}",m);
 			
@@ -83,6 +81,9 @@ public class MemberController {
 			mav.addObject("loc", loc);
 			
 			mav.setViewName("common/msg");
+		}
+		else {
+		msg = "회원 탈퇴 실패";
 		}
 		
 		return mav;
