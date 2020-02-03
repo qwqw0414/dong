@@ -5,6 +5,14 @@
 <mapper namespace="member">
 
 	<!-- 민호 시작 ========================== -->
+	<select id="selectMemberPoints" resultType="map" parameterType="member">
+		select M.*, p.point, a.sido, a.sigungu, a.dong 
+		from member M join point P 
+		on m.member_id = p.member_id
+		join address A
+		on m.member_id = a. member_id
+		where m.member_id = #{memberId}
+	</select>
 	
 	<!-- ==========================  민호 끝 -->
 	
@@ -28,7 +36,14 @@
 	<!-- ==========================  근호 끝 -->
 	
 	<!-- 지은 시작 ========================== -->
-	
+	<select id="selectMember" resultType="member">
+		select * from member
+		where member_id = #{memberId}
+	</select>
+	<update id="passwordUpdate">
+		update member set password = #{password}
+		where memberId = #{memberId}
+	</update>
 	<!-- ==========================  지은 끝 -->
 	
 	<!-- 예찬 시작 ========================== -->

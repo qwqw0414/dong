@@ -3,6 +3,7 @@ package com.pro.dong.member.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -39,7 +40,13 @@ public class MemberController {
 	
 // 민호 시작 ==========================
 	@RequestMapping("/chargePoint.do")
-	public void chargePoint() {
+	public ModelAndView chargePoint(ModelAndView mav, HttpServletRequest request) {
+		
+		Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
+		Map<String, String> result = ms.selectMemberPoints(memberLoggedIn);
+		mav.addObject("map", result);
+		mav.setViewName("member/chargePoint");
+		return mav;
 		
 	}
 	
@@ -65,10 +72,8 @@ public class MemberController {
 		String msg = "";
 		String loc = "/";
 	
-		if(result < 0) {
-			msg = "회원 탈퇴 실패";
-		}
-		else {
+		
+		if(result > 0) {
 			Member m = ms.selectDeleteOne(memberId);
 			log.debug("member객체야@@@@@@@@@@@@@@={}",m);
 			
@@ -83,6 +88,9 @@ public class MemberController {
 			mav.addObject("loc", loc);
 			
 			mav.setViewName("common/msg");
+		}
+		else {
+		msg = "회원 탈퇴 실패";
 		}
 		
 		return mav;
@@ -146,10 +154,30 @@ public class MemberController {
 	
 // 지은 시작 ==========================
 	@RequestMapping("/findPassword.do")
-	public void findPassword() {
+	public void findPassword() {}
+	
+	@RequestMapping("/findPasswordEnd.do")
+	@ResponseBody
+	public Member findPasswordEnd(@RequestParam String memberId, @RequestParam String email, ModelAndView mav, HttpSession session) {
 		
+		Map<String,String> map = new HashMap<>();
+		map.put("memberId",memberId);
+		map.put("email",email);
+		Member member = ms.selectMember(map);
+		log.debug("memberId",memberId);
+		log.debug("email",email);
+		return member;
 	}
 	
+	@RequestMapping("/member/passwordUpdate.do")
+	@ResponseBody
+	public ModelAndView passwordUpdate(String memberId, ModelAndView mav) {
+		int result = ms.passwordUpdate(memberId);
+		
+		mav.addObject("result", result);
+		
+		return mav;
+	}
 //========================== 지은 끝
 	
 // 예찬 시작 ==========================
@@ -238,7 +266,6 @@ public class MemberController {
 // 현규 시작 ==========================
 	@RequestMapping("/memberView.do")
 	public void memberView() {
-		
 	}
 	
 //========================== 현규 끝
