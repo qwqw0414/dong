@@ -39,11 +39,13 @@ public interface MemberService {
 
 	int insertPoint(String memberId);
 
-
+	int createShop(String memberId);
 	//==========================  예찬 끝
 	
 	// 주영 시작 ==========================
 	Member selectMemberByName(Member member);
+
+
 	
 	// 현규 시작 ==========================
 	

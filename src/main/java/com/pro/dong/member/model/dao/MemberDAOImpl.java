@@ -79,6 +79,10 @@ public class MemberDAOImpl implements MemberDAO{
 	public int insertPoint(String memberId) {
 		return sst.insert("insertPoint", memberId);
 	}
+	@Override
+	public int createShop(String memberId) {
+		return sst.insert("createShop", memberId);
+	}
 	//==========================  예찬 끝
 
 	

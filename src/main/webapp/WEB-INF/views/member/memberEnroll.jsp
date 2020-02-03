@@ -74,6 +74,7 @@
 
     <div class="enroll-form" id="page-4">
         이메일 인증 추가 예정
+        <input type="email" id="email" value="" class="form-control form-control text-center">
     </div>
 
     <div class="enroll-btn" id="btn-1">
@@ -112,6 +113,7 @@ $(()=>{
     var $memberName = $("#memberEnroll #memberName");
     var $gender = $("#memberEnroll #gender");
     var $phone = $("#memberEnroll #phone");
+    var $email = $("#memberEnroll #email");
     var $year = $("#memberEnroll #year");
     var $month = $("#memberEnroll #month");
     var $date = $("#memberEnroll #date");
@@ -144,6 +146,7 @@ $(()=>{
                    gender:$gender.val(),
                    phone:$phone.val(),
                    birth:birth,
+                   email:$email.val(),
                    sido:$sido.val(),
                    sigungu:$sigungu.val(),
                    dong:$dong.val()},
