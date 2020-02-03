@@ -73,8 +73,8 @@ public class MemberServiceImpl implements MemberService{
 	
 	// 주영 시작 ==========================
 	@Override
-	public Member selectMemberByName(Map<String, String> map) {
-		return md.selectMemberByName(map);
+	public Member selectMemberByName(Member member) {
+		return md.selectMemberByName(member);
 	}
 	//==========================  주영 끝
 	

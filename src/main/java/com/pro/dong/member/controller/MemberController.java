@@ -217,15 +217,20 @@ public class MemberController {
 	
 	@RequestMapping("/findIdEnd")
 	@ResponseBody
-	public String findIdEnd(@RequestParam("memberName") String name, @RequestParam("memberEmail") String email) {
+	public Member findIdEnd(@RequestParam("memberName") String memberName, @RequestParam("email") String email) {
 		
-		Map<String, String> map = new HashMap<>();
-		map.put("name", name);
-		map.put("email", email);
+		Member member = new Member();
+		member.setMemberName(memberName);
+		member.setEmail(email);
 		
-		//Member m = ms.selectMemberByName(map);
-		
-		return ""+ms.selectMemberByName(map);
+		Member m = ms.selectMemberByName(member);
+		log.debug("m={}",m);
+		Member nullM = new Member();
+		if(m == null) {
+			log.debug("nullM={}",nullM);
+			return nullM;
+		}
+		return m;
 	}
 	
 //========================== 주영 끝

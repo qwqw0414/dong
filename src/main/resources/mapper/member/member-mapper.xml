@@ -50,11 +50,9 @@
 	<!-- ==========================  예찬 끝 -->
 	
 	<!-- 주영 시작 ========================== -->
-	<resultMap type="member" id="memberMap"></resultMap>
-	
-	<select id="selectMemberByName" resultMap="memberMap">
+	<select id="selectMemberByName" resultType="member" parameterType="member">
 		select * from member 
-		where member_name = #{name} and email = #{email} 
+		where member_name = #{memberName} and email = #{email} 
 	</select>
 	<!-- ==========================  주영 끝 -->
 	

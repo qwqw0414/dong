@@ -40,7 +40,7 @@ public interface MemberService {
 	//==========================  예찬 끝
 	
 	// 주영 시작 ==========================
-	Member selectMemberByName(Map<String, String> map);
+	Member selectMemberByName(Member member);
 	
 	//==========================  주영 끝
 	
