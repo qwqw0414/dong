@@ -55,13 +55,13 @@ public class MemberServiceImpl implements MemberService{
 	
 	// 지은 시작 ==========================
 	@Override
-	public Member selectMember(Map<String, String> map) {
-		return md.selectMember(map);
+	public int selectMember(Member m) {
+		return md.selectMember(m);
 	}
 	
 	@Override
-	public int passwordUpdate(String memberId) {
-		return md.passwordUpdate(memberId);
+	public int passwordUpdate(String id) {
+		return md.passwordUpdate(id);
 	}
 	
 	//==========================  지은 끝
@@ -97,9 +97,6 @@ public class MemberServiceImpl implements MemberService{
 	}
 	//==========================  주영 끝
 
-
-
-	
 	// 현규 시작 ==========================
 	
 	@Override

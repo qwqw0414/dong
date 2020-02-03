@@ -199,27 +199,30 @@ public class MemberController {
 	@RequestMapping("/findPassword.do")
 	public void findPassword() {}
 	
-	@RequestMapping("/findPasswordEnd.do")
+	@RequestMapping("/findPasswordEnd")
 	@ResponseBody
-	public Member findPasswordEnd(@RequestParam String memberId, @RequestParam String email, ModelAndView mav, HttpSession session) {
+	public int findPasswordEnd(@RequestParam String memberId, @RequestParam String email ) {
 		
-		Map<String,String> map = new HashMap<>();
-		map.put("memberId",memberId);
-		map.put("email",email);
-		Member member = ms.selectMember(map);
+		Member m = new Member();
+		m.setMemberId(memberId);
+		m.setEmail(email);
+		
+		int count = ms.selectMember(m);
 		log.debug("memberId",memberId);
 		log.debug("email",email);
-		return member;
+		
+		return count;
 	}
 	
-	@RequestMapping("/member/passwordUpdate.do")
+	@RequestMapping("/passwordUpdate")
 	@ResponseBody
-	public ModelAndView passwordUpdate(String memberId, ModelAndView mav) {
-		int result = ms.passwordUpdate(memberId);
+	public String passwordUpdate(@RequestParam String id,@RequestParam String pwdChk, Member member) {
 		
-		mav.addObject("result", result);
+		//비밀번호 암호화
+		member.setPassword(passwordEncoder.encode(pwdChk));
+		int result = ms.passwordUpdate(id);
 		
-		return mav;
+		return result+"";
 	}
 //========================== 지은 끝
 	
