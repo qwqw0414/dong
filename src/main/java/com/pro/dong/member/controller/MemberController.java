@@ -94,6 +94,10 @@ public class MemberController {
 //========================== 하진 끝
 	
 // 근호 시작 ==========================
+	@RequestMapping("/memberLogin.do")
+	public void memberLogin() {
+		
+	}
 	@RequestMapping("/memberLoginId.do")
 	public ModelAndView memberLoginId(@RequestParam String memberId, @RequestParam String password,
 			ModelAndView mav, HttpSession session) {
