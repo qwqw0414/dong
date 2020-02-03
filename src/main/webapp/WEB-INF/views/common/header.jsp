@@ -21,14 +21,31 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ea166326e5dc5657d4a2feb24b4cfe0b&libraries=services"></script>
 </head>
 
+<style>
+#headerImgDiv{
+
+	width: 100%;
+	text-align: center;
+}
+#bogiImg{
+	width:20px;
+	height: 20px;
+}
+</style> 
+
 <body>
 <header>
+<div id="headerImgDiv">
+	<a href="${pageContext.request.contextPath}">
+		<img id="headerImg" src="${pageContext.request.contextPath}/resources/images/header.PNG"/>
+	</a>
+	</div>
 	<nav class="navbar navbar-expand-md navbar-light bg-light">
-	  <a class="navbar-brand" href="#">동네한바퀴</a>
+	 
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	    <span class="navbar-toggler-icon"></span>
 	  </button>
-	
+	  
 	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	    <ul class="navbar-nav mr-auto">
 			<!-- 회원 -->
@@ -49,7 +66,9 @@
 	          <a class="dropdown-item" href="${pageContext.request.contextPath}/member/findPassword.do">비밀번호 찾기</a>
 	          <a class="dropdown-item" href="${pageContext.request.contextPath}/member/findId.do">아이디 찾기</a>
 	          <a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberView.do">내 정보</a>
-	          <a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberBye.do">회원 탈퇴</a>
+	          <c:if test="${memberLoggedIn != null }">
+	          	<a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberBye.do">회원 탈퇴</a>
+	          </c:if>
 	        </div>
 	      </li>
 
@@ -78,6 +97,14 @@
 	    </ul>
 	  </div>
 	</nav>
+	<div class="input-group mb-3">
+  		<input type="text" class="form-control" placeholder="검색어를 입력하세요." aria-label="Recipient's username" aria-describedby="basic-addon2">
+  		<div class="input-group-append">
+    		<span class="input-group-text" id="basic-addon2">
+    			<img id="bogiImg" src="${pageContext.request.contextPath}/resources/images/bogi.png"/>
+    		</span>
+  		</div>
+	  </div>
 </header>
 <section>
 	<div class="container" id="section">

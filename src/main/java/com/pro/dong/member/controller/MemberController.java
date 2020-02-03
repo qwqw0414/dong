@@ -3,7 +3,6 @@ package com.pro.dong.member.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -40,13 +39,7 @@ public class MemberController {
 	
 // 민호 시작 ==========================
 	@RequestMapping("/chargePoint.do")
-	public ModelAndView chargePoint(ModelAndView mav, HttpServletRequest request) {
-		
-		Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
-		Map<String, String> result = ms.selectMemberPoints(memberLoggedIn);
-		mav.addObject("map", result);
-		mav.setViewName("member/chargePoint");
-		return mav;
+	public void chargePoint() {
 		
 	}
 	
@@ -65,36 +58,32 @@ public class MemberController {
 									@RequestParam("password") String password,
 									ModelAndView mav) {
 		
-		Member m = ms.selectDeleteOne(memberId);
-		log.debug("member객체야@@@@@@@@@@@@@@={}",m);
-
+		
+		int result = ms.byeMember(memberId);
+		 
+		log.debug("memberId={}",memberId);
 		String msg = "";
 		String loc = "/";
-		
-		if(m != null) {
+	
+		if(result < 0) {
+			msg = "회원 탈퇴 실패";
+		}
+		else {
+			Member m = ms.selectDeleteOne(memberId);
+			log.debug("member객체야@@@@@@@@@@@@@@={}",m);
 			
 			//비밀번호에 따른 분기				사용자가 입력	db에 있는 비번
 			if(passwordEncoder.matches(password, m.getPassword())) {
-				int result = ms.byeMember(memberId);
-				log.debug("memberId={}",memberId);
-				
-				if(result>0)
-					msg="회원 탈퇴 성공";
-				
+				msg="회원 탈퇴 성공";
 			}
 			else {
 				msg="비밀번호가 틀렸습니다.";
 			}
+			mav.addObject("msg", msg);
+			mav.addObject("loc", loc);
 			
+			mav.setViewName("common/msg");
 		}
-		else {
-			msg = "회원 탈퇴 실패";
-		}
-		
-		mav.addObject("msg", msg);
-		mav.addObject("loc", loc);
-		
-		mav.setViewName("common/msg");
 		
 		return mav;
 	}
@@ -228,12 +217,6 @@ public class MemberController {
 				throw new MemberException("회원가입 오류");
 			}
 			
-			if(result > 0) {
-				result = ms.createShop(member.getMemberId());
-			}else {
-				throw new MemberException("회원가입 오류");
-			}
-			
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -245,28 +228,21 @@ public class MemberController {
 	
 // 주영 시작 ==========================
 	@RequestMapping("/findId.do")
-	public String findId() {
-		log.debug("jsp 연결 성공");
+	public void findId() {
 		
-		return "member/findId";
 	}
 	
 	
-	@RequestMapping("/findIdEnd")
+	@RequestMapping("/findIdEnd.do")
 	@ResponseBody
-	public Member findIdEnd(@RequestParam("memberName") String memberName, @RequestParam("email") String email) {
+	public Member findIdEnd(@RequestParam("memberName") String name, @RequestParam("memberEmail") String email) {
 		
-		Member member = new Member();
-		member.setMemberName(memberName);
-		member.setEmail(email);
+		Map<String, String> map = new HashMap<>();
+		map.put("name", name);
+		map.put("email", email);
 		
-		Member m = ms.selectMemberByName(member);
-		log.debug("m={}",m);
-		Member nullM = new Member();
-		if(m == null) {
-			log.debug("nullM={}",nullM);
-			return nullM;
-		}
+		Member m = ms.selectMemberByName(map);
+		
 		return m;
 	}
 	
@@ -274,7 +250,12 @@ public class MemberController {
 	
 // 현규 시작 ==========================
 	@RequestMapping("/memberView.do")
-	public void memberView() {
+	public ModelAndView memberView(HttpSession session, ModelAndView mav) {
+		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
+		mav = new ModelAndView();
+		mav.addObject("member",ms.selectOneMember(memberLoggedIn.getMemberId()));
+		mav.setViewName("member/memberView");
+		return mav;
 	}
 	
 //========================== 현규 끝
