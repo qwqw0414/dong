@@ -3,7 +3,9 @@ package com.pro.dong.member.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -108,7 +110,7 @@ public class MemberController {
 	}
 	@RequestMapping("/memberLoginId.do")
 	public ModelAndView memberLoginId(@RequestParam String memberId, @RequestParam String password,
-			ModelAndView mav, HttpSession session) {
+			ModelAndView mav, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 	Member m = ms.selectLoginMember(memberId);
 	log.debug("m={}", m);
@@ -128,6 +130,28 @@ public class MemberController {
 		if(passwordEncoder.matches(password, m.getPassword())) {
 			msg = "로그인 성공";
 			mav.addObject("memberLoggedIn", m);
+			//아이디저장
+			String saveId = request.getParameter("saveId");
+			
+			//체크한경우
+			if(saveId != null) {
+				Cookie c = new Cookie("saveId", memberId);
+				c.setMaxAge(7*24*60*60);//7일후 소멸함
+				c.setPath("/");
+//				request.setAttribute("c", c);
+				response.addCookie(c);
+				log.debug("ccccccc={}", c);
+				
+			}
+			//체크하지 않은 경우
+			else {
+				Cookie c = new Cookie("saveId", memberId);
+				c.setMaxAge(0);
+				c.setPath("/");
+				//request.setAttribute("c", c);
+				log.debug("ccccccc={}", c);
+			}
+			
 		}
 		else {
 			msg = "비밀번호가 틀렸습니다.";
