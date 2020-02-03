@@ -1,10 +1,22 @@
 package com.pro.dong.shop.model.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.pro.dong.member.model.dao.MemberDAO;
+import com.pro.dong.member.model.service.MemberServiceImpl;
 
 @Service
 public class ShopServiceImpl {
 
+	static Logger log = LoggerFactory.getLogger(MemberServiceImpl.class);
+	
+	@Autowired
+	MemberDAO md;
+	
+	
 	// 민호 시작 ==========================
 	
 	
