@@ -25,6 +25,9 @@ public interface MemberDAO {
 	//==========================  근호 끝
 	
 	// 지은 시작 ==========================
+	Member selectMember(Map<String, String> map);
+	
+	int passwordUpdate(String memberId);
 	
 	//==========================  지은 끝
 	
@@ -38,6 +41,8 @@ public interface MemberDAO {
 	int insertValid(String memberId);
 
 	int insertPoint(String memberId);
+
+
 
 	//==========================  예찬 끝
 	

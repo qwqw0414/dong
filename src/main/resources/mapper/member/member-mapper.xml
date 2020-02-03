@@ -36,7 +36,14 @@
 	<!-- ==========================  근호 끝 -->
 	
 	<!-- 지은 시작 ========================== -->
-	
+	<select id="selectMember" resultType="member">
+		select * from member
+		where member_id = #{memberId}
+	</select>
+	<update id="passwordUpdate">
+		update member set password = #{password}
+		where memberId = #{memberId}
+	</update>
 	<!-- ==========================  지은 끝 -->
 	
 	<!-- 예찬 시작 ========================== -->

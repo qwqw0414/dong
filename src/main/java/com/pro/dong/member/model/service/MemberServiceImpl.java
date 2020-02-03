@@ -47,6 +47,15 @@ public class MemberServiceImpl implements MemberService{
 	//==========================  근호 끝
 	
 	// 지은 시작 ==========================
+	@Override
+	public Member selectMember(Map<String, String> map) {
+		return md.selectMember(map);
+	}
+	
+	@Override
+	public int passwordUpdate(String memberId) {
+		return md.passwordUpdate(memberId);
+	}
 	
 	//==========================  지은 끝
 	
@@ -73,7 +82,7 @@ public class MemberServiceImpl implements MemberService{
 		return md.insertPoint(memberId);
 	}
 	//==========================  예찬 끝
-	
+
 	// 주영 시작 ==========================
 	@Override
 	public Member selectMemberByName(Map<String, String> map) {
