@@ -3,7 +3,6 @@ package com.pro.dong.member.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -11,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -45,13 +46,58 @@ public class MemberController {
 //==========================민호 끝
 	
 // 하진 시작 ==========================
+	
 	@RequestMapping("/memberBye.do")
-	public void memberBye() {
-		
+	public ModelAndView memberBye(ModelAndView mav) {
+		mav.setViewName("/member/memberBye");
+		return mav;
 	}
+	
+	@RequestMapping("/memberByeForm.do")
+	public ModelAndView memberBye(@RequestParam("memberId") String memberId,
+									@RequestParam("password") String password,
+									ModelAndView mav) {
+		
+		
+		int result = ms.byeMember(memberId);
+		 
+		log.debug("memberId={}",memberId);
+		String msg = "";
+		String loc = "/";
+	
+		if(result < 0) {
+			msg = "회원 탈퇴 실패";
+		}
+		else {
+			Member m = ms.selectDeleteOne(memberId);
+			log.debug("member객체야@@@@@@@@@@@@@@={}",m);
+			
+			//비밀번호에 따른 분기				사용자가 입력	db에 있는 비번
+			if(passwordEncoder.matches(password, m.getPassword())) {
+				msg="회원 탈퇴 성공";
+			}
+			else {
+				msg="비밀번호가 틀렸습니다.";
+			}
+			mav.addObject("msg", msg);
+			mav.addObject("loc", loc);
+			
+			mav.setViewName("common/msg");
+		}
+		
+		return mav;
+	}
+	
+	
+	
+	
 //========================== 하진 끝
 	
 // 근호 시작 ==========================
+	@RequestMapping("/memberLogin.do")
+	public void memberLogin() {
+		
+	}
 	@RequestMapping("/memberLoginId.do")
 	public ModelAndView memberLoginId(@RequestParam String memberId, @RequestParam String password,
 			ModelAndView mav, HttpSession session) {
@@ -186,18 +232,18 @@ public class MemberController {
 		
 	}
 	
+	
 	@RequestMapping("/findIdEnd.do")
-	public ModelAndView findIdEnd(ModelAndView mav) {
+	@ResponseBody
+	public Member findIdEnd(@RequestParam("memberName") String name, @RequestParam("memberEmail") String email) {
 		
-		System.out.println("sdsd");
+		Map<String, String> map = new HashMap<>();
+		map.put("name", name);
+		map.put("email", email);
 		
-		mav.addObject("msg", "안녕");
-		mav.addObject("loc", "/");
-		mav.setViewName("common/msg");
+		Member m = ms.selectMemberByName(map);
 		
-		//Map<String, String> map = new HashMap<>();
-		
-		return mav;
+		return m;
 	}
 	
 //========================== 주영 끝

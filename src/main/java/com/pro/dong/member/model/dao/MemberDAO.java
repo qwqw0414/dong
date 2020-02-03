@@ -13,7 +13,9 @@ public interface MemberDAO {
 	//==========================  민호 끝
 	
 	// 하진 시작 ==========================
+	int byeMember(String memberId);
 	
+	Member selectDeleteOne(String memberId);
 	//==========================  하진 끝
 	
 	// 근호 시작 ==========================
@@ -44,7 +46,7 @@ public interface MemberDAO {
 	//==========================  예찬 끝
 	
 	// 주영 시작 ==========================
-	
+	Member selectMemberByName(Map<String, String> map);
 	//==========================  주영 끝
 	
 	// 현규 시작 ==========================

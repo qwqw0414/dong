@@ -9,7 +9,15 @@
 	<!-- ==========================  민호 끝 -->
 	
 	<!-- 하진 시작 ========================== -->
+	<delete id="byeMember">
+		delete from member
+		where member_id = #{memberId}
+	</delete>
 	
+	<select id="selectDeleteOne" resultType="member">
+		select * from member
+		where member_id = #{memberId}
+	</select>
 	<!-- ==========================  하진 끝 -->
 	
 	<!-- 근호 시작 ========================== -->
@@ -49,7 +57,12 @@
 	<!-- ==========================  예찬 끝 -->
 	
 	<!-- 주영 시작 ========================== -->
+	<resultMap type="member" id="memberMap"></resultMap>
 	
+	<select id="selectMemberByName" resultMap="memberMap">
+		select * from member 
+		where member_name = #{name} and email = #{email} 
+	</select>
 	<!-- ==========================  주영 끝 -->
 	
 	<!-- 현규 시작 ========================== -->
