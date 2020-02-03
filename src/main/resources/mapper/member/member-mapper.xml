@@ -28,13 +28,13 @@
 	<!-- ==========================  근호 끝 -->
 	
 	<!-- 지은 시작 ========================== -->
-	<select id="selectMember" resultType="member">
-		select * from member
+	<select id="selectMember" resultType="_int" parameterType="member">
+		select count(*) from member
 		where member_id = #{memberId}
 	</select>
-	<update id="passwordUpdate">
-		update member set password = #{password}
-		where memberId = #{memberId}
+	<update id="passwordUpdate" parameterType="member">
+		update member set password = #{pwdchk}
+		where member_Id = #{id}
 	</update>
 	<!-- ==========================  지은 끝 -->
 	

@@ -24,10 +24,9 @@ public interface MemberDAO {
 	//==========================  근호 끝
 	
 	// 지은 시작 ==========================
-	Member selectMember(Map<String, String> map);
-	
-	int passwordUpdate(String memberId);
-	
+	int selectMember(Member m);
+
+	int passwordUpdate(String id);
 	//==========================  지은 끝
 	
 	// 예찬 시작 ==========================
@@ -48,6 +47,8 @@ public interface MemberDAO {
 	// 주영 시작 ==========================
 	Member selectMemberByName(Map<String, String> map);
 	//==========================  주영 끝
+
+
 	
 	// 현규 시작 ==========================
 	
