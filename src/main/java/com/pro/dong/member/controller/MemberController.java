@@ -208,22 +208,24 @@ public class MemberController {
 	
 // 주영 시작 ==========================
 	@RequestMapping("/findId.do")
-	public void findId() {
+	public String findId() {
+		log.debug("jsp 연결 성공");
 		
+		return "member/findId";
 	}
 	
 	
-	@RequestMapping("/findIdEnd.do")
+	@RequestMapping("/findIdEnd")
 	@ResponseBody
-	public Member findIdEnd(@RequestParam("memberName") String name, @RequestParam("memberEmail") String email) {
+	public String findIdEnd(@RequestParam("memberName") String name, @RequestParam("memberEmail") String email) {
 		
 		Map<String, String> map = new HashMap<>();
 		map.put("name", name);
 		map.put("email", email);
 		
-		Member m = ms.selectMemberByName(map);
+		//Member m = ms.selectMemberByName(map);
 		
-		return m;
+		return ""+ms.selectMemberByName(map);
 	}
 	
 //========================== 주영 끝
