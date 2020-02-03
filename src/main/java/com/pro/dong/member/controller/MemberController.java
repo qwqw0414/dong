@@ -151,7 +151,7 @@ public class MemberController {
 
 			//아이디저장
 			String saveId = request.getParameter("saveId");
-			
+			log.debug("saveId={}",saveId);
 			//체크한경우
 			if(saveId != null) {
 				Cookie c = new Cookie("saveId", memberId);

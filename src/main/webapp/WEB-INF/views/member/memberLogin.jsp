@@ -20,11 +20,9 @@
 			if("saveId".equals(k)){
 				saveId = true;
 				memberId = v;
-				System.out.println(saveId);
 			}
 		}
 	}
- 	pageContext.setAttribute("saveId", saveId);
 %>
 
 <div id="memberLogin" >
@@ -32,14 +30,15 @@
 	<h1>로그인</h1>
 	<form action="${pageContext.request.contextPath}/member/memberLoginId.do" method="post">
 	<div class="login-form" id="loginPage">
-		<input type="text" name="memberId" id="memberId" placeholder="로그인할 아이디를 입력해주세요." class="form-control form-control-lg"/>
+		<input type="text" name="memberId" id="memberId" placeholder="로그인할 아이디를 입력해주세요." class="form-control form-control-lg"
+		value="<%=saveId?memberId:""%>"/>
 		<br />
 		<input type="password" name="password" id="password" placeholder="비밀번호를 입력해주세요." class="form-control form-control-lg"/>
 	</div>
 	
 	<div class="enroll-btn custom-control custom-checkbox" >
 		<button type="submit" id="loggin-btn" class="btn btn-outline-primary btn-lg btn-pre">로그인</button>
- 		<input type="checkbox" class="custom-control-input" id="saveId" <%=saveId?"checked":"" %>>
+ 		<input type="checkbox" class="custom-control-input" id="saveId" name="saveId" <%=saveId?"checked":"" %>>
   		<label class="custom-control-label" for="saveId" >아이디 저장</label>
 	</div>
 	
