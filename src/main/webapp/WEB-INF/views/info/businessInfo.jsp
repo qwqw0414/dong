@@ -52,11 +52,11 @@ table.bbs_default.view th {
 		</tr>								
 		<tr>
 			<th scope="row">상호</th>
-			<td colspan="3">번개장터 주식회사</td>
+			<td colspan="3">동네한바퀴 주식회사</td>
 		</tr>								
 		<tr>
 			<th scope="row">대표자명</th>
-			<td>이재후</td>
+			<td>댕댕</td>
 			<th scope="row">대표 전화번호</th>
 			<td>02-598-8240</td>
 		</tr>
@@ -91,7 +91,7 @@ table.bbs_default.view th {
 		<tr>
 			<th scope="row">인터넷도메인</th>
 			<td colspan="3">
-						http://bunjang.co.kr<br />
+						http://dong.co.kr<br />
 						www.quicket.co.kr
 			</td>
 		</tr>
@@ -113,7 +113,7 @@ table.bbs_default.view th {
 	<strong>신고기관(지방자치단체)</strong>에 문의하여 주시기 바랍니다.<br/><br/>
 	일부 사업자의 경우, 부가가치세법상 사업자 폐업 신고는 하였으나 전자상거래법상 통신판매업 폐업 신고는 하지 않은 사례가 있을 수 있습니다. 
 	소비자 피해를 방지하기 위해 부가가치세법상 <strong>사업자 폐업 여부</strong>도 <a href="http://www.hometax.go.kr" target="_blank" title="새창"><strong>국세청 홈택스 페이지</strong>(www.hometax.go.kr)</a>의 사업자등록상태조회 코너를 통해 확인하시기 바랍니다. 
-	<a href="https://teht.hometax.go.kr/websquare/websquare.html?w2xPath=/ui/ab/a/a/UTEABAAA13.xml" target="_blank" title="새창">[바로가기 링크]</a>
+	<a href="https://teht.hometax.go.kr/websquare/websquare.html?w2xPath=/ui/ab/a/a/UTEABAAA13.xml" target="_blank" title="새창">바로가기</a>
 	</p>
 </div>
 </body>
