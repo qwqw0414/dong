@@ -100,7 +100,7 @@ public class MemberServiceImpl implements MemberService{
 	// 현규 시작 ==========================
 	
 	@Override
-	public Member selectOneMember(String memberId) {
+	public Map<String, Object> selectOneMember(String memberId) {
 		return md.selectOneMember(memberId);
 	}
 	//==========================  현규 끝
