@@ -203,6 +203,8 @@ public class MemberController {
 	@ResponseBody
 	public int findPasswordEnd(@RequestParam String memberId, @RequestParam String email ) {
 		
+		log.debug(memberId + "," + email);
+		
 		Member m = new Member();
 		m.setMemberId(memberId);
 		m.setEmail(email);
@@ -216,18 +218,15 @@ public class MemberController {
 	
 	@RequestMapping("/passwordUpdate")
 	@ResponseBody
-	@PostMapping
-	public String passwordUpdate(@RequestParam String id,@RequestParam String pwdChk, Member member) {
-		String loc = "/";
+	public String passwordUpdate(Member member) {
+		
 		//비밀번호 암호화
-		member.setPassword(passwordEncoder.encode(pwdChk));
-		int result = ms.passwordUpdate(id);
-		if(result>0) {
-			loc = "/dong";
-		}else {
-			loc ="/dong/member";
-		}
-		log.debug("pwdChk",pwdChk);
+		log.debug(member.toString());
+		
+		member.setPassword(passwordEncoder.encode(member.getPassword()));
+		
+		int result = ms.passwordUpdate(member);
+		
 		return result+"";
 	}
 //========================== 지은 끝
@@ -314,6 +313,7 @@ public class MemberController {
 		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
 		mav = new ModelAndView();
 		mav.addObject("member",ms.selectOneMember(memberLoggedIn.getMemberId()));
+		log.debug("mav={}",mav);
 		mav.setViewName("member/memberView");
 		return mav;
 	}

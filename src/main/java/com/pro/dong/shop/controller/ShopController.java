@@ -1,14 +1,17 @@
 package com.pro.dong.shop.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.pro.dong.member.controller.MemberController;
+import com.pro.dong.member.model.vo.Member;
 import com.pro.dong.shop.model.service.ShopService;
+import com.pro.dong.shop.model.vo.Shop;
 
 @Controller
 @RequestMapping("/shop")
@@ -28,10 +31,6 @@ public class ShopController {
 	
 	
 	// 하진 시작 ==========================
-	@RequestMapping("/shopView.do")
-	public void myshopView() {
-		
-	}
 	
 	
 	//========================== 하진 끝
@@ -59,6 +58,15 @@ public class ShopController {
 	
 	
 	// 주영 시작 ==========================
+	@RequestMapping("/shopView.do")
+	public void myshopView(HttpServletRequest request) {
+		Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
+		String memberId = memberLoggedIn.getMemberId();
+		
+		Shop shop = ss.selectOneShop(memberId);
+		log.debug("memberShop={}", shop);
+		
+	}
 	
 	
 	
