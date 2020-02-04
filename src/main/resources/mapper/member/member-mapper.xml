@@ -46,8 +46,8 @@
 		where member_id = #{memberId}
 	</select>
 	<update id="passwordUpdate" parameterType="member">
-		update member set password = #{pwdchk}
-		where member_Id = #{id}
+		update member set password = #{password}
+		where member_Id = #{memberId}
 	</update>
 	<!-- ==========================  지은 끝 -->
 	

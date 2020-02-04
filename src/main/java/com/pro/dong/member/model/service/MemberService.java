@@ -27,6 +27,7 @@ public interface MemberService {
 	// 지은 시작 ==========================
 	int selectMember(Member m);
 
+	int passwordUpdate(Member member);
 	
 	//==========================  지은 끝
 	
@@ -47,7 +48,6 @@ public interface MemberService {
 	// 주영 시작 ==========================
 	Member selectMemberByName(Map<String, String> map);
 
-	int passwordUpdate(String id);
 
 	
 	//==========================  주영 끝
