@@ -24,7 +24,11 @@
 	<!-- ==========================  예찬 끝 -->
 	
 	<!-- 주영 시작 ========================== -->
-	
+	<select id="selectOneShop" resultType="shop">
+		select * from member M 
+		left join shop S on M.member_id = S.member_id 
+		where M.member_id = #{memberId}
+	</select>
 	<!-- ==========================  주영 끝 -->
 	
 	<!-- 현규 시작 ========================== -->
