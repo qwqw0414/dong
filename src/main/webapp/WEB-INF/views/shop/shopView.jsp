@@ -11,7 +11,7 @@
 	margin-bottom: 50px;
 	display: inline-block;
 }
-#shopImg{
+#shopImg1{
 	width: 300px;
 	height: 300px;
 	display: inline-block;
@@ -23,7 +23,6 @@
 }
 #shopImageDiv{
 	display: inline-block;
-	background: yellow;
 }
 #shopDetailInfoDiv{
 	display: inline-block;
@@ -37,10 +36,10 @@
  <div id="shopView" class="mx-center">
 	<div id="shopDiv">
 		<div id="shopImageDiv">
-			<img id="shopImg" src="${pageContext.request.contextPath}/resources/images/dog.png" alt="" />
+			<img id="shopImg1" src="${pageContext.request.contextPath}/resources/images/dog.png" alt="" />
 		</div>
 		<div id="shopDetailInfoDiv">
-			${map.SHOP_NAME} &nbsp;&nbsp;&nbsp;<button>상점명 수정</button><br /><br />
+			${map.SHOP_NAME} &nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-outline-success">상점명 수정</button><br /><br />
 			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-open@2x.png" width="14" height="13">상점오픈일 ${map.SINCE} 일 전
 			&nbsp;&nbsp;&nbsp;
 			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-user@2x.png" width="14" height="13">상점방문수 10명
@@ -48,10 +47,34 @@
 			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-sell@2x.png" width="14" height="13">상품판매 0회
 			&nbsp;&nbsp;&nbsp;
 			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-dell@2x.png" width="14" height="13">택배발송 2회
-			<br /><br />${map.SHOP_INFO} &nbsp;&nbsp;&nbsp;<button>소개글 수정</button>
+			<br /><br />${map.SHOP_INFO} &nbsp;&nbsp;&nbsp;<button onclick="updateShopInfo();" type="button" class="btn btn-outline-success">소개글 수정</button>
 		</div>
 	</div>
-	
+	<script>
+	function updateShopInfo(){
+		$.ajax({
+			url : "${pageContext.request.contextPath}/member/findIdEnd",
+			data : {memberName : name,
+					email : email},
+			dataType : "json",
+			type : "GET", 
+			success : data => {
+				//console.log(data);
+				var findId = $("<h2></h2>");
+				if(data.memberId == null){
+					findId.append("입력하신 정보의 회원은 존재하지 않습니다.");
+				}
+				else{
+					findId.append(data.memberName+"님의 아이디는 "+data.memberId+"입니다.");
+				}
+				$("#findId-result").html(findId);
+			},
+			error : (x, s, e) => {
+				console.log("ajax 요청 실패!");
+			}
+		});
+	};
+	</script>
 	
 	<!-- 넘어오면 다 내꺼 -->
 	<style>
