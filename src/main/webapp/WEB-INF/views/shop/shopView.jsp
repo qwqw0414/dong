@@ -9,6 +9,7 @@
 #shopView{width: 1100px;}
 #shopDiv{
 	margin-bottom: 50px;
+	display: inline-block;
 }
 #shopImg{
 	width: 300px;
@@ -18,7 +19,16 @@
 #shopInfoDiv{
 	width: 1100px;
 	height: 300px;
-	background: orange;
+	display: inline-block;
+}
+#shopImageDiv{
+	display: inline-block;
+	background: yellow;
+}
+#shopDetailInfoDiv{
+	display: inline-block;
+	position: relative;
+	left: 50px;
 }
 </style>
 
@@ -26,32 +36,22 @@
 
  <div id="shopView" class="mx-center">
 	<div id="shopDiv">
-		<div id="shopInfoDiv">
+		<div id="shopImageDiv">
 			<img id="shopImg" src="${pageContext.request.contextPath}/resources/images/dog.png" alt="" />
+		</div>
+		<div id="shopDetailInfoDiv">
+			${map.SHOP_NAME} &nbsp;&nbsp;&nbsp;<button>상점명 수정</button><br /><br />
 			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-open@2x.png" width="14" height="13">상점오픈일 ${map.SINCE} 일 전
-				${map.SHOP_INFO}
-			
+			&nbsp;&nbsp;&nbsp;
+			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-user@2x.png" width="14" height="13">상점방문수 10명
+			&nbsp;&nbsp;&nbsp;
+			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-sell@2x.png" width="14" height="13">상품판매 0회
+			&nbsp;&nbsp;&nbsp;
+			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-dell@2x.png" width="14" height="13">택배발송 2회
+			<br /><br />${map.SHOP_INFO} &nbsp;&nbsp;&nbsp;<button>소개글 수정</button>
 		</div>
 	</div>
 	
-			<div class="sc-cZBZkQ kdAIzz">
-			<div class="sc-ecaExY gIQILP">
-			</div>
-			<div class="sc-ecaExY gIQILP">
-			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-user@2x.png" width="14" height="13" alt="상점방문수 아이콘">상점방문수<div class="sc-gbzWSY gvMbZA">3,450 명</div>
-			</div>
-			<div class="sc-ecaExY gIQILP">
-			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-sell@2x.png" width="14" height="13" alt="상품판매 아이콘">상품판매<div class="sc-gbzWSY gvMbZA">0 회</div>
-			</div>
-			<div class="sc-ecaExY gIQILP">
-			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-dell@2x.png" width="14" height="13" alt="상퓸발송 아이콘">택배발송<div class="sc-gbzWSY gvMbZA">2 회</div>
-			</div>
-			</div>
-			<div class="sc-jqIZGH fizQpi">
-			</div>
-			<div class="sc-jGxEUC ecWIjT"><button class="sc-ESoVU ldCXVj">소개글 수정</button>
-			</div>
-			</div>
 	
 	<!-- 넘어오면 다 내꺼 -->
 	<style>
