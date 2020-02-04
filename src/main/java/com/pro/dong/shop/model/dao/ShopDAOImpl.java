@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.pro.dong.member.model.dao.MemberDAOImpl;
 
 @Repository
-public class ShopDAOImpl {
+public class ShopDAOImpl implements ShopDAO{
 
 	static Logger log = LoggerFactory.getLogger(MemberDAOImpl.class);
 	
