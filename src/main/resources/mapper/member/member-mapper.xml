@@ -79,7 +79,7 @@
 	<!-- ==========================  주영 끝 -->
 	
 	<!-- 현규 시작 ========================== -->
-	<select id="selectOneMember" resultMap="memberMap">
+	<select id="selectOneMember" resultType="map">
 	select M.*, p.point, a.sido, a.sigungu, a.dong 
 		from member M left join point P 
 		on m.member_id = p.member_id

@@ -51,7 +51,7 @@ public interface MemberDAO {
 
 	
 	// 현규 시작 ==========================
-	Member selectOneMember(String memberId);
+	Map<String, Object> selectOneMember(String memberId);
 
 	
 	
