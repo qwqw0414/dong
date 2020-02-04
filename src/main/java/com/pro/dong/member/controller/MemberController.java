@@ -3,7 +3,9 @@ package com.pro.dong.member.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -126,7 +128,7 @@ public class MemberController {
 	}
 	@RequestMapping("/memberLoginId.do")
 	public ModelAndView memberLoginId(@RequestParam String memberId, @RequestParam String password,
-			ModelAndView mav, HttpSession session) {
+			ModelAndView mav, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 	Member m = ms.selectLoginMember(memberId);
 	log.debug("m={}", m);
@@ -146,6 +148,29 @@ public class MemberController {
 		if(passwordEncoder.matches(password, m.getPassword())) {
 			msg = "로그인 성공";
 			mav.addObject("memberLoggedIn", m);
+
+			//아이디저장
+			String saveId = request.getParameter("saveId");
+			log.debug("saveId={}",saveId);
+			//체크한경우
+			if(saveId != null) {
+				Cookie c = new Cookie("saveId", memberId);
+				c.setMaxAge(7*24*60*60);//7일후 소멸함
+				c.setPath("/");
+//				request.setAttribute("c", c);
+				response.addCookie(c);
+				log.debug("ccccccc={}", c);
+				
+			}
+			//체크하지 않은 경우
+			else {
+				Cookie c = new Cookie("saveId", memberId);
+				c.setMaxAge(0);
+				c.setPath("/");
+				response.addCookie(c);
+				log.debug("ccccccc={}", c);
+			}
+			
 		}
 		else {
 			msg = "비밀번호가 틀렸습니다.";
@@ -174,27 +199,30 @@ public class MemberController {
 	@RequestMapping("/findPassword.do")
 	public void findPassword() {}
 	
-	@RequestMapping("/findPasswordEnd.do")
+	@RequestMapping("/findPasswordEnd")
 	@ResponseBody
-	public Member findPasswordEnd(@RequestParam String memberId, @RequestParam String email, ModelAndView mav, HttpSession session) {
+	public int findPasswordEnd(@RequestParam String memberId, @RequestParam String email ) {
 		
-		Map<String,String> map = new HashMap<>();
-		map.put("memberId",memberId);
-		map.put("email",email);
-		Member member = ms.selectMember(map);
+		Member m = new Member();
+		m.setMemberId(memberId);
+		m.setEmail(email);
+		
+		int count = ms.selectMember(m);
 		log.debug("memberId",memberId);
 		log.debug("email",email);
-		return member;
+		
+		return count;
 	}
 	
-	@RequestMapping("/member/passwordUpdate.do")
+	@RequestMapping("/passwordUpdate")
 	@ResponseBody
-	public ModelAndView passwordUpdate(String memberId, ModelAndView mav) {
-		int result = ms.passwordUpdate(memberId);
+	public String passwordUpdate(@RequestParam String id,@RequestParam String pwdChk, Member member) {
 		
-		mav.addObject("result", result);
+		//비밀번호 암호화
+		member.setPassword(passwordEncoder.encode(pwdChk));
+		int result = ms.passwordUpdate(id);
 		
-		return mav;
+		return result+"";
 	}
 //========================== 지은 끝
 	

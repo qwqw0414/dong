@@ -53,14 +53,15 @@ public class MemberDAOImpl implements MemberDAO{
 	
 	// 지은 시작 ==========================
 	@Override
-	public Member selectMember(Map<String, String> map) {
-		return sst.selectOne("member.selectMember",map);
+	public int selectMember(Member m) {
+		return sst.selectOne("member.selectMember",m);
 	}
 
 	@Override
-	public int passwordUpdate(String memberId) {
-		return sst.update("member.passwordUpdate", memberId);
+	public int passwordUpdate(String id) {
+		return sst.update("member.passwordUpdate", id);
 	}
+
 	//==========================  지은 끝
 	
 	// 예찬 시작 ==========================
@@ -94,9 +95,6 @@ public class MemberDAOImpl implements MemberDAO{
 		return sst.selectOne("member.selectMemberByName", map);
 	}
 	//==========================  주영 끝
-
-
-
 
 	
 	// 현규 시작 ==========================
