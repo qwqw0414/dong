@@ -23,14 +23,39 @@
 
 <style>
 #headerImgDiv{
-
 	width: 100%;
 	text-align: center;
+	margin-bottom: 50px;
 }
 #bogiImg{
 	width:20px;
 	height: 20px;
 }
+#headerMenu{
+	width:30px;
+	height: 30px;
+}
+#saleImg{
+	width:35px;
+	height: 40px;
+    margin-left: 20px;
+}
+#shopImg{
+	width:35px;
+	height: 40px;
+	margin-left: 20px;
+}
+#chatImg{
+	width:38px;
+	height: 40px;
+	margin-left: 20px;
+}
+#button-addon2{
+
+    height: 38px;
+}
+
+
 </style> 
 
 <body>
@@ -106,15 +131,56 @@
 	</a>
 </div>
 
-	<div class="input-group mb-3">
-  		<input type="text" class="form-control" placeholder="검색어를 입력하세요." aria-label="Recipient's username" aria-describedby="basic-addon2">
-  		<div class="input-group-append">
-    		<span class="input-group-text" id="basic-addon2">
-    			<img id="bogiImg" src="${pageContext.request.contextPath}/resources/images/bogi.png"/>
-    		</span>
-  		</div>
-	  </div>
-</header>
+
+<div class="container">
+	<div class="row">
+	
+		<!--카테고리아이콘-->
+		<div class="col-md-1">
+			<div class="btn-group">
+				<a style="color:white;" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+					<img id="headerMenu" src="${pageContext.request.contextPath}/resources/images/menuImg.PNG"/>
+				</a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="#">의류</a> 
+					<a class="dropdown-item" href="#">디지털</a> 
+					<a class="dropdown-item" href="#">유아동</a>
+					<a class="dropdown-item" href="#">뷰티</a>
+					<a class="dropdown-item" href="#">운동</a>
+					<a class="dropdown-item" href="#">재능</a>
+					<a class="dropdown-item" href="#">구인구직</a>
+				</div>
+			</div>
+		</div>
+		
+		<!--검색창-->
+		<div class="input-group col-md-7">
+  			<input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+  			<div class="input-group-append">
+    			<button class="btn btn-outline-secondary" type="button" id="button-addon2">
+    				<img id="bogiImg" src="${pageContext.request.contextPath}/resources/images/bogi.png"/>
+    			</button>
+ 			</div>
+		</div>
+		
+		<!--메뉴-->
+		<div>
+			<a style="color:black; text-decoration: none;" href=""><img id="saleImg" src="${pageContext.request.contextPath}/resources/images/sale.PNG"/> 판매하기</a>
+		</div>
+		<div>
+			<a style="color:black; text-decoration: none;"href=""><img id="shopImg" src="${pageContext.request.contextPath}/resources/images/shop.PNG"/> 내 상점</a>
+		</div>
+		<div>
+			<a style="color:black; text-decoration: none;"href=""><img id="chatImg" src="${pageContext.request.contextPath}/resources/images/chat.PNG"/> 동네톡</a>
+		</div>
+		
+	</div>
+	
+</div>	
+	
+	
+	</header>
+
 <section>
 	<div class="container" id="section">
 	

@@ -67,7 +67,7 @@ function loadCategoryList(){
       </select>
     </div>
 	<p id="totalContents"></p>
-	<input type="button" value="글쓰기" id="btn-add" class="btn btn-outline-success" onclick="fn_goBoardForm();"/>
+	<input type="button" value="글쓰기" id="btn-add" class="btn btn-outline-success" onclick="fn_goWriteBoard();"/>
 	<table id="tbl-board" class="table table-striped table-hover">
 
 	</table>
@@ -75,5 +75,11 @@ function loadCategoryList(){
 	<div id="pageBar">
 	
 	</div>
+	
+<script>
+function fn_goWriteBoard(){
+	location.href = "${pageContext.request.contextPath}/board/writeBoard.do";
+	}
+</script>
 </section> 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

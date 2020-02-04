@@ -24,16 +24,13 @@
     -webkit-box-align: center;
     align-items: center;
 }
-a{
-	text-decoration: none;
-}
 .footerbox{
 	display: block;
     font-size: 13px;
     color: rgb(77, 77, 77);
     position: relative;
-    text-decoration:none;
 }
+
 </style>
 <footer>
     <div class="line"></div>
@@ -41,12 +38,12 @@ a{
     		<div class="footerlink">
     			<a href="" class="footerbox">공지사항</a>
     			<a href="" class="footerbox">자주묻는 질문</a>
-     			<a href="${pageContext.request.contextPath}/WEB-INF/views/info/operationPolicy.jsp" class="footerbox">운영정책</a>
+     			<a href="${pageContext.request.contextPath}/info/operationPolicy.do" class="footerbox">운영정책</a>
     			<a href="" class="footerbox">1:1문의</a>
-    			<a href="/info/businessInfo" class="footerbox">사업자정보확인</a>
-    			<a href="/info/usePolicy" class="footerbox">이용약관</a>
-    			<a href="/info/personalInfoPolicy" class="footerbox">개인정보처리방침</a>
-    			<a href="/info/locationbasedServiceInfo" class="footerbox">위치기반서비스약관</a>
+    			<a href="${pageContext.request.contextPath}/info/businessInfo.do" class="footerbox">사업자정보확인</a>
+    			<a href="${pageContext.request.contextPath}/info/usePolicy.do" class="footerbox">이용약관</a>
+    			<a href="${pageContext.request.contextPath}/info/personalInfoPolicy.do" class="footerbox">개인정보처리방침</a>
+    			<a href="${pageContext.request.contextPath}/info/locationbasedServiceInfo.do" class="footerbox">위치기반서비스약관</a>
     		</div>
     	</div>
     	<div class="text-center">
