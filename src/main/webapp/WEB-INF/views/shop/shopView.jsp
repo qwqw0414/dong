@@ -34,21 +34,39 @@
  
 <!-- 넘어오면 다 내꺼 -->
 <style>
-#shopView-nav {width: 900px;}
+#shopView-nav {width: 1000px; border: 1px solid black;}
 #shopView-nav ul{list-style:none; margin:0; padding:0;}
 #shopView-nav li{float: left;}
-#shopView-nav ul li div{width: 100px;}
+#shopView-nav ul li div{width: 150px;}
 </style>
 
-<div id="shopView-nav" class="text-center">
-	<ul>
-		<li><div>내 상품</div></li>
-		<li><div>상점문의</div></li>
-		<li><div>찜 목록</div></li>
-		<li><div>상점후기</div></li>
-		<li><div>팔로우</div></li>
-		<li><div>팔로워</div></li>
-	</ul>
+<div id="shopView-nav">
+	<div>
+		<ul>
+			<li><div>내 상품</div></li>
+			<li><div>상점문의</div></li>
+			<li><div>찜 목록</div></li>
+			<li><div>상점후기</div></li>
+			<li><div>팔로우</div></li>
+			<li><div>팔로워</div></li>
+		</ul>
+	</div>
+
+	<div>
+		<h1>내 상품</h1>
+	</div>
+	<div>
+		<h1>상점 문의</h1>
+	</div>
+	<div>
+		<h1>찜</h1>
+	</div>
+	<div>
+		<h1>상점 후기</h1>
+	</div>
+	<div>
+		<h1>팔로잉</h1>
+	</div>
 </div>
 
 
