@@ -3,15 +3,12 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <%
 	Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
-	System.out.println("memberLoggedIn="+memberLoggedIn);
 %>
 <style>
 #shopDiv{
 	background: yellow;
 	margin-bottom: 50px;
-}
-#shopImg{
-	background: red;
+	width: 1000px;
 }
 #shopInfoDiv{
 	background: blue;

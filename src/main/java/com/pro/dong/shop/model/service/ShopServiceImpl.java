@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.pro.dong.member.model.service.MemberServiceImpl;
 import com.pro.dong.shop.model.dao.ShopDAO;
+import com.pro.dong.shop.model.vo.Shop;
 
 @Service
 public class ShopServiceImpl implements ShopService{
@@ -53,7 +54,10 @@ public class ShopServiceImpl implements ShopService{
 	
 	
 	// 주영 시작 ==========================
-	
+	@Override
+	public Shop selectOneShop(String memberId) {
+		return sd.selectOneShop(memberId);
+	}
 	
 	
 	//========================== 주영 끝
