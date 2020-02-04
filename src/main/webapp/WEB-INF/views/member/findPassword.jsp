@@ -33,7 +33,8 @@
 <script>
 $(function(){
 	$("#pwdUpdateFrm").hide();
-});
+}); 
+
 
 $(()=> {
 	var $memberId = $("#pwdFrm #memberId");
@@ -72,26 +73,26 @@ $("#pwdFrm #btn-Update").click(function(){
 	
 
 $("#pwdUpdateFrm #btn-pwdUpdate").click(function(){
-	$pwd.keyup((e)=>{
-    var regExp = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).*$/g;
+ 		var regExpPw = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).*$/g;
+
+		if($pwd.val().length == 0){
+			alert("변경할 비밀번호를 입력하세요.");
+			return false;
+		} else if($pwdChk.val().length == 0){
+			alert("변경할 비밀번호가 일치하지 않습니다.");
+			return false;
+		} else if($pwd.val() != $pwdChk.val()){
+			alert("입력하신 비밀번호를 확인하세요.");
+			return false;
+		} 
 		
-    	if(regExp.test($pwd.val())){
-    		changeMsg("valid_password",'t');
-            changeForm($pwd,'t');
-    	}else{
-    		changeMsg("check_password");
-            changeForm($pwd);
-    	}
-    	if(e.keyCode == 13){
-    		$pwdChk.focus();
-    	}
-	});
-	
-	$pwdChk.keyup((e)=>{
-		if($pwd.val() !== $pwdChk.val()){
-			alert("비밀번호가 올바르지 않습니다.");
-			return;
-		}    
+		if($pwd.val() == $pwdChk.val()){
+			if(!regExpPw.test($pwd.val())){
+				alert("8~20자의 영문, 숫자, 특수기호를 입력해주세요.");
+				return false;
+			}
+		}
+
 		$.ajax({
 			url: "${pageContext.request.contextPath}/member/passwordUpdate",
 			data: {pwd:$pwd.val(), pwdChk:$pwdChk.val()},
@@ -101,6 +102,8 @@ $("#pwdUpdateFrm #btn-pwdUpdate").click(function(){
 				console.log(data);
 				if(data>0){
 					console.log(data);	
+					console.log(data.pwd);	
+					console.log(data.pwdChk);	
 					
 				}else{
 					console.log("비밀번호 변경 실패");
@@ -110,14 +113,11 @@ $("#pwdUpdateFrm #btn-pwdUpdate").click(function(){
 				console.log("비밀번호 변경 ajax요청 실패!",x,s,e);
 			}
 		});
-		
-	});
-
-});
 	
-	
+	}); 
 });
 
+	 
 
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
