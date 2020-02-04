@@ -5,10 +5,10 @@
 	Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
 %>
 <style>
+#shopView{width: 1100px;}
 #shopDiv{
 	background: yellow;
 	margin-bottom: 50px;
-	width: 1000px;
 }
 #shopInfoDiv{
 	background: blue;
@@ -19,52 +19,57 @@
 }
 </style>
  
-<div id="shopDiv">
-	<div id="shopImgDiv">
-		<img id="shopImg" src="${pageContext.request.contextPath}/resources/images/dog.png" alt="" />
-		<input type="hidden" name="memberLoggedIn" value="<%= memberLoggedIn.getMemberId()%>"/>
+ <div id="shopView" class="mx-center">
+	<div id="shopDiv">
+		<div id="shopImgDiv">
+			<img id="shopImg" src="${pageContext.request.contextPath}/resources/images/dog.png" alt="" />
+			<input type="hidden" name="memberLoggedIn" value="<%= memberLoggedIn.getMemberId()%>"/>
+		</div>
+		<div id="shopInfoDiv">
+			
+		</div>
 	</div>
-	<div id="shopInfoDiv">
-		
+	 
+	<!-- 넘어오면 다 내꺼 -->
+	<style>
+	#shopView-nav {border: 1px solid black;}
+	#shopView-nav ul{list-style:none; margin:0; padding:0;}
+	#shopView-nav li{float: left;}
+	#shopView-nav ul li div{width: 150px;}
+	</style>
+	
+	<div id="shopView-nav">
+		<div>
+			<ul>
+				<li><div>내 상품</div></li>
+				<li><div>상점문의</div></li>
+				<li><div>찜 목록</div></li>
+				<li><div>상점후기</div></li>
+				<li><div>팔로우</div></li>
+				<li><div>팔로워</div></li>
+			</ul>
+		</div>
+	
+		<div>
+			<h1>내 상품</h1>
+		</div>
+		<div>
+			<h1>상점 문의</h1>
+		</div>
+		<div>
+			<h1>찜</h1>
+		</div>
+		<div>
+			<h1>상점 후기</h1>
+		</div>
+		<div>
+			<h1>팔로잉</h1>
+		</div>
 	</div>
-</div>
- 
-<!-- 넘어오면 다 내꺼 -->
-<style>
-#shopView-nav {width: 1000px; border: 1px solid black;}
-#shopView-nav ul{list-style:none; margin:0; padding:0;}
-#shopView-nav li{float: left;}
-#shopView-nav ul li div{width: 150px;}
-</style>
 
-<div id="shopView-nav">
-	<div>
-		<ul>
-			<li><div>내 상품</div></li>
-			<li><div>상점문의</div></li>
-			<li><div>찜 목록</div></li>
-			<li><div>상점후기</div></li>
-			<li><div>팔로우</div></li>
-			<li><div>팔로워</div></li>
-		</ul>
-	</div>
+ </div>
 
-	<div>
-		<h1>내 상품</h1>
-	</div>
-	<div>
-		<h1>상점 문의</h1>
-	</div>
-	<div>
-		<h1>찜</h1>
-	</div>
-	<div>
-		<h1>상점 후기</h1>
-	</div>
-	<div>
-		<h1>팔로잉</h1>
-	</div>
-</div>
+
 
 
 
