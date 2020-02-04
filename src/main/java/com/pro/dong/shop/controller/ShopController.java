@@ -28,10 +28,6 @@ public class ShopController {
 	
 	
 	// 하진 시작 ==========================
-	@RequestMapping("/shopView.do")
-	public void myshopView() {
-		
-	}
 	
 	
 	//========================== 하진 끝
