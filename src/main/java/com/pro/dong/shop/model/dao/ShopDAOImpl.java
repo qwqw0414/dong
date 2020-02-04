@@ -1,5 +1,7 @@
 package com.pro.dong.shop.model.dao;
 
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,7 +57,7 @@ public class ShopDAOImpl implements ShopDAO{
 	
 	// 주영 시작 ==========================
 	@Override
-	public Shop selectOneShop(String memberId) {
+	public Map<String, String> selectOneShop(String memberId) {
 		return sst.selectOne("shop.selectOneShop", memberId);
 	}
 	

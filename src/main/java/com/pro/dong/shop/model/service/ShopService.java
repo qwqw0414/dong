@@ -1,5 +1,7 @@
 package com.pro.dong.shop.model.service;
 
+import java.util.Map;
+
 import com.pro.dong.shop.model.vo.Shop;
 
 public interface ShopService {
@@ -40,7 +42,7 @@ public interface ShopService {
 	
 	
 	// 주영 시작 ==========================
-	Shop selectOneShop(String memberId);
+	Map<String, String> selectOneShop(String memberId);
 	
 	
 	//========================== 주영 끝
