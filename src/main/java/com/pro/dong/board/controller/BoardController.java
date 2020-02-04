@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pro.dong.board.model.service.BoardService;
 import com.pro.dong.board.model.vo.Board;
+import com.pro.dong.common.util.Utils;
 import com.pro.dong.member.model.vo.Address;
 
 
@@ -61,7 +62,9 @@ public class BoardController {
 		result.put("cPage", cPage);
 		result.put("numPerPage", numPerPage);
 		result.put("totalContents", totalContents);
-		
+		String function = "loadBoardList(";
+		String pageBar = Utils.getAjaxPageBar(totalContents, cPage, numPerPage, function);
+		result.put("pageBar", pageBar);
 		return result;
 	}
 	//==========================민호 끝
