@@ -25,9 +25,11 @@
 		</where>
 	</select>
 	<select id="loadBoardList" parameterType="map" resultType="map">
-		select B.*
+		select B.*, c.category_name
 		from board B join address A
 		on b.member_id = a.member_id
+		join board_category C
+		on b.category_id = c.category_id
 		<where>
 			<if test="sido!=null and sido!=''">
 				a.sido = #{sido}

@@ -74,7 +74,22 @@ public class BoardController {
 	//========================== 하진 끝
 		
 	// 근호 시작 ==========================
-
+	@RequestMapping("/writeBoard.do")
+	public void writeBoard() {
+		
+	}
+	@RequestMapping("/writeBoardEnd")
+	public Map<String, String> writeBoardEnd(@RequestBody String boardTitle,
+											 @RequestBody String boardContent){
+		Map<String, String> map = new HashMap<>();
+		
+		//int result = bs.writeBoardEnd(boardTitle, boardContent);
+		//String msg = result > 0? "작성 완료!":"작성 실패";
+		
+		//map.put("msg", msg);
+		
+		return map;
+	}
 	//========================== 근호 끝
 		
 	// 지은 시작 ==========================

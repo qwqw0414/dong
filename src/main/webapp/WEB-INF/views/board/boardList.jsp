@@ -7,6 +7,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <script>
 $(function(){
+	loadCategoryList();
 	loadBoardList();
 });
 function loadBoardList(cPage){
@@ -24,21 +25,23 @@ function loadBoardList(cPage){
 		data: {memberId:memberId,
 			cPage:cPage},
 		success: data=>{
+			
+			let header = "<tr><th>카테고리</th><th>번호</th><th>작성자</th><th>제목</th><th>작성일</th><th>조회수</th></tr>";
 	    		console.log(data);
 	    	let $table = $("#tbl-board");
+	    	$table.html("");
 			let	html = "";
-		
 	    	for(var i=0; i<data.list.length;i++){
 	    		html += "<tr>";
+	    		html += "<td>"+data.list[i].CATEGORY_NAME+"</td>";
 	    		html += "<td>"+data.list[i].BOARD_NO+"</td>";
 	    		html += "<td>"+data.list[i].MEMBER_ID+"</td>";
-	    		html += "<td>"+data.list[i].CATEGORY_ID+"</td>";
 	    		html += "<td>"+data.list[i].BOARD_TITLE+"</td>";
 	    		html += "<td>"+data.list[i].WRITE_DATE+"</td>";
 	    		html += "<td>"+data.list[i].READ_COUNT+"</td>";
 	    		html += "</tr>";
 	    	}
-	    	$table.html(html);
+	    	$table.append(header+html);
 	    	$("#totalContents").text("총 "+data.totalContents+"건의 게시글이 있습니다");
 			$("#pageBar").html(data.pageBar);
 	    	},
@@ -47,24 +50,36 @@ function loadBoardList(cPage){
 			}
 	});//end of ajax
 }
+function loadCategoryList(){
+	var $category = $("#boardCategory");
+	var html = "<option>자유</option>";
+	html += "<option>홍보</option>";
+	html += "<option>공지</option>";
+	html += "<option>정보</option>";
+	$category.append(html);
+}
 </script>
  <h1>커뮤니티 게시판</h1>
 <section id="board-container" class="container">
+	<div class="col-md-3 mb-3">
+      <label for="boardCategory">카테고리</label>
+      <select class="custom-select" id="boardCategory" required>
+      </select>
+    </div>
 	<p id="totalContents"></p>
-	<input type="button" value="글쓰기" id="btn-add" class="btn btn-outline-success" onclick="fn_goBoardForm();"/>
+	<input type="button" value="글쓰기" id="btn-add" class="btn btn-outline-success" onclick="fn_goWriteBoard();"/>
 	<table id="tbl-board" class="table table-striped table-hover">
-		<tr>
-			<th>번호</th>
-			<th>작성자</th>
-			<th>구분</th>
-			<th>제목</th>
-			<th>작성일</th>
-			<th>조회수</th>
-		</tr>
+
 	</table>
 	<!-- pageBar 출력 -->
 	<div id="pageBar">
 	
 	</div>
+	
+<script>
+function fn_goWriteBoard(){
+	location.href = "${pageContext.request.contextPath}/board/writeBoard.do";
+	}
+</script>
 </section> 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
