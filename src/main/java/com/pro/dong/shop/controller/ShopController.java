@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.pro.dong.member.controller.MemberController;
-import com.pro.dong.member.model.service.MemberService;
+import com.pro.dong.shop.model.service.ShopService;
 
 @Controller
 @RequestMapping("/shop")
@@ -17,7 +17,7 @@ public class ShopController {
 	static Logger log = LoggerFactory.getLogger(MemberController.class);
 	
 	@Autowired
-	MemberService ms;
+	ShopService ss;
 	
 	
 	// 민호 시작 ==========================

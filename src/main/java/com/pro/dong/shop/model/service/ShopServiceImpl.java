@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pro.dong.member.model.dao.MemberDAO;
 import com.pro.dong.member.model.service.MemberServiceImpl;
+import com.pro.dong.shop.model.dao.ShopDAO;
 
 @Service
 public class ShopServiceImpl {
@@ -14,7 +14,7 @@ public class ShopServiceImpl {
 	static Logger log = LoggerFactory.getLogger(MemberServiceImpl.class);
 	
 	@Autowired
-	MemberDAO md;
+	ShopDAO sd;
 	
 	
 	// 민호 시작 ==========================
