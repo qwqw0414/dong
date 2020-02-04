@@ -216,18 +216,22 @@ public class MemberController {
 	
 	@RequestMapping("/passwordUpdate")
 	@ResponseBody
-	@PostMapping
-	public String passwordUpdate(@RequestParam String id,@RequestParam String pwdChk, Member member) {
+	public String passwordUpdate(Member member) {
 		String loc = "/";
 		//비밀번호 암호화
-		member.setPassword(passwordEncoder.encode(pwdChk));
-		int result = ms.passwordUpdate(id);
+		
+		log.debug(member.toString());
+		
+		member.setPassword(passwordEncoder.encode(member.getPassword()));
+		
+		int result = ms.passwordUpdate(member);
+		
+		
 		if(result>0) {
 			loc = "/dong";
 		}else {
 			loc ="/dong/member";
 		}
-		log.debug("pwdChk",pwdChk);
 		return result+"";
 	}
 //========================== 지은 끝
