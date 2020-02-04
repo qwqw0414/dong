@@ -9,7 +9,7 @@ import com.pro.dong.member.model.service.MemberServiceImpl;
 import com.pro.dong.shop.model.dao.ShopDAO;
 
 @Service
-public class ShopServiceImpl {
+public class ShopServiceImpl implements ShopService{
 
 	static Logger log = LoggerFactory.getLogger(MemberServiceImpl.class);
 	
