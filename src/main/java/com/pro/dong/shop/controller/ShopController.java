@@ -28,10 +28,9 @@ public class ShopController {
 	
 	
 	// 하진 시작 ==========================
-	@RequestMapping("/myShopView.do")
-	public ModelAndView myshopView(ModelAndView mav) {
-		mav.setViewName("/shop/myShopView");
-		return mav;
+	@RequestMapping("/shopView.do")
+	public void myshopView() {
+		
 	}
 	
 	
