@@ -1,10 +1,37 @@
+<%@page import="com.pro.dong.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
-
-<div id="myshopMainDiv">
-	
+<%
+	Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
+	System.out.println("memberLoggedIn="+memberLoggedIn);
+%>
+<style>
+#shopDiv{
+	background: yellow;
+	margin-bottom: 50px;
+}
+#shopImg{
+	background: red;
+}
+#shopInfoDiv{
+	background: blue;
+}
+#shopImg{
+	width: 200px;
+	height: 300px;
+}
+</style>
+ 
+<div id="shopDiv">
+	<div id="shopImgDiv">
+		<img id="shopImg" src="${pageContext.request.contextPath}/resources/images/dog.png" alt="" />
+		<input type="hidden" name="memberLoggedIn" value="<%= memberLoggedIn.getMemberId()%>"/>
+	</div>
+	<div id="shopInfoDiv">
+		
+	</div>
 </div>
-
+ 
 <!-- 넘어오면 다 내꺼 -->
 <style>
 .size{
