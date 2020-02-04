@@ -24,9 +24,10 @@
 	<!-- ==========================  예찬 끝 -->
 	
 	<!-- 주영 시작 ========================== -->
-	<select id="selectOneShop" resultType="shop">
-		select * from member M 
-		left join shop S on M.member_id = S.member_id 
+	<select id="selectOneShop" resultType="map">
+		select 
+		S.member_id, s.shop_info, s.image, s.shop_name, s.shop_no, ceil(sysdate-s.open_date) as since
+		from member M left join shop S on M.member_id = S.member_id 
 		where M.member_id = #{memberId}
 	</select>
 	<!-- ==========================  주영 끝 -->

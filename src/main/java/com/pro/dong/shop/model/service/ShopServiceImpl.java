@@ -1,5 +1,7 @@
 package com.pro.dong.shop.model.service;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +57,7 @@ public class ShopServiceImpl implements ShopService{
 	
 	// 주영 시작 ==========================
 	@Override
-	public Shop selectOneShop(String memberId) {
+	public Map<String, String> selectOneShop(String memberId) {
 		return sd.selectOneShop(memberId);
 	}
 	
