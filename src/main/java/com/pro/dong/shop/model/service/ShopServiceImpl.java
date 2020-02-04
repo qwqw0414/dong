@@ -1,5 +1,7 @@
 package com.pro.dong.shop.model.service;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.pro.dong.member.model.service.MemberServiceImpl;
 import com.pro.dong.shop.model.dao.ShopDAO;
+import com.pro.dong.shop.model.vo.Shop;
 
 @Service
 public class ShopServiceImpl implements ShopService{
@@ -53,7 +56,10 @@ public class ShopServiceImpl implements ShopService{
 	
 	
 	// 주영 시작 ==========================
-	
+	@Override
+	public Map<String, String> selectOneShop(String memberId) {
+		return sd.selectOneShop(memberId);
+	}
 	
 	
 	//========================== 주영 끝

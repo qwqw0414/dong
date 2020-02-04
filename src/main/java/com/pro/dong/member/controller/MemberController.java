@@ -312,7 +312,9 @@ public class MemberController {
 	public ModelAndView memberView(HttpSession session, ModelAndView mav) {
 		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
 		mav = new ModelAndView();
-		mav.addObject("member",ms.selectOneMember(memberLoggedIn.getMemberId()));
+		Map<String, Object> map = ms.selectOneMember(memberLoggedIn.getMemberId());
+		mav.addObject("member", map);
+		log.debug("mav={}",mav);
 		mav.setViewName("member/memberView");
 		return mav;
 	}

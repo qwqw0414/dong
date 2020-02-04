@@ -1,5 +1,9 @@
 package com.pro.dong.shop.model.dao;
 
+import java.util.Map;
+
+import com.pro.dong.shop.model.vo.Shop;
+
 public interface ShopDAO {
 
 	// 민호 시작 ==========================
@@ -38,8 +42,7 @@ public interface ShopDAO {
 	
 	
 	// 주영 시작 ==========================
-	
-	
+	Map<String, String> selectOneShop(String memberId);	
 	
 	//========================== 주영 끝
 	
