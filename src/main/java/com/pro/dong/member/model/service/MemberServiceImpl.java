@@ -60,8 +60,8 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	@Override
-	public int passwordUpdate(String id) {
-		return md.passwordUpdate(id);
+	public int passwordUpdate(Member member) {
+		return md.passwordUpdate(member);
 	}
 	
 	//==========================  지은 끝

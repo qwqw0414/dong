@@ -35,68 +35,77 @@
 
 <body>
 <header>
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+		aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+			<!-- 회원 -->
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false">
+					회원
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberEnroll.do">회원가입</a>
+					<c:if test="${memberLoggedIn == null }">
+						<a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberLogin.do">로그인</a>
+					</c:if>
+					<c:if test="${memberLoggedIn != null }">
+						<a class="dropdown-item"
+							href="${pageContext.request.contextPath }/member/memberLogOut.do">로그아웃</a>
+					</c:if>
+					<a class="dropdown-item" href="${pageContext.request.contextPath }/member/chargePoint.do">포인트 충전</a>
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/member/findPassword.do">비밀번호
+						찾기</a>
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/member/findId.do">아이디 찾기</a>
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberView.do">내 정보</a>
+					<c:if test="${memberLoggedIn != null }">
+						<a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberBye.do">회원 탈퇴</a>
+					</c:if>
+				</div>
+			</li>
+
+			<!-- 커뮤니티 -->
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false">
+					커뮤니티
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/board/boardList.do">게시글</a>
+				</div>
+			</li>
+
+			<!-- 커뮤니티 -->
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false">
+					상점
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/shop/shopView.do">내 상점</a>
+
+				</div>
+			</li>
+
+		</ul>
+	</div>
+</nav>
+
+
 <div id="headerImgDiv">
 	<a href="${pageContext.request.contextPath}">
 		<img id="headerImg" src="${pageContext.request.contextPath}/resources/images/header.PNG"/>
 	</a>
-	</div>
-	<nav class="navbar navbar-expand-md navbar-light bg-light">
-	 
-	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-	    <span class="navbar-toggler-icon"></span>
-	  </button>
-	  
-	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-	    <ul class="navbar-nav mr-auto">
-			<!-- 회원 -->
-	      <li class="nav-item dropdown">
-	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	          회원
-	        </a>
-	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-	        
-	          <a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberEnroll.do">회원가입</a>
-	       	 <c:if test="${memberLoggedIn == null }">	
-	          	<a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberLogin.do">로그인</a>
-	         </c:if>
-	         <c:if test="${memberLoggedIn != null }">
-				<a  class="dropdown-item" href="${pageContext.request.contextPath }/member/memberLogOut.do">로그아웃</a>
-	         </c:if>
-			  <a class="dropdown-item" href="${pageContext.request.contextPath }/member/chargePoint.do">포인트 충전</a>
-	          <a class="dropdown-item" href="${pageContext.request.contextPath}/member/findPassword.do">비밀번호 찾기</a>
-	          <a class="dropdown-item" href="${pageContext.request.contextPath}/member/findId.do">아이디 찾기</a>
-	          <a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberView.do">내 정보</a>
-	          <c:if test="${memberLoggedIn != null }">
-	          	<a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberBye.do">회원 탈퇴</a>
-	          </c:if>
-	        </div>
-	      </li>
+</div>
 
-		  <!-- 커뮤니티 -->
-		  <li class="nav-item dropdown">
-	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	          커뮤니티
-	        </a>
-	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-	          <a class="dropdown-item" href="${pageContext.request.contextPath}/board/boardList.do">게시글</a>
-	        </div>
-		  </li>
-		  
-		  <!-- 커뮤니티 -->
-		  <li class="nav-item dropdown">
-	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	          상점
-	        </a>
-	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-	        
-	          <a class="dropdown-item" href="${pageContext.request.contextPath}/shop/myShopView.do">내 상점</a>
-
-	        </div>
-		  </li>
-
-	    </ul>
-	  </div>
-	</nav>
 	<div class="input-group mb-3">
   		<input type="text" class="form-control" placeholder="검색어를 입력하세요." aria-label="Recipient's username" aria-describedby="basic-addon2">
   		<div class="input-group-append">

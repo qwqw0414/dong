@@ -27,7 +27,7 @@ public interface MemberDAO {
 	// 지은 시작 ==========================
 	int selectMember(Member m);
 
-	int passwordUpdate(String id);
+	int passwordUpdate(Member member);
 	//==========================  지은 끝
 	
 	// 예찬 시작 ==========================

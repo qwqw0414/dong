@@ -58,8 +58,8 @@ public class MemberDAOImpl implements MemberDAO{
 	}
 
 	@Override
-	public int passwordUpdate(String id) {
-		return sst.update("member.passwordUpdate", id);
+	public int passwordUpdate(Member member) {
+		return sst.update("member.passwordUpdate", member);
 	}
 
 	//==========================  지은 끝
