@@ -53,7 +53,7 @@ public interface MemberService {
 	//==========================  주영 끝
 	
 	// 현규 시작 ==========================
-	Member selectOneMember(String memberId);
+	Map<String,Object> selectOneMember(String memberId);
 
 
 	

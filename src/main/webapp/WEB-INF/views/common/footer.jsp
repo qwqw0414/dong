@@ -1,15 +1,51 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     </div>
-</section>
+  </section>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/css.css" />
 <style>
 .text-center{
 	padding-top: 50px;
 }
+.footer{
+	width: 100%;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    border-top: 1px solid rgb(238, 238, 238);
+    border-bottom: 1px solid rgb(238, 238, 238);
+}
+.footerlink{
+	height: 64px;
+    width: 1024px;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.footerbox{
+	display: block;
+    font-size: 13px;
+    color: rgb(77, 77, 77);
+    position: relative;
+}
+
 </style>
 <footer>
     <div class="line"></div>
+    	<div class="footer">
+    		<div class="footerlink">
+    			<a href="" class="footerbox">공지사항</a>
+    			<a href="" class="footerbox">자주묻는 질문</a>
+     			<a href="${pageContext.request.contextPath}/info/operationPolicy.do" class="footerbox">운영정책</a>
+    			<a href="" class="footerbox">1:1문의</a>
+    			<a href="${pageContext.request.contextPath}/info/businessInfo.do" class="footerbox">사업자정보확인</a>
+    			<a href="${pageContext.request.contextPath}/info/usePolicy.do" class="footerbox">이용약관</a>
+    			<a href="${pageContext.request.contextPath}/info/personalInfoPolicy.do" class="footerbox">개인정보처리방침</a>
+    			<a href="${pageContext.request.contextPath}/info/locationbasedServiceInfo.do" class="footerbox">위치기반서비스약관</a>
+    		</div>
+    	</div>
     	<div class="text-center">
 			<h4>웹 사이트 No1.중고 거래 서비스 동네한바퀴와 함께 하세요. 누구나, 무엇이든, 쉽고 편하고 안전하게 거래하는 세상을 꿈꾸고 있습니다.</h4>
 			<p>

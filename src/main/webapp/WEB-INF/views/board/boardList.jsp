@@ -7,16 +7,22 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <script>
 $(function(){
+	loadBoardList();
+});
+function loadBoardList(cPage){
 	if(<%=memberLoggedIn==null%>){
 		var memberId = "";		
 	} else {
 		var memberId = "<%=memberLoggedIn.getMemberId()%>";	
 	}
+	var cPage = cPage;
 	console.log(memberId);
+	console.log(cPage);
 	$.ajax({
 		url: "${pageContext.request.contextPath}/board/loadBoardList",
 		type: "GET",
-		data: {memberId:memberId},
+		data: {memberId:memberId,
+			cPage:cPage},
 		success: data=>{
 	    		console.log(data);
 	    	let $table = $("#tbl-board");
@@ -32,16 +38,15 @@ $(function(){
 	    		html += "<td>"+data.list[i].READ_COUNT+"</td>";
 	    		html += "</tr>";
 	    	}
-	    	$table.append(html);
+	    	$table.html(html);
 	    	$("#totalContents").text("총 "+data.totalContents+"건의 게시글이 있습니다");
-
+			$("#pageBar").html(data.pageBar);
 	    	},
 	    	error : (x, s, e) => {
 				console.log("ajax 요청 실패!");
 			}
 	});//end of ajax
-});
-
+}
 </script>
  <h1>커뮤니티 게시판</h1>
 <section id="board-container" class="container">
