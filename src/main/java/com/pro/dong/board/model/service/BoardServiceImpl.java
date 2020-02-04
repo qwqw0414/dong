@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.pro.dong.board.model.dao.BoardDAO;
 @Service
-public class BoardServiceImpl {
+public class BoardServiceImpl implements BoardService {
 
 	static Logger log = LoggerFactory.getLogger(BoardServiceImpl.class);
 	@Autowired

@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.pro.dong.board.model.service.BoardService;
 
-@Controller
+
 @RequestMapping("/board")
+@Controller
 public class BoardController {
 	
 	static Logger log = LoggerFactory.getLogger(BoardController.class);
