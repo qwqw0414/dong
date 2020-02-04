@@ -308,6 +308,7 @@ public class MemberController {
 		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
 		mav = new ModelAndView();
 		mav.addObject("member",ms.selectOneMember(memberLoggedIn.getMemberId()));
+		log.debug("mav={}",mav);
 		mav.setViewName("member/memberView");
 		return mav;
 	}
