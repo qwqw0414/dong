@@ -89,7 +89,7 @@
 	        </a>
 	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 	        
-	          <a class="dropdown-item" href="${pageContext.request.contextPath}/shop/myShopView.do">내 상점</a>
+	          <a class="dropdown-item" href="${pageContext.request.contextPath}/shop/shopView.do">내 상점</a>
 
 	        </div>
 		  </li>
