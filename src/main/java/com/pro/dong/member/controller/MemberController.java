@@ -203,6 +203,8 @@ public class MemberController {
 	@ResponseBody
 	public int findPasswordEnd(@RequestParam String memberId, @RequestParam String email ) {
 		
+		log.debug(memberId + "," + email);
+		
 		Member m = new Member();
 		m.setMemberId(memberId);
 		m.setEmail(email);
@@ -217,21 +219,14 @@ public class MemberController {
 	@RequestMapping("/passwordUpdate")
 	@ResponseBody
 	public String passwordUpdate(Member member) {
-		String loc = "/";
-		//비밀번호 암호화
 		
+		//비밀번호 암호화
 		log.debug(member.toString());
 		
 		member.setPassword(passwordEncoder.encode(member.getPassword()));
 		
 		int result = ms.passwordUpdate(member);
 		
-		
-		if(result>0) {
-			loc = "/dong";
-		}else {
-			loc ="/dong/member";
-		}
 		return result+"";
 	}
 //========================== 지은 끝

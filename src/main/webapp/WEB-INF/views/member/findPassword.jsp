@@ -12,8 +12,7 @@
     <label for="exampleInputPassword1">이메일</label>
     <input type="email" class="form-control" id="email" required>
   </div>
-<button type="submit" class="btn btn-primary" id="btn-pwdFrm">비밀번호 확인</button>
-<button type="submit" class="btn btn-primary" id="btn-Update">비밀번호 변경</button>
+  <button type="submit" class="btn btn-primary" id="btn-Update">비밀번호 변경</button>
 </div>
 
 <div id="pwdUpdateFrm">
@@ -43,7 +42,7 @@ $(()=> {
 	var $pwdChk = $("#pwdUpdateFrm #passwordCheck");
 	
 
-	$("#pwdFrm #btn-pwdFrm").click(function(){
+	$("#pwdFrm #btn-Update").click(function(){
 		
 		$.ajax({
 			url: "${pageContext.request.contextPath}/member/findPasswordEnd",
@@ -54,8 +53,9 @@ $(()=> {
 			success: data =>{
 				console.log(data);
 				if(data>0){
-					console.log(data.memberId);
-					console.log(data.email);
+					$("#pwdFrm").hide();
+					$("#pwdUpdateFrm").show();
+					$("#pwdUpdateFrm #memberId").val($memberId.val());
 				}else{
 					console.log("입력한 값 없음");
 				}
@@ -64,12 +64,6 @@ $(()=> {
 				console.log("ajax요청 실패!",x,s,e);
 			}
 		});
-	});
-	
-	
-	$("#pwdFrm #btn-Update").click(function(){
-		$("#pwdFrm").hide();
-		$("#pwdUpdateFrm").show();
 	});
 	
 
@@ -100,7 +94,6 @@ $(()=> {
 			$pwdChk.focus();
 			return;
 		} 
-		
 
 		$.ajax({
 			url: "${pageContext.request.contextPath}/member/passwordUpdate",
@@ -111,9 +104,8 @@ $(()=> {
 			success: data => {
 				console.log(data);
 				if(data>0){
-					console.log("변경 성공");	
-	
-					
+					console.log("변경 성공");
+					location.href = "";	
 				}else{
 					console.log("비밀번호 변경 실패");
 				}
