@@ -7,9 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.pro.dong.member.model.dao.MemberDAOImpl;
+import com.pro.dong.shop.model.vo.Shop;
 
 @Repository
-public class ShopDAOImpl {
+public class ShopDAOImpl implements ShopDAO{
 
 	static Logger log = LoggerFactory.getLogger(MemberDAOImpl.class);
 	
@@ -53,7 +54,10 @@ public class ShopDAOImpl {
 	
 	
 	// 주영 시작 ==========================
-	
+	@Override
+	public Shop selectOneShop(String memberId) {
+		return sst.selectOne("shop.selectOneShop", memberId);
+	}
 	
 	
 	//========================== 주영 끝

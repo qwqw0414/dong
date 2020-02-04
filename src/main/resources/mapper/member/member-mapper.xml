@@ -46,8 +46,8 @@
 		where member_id = #{memberId}
 	</select>
 	<update id="passwordUpdate" parameterType="member">
-		update member set password = #{pwdchk}
-		where member_Id = #{id}
+		update member set password = #{password}
+		where member_Id = #{memberId}
 	</update>
 	<!-- ==========================  지은 끝 -->
 	
@@ -80,8 +80,13 @@
 	
 	<!-- 현규 시작 ========================== -->
 	<select id="selectOneMember" resultMap="memberMap">
-	select * from member
-	where member_id = #{memberId}
+	select M.*, p.point, a.sido, a.sigungu, a.dong 
+		from member M left join point P 
+		on m.member_id = p.member_id
+		left join address A
+		on m.member_id = a. member_id
+		where m.member_id=#{memberId}
+	
 	</select>
 	<!-- ==========================  현규 끝 -->
 

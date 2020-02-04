@@ -1,5 +1,7 @@
 package com.pro.dong.shop.model.service;
 
+import com.pro.dong.shop.model.vo.Shop;
+
 public interface ShopService {
 
 	// 민호 시작 ==========================
@@ -38,7 +40,7 @@ public interface ShopService {
 	
 	
 	// 주영 시작 ==========================
-	
+	Shop selectOneShop(String memberId);
 	
 	
 	//========================== 주영 끝
