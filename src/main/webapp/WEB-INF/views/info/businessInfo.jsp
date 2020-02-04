@@ -72,7 +72,7 @@ table.bbs_default.view th {
 		</tr>								
 		<tr>
 			<th scope="row">전자우편(E-mail)</th>
-            <td>**@bunjang.co.kr</td>
+            <td>**@dong.co.kr</td>
 			<th scope="row">신고일자</th>
 			<td>20120817</td>
 		</tr>								
