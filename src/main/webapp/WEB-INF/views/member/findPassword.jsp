@@ -105,9 +105,10 @@ $(()=> {
 				console.log(data);
 				if(data>0){
 					console.log("변경 성공");
-					location.href = "";	
+					location.href = "/dong";	
 				}else{
 					console.log("비밀번호 변경 실패");
+					location.href = "/dong/member";	
 				}
 				
 			},error(x,s,e){
