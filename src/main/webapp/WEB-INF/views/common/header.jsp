@@ -114,7 +114,19 @@
 				</div>
 			</li>
 
-			<!-- 커뮤니티 -->
+			<!-- 상품 -->
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false">
+					상품
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/product/productReg.do">상품 등록</a>
+
+				</div>
+			</li>
+			<!-- 상점 -->
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
 					aria-haspopup="true" aria-expanded="false">
