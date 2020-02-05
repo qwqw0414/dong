@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.pro.dong.board.model.service.BoardService;
 import com.pro.dong.board.model.vo.Board;
@@ -31,13 +32,19 @@ public class BoardController {
 	
 	// 민호 시작 ==========================
 	@RequestMapping("/boardList.do")
-	public void boardList() {
+	public ModelAndView boardList(ModelAndView mav) {
+		
+		List<BoardCategory> boardCategoryList = bs.selectBoardCategory();
+		mav.addObject("boardCategoryList",boardCategoryList);
+		mav.setViewName("/board/boardList");
+		return mav;
 		
 	}
 	
 	@RequestMapping("/loadBoardList")
 	@ResponseBody
-	public Map<String, Object> loadBoardList(@RequestParam(defaultValue="1") int cPage, @RequestParam("memberId") String memberId){
+	public Map<String, Object> loadBoardList(@RequestParam(value="boardCategory",defaultValue="") String boardCategory,@RequestParam(value="cPage",defaultValue="1") int cPage, @RequestParam("memberId") String memberId){
+		log.debug("boardCategory={}",boardCategory);
 		final int numPerPage = 10;
 		Map<String, Object> result = new HashMap<>();
 		// 주소 조회
@@ -53,6 +60,7 @@ public class BoardController {
 		param.put("sido", sido);
 		param.put("sigungu", sigungu);
 		param.put("dong", dong);
+		param.put("boardCategory", boardCategory);
 		// 페이징바 작업
 		int totalContents = bs.selectBoardTotalContents(param);
 		// 게시글 조회
@@ -66,7 +74,7 @@ public class BoardController {
 		result.put("cPage", cPage);
 		result.put("numPerPage", numPerPage);
 		result.put("totalContents", totalContents);
-		String function = "loadBoardList(";
+		String function = "loadBoardList('"+boardCategory+"',";
 		String pageBar = Utils.getAjaxPageBar(totalContents, cPage, numPerPage, function);
 		result.put("pageBar", pageBar);
 		return result;

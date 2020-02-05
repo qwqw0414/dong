@@ -1,35 +1,47 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.pro.dong.board.model.vo.BoardCategory"%>
+<%@page import="java.util.List"%>
 <%@page import="com.pro.dong.common.util.Utils"%>
 <%@page import="com.pro.dong.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
+	List<BoardCategory> list = new ArrayList<>();
+	list = (List<BoardCategory>)request.getAttribute("boardCategoryList");
+	String option = "";
+	for(BoardCategory bc: list){
+		option +=  "<option value=\""+bc.getCategoryId()+"\">"+bc.getCategoryName()+"</option>";
+	}
 %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <script>
 $(function(){
 	loadBoardList();
+	
+	$("#boardCategory").change(function(){
+		var cPage = $("#cPage").val();
+		var boardCategory = $("#boardCategory").val();
+		console.log(boardCategory);
+		console.log(cPage);
+		loadBoardList(boardCategory,cPage);
+	});
 });
-function loadBoardList(cPage){
+function loadBoardList(boardCategory, cPage){
 	if(<%=memberLoggedIn==null%>){
 		var memberId = "";		
 	} else {
 		var memberId = "<%=memberLoggedIn.getMemberId()%>";	
 	}
 	var cPage = cPage;
-	var $category = $("#boardCategory");
-	console.log(memberId);
-	console.log(cPage);
+	var boardCategory = boardCategory;
+	$("#cPage").val(cPage);
 	$.ajax({
 		url: "${pageContext.request.contextPath}/board/loadBoardList",
 		type: "GET",
 		data: {memberId:memberId,
-			cPage:cPage},
+			cPage:cPage,
+			boardCategory:boardCategory},
 		success: data=>{
-			let categoryHtml = "";
-			for(var i=0; i<data.boardCategoryList.length;i++){
-				categoryHtml += "<option>"+data.boardCategoryList[i].categoryName+"</option>";
-			}
-			$category.html(categoryHtml);
 			let header = "<tr><th>카테고리</th><th>번호</th><th>작성자</th><th>제목</th><th>작성일</th><th>조회수</th></tr>";
 	    	let $table = $("#tbl-board");
 	    	$table.html("");
@@ -47,19 +59,24 @@ function loadBoardList(cPage){
 	    	$table.append(header+html);
 	    	$("#totalContents").text("총 "+data.totalContents+"건의 게시글이 있습니다");
 			$("#pageBar").html(data.pageBar);
+
+			
 	    	},
 	    	error : (x, s, e) => {
 				console.log("ajax 요청 실패!",x,s,e);
-			}
+	    	}
 	});//end of ajax
-}
+	
 
+	
+}
 </script>
  <h1>커뮤니티 게시판</h1>
 <section id="board-container" class="container">
 	<div class="col-md-3 mb-3">
       <label for="boardCategory">카테고리</label>
       <select class="custom-select" id="boardCategory" required>
+     	<%=option %>
       </select>
     </div>
 	<p id="totalContents"></p>
@@ -71,7 +88,7 @@ function loadBoardList(cPage){
 	<div id="pageBar">
 	
 	</div>
-	
+	<input type="hidden" name="cPage" id="cPage"/>
 <script>
 function fn_goWriteBoard(){
 	location.href = "${pageContext.request.contextPath}/board/writeBoard.do";
