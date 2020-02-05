@@ -74,7 +74,7 @@
 	
 	<select id="selectMemberByName" resultMap="memberMap">
 		select * from member 
-		where member_name = #{name} and email = #{email} 
+		where member_name = #{memberName} and email = #{email} 
 	</select>
 	<!-- ==========================  주영 끝 -->
 	
