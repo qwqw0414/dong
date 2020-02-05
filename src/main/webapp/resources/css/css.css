@@ -1,6 +1,12 @@
 @charset "UTF-8";
 /* 폰트 */
 @font-face { font-family: 'MapoPeacefull'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoPeacefullA.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face{font-family:'BMHANNAPro';src: url('/dong/css/font/BMHANNAPro.ttf');}
+@font-face{font-family:'DXMgoRB';src: url('/dong/css/font/DXMgoRB-KSCpc-EUC-H.ttf');}
+@font-face{font-family:'LAB디지털';src: url('/dong/css/font/LAB디지털.ttf');}
+@font-face{font-family:'Typo_DecoSolidSlash';src: url('/dong/css/font/Typo_DecoSolidSlash.ttf');}
+@font-face{font-family:'NanumSquare_acB';src: url('/dong/css/font/NanumSquare_acB.ttf');}
+
 /*헤더 css*/
 
 /*푸터 css*/
