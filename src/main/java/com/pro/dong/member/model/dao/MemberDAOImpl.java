@@ -91,8 +91,8 @@ public class MemberDAOImpl implements MemberDAO{
 	
 	// 주영 시작 ==========================
 	@Override
-	public Member selectMemberByName(Map<String, String> map) {
-		return sst.selectOne("member.selectMemberByName", map);
+	public Member selectMemberByName(Member member) {
+		return sst.selectOne("member.selectMemberByName", member);
 	}
 	//==========================  주영 끝
 
@@ -101,6 +101,10 @@ public class MemberDAOImpl implements MemberDAO{
 	@Override
 	public Map<String, Object> selectOneMember(String memberId) {
 		return sst.selectOne("member.selectOneMember", memberId);
+	}
+	@Override
+	public int updateMemberName(Map<String, String> param) {
+		return sst.update("member.updateMemberName",param);
 	}
 	
 	//==========================  현규 끝

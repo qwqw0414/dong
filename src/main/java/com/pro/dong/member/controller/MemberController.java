@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.pro.dong.member.model.exception.MemberException;
 import com.pro.dong.member.model.service.MemberService;
 import com.pro.dong.member.model.vo.Address;
@@ -85,27 +86,23 @@ public class MemberController {
 	public ModelAndView memberBye(@RequestParam("memberId") String memberId,
 									@RequestParam("password") String password,
 									ModelAndView mav) {
-		
-		
-		int result = ms.byeMember(memberId);
-		 
-		log.debug("memberId={}",memberId);
+	
 		String msg = "";
 		String loc = "/";
 	
-		if(result < 0) {
-			msg = "회원 탈퇴 실패";
-		}
-		else {
-			Member m = ms.selectDeleteOne(memberId);
-			log.debug("member객체야@@@@@@@@@@@@@@={}",m);
+		Member m = ms.selectDeleteOne(memberId);
+
+		if(m != null) {
 			
-			//비밀번호에 따른 분기				사용자가 입력	db에 있는 비번
+			//비밀번호에 따른 분기			사용자가 입력	db에 있는 비번
 			if(passwordEncoder.matches(password, m.getPassword())) {
-				msg="회원 탈퇴 성공";
+				int result = ms.byeMember(memberId);{
+					msg="회원 탈퇴 성공";
+				}
 			}
 			else {
 				msg="비밀번호가 틀렸습니다.";
+				loc="/member/memberBye.do";
 			}
 			mav.addObject("msg", msg);
 			mav.addObject("loc", loc);
@@ -291,18 +288,16 @@ public class MemberController {
 		
 	}
 	
-	
-	@RequestMapping("/findIdEnd.do")
+	@RequestMapping(value="/findIdEnd", produces="text/plain;charset=UTF-8")
 	@ResponseBody
-	public Member findIdEnd(@RequestParam("memberName") String name, @RequestParam("memberEmail") String email) {
+	public String findIdEnd(Member member) {
 		
-		Map<String, String> map = new HashMap<>();
-		map.put("name", name);
-		map.put("email", email);
+		log.debug(member.toString());
 		
-		Member m = ms.selectMemberByName(map);
+		Member m = ms.selectMemberByName(member);
 		
-		return m;
+		Gson gson = new Gson();
+		return gson.toJson(m);
 	}
 	
 //========================== 주영 끝
@@ -318,6 +313,38 @@ public class MemberController {
 		mav.setViewName("member/memberView");
 		return mav;
 	}
+	
+	
+	@RequestMapping("/updateMemberName")
+	@ResponseBody
+	public Map<String, Object> updateMemberName(HttpSession session, @RequestParam("afterName") String afterName) {
+		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
+		
+		log.info("세션 memberId={}",memberLoggedIn.getMemberId());
+		log.info("바꿀 membername={}",afterName);
+
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String,String> param = new HashMap<String, String>();
+		param.put("memberId", memberLoggedIn.getMemberId());
+		param.put("afterName", afterName);
+		
+		log.info("map={}",map);
+		
+		int result = ms.updateMemberName(param);
+		log.info("result={}",result);
+		
+		
+		if (result>0) {
+			map=ms.selectOneMember(memberLoggedIn.getMemberId());
+		}
+				
+		log.info("바뀐멤버객체={}",map);
+		
+		
+		return map;
+	}
+	
 	
 //========================== 현규 끝
 

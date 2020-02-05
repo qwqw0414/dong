@@ -42,7 +42,9 @@ public interface ShopDAO {
 	
 	
 	// 주영 시작 ==========================
-	Map<String, String> selectOneShop(String memberId);	
+	Map<String, String> selectOneShop(String memberId);
+
+	int updateShopInfo(Shop shop);	
 	
 	//========================== 주영 끝
 	
