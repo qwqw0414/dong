@@ -54,6 +54,7 @@ public interface MemberService {
 	
 	// 현규 시작 ==========================
 	Map<String,Object> selectOneMember(String memberId);
+	int updateMemberName(Map<String, String> param);
 
 
 	

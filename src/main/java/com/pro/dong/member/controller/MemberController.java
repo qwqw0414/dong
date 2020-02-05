@@ -319,6 +319,38 @@ public class MemberController {
 		return mav;
 	}
 	
+	
+	@RequestMapping("/updateMemberName")
+	@ResponseBody
+	public Map<String, Object> updateMemberName(HttpSession session, @RequestParam("afterName") String afterName) {
+		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
+		
+		log.info("세션 memberId={}",memberLoggedIn.getMemberId());
+		log.info("바꿀 membername={}",afterName);
+
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String,String> param = new HashMap<String, String>();
+		param.put("memberId", memberLoggedIn.getMemberId());
+		param.put("afterName", afterName);
+		
+		log.info("map={}",map);
+		
+		int result = ms.updateMemberName(param);
+		log.info("result={}",result);
+		
+		
+		if (result>0) {
+			map=ms.selectOneMember(memberLoggedIn.getMemberId());
+		}
+				
+		log.info("바뀐멤버객체={}",map);
+		
+		
+		return map;
+	}
+	
+	
 //========================== 현규 끝
 
 	

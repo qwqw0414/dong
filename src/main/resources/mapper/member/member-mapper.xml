@@ -95,6 +95,15 @@
 		
 	
 	</select>
+	
+	<update id="updateMemberName">
+		update member 
+		set member_name=#{afterName}
+		where member_id=#{memberId}
+		
+	</update>
+	
+	
 	<!-- ==========================  현규 끝 -->
 
 </mapper>

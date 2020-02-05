@@ -103,6 +103,11 @@ public class MemberServiceImpl implements MemberService{
 	public Map<String, Object> selectOneMember(String memberId) {
 		return md.selectOneMember(memberId);
 	}
+	@Override
+	public int updateMemberName(Map<String, String> param) {
+		return md.updateMemberName(param);
+	}
 	//==========================  현규 끝
+
 	
 }
