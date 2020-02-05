@@ -42,6 +42,9 @@
 			</if>
 		</where>
 	</select>
+	<select id="selectBoardCategory" resultType="boardCategory">
+		select * from board_category
+	</select>
 	<!-- ==========================  민호 끝 -->
 	
 	<!-- 하진 시작 ========================== -->
