@@ -92,8 +92,8 @@ public class MemberServiceImpl implements MemberService{
 
 	// 주영 시작 ==========================
 	@Override
-	public Member selectMemberByName(Map<String, String> map) {
-		return md.selectMemberByName(map);
+	public Member selectMemberByName(Member member) {
+		return md.selectMemberByName(member);
 	}
 	//==========================  주영 끝
 
@@ -103,6 +103,11 @@ public class MemberServiceImpl implements MemberService{
 	public Map<String, Object> selectOneMember(String memberId) {
 		return md.selectOneMember(memberId);
 	}
+	@Override
+	public int updateMemberName(Map<String, String> param) {
+		return md.updateMemberName(param);
+	}
 	//==========================  현규 끝
+
 	
 }

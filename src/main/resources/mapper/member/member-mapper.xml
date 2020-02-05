@@ -74,7 +74,7 @@
 	
 	<select id="selectMemberByName" resultMap="memberMap">
 		select * from member 
-		where member_name = #{name} and email = #{email} 
+		where member_name = #{memberName} and email = #{email} 
 	</select>
 	<!-- ==========================  주영 끝 -->
 	
@@ -95,6 +95,15 @@
 		
 	
 	</select>
+	
+	<update id="updateMemberName">
+		update member 
+		set member_name=#{afterName}
+		where member_id=#{memberId}
+		
+	</update>
+	
+	
 	<!-- ==========================  현규 끝 -->
 
 </mapper>

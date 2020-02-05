@@ -122,7 +122,19 @@ a{
 				</div>
 			</li>
 
-			<!-- 커뮤니티 -->
+			<!-- 상품 -->
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false">
+					상품
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/product/productReg.do">상품 등록</a>
+
+				</div>
+			</li>
+			<!-- 상점 -->
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
 					aria-haspopup="true" aria-expanded="false">
@@ -173,11 +185,11 @@ a{
 			<ul class="one"> 
   				<li>
   					<div id="menuImgDiv">
-  					<a href="#"><img id="headerMenu" src="${pageContext.request.contextPath}/resources/images/menuImg.PNG"/></a>
+  						<a href="#" class="categoryA"><img id="headerMenu" src="${pageContext.request.contextPath}/resources/images/menuImg.PNG"/></a>
     				</div>
     				<ul class="two">
     					<li><a href="">카테고리</a></li>
-    					<hr />
+    					<hr/>
        					<li><a href="#">패션</a>
        						<ul class="three">
          						<li><a href="#">여성패션</a>
@@ -265,12 +277,12 @@ a{
 
 	</header>
 
-<!-- <script>
-$("#categoryDiv .dropdown-toggle").click(function(){
+<script>
+$("#categoryDiv .categoryA").click(function(){
 	$.ajax({
-		url:"${pageContext.request.contextPath}/common/header",
-		dataType: "json",
+		url:"${pageContext.request.contextPath}/product/categoryView",
 		type: "GET",
+		dataType: "json",
 		success: data => {
 			console.log("성공");
 		},
@@ -279,9 +291,7 @@ $("#categoryDiv .dropdown-toggle").click(function(){
 		}
 	});
 });
-
-
-</script> -->
+</script>
 
 
 

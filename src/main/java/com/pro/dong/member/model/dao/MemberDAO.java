@@ -46,12 +46,13 @@ public interface MemberDAO {
 	//==========================  예찬 끝
 	
 	// 주영 시작 ==========================
-	Member selectMemberByName(Map<String, String> map);
+	Member selectMemberByName(Member member);
 	//==========================  주영 끝
 
 	
 	// 현규 시작 ==========================
 	Map<String, Object> selectOneMember(String memberId);
+	int updateMemberName(Map<String, String> param);
 
 	
 	

@@ -1,8 +1,12 @@
 package com.pro.dong.product.model.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.pro.dong.product.model.vo.Category;
 
 @Repository
 public class ProductDAOImpl implements ProductDAO{
@@ -15,7 +19,13 @@ public class ProductDAOImpl implements ProductDAO{
 	//==========================민호 끝
 		
 	//하진 시작 ==========================
-		
+	@Override
+	public List<Category> selectCategory() {
+		return sst.selectList("product,selectCategory");
+	}
+	
+	
+	
 	//========================== 하진 끝
 		
 	//근호 시작 ==========================
