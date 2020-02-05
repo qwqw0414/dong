@@ -7,7 +7,6 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <script>
 $(function(){
-	loadCategoryList();
 	loadBoardList();
 });
 function loadBoardList(cPage){
@@ -17,6 +16,7 @@ function loadBoardList(cPage){
 		var memberId = "<%=memberLoggedIn.getMemberId()%>";	
 	}
 	var cPage = cPage;
+	var $category = $("#boardCategory");
 	console.log(memberId);
 	console.log(cPage);
 	$.ajax({
@@ -25,9 +25,12 @@ function loadBoardList(cPage){
 		data: {memberId:memberId,
 			cPage:cPage},
 		success: data=>{
-			
+			let categoryHtml = "";
+			for(var i=0; i<data.boardCategoryList.length;i++){
+				categoryHtml += "<option>"+data.boardCategoryList[i].categoryName+"</option>";
+			}
+			$category.html(categoryHtml);
 			let header = "<tr><th>카테고리</th><th>번호</th><th>작성자</th><th>제목</th><th>작성일</th><th>조회수</th></tr>";
-	    		console.log(data);
 	    	let $table = $("#tbl-board");
 	    	$table.html("");
 			let	html = "";
@@ -46,18 +49,11 @@ function loadBoardList(cPage){
 			$("#pageBar").html(data.pageBar);
 	    	},
 	    	error : (x, s, e) => {
-				console.log("ajax 요청 실패!");
+				console.log("ajax 요청 실패!",x,s,e);
 			}
 	});//end of ajax
 }
-function loadCategoryList(){
-	var $category = $("#boardCategory");
-	var html = "<option>자유</option>";
-	html += "<option>홍보</option>";
-	html += "<option>공지</option>";
-	html += "<option>정보</option>";
-	$category.append(html);
-}
+
 </script>
  <h1>커뮤니티 게시판</h1>
 <section id="board-container" class="container">
@@ -69,7 +65,7 @@ function loadCategoryList(){
 	<p id="totalContents"></p>
 	<input type="button" value="글쓰기" id="btn-add" class="btn btn-outline-success" onclick="fn_goWriteBoard();"/>
 	<table id="tbl-board" class="table table-striped table-hover">
-
+		
 	</table>
 	<!-- pageBar 출력 -->
 	<div id="pageBar">
