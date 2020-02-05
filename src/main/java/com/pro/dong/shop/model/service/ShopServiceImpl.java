@@ -61,11 +61,12 @@ public class ShopServiceImpl implements ShopService{
 		return sd.selectOneShop(memberId);
 	}
 
-
 	@Override
-	public int updateShopInfo(Shop shop) {
-		return sd.updateShopInfo(shop);
+	public int updateShopInfo(Map<String, String> param) {
+		return sd.updateShopInfo(param);
 	}
+
+
 	
 	
 	//========================== 주영 끝

@@ -32,7 +32,7 @@
 	</select>
 	
 	<update id="updateShopInfo">
-		update shop set shop_info = #{shop.shop_info} where member_id = #{shop.member_id}
+		update shop set shop_info = #{shopInfo} where member_id = #{memberId}
 	</update>
 	<!-- ==========================  주영 끝 -->
 	

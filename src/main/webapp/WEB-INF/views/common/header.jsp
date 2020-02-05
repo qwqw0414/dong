@@ -161,25 +161,6 @@ a{
 
 <div class="container">
 	<div class="row">
-	
-		<%-- <!--카테고리아이콘-->
-		<div class="col-md-1">
-			<div class="btn-group" id="categoryDiv">
-				<a style="color:white;" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
-					<img id="headerMenu" src="${pageContext.request.contextPath}/resources/images/menuImg.PNG"/>
-				</a>
-				
-				<div class="dropdown-menu">
-					<a class="dropdown-item" href="#">의류</a> 
-					<a class="dropdown-item" href="#">디지털</a> 
-					<a class="dropdown-item" href="#">유아동</a>
-					<a class="dropdown-item" href="#">뷰티</a>
-					<a class="dropdown-item" href="#">운동</a>
-					<a class="dropdown-item" href="#">재능</a>
-					<a class="dropdown-item" href="#">구인구직</a>
-				</div>
-			</div>
-		</div> --%>
 		
 		<div id="categoryDiv"> 
 			<ul class="one"> 
@@ -188,68 +169,21 @@ a{
   						<a href="#" class="categoryA"><img id="headerMenu" src="${pageContext.request.contextPath}/resources/images/menuImg.PNG"/></a>
     				</div>
     				<ul class="two">
-    					<li><a href="">카테고리</a></li>
-    					<hr/>
-       					<li><a href="#">패션</a>
+       					<li id="categoryOneList"><a href="#"></a>
        						<ul class="three">
-         						<li><a href="#">여성패션</a>
-         							<ul class="three">
-         								<li><a href="#">티셔츠</a></li>
-         								<li><a href="#">치마</a></li>
-         								<li><a href="#">바지</a></li>
-         								<li><a href="#">바지</a></li>
-         								<li><a href="#">바지</a></li>
-         								<li><a href="#">바지</a></li>
-         								<li><a href="#">바지</a></li>
-         								<li><a href="#">바지</a></li>
-       								</ul>
-         						</li>
-         						<li><a href="#">sub3-2</a></li>
-         						<li><a href="#">sub3-3</a></li>
-         						<li><a href="#">sub3-3</a></li>
-         						<li><a href="#">sub3-3</a></li>
-         						<li><a href="#">sub3-3</a></li>
+         						<li><a href="#">여성패션</a></li>
        						</ul>
        					</li>
        					<li><a href="#">sub2</a>
        						<ul class="three">
-         						<li><a href="#">sub3-1</a></li>
-         						<li><a href="#">sub3-2</a></li>
-         						<li><a href="#">sub3-3</a></li>
-         						<li><a href="#">sub3-3</a></li>
-         						<li><a href="#">sub3-3</a></li>
+         						<li><a href="#">xcvxcvxcvxcvxcv</a></li>
        						</ul>
        					</li>
-       					<li><a href="#">sub3</a>
-        					<ul class="three">
-         						<li><a href="#">sub3-1</a>
-         							<ul class="three">
-         								<li><a href="#">sub3-1</a></li>
-         								<li><a href="#">sub3-2</a></li>
-         								<li><a href="#">sub3-3</a></li>
-         								<li><a href="#">sub3-3</a></li>
-         								<li><a href="#">sub3-3</a></li>
-         								<li><a href="#">sub3-3</a></li>
-       								</ul>
-         						</li>
-         						<li><a href="#">sub3-2</a></li>
-         						<li><a href="#">sub3-3</a></li>
-         						<li><a href="#">sub3-3</a></li>
-         						<li><a href="#">sub3-3</a></li>
-         						<li><a href="#">sub3-3</a></li>
-         						<li><a href="#">sub3-3</a></li>
-       						</ul>
-       					</li>
-       					<li><a href="">메뉴이다</a></li>
-       					<li><a href="">메뉴이다</a></li>
-       					<li><a href="">메뉴이다</a></li>
-       					<li><a href="">메뉴이다</a></li>
-       					<li><a href="">메뉴이다</a></li>
     				</ul>
+    				
   				</li>
 			</ul>
 		</div>
-		
 	
 		<!--검색창-->
 		<div class="input-group col-md-7">
@@ -278,19 +212,32 @@ a{
 	</header>
 
 <script>
-$("#categoryDiv .categoryA").click(function(){
+$("#categoryDiv .categoryA").hover(function(e){
+	
+	var $categoryOneList =  $("#categoryOneList");
+	
 	$.ajax({
 		url:"${pageContext.request.contextPath}/product/categoryView",
 		type: "GET",
 		dataType: "json",
 		success: data => {
 			console.log("성공");
+			
+			let categoryHtml = "";
+			for(var i=0; i<data.cateboryList.length; i++){
+				categoryHtml += "<li><a href='#'>"+data.cateboryList[i].CATEGORY_NAME+"</a></li>";
+			}
+			$categoryOneList.html(categoryHtml);
+			
 		},
 		error: (x,s,e)=>{
 			console.log("실패",x,s,e);
 		}
 	});
 });
+
+
+
 </script>
 
 

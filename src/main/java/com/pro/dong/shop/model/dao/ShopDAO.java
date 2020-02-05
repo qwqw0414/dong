@@ -44,7 +44,8 @@ public interface ShopDAO {
 	// 주영 시작 ==========================
 	Map<String, String> selectOneShop(String memberId);
 
-	int updateShopInfo(Shop shop);	
+	int updateShopInfo(Map<String, String> param);
+
 	
 	//========================== 주영 끝
 	
