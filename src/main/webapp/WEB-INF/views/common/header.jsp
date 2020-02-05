@@ -155,7 +155,7 @@
 		
 		<!--검색창-->
 		<div class="input-group col-md-7">
-  			<input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+  			<input type="text" class="form-control" placeholder="검색어를 입력하세요" aria-label="Recipient's username" aria-describedby="button-addon2">
   			<div class="input-group-append">
     			<button class="btn btn-outline-secondary" type="button" id="button-addon2">
     				<img id="bogiImg" src="${pageContext.request.contextPath}/resources/images/bogi.png"/>
@@ -168,7 +168,7 @@
 			<a style="color:black; text-decoration: none;" href=""><img id="saleImg" src="${pageContext.request.contextPath}/resources/images/sale.PNG"/> 판매하기</a>
 		</div>
 		<div>
-			<a style="color:black; text-decoration: none;"href=""><img id="shopImg" src="${pageContext.request.contextPath}/resources/images/shop.PNG"/> 내 상점</a>
+			<a style="color:black; text-decoration: none;" href="${pageContext.request.contextPath}/shop/shopView.do"><img id="shopImg" src="${pageContext.request.contextPath}/resources/images/shop.PNG"/> 내 상점</a>
 		</div>
 		<div>
 			<a style="color:black; text-decoration: none;"href=""><img id="chatImg" src="${pageContext.request.contextPath}/resources/images/chat.PNG"/> 동네톡</a>
