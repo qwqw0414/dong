@@ -43,6 +43,7 @@ public class BoardDAOImpl implements BoardDAO {
 		return sst.selectList("board.selectBoardCategory");
 	}
 
+
 	
 	//==========================민호 끝
 		
@@ -59,6 +60,15 @@ public class BoardDAOImpl implements BoardDAO {
 	//========================== 근호 끝
 		
 	// 지은 시작 ==========================
+	@Override
+	public Board selectOneBoard(int boardNo) {
+		return sst.selectOne("board.selectOneBoard", boardNo);
+	}
+
+	@Override
+	public int boardInCount(int boardNo) {
+		return sst.update("board.boardInCount", boardNo);
+	}
 
 	//========================== 지은 끝
 		

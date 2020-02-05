@@ -102,6 +102,10 @@ public class MemberDAOImpl implements MemberDAO{
 	public Map<String, Object> selectOneMember(String memberId) {
 		return sst.selectOne("member.selectOneMember", memberId);
 	}
+	@Override
+	public int updateMemberName(Map<String, String> param) {
+		return sst.update("member.updateMemberName",param);
+	}
 	
 	//==========================  현규 끝
 }

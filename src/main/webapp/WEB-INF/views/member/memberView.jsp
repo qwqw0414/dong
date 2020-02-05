@@ -47,17 +47,59 @@
                     </div>
                 </div>
 
+
                 <div class="col" id="col_right">
                     <div id="mypage_info" class="mypage_con">
                         <h4>내정보</h4><br>
                         <div class="ms_content">
                             <div class="row row-cols-2">
-
-                                <div class="col">
-                                    <p><label for="memberName">이름</label> : <input type="text" name="memberName"value="${member.MEMBER_NAME }" /></p>
-                                	<p><label for="phone">연락처</label> : <input type="text" name="phone"value="${member.PHONE}" /></p>
-                                	<p><label for="email">이메일</label> : <input type="text" name="email" value="${member.EMAIL }" /></p>
+                            
+                            <div id="change_con">
+                            <div class="ms_change">
+                                <div class="before_change1">
+                              		  이름:<span id="curname">${member.MEMBER_NAME}</span> <input type="button" class="change_btn1" value="수정" />
                                 </div>
+                                <div class="input-group mb-3  after_change1" >
+                                    <input type="text" class="form-control" id="username" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                    <div class="input-group-append">
+                                      <button class="btn btn-outline-secondary" type="button" id="button-addon1">확인</button>
+                                    </div>
+                                  </div>
+                            </div>
+                            
+                            <div class="ms_change">
+
+                                <div class="before_change2">
+                                <span>연락처:${member.PHONE}</span> <input type="button" class="change_btn2" value="수정" />
+                                </div>
+
+                                <div class="input-group mb-3 after_change2" style="display: none;">
+                                    <input type="text" class="form-control" aria-label="Recipient's" aria-describedby="button-addon2">
+                                    <div class="input-group-append">
+                                      <button class="btn btn-outline-secondary" type="button" id="button-addon2">확인</button>
+                                    </div>
+                                  </div>
+
+                            </div>
+                            
+
+
+                            <div class="ms_change">
+                                <div class="before_change3">
+                                <span>이메일:${member.EMAIL}</span> <input type="button" class="change_btn3" value="수정" />
+                            </div>
+                                <div class="input-group mb-3  after_change3" style="display: none;">
+                                    <input type="text" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                    <div class="input-group-append">
+                                      <button class="btn btn-outline-secondary" type="button" id="button-addon3">확인</button>
+                                    </div>
+                                  </div>
+                            </div>
+                            </div>
+                            
+                            
+
+
 
                                 <div class="col">
                                 	 <p>성별 : ${member.GENDER=='M'?'남자':'여자' }</p>
@@ -65,10 +107,7 @@
                                 </div>
                             </div>
 
-                        <div class="mypage_btn">
-                            
-                            <input type="button"  class="btn_val btn_val_update" value="수정">
-                        </div>
+                      
 
                     </div>
                     
@@ -97,6 +136,40 @@
 
         </div>
     </div>
+    
+    
+    
+    <script>
+    //이름 변경
+	$("#button-addon1").on('click',function(){
+		var afterName = $("#username").val();
+		console.log(afterName);
+		
+		$.ajax({
+			url:"${pageContext.request.contextPath}/member/updateMemberName",
+			data:{afterName:afterName},
+			type:"POST",
+			success: data => {
+				console.log(data);
+				$("#curname").text(data.MEMBER_NAME)
+    		},
+    		error: (x,s,e) => {
+				console.log(x,s,e);
+			}
+		});
+	});
+    
+    //
+
+
+    
+    </script>
+    
+    
+    
+    
+    
+    
 
 <style>
 .mypage_con{
@@ -118,6 +191,15 @@
 }
 #col_right{
     padding-left: 100px;
+}
+.ms_change{
+	width:280px;
+	height: 30px;
+	display:inline-block;
+	
+}
+#change_con{
+	padding-left:20px;
 }
 </style>
 
