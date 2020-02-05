@@ -93,6 +93,11 @@ public class BoardController {
 	//========================== 근호 끝
 		
 	// 지은 시작 ==========================
+	@RequestMapping("/boardView.do")
+	public void viewBoard() {
+		
+	}
+	
 
 	//========================== 지은 끝
 		
