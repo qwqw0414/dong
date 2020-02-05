@@ -252,7 +252,7 @@ public class MemberController {
 		try {
 //		    비밀번호 암호화
 			member.setPassword(passwordEncoder.encode(member.getPassword()));
-			
+			log.debug(member.toString());
 			result = ms.insertMember(member);
 			
 			if(result > 0) {
