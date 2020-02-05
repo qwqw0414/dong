@@ -60,9 +60,9 @@
 			&nbsp;&nbsp;&nbsp;
 			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-dell@2x.png" width="14" height="13">택배발송 2회
 			<br /><br /><span id="shopInfoDetail">${map.SHOP_INFO}</span> &nbsp;&nbsp;&nbsp;
-			<button id="hiddenBtn" type="button" class="btn btn-outline-success btn-sm">수정</button><br /><br />
+			<button onclick="showUpdate();" id="hiddenBtn" type="button" class="btn btn-outline-success btn-sm">수정</button><br /><br />
 			<textarea  name="updateInfo" id="updateInfo" cols="30" rows="3">${map.SHOP_INFO }</textarea>
-			<button  type="button" class="btn btn-outline-success btn-sm" id="up_btn">수정</button>
+			<button onclick="showUpdateEnd();" type="button" class="btn btn-outline-success btn-sm" id="up_btn">수정</button>
 		</div>
 	</div>
 	<script>
@@ -74,27 +74,43 @@
 		$update_btn.hide();
 	}); 
 	
-	$('hiddenBtn').click(function(){
+	function showUpdate(){
+		var $textarea = $("#updateInfo");
+		var $update_btn = $("#up_btn");
+		
 		$textarea.show();
 		$update_btn.show();
-	}
+		
+		var $shopInfoSpan = $("#shopInfoDetail");
+		var $update_btn1 = $("#hiddenBtn");
+		
+		$shopInfoSpan.hide();
+		$update_btn1.hide();
+	};
 	
 	
 	
-	/* function updateShopInfo(){
+	
+	function showUpdateEnd(){
 		var memberId = $("[name=memberLoggedIn]").val();
+		var updateInfo = $("#updateInfo").val();
+		
+		console.log("memberId="+memberId);
+		console.log("updateInfo="+updateInfo);
+
 		$.ajax({
 			url : "${pageContext.request.contextPath}/shop/updateShopInfo",
-			data : {memberId : memberId}
+			data : {memberId : memberId,
+				    shopInfo : updateInfo},
+			dataType : "json",
 			success : data => {
 				console.log(data);
-								
 			},
 			error : (x, s, e) => {
 				console.log("ajax 요청 실패!");
 			}
 		});
-	}; */
+	};
 	</script>
 	<hr class="my-hr3"/><br />
 	

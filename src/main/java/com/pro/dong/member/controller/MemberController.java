@@ -287,8 +287,7 @@ public class MemberController {
 		
 	}
 	
-	
-	@RequestMapping("/findIdEnd.do")
+	@RequestMapping("/findIdEnd")
 	@ResponseBody
 	public Member findIdEnd(@RequestParam("memberName") String name, @RequestParam("memberEmail") String email) {
 		
