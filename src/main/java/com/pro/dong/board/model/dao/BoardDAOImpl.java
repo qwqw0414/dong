@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.pro.dong.board.model.vo.Attachment;
 import com.pro.dong.board.model.vo.Board;
 import com.pro.dong.board.model.vo.BoardCategory;
 import com.pro.dong.member.model.vo.Address;
@@ -54,6 +55,11 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public int insertBoard(Board board) {
 		return sst.insert("board.insertBoard", board);
+	}
+
+	@Override
+	public int insertAttachment(Attachment a) {
+		return sst.insert("board.insertAttachment", a);
 	}
 
 	//========================== 근호 끝

@@ -62,7 +62,18 @@
 			   #{boardContents},
 			   default,
 			   #{readCount})
+		<selectKey keyProperty="boardNo" resultType="_int"
+				   order="AFTER">
+			select seq_board_no.currval from dual
+		</selectKey>
+	</insert>
 	
+	<insert id="insertAttachment">
+		insert into board_attachment(attchment_no, board_no, originalfilename, renamedfilename)
+		values(seq_attachment_no.nextval,
+			   #{boardNo},
+			   #{originalFileName},
+			   #{renamedFileName})
 	</insert>
 	<!-- ==========================  근호 끝 -->
 	

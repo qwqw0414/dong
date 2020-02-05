@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pro.dong.board.model.dao.BoardDAO;
+import com.pro.dong.board.model.vo.Attachment;
 import com.pro.dong.board.model.vo.Board;
 import com.pro.dong.board.model.vo.BoardCategory;
 import com.pro.dong.member.model.vo.Address;
@@ -47,9 +48,21 @@ public class BoardServiceImpl implements BoardService {
 	//========================== 하진 끝
 		
 	// 근호 시작 ==========================
+	
 	@Override
-	public int insertBoard(Board board) {
-		return bd.insertBoard(board);
+	public int insertBoard(Board board, List<Attachment> attachList) {
+		int result = 0;
+		result = bd.insertBoard(board);
+		
+		//2. attachment 행추가
+		if(attachList.size() > 0) {
+			for(Attachment a : attachList) {
+				a.setBoardNo(board.getBoardNo());
+				result = bd.insertAttachment(a);
+			}
+		}
+		return result;
+		
 	}
 	//========================== 근호 끝
 		

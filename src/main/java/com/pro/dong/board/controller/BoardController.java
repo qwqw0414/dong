@@ -1,8 +1,15 @@
 package com.pro.dong.board.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,13 +20,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.pro.dong.board.model.service.BoardService;
+import com.pro.dong.board.model.vo.Attachment;
 import com.pro.dong.board.model.vo.Board;
 import com.pro.dong.board.model.vo.BoardCategory;
 import com.pro.dong.common.util.Utils;
 import com.pro.dong.member.model.vo.Address;
+
+import sun.java2d.pipe.SpanShapeRenderer.Simple;
 
 
 @RequestMapping("/board")
@@ -85,7 +96,58 @@ public class BoardController {
 		
 	}
 	@RequestMapping("/writeBoardEnd.do")
-	public String writeBoardEnd(Model model, Board board) {
+	public ModelAndView writeBoardEnd(ModelAndView mav, Board board,
+									  @RequestParam(value="upFile", required=false) MultipartFile[] upFile,
+									  HttpServletRequest request) {
+		
+		String saveDirectory = request.getServletContext().getRealPath("/resources/upload/board");
+		List<Attachment> attachList = new ArrayList<>();
+		
+		//동적으로 directory 생성
+		File dir = new File(saveDirectory);
+		if(dir.exists() == false)
+			dir.mkdir();
+		
+		//MultipartFile객체 파일업로드 처리
+		for(MultipartFile f : upFile) {
+			if(!f.isEmpty()) {
+				//파일명 재생성
+				String originalFileName = f.getOriginalFilename();
+				String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
+				int rndNum = (int)(Math.random()*1000);
+				String renamedFileName = sdf.format(new Date())+"_"+rndNum+ext;
+				
+				//서버컴퓨터에 파일저장
+				try {
+					f.transferTo(new File(saveDirectory+"/"+renamedFileName));
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				Attachment attach = new Attachment();
+				attach.setOriginalFileName(originalFileName);
+				attach.setRenamedFileName(renamedFileName);
+				attachList.add(attach);
+				
+			}
+		}
+		log.debug("attachList={}", attachList);
+		//업로드 처리 끝
+		
+		//2.업무로직
+		int result = bs.insertBoard(board, attachList);
+		
+		//3.view
+		mav.addObject("msg", result>0?"등록성공!":"등록실패!");
+		mav.addObject("loc", "/board/boardList.do");
+		mav.setViewName("common/msg");
+		
+		return mav;
+	}
+	/*public String writeBoardEnd(Model model, Board board) {
 		
 		int result = bs.insertBoard(board);
 		log.debug("board={}", board);
@@ -95,7 +157,7 @@ public class BoardController {
 		log.debug("result={}",result);
 		
 		return "common/msg";
-	}
+	}*/
 	//========================== 근호 끝
 		
 	// 지은 시작 ==========================

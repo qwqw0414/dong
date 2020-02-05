@@ -3,6 +3,7 @@ package com.pro.dong.board.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.pro.dong.board.model.vo.Attachment;
 import com.pro.dong.board.model.vo.Board;
 import com.pro.dong.board.model.vo.BoardCategory;
 import com.pro.dong.member.model.vo.Address;
@@ -25,7 +26,7 @@ public interface BoardService {
 	//========================== 하진 끝
 		
 	// 근호 시작 ==========================
-	int insertBoard(Board board);
+	int insertBoard(Board board, List<Attachment> attachList);
 	
 	//========================== 근호 끝
 		
