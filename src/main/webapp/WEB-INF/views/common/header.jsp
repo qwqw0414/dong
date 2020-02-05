@@ -54,7 +54,14 @@
 
     height: 38px;
 }
-
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+}
+.dropdown:hover .dropdown-submenu {
+    display: block;
+    margin-top: 0;
+}
 
 </style> 
 
@@ -137,10 +144,11 @@
 	
 		<!--카테고리아이콘-->
 		<div class="col-md-1">
-			<div class="btn-group">
-				<a style="color:white;" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+			<div class="btn-group" id="categoryDiv">
+				<a style="color:white;" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
 					<img id="headerMenu" src="${pageContext.request.contextPath}/resources/images/menuImg.PNG"/>
 				</a>
+				
 				<div class="dropdown-menu">
 					<a class="dropdown-item" href="#">의류</a> 
 					<a class="dropdown-item" href="#">디지털</a> 
@@ -152,7 +160,7 @@
 				</div>
 			</div>
 		</div>
-		
+	
 		<!--검색창-->
 		<div class="input-group col-md-7">
   			<input type="text" class="form-control" placeholder="검색어를 입력하세요" aria-label="Recipient's username" aria-describedby="button-addon2">
@@ -173,13 +181,32 @@
 		<div>
 			<a style="color:black; text-decoration: none;"href=""><img id="chatImg" src="${pageContext.request.contextPath}/resources/images/chat.PNG"/> 동네톡</a>
 		</div>
-		
 	</div>
-	
 </div>	
-	
-	
+
+
 	</header>
+
+<!-- <script>
+$("#categoryDiv .dropdown-toggle").click(function(){
+	$.ajax({
+		url:"${pageContext.request.contextPath}/common/header",
+		dataType: "json",
+		type: "GET",
+		success: data => {
+			console.log("성공");
+		},
+		error: (x,s,e)=>{
+			console.log("실패",x,s,e);
+		}
+	});
+});
+
+
+</script> -->
+
+
+
 
 <section>
 	<div class="container" id="section">
