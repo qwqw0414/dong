@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.pro.dong.member.controller.MemberController;
 import com.pro.dong.member.model.vo.Member;
 import com.pro.dong.shop.model.service.ShopService;
@@ -82,21 +83,20 @@ public class ShopController {
 	@RequestMapping("/updateShopInfo")
 	@ResponseBody
 	public Map<String, String> shopInfoUpdate(@RequestParam("memberId") String memberId,
-							           	      @RequestParam("updateInfo") String shopInfo) {
+							     @RequestParam("updateInfo") String shopInfo) {
 		log.info("넘어왔다!!!!!!!!!!!!!!!!!!!!!!!");
-		Shop shop = new Shop();
-		shop.setMemberId(memberId);
-		shop.setShopInfo(shopInfo);
+		Map<String, String> param = new HashMap<>();
+		param.put("memberId", memberId);
+		param.put("shopInfo", shopInfo);
 		
-		log.debug("가져온 shop={}", shop);
 		
-		int result = ss.updateShopInfo(shop);
+		int result = ss.updateShopInfo(param);
 
-		log.debug("result={}", result);
+		log.info("result={}", result);
 		
-		Map<String, String> map = ss.selectOneShop(memberId);
+		Map<String, String> resultShop = ss.selectOneShop(memberId);
 		
-		return map;
+		return resultShop;
 	}
 	
 	//========================== 주영 끝

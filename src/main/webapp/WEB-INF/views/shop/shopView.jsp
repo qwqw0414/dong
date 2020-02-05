@@ -51,8 +51,10 @@
 			<img id="shopImg1" src="${pageContext.request.contextPath}/resources/images/dog.png" alt="" />
 		<!-- </div> -->
 		<div id="shopDetailInfoDiv">
-			${map.SHOP_NAME} &nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-outline-success btn-sm">수정</button><br /><br />
-			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-open@2x.png" width="14" height="13">상점오픈일 ${map.SINCE} 일 전
+			<span id="shopNameSpan">${map.SHOP_NAME}</span> &nbsp;&nbsp;&nbsp;<button onclick="shopNameUp();" id="shopNameBtn" type="button" class="btn btn-outline-success btn-sm">수정</button><br /><br />
+			<input id="shopNameInput" type="text"  value="${map.SHOP_NAME}"/>
+			<button id="shopNameUpdateBtn" onclick="shopNameUpdateEnd();" type="button" class="btn btn-outline-success btn-sm">수정</button><br /><br />
+			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-open@2x.png" width="14" height="13">상점오픈일 ${map.SINCE} 일째
 			&nbsp;&nbsp;&nbsp;
 			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-user@2x.png" width="14" height="13">상점방문수 10명
 			&nbsp;&nbsp;&nbsp;
@@ -60,18 +62,44 @@
 			&nbsp;&nbsp;&nbsp;
 			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-dell@2x.png" width="14" height="13">택배발송 2회
 			<br /><br /><span id="shopInfoDetail">${map.SHOP_INFO}</span> &nbsp;&nbsp;&nbsp;
-			<button onclick="showUpdate();" id="hiddenBtn" type="button" class="btn btn-outline-success btn-sm">수정</button><br /><br />
+			<button onclick="showUpdate();" id="hiddenBtn" type="button" class="btn btn-outline-success btn-sm">수정</button><br />
 			<textarea  name="updateInfo" id="updateInfo" cols="30" rows="3">${map.SHOP_INFO }</textarea>
-			<button onclick="showUpdateEnd();" type="button" class="btn btn-outline-success btn-sm" id="up_btn">수정</button>
+			<button onclick="shopUpdateEnd();" type="button" class="btn btn-outline-success btn-sm" id="up_btn">수정</button>
 		</div>
 	</div>
 	<script>
+	function shopNameUpdateEnd(){
+		var shopName = $("#shopNameInput").val();
+		console.log("shopName="+shopName);
+		
+	}
+	
+	function shopNameUp(){
+		var $shopNameSpan = $("#shopNameSpan");
+		var $shopNameBtn = $("#shopNameBtn");
+		
+		$shopNameSpan.hide();
+		$shopNameBtn.hide();
+		
+		var $shopNameInput = $("#shopNameInput");
+		var $shopNameUpdateBtn = $("#shopNameUpdateBtn");
+		
+		$shopNameInput.show();
+		$shopNameUpdateBtn.show();
+	}
+	
 	$(function(){
 		var $textarea = $("#updateInfo");
 		var $update_btn = $("#up_btn");
 		
 		$textarea.hide();
 		$update_btn.hide();
+		
+		var $shopNameInput = $("#shopNameInput");
+		var $shopNameUpdateBtn = $("#shopNameUpdateBtn");
+		
+		$shopNameInput.hide();
+		$shopNameUpdateBtn.hide();
 	}); 
 	
 	function showUpdate(){
@@ -88,10 +116,7 @@
 		$update_btn1.hide();
 	};
 	
-	
-	
-	
-	function showUpdateEnd(){
+	function shopUpdateEnd(){
 		var memberId = $("[name=memberLoggedIn]").val();
 		var updateInfo = $("#updateInfo").val();
 		
@@ -100,11 +125,24 @@
 
 		$.ajax({
 			url : "${pageContext.request.contextPath}/shop/updateShopInfo",
-			dataType : "json",
+			method : "POST",
 			data : {memberId : memberId,
 					updateInfo : updateInfo},
 			success : data => {
 				console.log(data);
+				var $textarea = $("#updateInfo");
+				var $update_btn = $("#up_btn");
+				
+				$textarea.hide();
+				$update_btn.hide();
+				
+				var $shopInfoSpan = $("#shopInfoDetail");
+				var $update_btn1 = $("#hiddenBtn");
+				 $('#shopInfoDetail').html(data.SHOP_INFO);
+				 console.log(data.SHOP_INFO);
+				
+				$shopInfoSpan.show();
+				$update_btn1.show();
 			},
 			error : (x, s, e) => {
 				console.log("ajax 요청 실패!");

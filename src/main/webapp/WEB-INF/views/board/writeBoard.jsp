@@ -1,3 +1,6 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.pro.dong.board.model.vo.BoardCategory"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
@@ -11,13 +14,48 @@
     .col-auto{
         padding: 0px;
     }
-
-
 </style>
+<%
+	List<BoardCategory> list = new ArrayList<>();
+	list = (List<BoardCategory>)request.getAttribute("boardCategoryList");
+	String option = "";
+	for(BoardCategory bc: list){
+		option +=  "<option value=\""+bc.getCategoryId()+"\">"+bc.getCategoryName()+"</option>";
+	}
+%>
+<script>
+function validate(){
+	var contents = $("#boardContents").val();
+	if(contents.trim().length==0){
+		alert("내용을 입력하세요");
+		return false;
+	}
+	return true;
+}
 
+$(function(){
+	//파일명 노출하기
+	$("#upFile").on("change", function(){
+		//파일 취소
+		if($(this).prop("files")[0] === undefined){
+			$(this).next(".custom-file-label")
+				   .html("파일을 선택하세요.");
+			return;
+		}
+		
+		var fileName = $(this).prop('files')[0].name;
+		
+		$(this).next(".custom-file-label")
+			   .html(fileName);
+	});
+});
+</script>
 
 <div id="boardWrite-contanier" class="text-center">
-	<form action="${pageContext.request.contextPath}/board/writeBoardEnd.do">
+	<form action="${pageContext.request.contextPath}/board/writeBoardEnd.do"
+		  method="post"
+		  enctype="multipart/form-data"
+		  onsubmit="return validate();">
         <div id="boardWrite-contant">
                 <div class="col-auto">
                         <label class="sr-only" for="inlineFormInputGroup">Username</label>
@@ -42,19 +80,16 @@
 				    <label class="input-group-text" for="inputGroupSelect01">카테고리</label>
 				 </div>
 				 <select class="custom-select" id="boardCategory" name="boardCategory">
-				    <option selected>공지</option>
-				    <option value="1">정보</option>
-				    <option value="2">홍보</option>
-				    <option value="3">자유</option>
+				   <%=option %>
 				 </select>
 				</div>
-               <div class="input-group mb-3" style="padding:0px;">
-				  <div class="input-group-prepend" style="padding:0px;">
+               <div class="input-group mb-3" >
+				  <div class="input-group-prepend" >
 				    <span class="input-group-text">첨부파일</span>
 				  </div>
 				  <div class="custom-file">
-				    <input type="file" class="custom-file-input" name="upFile" id="upFile1" >
-				    <label class="custom-file-label" for="upFile1">파일을 선택하세요</label>
+				    <input type="file" class="custom-file-input" name="upFile" id="upFile" >
+				    <label class="custom-file-label" for="upFile">파일을 선택하세요</label>
 				  </div>
 				</div>
 				
