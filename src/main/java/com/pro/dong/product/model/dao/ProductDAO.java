@@ -1,5 +1,9 @@
 package com.pro.dong.product.model.dao;
 
+import java.util.List;
+
+import com.pro.dong.product.model.vo.Category;
+
 public interface ProductDAO {
 
 	//민호 시작 ==========================
@@ -7,7 +11,10 @@ public interface ProductDAO {
 	//==========================민호 끝
 		
 	//하진 시작 ==========================
-		
+	List<Category> selectCategory();	
+	
+	
+	
 	//========================== 하진 끝
 		
 	//근호 시작 ==========================

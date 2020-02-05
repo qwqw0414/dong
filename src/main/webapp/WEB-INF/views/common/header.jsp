@@ -173,11 +173,11 @@ a{
 			<ul class="one"> 
   				<li>
   					<div id="menuImgDiv">
-  					<a href="#"><img id="headerMenu" src="${pageContext.request.contextPath}/resources/images/menuImg.PNG"/></a>
+  						<a href="#" class="categoryA"><img id="headerMenu" src="${pageContext.request.contextPath}/resources/images/menuImg.PNG"/></a>
     				</div>
     				<ul class="two">
     					<li><a href="">카테고리</a></li>
-    					<hr />
+    					<hr/>
        					<li><a href="#">패션</a>
        						<ul class="three">
          						<li><a href="#">여성패션</a>
@@ -265,12 +265,12 @@ a{
 
 	</header>
 
-<!-- <script>
-$("#categoryDiv .dropdown-toggle").click(function(){
+<script>
+$("#categoryDiv .categoryA").click(function(){
 	$.ajax({
-		url:"${pageContext.request.contextPath}/common/header",
-		dataType: "json",
+		url:"${pageContext.request.contextPath}/product/categoryView",
 		type: "GET",
+		dataType: "json",
 		success: data => {
 			console.log("성공");
 		},
@@ -279,9 +279,7 @@ $("#categoryDiv .dropdown-toggle").click(function(){
 		}
 	});
 });
-
-
-</script> -->
+</script>
 
 
 
