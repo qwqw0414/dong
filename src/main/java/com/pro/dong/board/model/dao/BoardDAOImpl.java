@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.pro.dong.board.model.vo.Board;
+import com.pro.dong.board.model.vo.BoardCategory;
 import com.pro.dong.member.model.vo.Address;
 @Repository
 public class BoardDAOImpl implements BoardDAO {
@@ -35,6 +36,11 @@ public class BoardDAOImpl implements BoardDAO {
 		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
 		return sst.selectList("board.loadBoardList", param, rowBounds);
 
+	}
+
+	@Override
+	public List<BoardCategory> selectBoardCategory() {
+		return sst.selectList("board.selectBoardCategory");
 	}
 
 	
