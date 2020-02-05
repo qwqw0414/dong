@@ -56,6 +56,9 @@
 	<!-- ==========================  근호 끝 -->
 	
 	<!-- 지은 시작 ========================== -->
+	<select id="selectOneBoard" resultType="board">
+		select * from board where board_No = #{boardNo}
+	</select>
 	
 	<!-- ==========================  지은 끝 -->
 	

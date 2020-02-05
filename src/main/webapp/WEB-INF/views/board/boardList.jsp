@@ -39,7 +39,7 @@ function loadBoardList(cPage){
 	    		html += "<td>"+data.list[i].CATEGORY_NAME+"</td>";
 	    		html += "<td>"+data.list[i].BOARD_NO+"</td>";
 	    		html += "<td>"+data.list[i].MEMBER_ID+"</td>";
-	    		html += "<td><a href='${pageContext.request.contextPath}/board/boardView.do?board_No=${board_No}'>"+data.list[i].BOARD_TITLE+"</a></td>";
+	    		html += "<td><a href='${pageContext.request.contextPath}/board/boardView.do?boardNo="+data.list[i].BOARD_NO+"'>"+data.list[i].BOARD_TITLE+"</a></td>";
 	    		html += "<td>"+data.list[i].WRITE_DATE+"</td>";
 	    		html += "<td>"+data.list[i].READ_COUNT+"</td>";
 	    		html += "</tr>";

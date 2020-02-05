@@ -17,6 +17,7 @@ public interface BoardDAO {
 	int selectBoardTotalContents(Map<String, String> param);
 
 	List<BoardCategory> selectBoardCategory();
+
 	
 	//==========================민호 끝
 		
@@ -29,6 +30,7 @@ public interface BoardDAO {
 	//========================== 근호 끝
 		
 	// 지은 시작 ==========================
+	Board selectOneBoard(int boardNo);
 
 	//========================== 지은 끝
 		
