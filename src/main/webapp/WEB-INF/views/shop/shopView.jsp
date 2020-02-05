@@ -100,9 +100,9 @@
 
 		$.ajax({
 			url : "${pageContext.request.contextPath}/shop/updateShopInfo",
-			data : {memberId : memberId,
-				    shopInfo : updateInfo},
 			dataType : "json",
+			data : {memberId : memberId,
+					updateInfo : updateInfo},
 			success : data => {
 				console.log(data);
 			},

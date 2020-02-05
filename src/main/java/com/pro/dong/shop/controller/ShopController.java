@@ -1,5 +1,6 @@
 package com.pro.dong.shop.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.pro.dong.member.controller.MemberController;
@@ -77,27 +79,25 @@ public class ShopController {
 		return mav;
 	}
 	
-	@RequestMapping("/shop/updateShopInfo")
-	public ModelAndView shopInfoUpdate(@RequestParam("memberId") String memberId,
-							           @RequestParam("shopInfo") String shopInfo) {
-		
+	@RequestMapping("/updateShopInfo")
+	@ResponseBody
+	public Map<String, String> shopInfoUpdate(@RequestParam("memberId") String memberId,
+							           	      @RequestParam("updateInfo") String shopInfo) {
+		log.info("넘어왔다!!!!!!!!!!!!!!!!!!!!!!!");
 		Shop shop = new Shop();
 		shop.setMemberId(memberId);
 		shop.setShopInfo(shopInfo);
 		
-		ModelAndView mav = new ModelAndView();
+		log.debug("가져온 shop={}", shop);
 		
 		int result = ss.updateShopInfo(shop);
 
 		log.debug("result={}", result);
 		
 		Map<String, String> map = ss.selectOneShop(memberId);
-		mav.addObject("map", map);
 		
-		return mav;
+		return map;
 	}
-	
-	
 	
 	//========================== 주영 끝
 	
