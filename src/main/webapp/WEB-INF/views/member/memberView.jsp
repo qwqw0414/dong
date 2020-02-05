@@ -60,21 +60,21 @@
                               		  이름:<span id="curname">${member.MEMBER_NAME}</span> <input type="button" class="change_btn1" value="수정" />
                                 </div>
                                 <div class="input-group mb-3  after_change1" >
-                                    <input type="text" class="form-control" id="username" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                    <input type="text" class="form-control" id="username" aria-label="Recipient's" aria-describedby="button-addon1">
                                     <div class="input-group-append">
                                       <button class="btn btn-outline-secondary" type="button" id="button-addon1">확인</button>
                                     </div>
                                   </div>
                             </div>
                             
-                            <div class="ms_change">
+                            <div id="ms_change">
 
                                 <div class="before_change2">
-                                <span>연락처:${member.PHONE}</span> <input type="button" class="change_btn2" value="수정" />
+                                	연락처:<span id="curphone">${member.PHONE}</span> <input type="button" class="change_btn2" value="수정" />
                                 </div>
 
-                                <div class="input-group mb-3 after_change2" style="display: none;">
-                                    <input type="text" class="form-control" aria-label="Recipient's" aria-describedby="button-addon2">
+                                <div class="input-group mb-3 after_change2">
+                                    <input type="text" class="form-control" id="userphone" aria-label="Recipient's" aria-describedby="button-addon2" maxlength="11">
                                     <div class="input-group-append">
                                       <button class="btn btn-outline-secondary" type="button" id="button-addon2">확인</button>
                                     </div>
@@ -89,7 +89,7 @@
                                 <span>이메일:${member.EMAIL}</span> <input type="button" class="change_btn3" value="수정" />
                             </div>
                                 <div class="input-group mb-3  after_change3" style="display: none;">
-                                    <input type="text" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                    <input type="text" class="form-control" aria-label="Recipient's" aria-describedby="button-addon3">
                                     <div class="input-group-append">
                                       <button class="btn btn-outline-secondary" type="button" id="button-addon3">확인</button>
                                     </div>
@@ -159,7 +159,25 @@
 		});
 	});
     
-    //
+    //연락처
+    	$("#button-addon2").on('click',function(){
+		var afterPhone = $("#userphone").val();
+		console.log("zzz");
+// 		console.log(afterPhone);
+		
+// 		$.ajax({
+// 			url:"${pageContext.request.contextPath}/member/updateMemberPhone",
+// 			data:{afterPhone:afterPhone},
+// 			type:"POST",
+// 			success: data => {
+// 				console.log(data);
+// // 				$("#curphone").text(data.PHONE)
+//     		},
+//     		error: (x,s,e) => {
+// 				console.log(x,s,e);
+// 			}
+// 		});
+	});
 
 
     
