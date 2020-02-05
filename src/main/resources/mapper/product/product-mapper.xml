@@ -8,7 +8,10 @@
 	<!-- ==========================  민호 끝 -->
 	
 	<!-- 하진 시작 ========================== -->
-	
+	<select id="selectCategory" parameterType="map" resultType="map">
+		select * from product_category
+		where category_id like 'A%'
+	</select>
 	<!-- ==========================  하진 끝 -->
 	
 	<!-- 근호 시작 ========================== -->
