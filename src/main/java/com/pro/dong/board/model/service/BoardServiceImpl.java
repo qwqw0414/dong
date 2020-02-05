@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.pro.dong.board.model.dao.BoardDAO;
 import com.pro.dong.board.model.vo.Board;
+import com.pro.dong.board.model.vo.BoardCategory;
 import com.pro.dong.member.model.vo.Address;
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -34,6 +35,10 @@ public class BoardServiceImpl implements BoardService {
 		return bd.selectBoardTotalContents(param);
 	}
 
+	@Override
+	public List<BoardCategory> selectBoardCategory() {
+		return bd.selectBoardCategory();
+	}
 	
 	//==========================민호 끝
 		

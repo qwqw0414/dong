@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.pro.dong.board.model.service.BoardService;
 import com.pro.dong.board.model.vo.Board;
+import com.pro.dong.board.model.vo.BoardCategory;
 import com.pro.dong.common.util.Utils;
 import com.pro.dong.member.model.vo.Address;
 
@@ -43,7 +44,9 @@ public class BoardController {
 		Map<String, Object> result = new HashMap<>();
 		// 주소 조회
 		Address addr = bs.getAddrByMemberId(memberId);
-		log.debug("addr={}",addr);
+		// 게시판 카테고리 조회
+		List<BoardCategory> boardCategoryList = bs.selectBoardCategory();
+		
 		// 파라미터 생성
 		Map<String, String> param = new HashMap<>();
 		String sido = addr.getSido();
@@ -61,6 +64,7 @@ public class BoardController {
 		result.put("sigungu", sigungu);
 		result.put("dong", dong);
 		result.put("list", list);
+		result.put("boardCategoryList", boardCategoryList);
 		result.put("cPage", cPage);
 		result.put("numPerPage", numPerPage);
 		result.put("totalContents", totalContents);
