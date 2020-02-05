@@ -34,6 +34,14 @@
 	<update id="updateShopInfo">
 		update shop set shop_info = #{shopInfo} where member_id = #{memberId}
 	</update>
+	
+	<select id="selectShopNameCheck" resultType="_int">
+		select count(*) from shop where shop_name = #{shopName}
+	</select>
+	
+	<update id="updateShopName">
+		update shop set shop_name = #{shopName} where member_id = #{memberId}
+	</update>
 	<!-- ==========================  주영 끝 -->
 	
 	<!-- 현규 시작 ========================== -->

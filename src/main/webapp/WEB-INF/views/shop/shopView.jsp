@@ -53,7 +53,8 @@
 		<div id="shopDetailInfoDiv">
 			<span id="shopNameSpan">${map.SHOP_NAME}</span> &nbsp;&nbsp;&nbsp;<button onclick="shopNameUp();" id="shopNameBtn" type="button" class="btn btn-outline-success btn-sm">수정</button><br /><br />
 			<input id="shopNameInput" type="text"  value="${map.SHOP_NAME}"/>
-			<button id="shopNameUpdateBtn" onclick="shopNameUpdateEnd();" type="button" class="btn btn-outline-success btn-sm">수정</button><br /><br />
+			<button id="shopNameUpdateBtn" onclick="shopNameUpdateEnd();" type="button" class="btn btn-outline-success btn-sm">수정</button>
+			<span id="shopNameCheck"></span><br />
 			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-open@2x.png" width="14" height="13">상점오픈일 ${map.SINCE} 일째
 			&nbsp;&nbsp;&nbsp;
 			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-user@2x.png" width="14" height="13">상점방문수 10명
@@ -67,10 +68,82 @@
 			<button onclick="shopUpdateEnd();" type="button" class="btn btn-outline-success btn-sm" id="up_btn">수정</button>
 		</div>
 	</div>
+	
 	<script>
+	$("#shopNameInput").keyup(function() {
+		var shopName = $("#shopNameInput").val();
+		var memberId = $("[name=memberLoggedIn]").val();
+		var currentShopName = $("#shopNameSpan").val();
+		console.log("중복memberId="+memberId);
+		console.log("중복shopName="+shopName);
+		console.log("현재shopName="+currentShopName);
+		$.ajax({
+			url : "${pageContext.request.contextPath}/shop/shopNameCheck",
+			method : "POST",
+			data : {memberId : memberId,
+				    shopName : shopName},
+			success : data => {
+				console.log("넘어온 숫자는?"+data.checkResult);
+				/* if(currentShopName == shopName){
+					$("#shopNameUpdateBtn").attr("disabled", false);
+				} */
+				if(shopName.length == 0){
+					$("#shopNameCheck").html("상점명을 입력하세요.");
+					$("#shopNameCheck").css("color", "red");
+					$("#shopNameUpdateBtn").attr("disabled", true);
+				}
+				else if(data.checkResult == "9"){
+					$("#shopNameCheck").html("이미 사용중인 상점명입니다.");
+					$("#shopNameCheck").css("color", "red");
+					$("#shopNameUpdateBtn").attr("disabled", true);
+				}
+				else if(data.checkResult == "1"){
+					$("#shopNameSpan").html(data.SHOP_NAME);
+					$("#shopNameCheck").html("사용가능한 상점명입니다.");
+					$("#shopNameCheck").css("color", "blue");
+					$("#shopNameUpdateBtn").attr("disabled", false);
+				}
+			},
+			error : (x, s, e) => {
+				console.log("ajax 요청 실패!");
+			}
+		});
+	})
+	
 	function shopNameUpdateEnd(){
 		var shopName = $("#shopNameInput").val();
+		var memberId = $("[name=memberLoggedIn]").val();
+		console.log("memberId="+memberId);
 		console.log("shopName="+shopName);
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath}/shop/updateShopName",
+			method : "POST",
+			data : {memberId : memberId,
+				    shopName : shopName},
+			success : data => {
+				console.log(data);
+				console.log(data.SHOP_NAME);
+				
+				$("#shopNameCheck").html("");
+				$("#shopNameSpan").html(data.SHOP_NAME);
+				
+				var $shopNameInput = $("#shopNameInput");
+				var $shopNameUpdateBtn = $("#shopNameUpdateBtn");
+				
+				$shopNameInput.hide();
+				$shopNameUpdateBtn.hide();
+				
+				var $shopNameSpan = $("#shopNameSpan");
+				var $shopNameBtn = $("#shopNameBtn");
+				
+				 $shopNameSpan.show();
+				 $shopNameBtn.show();
+			},
+			error : (x, s, e) => {
+				console.log("ajax 요청 실패!");
+			}
+		});
 		
 	}
 	

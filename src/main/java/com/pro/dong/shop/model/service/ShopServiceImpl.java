@@ -66,6 +66,16 @@ public class ShopServiceImpl implements ShopService{
 		return sd.updateShopInfo(param);
 	}
 
+	@Override
+	public int selectShopNameCheck(Map<String, String> param) {
+		return sd.selectShopNameCheck(param);
+	}
+
+	@Override
+	public int updateShopName(Map<String, String> param) {
+		return sd.updateShopName(param);
+	}
+
 
 	
 	

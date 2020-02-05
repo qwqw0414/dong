@@ -46,6 +46,10 @@ public interface ShopDAO {
 
 	int updateShopInfo(Map<String, String> param);
 
+	int selectShopNameCheck(Map<String, String> param);
+
+	int updateShopName(Map<String, String> param);
+
 	
 	//========================== 주영 끝
 	

@@ -66,6 +66,16 @@ public class ShopDAOImpl implements ShopDAO{
 		return sst.update("shop.updateShopInfo", param);
 	}
 
+	@Override
+	public int selectShopNameCheck(Map<String, String> param) {
+		return sst.selectOne("shop.selectShopNameCheck", param);
+	}
+
+	@Override
+	public int updateShopName(Map<String, String> param) {
+		return sst.update("shop.updateShopName", param);
+	}
+
 	
 	
 	//========================== 주영 끝

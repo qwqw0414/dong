@@ -99,6 +99,54 @@ public class ShopController {
 		return resultShop;
 	}
 	
+	@RequestMapping("/shopNameCheck")
+	@ResponseBody
+	public Map<String, String> shopNameCheck(@RequestParam("memberId") String memberId,
+							     			  @RequestParam("shopName") String shopName) {
+		log.info("넘어왔다!!!!!!!!!!!!!!!!!!!!!!!");
+		Map<String, String> param = new HashMap<>();
+		param.put("memberId", memberId);
+		param.put("shopName", shopName);
+		
+		Map<String, String> shopNameCheck = new HashMap<>();
+		
+		int checkResult= ss.selectShopNameCheck(param);
+		
+		//중복이 아니니까 사용가능하다.
+		if(checkResult == 0) {
+			checkResult = 1;
+		} 
+		//중복이니까 사용 불가다.
+		else {
+			checkResult = 9;
+		}
+		
+		shopNameCheck.put("checkResult", Integer.toString(checkResult));
+		
+		return shopNameCheck;
+	}
+	
+	@RequestMapping("/updateShopName")
+	@ResponseBody
+	public Map<String, String> shopNameUpdate(@RequestParam("memberId") String memberId,
+							     			  @RequestParam("shopName") String shopName) {
+		log.info("넘어왔다!!!!!!!!!!!!!!!!!!!!!!!");
+		Map<String, String> param = new HashMap<>();
+		param.put("memberId", memberId);
+		param.put("shopName", shopName);
+		log.debug("param={}", param);
+		
+		int result = ss.updateShopName(param);
+		log.debug("result={}", result);
+		Map<String, String> resultShop = new HashMap<>();
+		
+		resultShop = ss.selectOneShop(memberId);	
+		log.info("넘어온값으로 찾은 상점={}", resultShop);
+		
+		return resultShop;
+	}
+	
+	
 	//========================== 주영 끝
 	
 	
