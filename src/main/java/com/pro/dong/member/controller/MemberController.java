@@ -344,7 +344,65 @@ public class MemberController {
 		
 		return map;
 	}
+	@RequestMapping("/updateMemberPhone")
+	@ResponseBody
+	public Map<String, Object> updateMemberPhone(HttpSession session, @RequestParam("afterPhone") String afterPhone) {
+		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
+		
+		log.info("세션 memberId={}",memberLoggedIn.getMemberId());
+		log.info("바꿀 afterPhone={}",afterPhone);
+		
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String,String> param = new HashMap<String, String>();
+		param.put("memberId", memberLoggedIn.getMemberId());
+		param.put("afterPhone", afterPhone);
+		
+		log.info("map={}",map);
+		
+		int result = ms.updateMemberPhone(param);
+		log.info("result={}",result);
+		
+		
+		if (result>0) {
+			map=ms.selectOneMember(memberLoggedIn.getMemberId());
+		}
+		
+		log.info("바뀐멤버객체={}",map);
+		
+		
+		return map;
+	}
 	
+	@RequestMapping("/updateMemberEmail")
+	@ResponseBody
+	public Map<String, Object> updateMemberEmail(HttpSession session, @RequestParam("afterEmail") String afterEmail) {
+		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
+		
+		log.info("세션 memberId={}",memberLoggedIn.getMemberId());
+		log.info("바꿀 afterEmail={}",afterEmail);
+		
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String,String> param = new HashMap<String, String>();
+		param.put("memberId", memberLoggedIn.getMemberId());
+		param.put("afterEmail", afterEmail);
+		
+		log.info("map={}",map);
+		
+		int result = ms.updateMemberEmail(param);
+		log.info("result={}",result);
+		
+		
+		if (result>0) {
+			map=ms.selectOneMember(memberLoggedIn.getMemberId());
+		}
+		
+		log.info("바뀐멤버객체={}",map);
+		
+		
+		return map;
+	}
 	
 //========================== 현규 끝
 
