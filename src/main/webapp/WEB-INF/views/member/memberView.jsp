@@ -3,6 +3,11 @@
 
 
 
+<h1 style="text-align: center;">마이페이지</h1><br>
+<hr>
+<br>
+
+
 <div id="memberView">
     <div class="mv_content">
         <div class="row row-cols-2">
