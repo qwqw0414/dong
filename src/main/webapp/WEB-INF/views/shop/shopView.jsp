@@ -8,12 +8,11 @@
 <style>
 #shopView{width: 1100px;}
 #shopDiv{
-	margin-bottom: 50px;
 	display: inline-block;
 }
 #shopImg1{
 	width: 300px;
-	height: 300px;
+	height: 400px;
 	display: inline-block;
 }
 #shopInfoDiv{
@@ -23,11 +22,14 @@
 }
 #shopImageDiv{
 	display: inline-block;
+	position: relative;
+	top: -130px;
 }
 #shopDetailInfoDiv{
 	display: inline-block;
 	position: relative;
-	left: 50px;
+	left: 80px;
+	top: 50px;
 }
 </style>
 
@@ -39,7 +41,7 @@
 			<img id="shopImg1" src="${pageContext.request.contextPath}/resources/images/dog.png" alt="" />
 		</div>
 		<div id="shopDetailInfoDiv">
-			${map.SHOP_NAME} &nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-outline-success">상점명 수정</button><br /><br />
+			${map.SHOP_NAME} &nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-outline-success btn-sm">수정</button><br /><br />
 			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-open@2x.png" width="14" height="13">상점오픈일 ${map.SINCE} 일 전
 			&nbsp;&nbsp;&nbsp;
 			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-user@2x.png" width="14" height="13">상점방문수 10명
@@ -47,33 +49,43 @@
 			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-sell@2x.png" width="14" height="13">상품판매 0회
 			&nbsp;&nbsp;&nbsp;
 			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-dell@2x.png" width="14" height="13">택배발송 2회
-			<br /><br />${map.SHOP_INFO} &nbsp;&nbsp;&nbsp;<button onclick="updateShopInfo();" type="button" class="btn btn-outline-success">소개글 수정</button>
+			<br /><br /><span id="shopInfoDetail">${map.SHOP_INFO}</span> &nbsp;&nbsp;&nbsp;
+			<button id="hiddenBtn" onclick="updateInfo();" type="button" class="btn btn-outline-success btn-sm">수정</button><br />
+			<textarea  name="updateInfo" id="updateInfo" cols="30" rows="10">${map.SHOP_INFO }</textarea>
+			<button  type="button" class="btn btn-outline-success btn-sm">수정</button><br />
 		</div>
 	</div>
 	<script>
-	function updateShopInfo(){
+	$(function(){
+		var $textarea = $("#updateInfo");
+		$textarea.hide();
+		
+	});
+	
+	function updateInfo(){
+		var $btn = $("#hiddenBtn");
+		var $info = $("#shopInfoDetail");
+		console.log($btn);
+		console.log($info);
+		$btn.hide();
+		$info.hide();
+	}
+	
+	
+	/* function updateShopInfo(){
+		var memberId = $("[name=memberLoggedIn]").val();
 		$.ajax({
-			url : "${pageContext.request.contextPath}/member/findIdEnd",
-			data : {memberName : name,
-					email : email},
-			dataType : "json",
-			type : "GET", 
+			url : "${pageContext.request.contextPath}/shop/updateShopInfo",
+			data : {memberId : memberId}
 			success : data => {
-				//console.log(data);
-				var findId = $("<h2></h2>");
-				if(data.memberId == null){
-					findId.append("입력하신 정보의 회원은 존재하지 않습니다.");
-				}
-				else{
-					findId.append(data.memberName+"님의 아이디는 "+data.memberId+"입니다.");
-				}
-				$("#findId-result").html(findId);
+				console.log(data);
+								
 			},
 			error : (x, s, e) => {
 				console.log("ajax 요청 실패!");
 			}
 		});
-	};
+	}; */
 	</script>
 	
 	<!-- 넘어오면 다 내꺼 -->
