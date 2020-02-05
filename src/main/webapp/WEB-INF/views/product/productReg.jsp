@@ -88,11 +88,22 @@
     <div class="product-tag">가격</div class="product-tag">
     <div class="product-insert">
         <input type="text">
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="shipping">
+            <label class="custom-control-label" for="shipping">무료 배송</label>
+        </div>
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="haggle">
+            <label class="custom-control-label" for="haggle">가격협의 가능</label>
+        </div>
     </div>
 </div>
 <hr>
 <div class="input-area">
     <div class="product-tag">설명</div class="product-tag">
+    <div class="product-insert">
+        <textarea name="" id="" cols="30" rows="10" class="form-control"></textarea>
+    </div>
 </div>
 <hr>
 <button>등록하기</button>
