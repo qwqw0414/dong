@@ -107,7 +107,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/writeBoardEnd.do")
-	public ModelAndView writeBoardEnd(ModelAndView mav, Board board,
+	public ModelAndView writeBoardEnd(ModelAndView mav, Board board, @RequestParam(value="boardCategory") String boardCategory,
 									  @RequestParam(value="upFile", required=false) MultipartFile[] upFile,
 									  HttpServletRequest request) {
 		
@@ -115,7 +115,7 @@ public class BoardController {
 		List<Attachment> attachList = new ArrayList<>();
 		
 		log.debug("board={}", board);
-		
+		board.setCategoryId(boardCategory);
 		//동적으로 directory 생성
 		File dir = new File(saveDirectory);
 		if(dir.exists() == false)
