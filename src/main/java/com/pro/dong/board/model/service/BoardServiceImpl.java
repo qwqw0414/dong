@@ -60,6 +60,11 @@ public class BoardServiceImpl implements BoardService {
 		return bd.selectOneBoard(boardNo);
 	}
 
+	@Override
+	public int boardInCount(int boardNo) {
+		return bd.boardInCount(boardNo);
+	}
+
 	//========================== 지은 끝
 		
 	// 예찬 시작 ==========================

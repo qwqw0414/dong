@@ -68,8 +68,12 @@
 	
 	<!-- 지은 시작 ========================== -->
 	<select id="selectOneBoard" resultType="board">
-		select * from board where board_No = #{boardNo}
+		select * from board where board_no = #{boardNo}
 	</select>
+	
+	<update id="boardInCount" parameterType="_int">
+		update board set read_count = read_count + 1 where board_no = #{boardNo} 
+	</update>
 	
 	<!-- ==========================  지은 끝 -->
 	

@@ -27,6 +27,7 @@ read_count -->
 	<input type="text" class="form-control" name="boardWriter" value="${memberLoggedIn.memberId}" readonly required>
 	<input type="text" class="form-control" name="categoryId" value="${board.categoryId}" readonly required>
 	<input type="text" class="form-control" name="writeDate" value="${board.writeDate}" readonly required>
+	<input type="text" class="form-control" name="writeDate" value="${board.readCount}" readonly required>
 
 	 <c:forEach items="" var="a" varStatus="vs">
 		<button type="button" 

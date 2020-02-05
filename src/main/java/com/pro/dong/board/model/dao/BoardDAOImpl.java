@@ -65,6 +65,11 @@ public class BoardDAOImpl implements BoardDAO {
 		return sst.selectOne("board.selectOneBoard", boardNo);
 	}
 
+	@Override
+	public int boardInCount(int boardNo) {
+		return sst.update("board.boardInCount", boardNo);
+	}
+
 	//========================== 지은 끝
 		
 	// 예찬 시작 ==========================

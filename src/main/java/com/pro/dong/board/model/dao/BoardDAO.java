@@ -33,6 +33,8 @@ public interface BoardDAO {
 	// 지은 시작 ==========================
 	Board selectOneBoard(int boardNo);
 
+	int boardInCount(int boardNo);
+
 	//========================== 지은 끝
 		
 	// 예찬 시작 ==========================

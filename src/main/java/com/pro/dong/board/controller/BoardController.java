@@ -103,13 +103,14 @@ public class BoardController {
 	public String boardView(Model model, @RequestParam("boardNo") int boardNo) {
 		Board board = bs.selectOneBoard(boardNo);
 		log.debug("boardNo="+boardNo);
+		
+		int readCount = bs.boardInCount(boardNo);
 		model.addAttribute("board", board);
+		log.debug("readCount="+readCount);
 		
 		return "board/boardView";
 		
 	}
-	
-
 	
 
 	//========================== 지은 끝
