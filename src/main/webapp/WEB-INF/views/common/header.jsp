@@ -82,7 +82,7 @@ a{
 
 <%if(memberLoggedIn == null){%>
 <!-- 모달 -->
-<div class="modal-bg">
+<div class="modal-bg" style="font-family: 'MapoPeacefull';">
     <div class="modal-dialog" style="margin-top: 20px;" id="modal-log">
         <div class="modal-content" style="height: 660px; width: 500px;">
 <!-- 모달바디 -->
@@ -298,7 +298,7 @@ $("#categoryDiv .categoryA").hover(function(e){
 
 
 <section>
-	<div class="container" id="section" style="min-width: 1200px;">
+	<div class="container_" id="section" style="width: 1200px; margin: auto;">
 	
 	
 	
