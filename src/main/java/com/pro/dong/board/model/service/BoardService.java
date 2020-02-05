@@ -14,6 +14,7 @@ public interface BoardService {
 	List<Board> loadBoardList(int cPage, int numPerPage, Map<String, String> param);
 
 	int selectBoardTotalContents(Map<String, String> param);
+
 	
 	//==========================민호 끝
 		
@@ -22,7 +23,8 @@ public interface BoardService {
 	//========================== 하진 끝
 		
 	// 근호 시작 ==========================
-
+	int insertBoard(Board board);
+	
 	//========================== 근호 끝
 		
 	// 지은 시작 ==========================

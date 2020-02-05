@@ -37,6 +37,7 @@ public class BoardDAOImpl implements BoardDAO {
 
 	}
 
+
 	
 	//==========================민호 끝
 		
@@ -45,6 +46,10 @@ public class BoardDAOImpl implements BoardDAO {
 	//========================== 하진 끝
 		
 	// 근호 시작 ==========================
+	@Override
+	public int insertBoard(Board board) {
+		return sst.insert("board.insertBoard", board);
+	}
 
 	//========================== 근호 끝
 		

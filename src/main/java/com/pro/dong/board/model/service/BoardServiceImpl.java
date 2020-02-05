@@ -33,6 +33,7 @@ public class BoardServiceImpl implements BoardService {
 	public int selectBoardTotalContents(Map<String, String> param) {
 		return bd.selectBoardTotalContents(param);
 	}
+
 	
 	//==========================민호 끝
 		
@@ -41,7 +42,10 @@ public class BoardServiceImpl implements BoardService {
 	//========================== 하진 끝
 		
 	// 근호 시작 ==========================
-
+	@Override
+	public int insertBoard(Board board) {
+		return bd.insertBoard(board);
+	}
 	//========================== 근호 끝
 		
 	// 지은 시작 ==========================

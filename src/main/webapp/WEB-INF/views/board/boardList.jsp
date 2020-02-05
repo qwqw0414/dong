@@ -69,7 +69,7 @@ function loadCategoryList(){
 	<p id="totalContents"></p>
 	<input type="button" value="글쓰기" id="btn-add" class="btn btn-outline-success" onclick="fn_goWriteBoard();"/>
 	<table id="tbl-board" class="table table-striped table-hover">
-
+		
 	</table>
 	<!-- pageBar 출력 -->
 	<div id="pageBar">

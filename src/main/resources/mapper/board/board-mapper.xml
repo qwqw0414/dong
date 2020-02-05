@@ -49,7 +49,18 @@
 	<!-- ==========================  하진 끝 -->
 	
 	<!-- 근호 시작 ========================== -->
+	<insert id="insertBoard">
+		insert into board(category_id, board_no, member_id, board_title, board_contents, write_date, read_count )
+		values(
+			   #{categoryId},
+			   seq_board_no.nextval,
+			   #{memberId},
+			   #{boardTitle},
+			   #{boardContents},
+			   default,
+			   #{readCount})
 	
+	</insert>
 	<!-- ==========================  근호 끝 -->
 	
 	<!-- 지은 시작 ========================== -->
