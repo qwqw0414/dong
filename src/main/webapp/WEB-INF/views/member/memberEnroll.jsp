@@ -1,16 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <style>
 #memberEnroll .enroll-form{width: 450px; margin: auto;}
-#memberEnroll .enroll-map{width: 600px; margin: auto;}
+#memberEnroll .enroll-map{width: 450px; margin: auto;}
 #memberEnroll .enroll-form input{margin-top: 40px;}
 #memberEnroll .enroll-form select{margin-top: 40px;}
 #memberEnroll h1{font-weight: bolder;}
 #memberEnroll .enroll-btn{margin-top: 50px;}
 #memberEnroll .enroll-btn button{width: 230px;}
-#memberEnroll #msg{font-size: 1.6em; margin: 40px 0 40px; height: 60px;}
-#memberEnroll #page-2{margin-top: -20px; margin-bottom: 30px;}
-#memberEnroll #page-3{margin-top: -20px; margin-bottom: 30px;}
+#memberEnroll #msg{font-size: 1.6em; margin: 0px 0 40px; height: 60px;}
+#memberEnroll #page-2{margin-top: 0px; margin-bottom: 30px;}
+#memberEnroll #page-3{margin-top: 0px; margin-bottom: 30px;}
 #memberEnroll #page-2{display: none;}
 #memberEnroll #btn-2{display: none;}
 #memberEnroll #page-3{display: none;}
@@ -19,7 +18,7 @@
 #memberEnroll #btn-4{display: none;}
 </style>
 <style>
-#memberEnroll .map_wrap {position:relative;width:100%;height:350px;}
+#memberEnroll .map_wrap {position:relative;width:100%;height:300px;}
 #memberEnroll .title {font-weight:bold;display:block;}
 #memberEnroll .hAddr {position:absolute;left:10px;top:10px;border-radius: 2px;background:#fff;background:rgba(255,255,255,0.8);z-index:1;padding:5px;}
 #memberEnroll #centerAddr {display:block;margin-top:2px;font-weight: normal;}
@@ -27,7 +26,6 @@
 </style>
 <div id="memberEnroll" class="text-center">
 
-    <h1>회원가입을 진행합니다.</h1>
     <div id="msg"></div>
 
     <div class="enroll-form" id="page-1">
@@ -74,7 +72,7 @@
 
     <div class="enroll-form" id="page-4">
         이메일 인증 추가 예정
-        <input type="email" id="email" value="" class="form-control form-control text-center">
+        <input type="email" id="email" value="" class="form-control text-center">
     </div>
 
     <div class="enroll-btn" id="btn-1">
@@ -153,11 +151,8 @@ $(()=>{
             dataType: "json",
             success : data =>{
                 if(data == 1){
-                    if(confirm("회원가입 완료되었습니다.로그인창으로 이동하시겠습니까?")){
-                        location.href = "${pageContext.request.contextPath}/member/memberLogin.do";
-                    }else{
-                        location.href = "${pageContext.request.contextPath}/";
-                    }
+                    alert("회원가입 완료");
+                    location.href = "${pageContext.request.contextPath}/";
                 }
                 else{
                     alert("실패");
@@ -424,7 +419,7 @@ $(()=>{
             case "check_passwordChk":$msg.html("비밀번호를 다시 한번 확인해주세요.");break;
             case "valid_passwordChk":$msg.html("비밀번호가 일치합니다.");break;
             case "invalid":$msg.html("다시 한번 확인해주세요.");break;
-            case "step2":$msg.html("가입에 필요한 개인 정보를 입력해주세요.");break;
+            case "step2":$msg.html("가입에 필요한 개인 정보를<br>입력해주세요.");break;
             case "check_name":$msg.html("본인 성명을 입력해주세요");break;
             case "check_gender":$msg.html("본인 성별을 선택해주세요.");break;
             case "check_birth":$msg.html("본인 생년월일을 선택해주세요.");break;
@@ -596,10 +591,3 @@ $(()=>{
 
 
 </script>
-
-
-
-
-
-
-<jsp:include page="/WEB-INF/views/common/footer.jsp"/>

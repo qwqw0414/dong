@@ -4,11 +4,11 @@
   </section>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/css.css" />
 <style>
-.text-center{
+footer .text-center{
 	padding-top: 50px;
 }
 .footer{
-	width: 100%;
+	min-width: 100%;
     display: flex;
     -webkit-box-pack: center;
     justify-content: center;

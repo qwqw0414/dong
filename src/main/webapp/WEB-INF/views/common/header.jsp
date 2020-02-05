@@ -1,8 +1,13 @@
+<%@page import="com.pro.dong.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+<%
+	Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
+%>
 <!DOCTYPE html>
 <html>
 
@@ -74,6 +79,55 @@ a{
 </style>
 
 <body>
+
+<%if(memberLoggedIn == null){%>
+<!-- 모달 -->
+<div class="modal-bg">
+    <div class="modal-dialog" style="margin-top: 20px;" id="modal-log">
+        <div class="modal-content" style="height: 660px; width: 500px;">
+<!-- 모달바디 -->
+            <div class="modal-body" id="login-page">
+				<jsp:include page="/WEB-INF/views/member/memberLogin.jsp"/>
+			</div>
+
+			<div class="modal-body" id="enroll-page">
+				<jsp:include page="/WEB-INF/views/member/memberEnroll.jsp"/>
+			</div>
+			
+			<div class="modal-body" id="findId-page">
+				<jsp:include page="/WEB-INF/views/member/findId.jsp"/>
+			</div>
+
+			<div class="modal-body" id="findPwd-page">
+				<jsp:include page="/WEB-INF/views/member/findPassword.jsp"/>
+			</div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+$(()=>{
+
+	$("#modal-log .modal-body").hide();
+	$("#modal-log #login-page").show();
+
+	$("#modal-log #login-bottom #btn-go-enroll").click(()=>{
+		$("#modal-log .modal-body").hide();
+		$("#modal-log #enroll-page").show();
+	});
+	$("#modal-log #login-bottom #btn-go-findId").click(()=>{
+		$("#modal-log .modal-body").hide();
+		$("#modal-log #findId-page").show();
+	});
+	$("#modal-log #login-bottom #btn-go-findPwd").click(()=>{
+		$("#modal-log .modal-body").hide();
+		$("#modal-log #findPwd-page").show();
+	});
+});
+</script>
+<%}%>
+
 <header>
 <nav class="navbar navbar-expand-md navbar-light bg-light">
 
@@ -152,14 +206,14 @@ a{
 </nav>
 
 
-<div id="headerImgDiv">
+<div id="headerImgDiv" style="min-width: 1400px;">
 	<a href="${pageContext.request.contextPath}">
 		<img id="headerImg" src="${pageContext.request.contextPath}/resources/images/header.PNG"/>
 	</a>
 </div>
 
 
-<div class="container">
+<div class="container" style="min-width: 1000px;">
 	<div class="row">
 		
 		<div id="categoryDiv"> 
@@ -209,7 +263,7 @@ a{
 </div>	
 
 
-	</header>
+</header>
 
 <script>
 $("#categoryDiv .categoryA").hover(function(e){
@@ -244,7 +298,7 @@ $("#categoryDiv .categoryA").hover(function(e){
 
 
 <section>
-	<div class="container" id="section">
+	<div class="container" id="section" style="min-width: 1200px;">
 	
 	
 	
