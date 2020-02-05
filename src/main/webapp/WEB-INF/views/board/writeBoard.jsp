@@ -1,3 +1,6 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.pro.dong.board.model.vo.BoardCategory"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
@@ -12,6 +15,14 @@
         padding: 0px;
     }
 </style>
+<%
+	List<BoardCategory> list = new ArrayList<>();
+	list = (List<BoardCategory>)request.getAttribute("boardCategoryList");
+	String option = "";
+	for(BoardCategory bc: list){
+		option +=  "<option value=\""+bc.getCategoryId()+"\">"+bc.getCategoryName()+"</option>";
+	}
+%>
 <script>
 function validate(){
 	var contents = $("#boardContents").val();
@@ -69,10 +80,7 @@ $(function(){
 				    <label class="input-group-text" for="inputGroupSelect01">카테고리</label>
 				 </div>
 				 <select class="custom-select" id="boardCategory" name="boardCategory">
-				    <option value="1">공지</option>
-				    <option value="2">정보</option>
-				    <option value="3">홍보</option>
-				    <option value="4">자유</option>
+				   <%=option %>
 				 </select>
 				</div>
                <div class="input-group mb-3" >

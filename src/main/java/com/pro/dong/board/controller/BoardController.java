@@ -99,9 +99,13 @@ public class BoardController {
 		
 	// 근호 시작 ==========================
 	@RequestMapping("/writeBoard.do")
-	public void writeBoard() {
-		
+	public ModelAndView writeBoard(ModelAndView mav) {
+		List<BoardCategory> boardCategoryList = bs.selectBoardCategory();
+		mav.addObject("boardCategoryList",boardCategoryList);
+		mav.setViewName("/board/writeBoard");
+		return mav;
 	}
+	
 	@RequestMapping("/writeBoardEnd.do")
 	public ModelAndView writeBoardEnd(ModelAndView mav, Board board,
 									  @RequestParam(value="upFile", required=false) MultipartFile[] upFile,
@@ -109,6 +113,8 @@ public class BoardController {
 		
 		String saveDirectory = request.getServletContext().getRealPath("/resources/upload/board");
 		List<Attachment> attachList = new ArrayList<>();
+		
+		log.debug("board={}", board);
 		
 		//동적으로 directory 생성
 		File dir = new File(saveDirectory);
