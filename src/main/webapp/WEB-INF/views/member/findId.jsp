@@ -34,7 +34,7 @@
 			dataType : "json",
 			type : "GET", 
 			success : data => {
-				//console.log(data);
+				console.log(data);
 				var findId = $("<h2></h2>");
 				if(data.memberId == null){
 					findId.append("입력하신 정보의 회원은 존재하지 않습니다.");
