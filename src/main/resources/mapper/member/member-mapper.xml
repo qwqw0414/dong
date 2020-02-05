@@ -80,12 +80,19 @@
 	
 	<!-- 현규 시작 ========================== -->
 	<select id="selectOneMember" resultType="map">
-	select M.*, p.point, a.sido, a.sigungu, a.dong 
+
+		
+		select M.*, p.point, a.sido, a.sigungu, a.dong,s.shop_no,s.shop_name,s.image,s.open_date
 		from member M left join point P 
 		on m.member_id = p.member_id
-		left join address A
-		on m.member_id = a. member_id
+		left join address A 
+		on m.member_id = a.member_id
+        left join shop S
+        on s.member_id = m.member_id
 		where m.member_id=#{memberId}
+		
+		
+		
 	
 	</select>
 	<!-- ==========================  현규 끝 -->
