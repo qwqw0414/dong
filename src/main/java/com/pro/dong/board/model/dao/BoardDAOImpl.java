@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.pro.dong.board.model.vo.Attachment;
 import com.pro.dong.board.model.vo.Board;
 import com.pro.dong.board.model.vo.BoardCategory;
 import com.pro.dong.member.model.vo.Address;
@@ -43,6 +44,7 @@ public class BoardDAOImpl implements BoardDAO {
 		return sst.selectList("board.selectBoardCategory");
 	}
 
+
 	
 	//==========================민호 끝
 		
@@ -56,9 +58,23 @@ public class BoardDAOImpl implements BoardDAO {
 		return sst.insert("board.insertBoard", board);
 	}
 
+	@Override
+	public int insertAttachment(Attachment a) {
+		return sst.insert("board.insertAttachment", a);
+	}
+
 	//========================== 근호 끝
 		
 	// 지은 시작 ==========================
+	@Override
+	public Board selectOneBoard(int boardNo) {
+		return sst.selectOne("board.selectOneBoard", boardNo);
+	}
+
+	@Override
+	public int boardInCount(int boardNo) {
+		return sst.update("board.boardInCount", boardNo);
+	}
 
 	//========================== 지은 끝
 		

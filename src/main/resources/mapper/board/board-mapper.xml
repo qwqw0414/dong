@@ -9,9 +9,11 @@
 		where member_id = #{memberId}
 	</select>
 	<select id="selectBoardTotalContents" parameterType="map" resultType="_int">
-		select count(*)cnt
+		select count(*) cnt
 		from board B join address A
 		on b.member_id = a.member_id
+		join board_category C
+		on b.category_id = c.category_id
 		<where>
 			<if test="sido!=null and sido!=''">
 				a.sido = #{sido}
@@ -21,6 +23,9 @@
 			</if>
 			<if test="dong!=null and dong!=''">
 				and a.dong = #{dong}
+			</if>
+			<if test="boardCategory!=null and boardCategory!=''">
+				and c.category_id = #{boardCategory}
 			</if>
 		</where>
 	</select>
@@ -40,7 +45,11 @@
 			<if test="dong!=null and dong!=''">
 				and a.dong = #{dong}
 			</if>
+			<if test="boardCategory!=null and boardCategory!=''">
+				and c.category_id = #{boardCategory}
+			</if>
 		</where>
+		order by b.board_no desc
 	</select>
 	<select id="selectBoardCategory" resultType="boardCategory">
 		select * from board_category
@@ -62,11 +71,29 @@
 			   #{boardContents},
 			   default,
 			   #{readCount})
+		<selectKey keyProperty="boardNo" resultType="_int"
+				   order="AFTER">
+			select seq_board_no.currval from dual
+		</selectKey>
+	</insert>
 	
+	<insert id="insertAttachment">
+		insert into board_attachment(attchment_no, board_no, originalfilename, renamedfilename)
+		values(seq_attachment_no.nextval,
+			   #{boardNo},
+			   #{originalFileName},
+			   #{renamedFileName})
 	</insert>
 	<!-- ==========================  근호 끝 -->
 	
 	<!-- 지은 시작 ========================== -->
+	<select id="selectOneBoard" resultType="board">
+		select * from board where board_no = #{boardNo}
+	</select>
+	
+	<update id="boardInCount" parameterType="_int">
+		update board set read_count = read_count + 1 where board_no = #{boardNo} 
+	</update>
 	
 	<!-- ==========================  지은 끝 -->
 	
