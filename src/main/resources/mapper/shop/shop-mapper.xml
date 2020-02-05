@@ -30,6 +30,10 @@
 		from member M left join shop S on M.member_id = S.member_id 
 		where M.member_id = #{memberId}
 	</select>
+	
+	<update id="updateShopInfo">
+		update shop set shop_info = #{shop.shop_info} where member_id = #{shop.member_id}
+	</update>
 	<!-- ==========================  주영 끝 -->
 	
 	<!-- 현규 시작 ========================== -->

@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.pro.dong.member.model.exception.MemberException;
 import com.pro.dong.member.model.service.MemberService;
 import com.pro.dong.member.model.vo.Address;
@@ -287,18 +288,16 @@ public class MemberController {
 		
 	}
 	
-	
-	@RequestMapping("/findIdEnd.do")
+	@RequestMapping(value="/findIdEnd", produces="text/plain;charset=UTF-8")
 	@ResponseBody
-	public Member findIdEnd(@RequestParam("memberName") String name, @RequestParam("memberEmail") String email) {
+	public String findIdEnd(Member member) {
 		
-		Map<String, String> map = new HashMap<>();
-		map.put("name", name);
-		map.put("email", email);
+		log.debug(member.toString());
 		
-		Member m = ms.selectMemberByName(map);
+		Member m = ms.selectMemberByName(member);
 		
-		return m;
+		Gson gson = new Gson();
+		return gson.toJson(m);
 	}
 	
 //========================== 주영 끝

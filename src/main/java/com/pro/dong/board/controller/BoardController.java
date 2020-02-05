@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.pro.dong.board.model.service.BoardService;
 import com.pro.dong.board.model.vo.Board;
@@ -83,17 +84,17 @@ public class BoardController {
 	public void writeBoard() {
 		
 	}
-	@RequestMapping("/writeBoardEnd")
-	public Map<String, String> writeBoardEnd(@RequestBody String boardTitle,
-											 @RequestBody String boardContent){
-		Map<String, String> map = new HashMap<>();
+	@RequestMapping("/writeBoardEnd.do")
+	public String writeBoardEnd(Model model, Board board) {
 		
-		//int result = bs.writeBoardEnd(boardTitle, boardContent);
-		//String msg = result > 0? "작성 완료!":"작성 실패";
+		int result = bs.insertBoard(board);
+		log.debug("board={}", board);
+		model.addAttribute("msg", result>0?"등록성공!":"등록실패!");
+		model.addAttribute("loc", "/board/boardList.do");
 		
-		//map.put("msg", msg);
+		log.debug("result={}",result);
 		
-		return map;
+		return "common/msg";
 	}
 	//========================== 근호 끝
 		

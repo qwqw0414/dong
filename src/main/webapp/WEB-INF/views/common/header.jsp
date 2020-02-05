@@ -20,7 +20,6 @@
 <!-- 카카오 맵 -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ea166326e5dc5657d4a2feb24b4cfe0b&libraries=services"></script>
 </head>
-
 <style>
 #headerImgDiv{
 	width: 100%;
@@ -51,19 +50,28 @@
 	margin-left: 20px;
 }
 #button-addon2{
-
     height: 38px;
 }
-.dropdown:hover .dropdown-menu {
-    display: block;
-    margin-top: 0;
-}
-.dropdown:hover .dropdown-submenu {
-    display: block;
-    margin-top: 0;
-}
+ ul{list-style:none; margin:0px; padding:0px; }
+.one{float:left;}/* 전체 메뉴를 float 시킴 */
+.one > li{float:left;}   /*1단 메뉴를 일렬로 늘어놓기 */
+.one ul{display:none;}  /*2단, 3단 메뉴를 숨기기 */
+.one li:hover > ul {display:block; background: white; z-index: 1;}  /*주 메뉴에 마우스 오버했을 때 부 메뉴 드러내기 */
+.two{position:absolute; left:0px; top: 35px; }  /*2단 메뉴 절대 위치*/
+.three{position:absolute;left:90px; top: 0px;}  /*3단 메뉴 절대 위치*/
 
-</style> 
+ul li a{text-decoration:none; display:block; width:90px;height: 30px;line-height: 30px;text-align:center;} 
+.one  li {width:90px;}  
+one li:hover{background-color:#EAEAEA;}
+a{
+	text-decoration: none !important;
+	color: black;
+}
+#categoryDiv {position:relative; margin-left:5px; zoom:1;} 
+#categoryDiv:before, #header:after{content: " "; display: block; clear: both;}
+#categoryDiv:after{clear: both;} 
+#contents{width:50%; height: 300px; float:left ;margin:5px;}
+</style>
 
 <body>
 <header>
@@ -114,7 +122,19 @@
 				</div>
 			</li>
 
-			<!-- 커뮤니티 -->
+			<!-- 상품 -->
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false">
+					상품
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/product/productReg.do">상품 등록</a>
+
+				</div>
+			</li>
+			<!-- 상점 -->
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
 					aria-haspopup="true" aria-expanded="false">
@@ -142,7 +162,7 @@
 <div class="container">
 	<div class="row">
 	
-		<!--카테고리아이콘-->
+		<%-- <!--카테고리아이콘-->
 		<div class="col-md-1">
 			<div class="btn-group" id="categoryDiv">
 				<a style="color:white;" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
@@ -159,7 +179,77 @@
 					<a class="dropdown-item" href="#">구인구직</a>
 				</div>
 			</div>
+		</div> --%>
+		
+		<div id="categoryDiv"> 
+			<ul class="one"> 
+  				<li>
+  					<div id="menuImgDiv">
+  					<a href="#"><img id="headerMenu" src="${pageContext.request.contextPath}/resources/images/menuImg.PNG"/></a>
+    				</div>
+    				<ul class="two">
+    					<li><a href="">카테고리</a></li>
+    					<hr />
+       					<li><a href="#">패션</a>
+       						<ul class="three">
+         						<li><a href="#">여성패션</a>
+         							<ul class="three">
+         								<li><a href="#">티셔츠</a></li>
+         								<li><a href="#">치마</a></li>
+         								<li><a href="#">바지</a></li>
+         								<li><a href="#">바지</a></li>
+         								<li><a href="#">바지</a></li>
+         								<li><a href="#">바지</a></li>
+         								<li><a href="#">바지</a></li>
+         								<li><a href="#">바지</a></li>
+       								</ul>
+         						</li>
+         						<li><a href="#">sub3-2</a></li>
+         						<li><a href="#">sub3-3</a></li>
+         						<li><a href="#">sub3-3</a></li>
+         						<li><a href="#">sub3-3</a></li>
+         						<li><a href="#">sub3-3</a></li>
+       						</ul>
+       					</li>
+       					<li><a href="#">sub2</a>
+       						<ul class="three">
+         						<li><a href="#">sub3-1</a></li>
+         						<li><a href="#">sub3-2</a></li>
+         						<li><a href="#">sub3-3</a></li>
+         						<li><a href="#">sub3-3</a></li>
+         						<li><a href="#">sub3-3</a></li>
+       						</ul>
+       					</li>
+       					<li><a href="#">sub3</a>
+        					<ul class="three">
+         						<li><a href="#">sub3-1</a>
+         							<ul class="three">
+         								<li><a href="#">sub3-1</a></li>
+         								<li><a href="#">sub3-2</a></li>
+         								<li><a href="#">sub3-3</a></li>
+         								<li><a href="#">sub3-3</a></li>
+         								<li><a href="#">sub3-3</a></li>
+         								<li><a href="#">sub3-3</a></li>
+       								</ul>
+         						</li>
+         						<li><a href="#">sub3-2</a></li>
+         						<li><a href="#">sub3-3</a></li>
+         						<li><a href="#">sub3-3</a></li>
+         						<li><a href="#">sub3-3</a></li>
+         						<li><a href="#">sub3-3</a></li>
+         						<li><a href="#">sub3-3</a></li>
+       						</ul>
+       					</li>
+       					<li><a href="">메뉴이다</a></li>
+       					<li><a href="">메뉴이다</a></li>
+       					<li><a href="">메뉴이다</a></li>
+       					<li><a href="">메뉴이다</a></li>
+       					<li><a href="">메뉴이다</a></li>
+    				</ul>
+  				</li>
+			</ul>
 		</div>
+		
 	
 		<!--검색창-->
 		<div class="input-group col-md-7">
