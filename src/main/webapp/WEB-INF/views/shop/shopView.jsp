@@ -6,40 +6,50 @@
 	Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
 %>
 <style>
-#shopView{width: 1100px;}
+#shopView{
+	width: 1100px;
+}
 #shopDiv{
 	display: inline-block;
+	position: relative;
 }
 #shopImg1{
 	width: 300px;
-	height: 400px;
+	height: 300px;
 	display: inline-block;
+	margin-bottom: 50px;
 }
 #shopInfoDiv{
 	width: 1100px;
 	height: 300px;
 	display: inline-block;
 }
-#shopImageDiv{
+/* #shopImageDiv{
 	display: inline-block;
 	position: relative;
 	top: -130px;
-}
+} */
 #shopDetailInfoDiv{
 	display: inline-block;
-	position: relative;
-	left: 80px;
+	position: absolute;
+	width: 600px;	
+	left: 380px;
 	top: 50px;
 }
+.my-hr3 {
+    border: 0;
+    height: 3px;
+    background: #ccc;
+  }
 </style>
 
 <input type="hidden" name="memberLoggedIn" value="<%= memberLoggedIn.getMemberId()%>"/>
 
  <div id="shopView" class="mx-center">
 	<div id="shopDiv">
-		<div id="shopImageDiv">
+		<!-- <div id="shopImageDiv"> -->
 			<img id="shopImg1" src="${pageContext.request.contextPath}/resources/images/dog.png" alt="" />
-		</div>
+		<!-- </div> -->
 		<div id="shopDetailInfoDiv">
 			${map.SHOP_NAME} &nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-outline-success btn-sm">수정</button><br /><br />
 			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-open@2x.png" width="14" height="13">상점오픈일 ${map.SINCE} 일 전
@@ -50,26 +60,25 @@
 			&nbsp;&nbsp;&nbsp;
 			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-dell@2x.png" width="14" height="13">택배발송 2회
 			<br /><br /><span id="shopInfoDetail">${map.SHOP_INFO}</span> &nbsp;&nbsp;&nbsp;
-			<button id="hiddenBtn" onclick="updateInfo();" type="button" class="btn btn-outline-success btn-sm">수정</button><br />
-			<textarea  name="updateInfo" id="updateInfo" cols="30" rows="10">${map.SHOP_INFO }</textarea>
-			<button  type="button" class="btn btn-outline-success btn-sm">수정</button><br />
+			<button id="hiddenBtn" type="button" class="btn btn-outline-success btn-sm">수정</button><br /><br />
+			<textarea  name="updateInfo" id="updateInfo" cols="30" rows="3">${map.SHOP_INFO }</textarea>
+			<button  type="button" class="btn btn-outline-success btn-sm" id="up_btn">수정</button>
 		</div>
 	</div>
 	<script>
 	$(function(){
 		var $textarea = $("#updateInfo");
-		$textarea.hide();
+		var $update_btn = $("#up_btn");
 		
-	});
+		$textarea.hide();
+		$update_btn.hide();
+	}); 
 	
-	function updateInfo(){
-		var $btn = $("#hiddenBtn");
-		var $info = $("#shopInfoDetail");
-		console.log($btn);
-		console.log($info);
-		$btn.hide();
-		$info.hide();
+	$('hiddenBtn').click(function(){
+		$textarea.show();
+		$update_btn.show();
 	}
+	
 	
 	
 	/* function updateShopInfo(){
@@ -87,6 +96,7 @@
 		});
 	}; */
 	</script>
+	<hr class="my-hr3"/><br />
 	
 	<!-- 넘어오면 다 내꺼 -->
 	<style>
