@@ -3,8 +3,8 @@
 
 
 
-<div class="container">
-        <div class="content">
+<div id="memberView">
+        <div class="mv_content">
             <div class="row row-cols-2">
                 
                 <div class="col" id="col_left">
@@ -74,7 +74,7 @@
                                 </div>
 
                                 <div class="input-group mb-3 after_change2">
-                                    <input type="text" class="form-control" id="userphone" aria-label="Recipient's" aria-describedby="button-addon2" maxlength="11">
+                                    <input type="text" class="form-control" id="userphone" maxlength="11">
                                     <div class="input-group-append">
                                       <button class="btn btn-outline-secondary" type="button" id="button-addon2">확인</button>
                                     </div>
@@ -86,10 +86,11 @@
 
                             <div class="ms_change">
                                 <div class="before_change3">
-                                <span>이메일:${member.EMAIL}</span> <input type="button" class="change_btn3" value="수정" />
+                                	이메일:<span id="curemail">${member.EMAIL}</span> <input type="button" class="change_btn3" value="수정" />
                             </div>
-                                <div class="input-group mb-3  after_change3" style="display: none;">
-                                    <input type="text" class="form-control" aria-label="Recipient's" aria-describedby="button-addon3">
+                            
+                                <div class="input-group mb-3  after_change3">
+                                    <input type="email" class="form-control" id="useremail">
                                     <div class="input-group-append">
                                       <button class="btn btn-outline-secondary" type="button" id="button-addon3">확인</button>
                                     </div>
@@ -141,7 +142,7 @@
     
     <script>
     //이름 변경
-	$("#button-addon1").on('click',function(){
+	$("#memberView #button-addon1").on('click',function(){
 		var afterName = $("#username").val();
 		console.log(afterName);
 		
@@ -160,26 +161,45 @@
 	});
     
     //연락처
-    	$("#button-addon2").on('click',function(){
+    	$("#memberView #button-addon2").on('click',function(){
 		var afterPhone = $("#userphone").val();
-		console.log("zzz");
-// 		console.log(afterPhone);
+		console.log(afterPhone);
 		
-// 		$.ajax({
-// 			url:"${pageContext.request.contextPath}/member/updateMemberPhone",
-// 			data:{afterPhone:afterPhone},
-// 			type:"POST",
-// 			success: data => {
-// 				console.log(data);
-// // 				$("#curphone").text(data.PHONE)
-//     		},
-//     		error: (x,s,e) => {
-// 				console.log(x,s,e);
-// 			}
-// 		});
+		$.ajax({
+			url:"${pageContext.request.contextPath}/member/updateMemberPhone",
+			data:{afterPhone:afterPhone},
+			type:"POST",
+			success: data => {
+				console.log(data);
+ 				$("#curphone").text(data.PHONE)
+    		},
+    		error: (x,s,e) => {
+				console.log(x,s,e);
+			}
+		});
 	});
 
-
+    //이메일
+$("#memberView #button-addon3").on('click',function(){
+		var afterEmail = $("#useremail").val();
+		console.log(afterEmail);
+		
+		$.ajax({
+			url:"${pageContext.request.contextPath}/member/updateMemberEmail",
+			data:{afterEmail:afterEmail},
+			type:"POST",
+			success: data => {
+				console.log(data);
+ 				$("#curemail").text(data.EMAIL)
+    		},
+    		error: (x,s,e) => {
+				console.log(x,s,e);
+			}
+		});
+	});
+    
+    
+    
     
     </script>
     

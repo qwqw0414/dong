@@ -102,6 +102,18 @@
 		where member_id=#{memberId}
 		
 	</update>
+	<update id="updateMemberPhone">
+		update member 
+		set phone=#{afterPhone}
+		where member_id=#{memberId}
+		
+	</update>
+	<update id="updateMemberEmail">
+		update member 
+		set email=#{afterEmail}
+		where member_id=#{memberId}
+		
+	</update>
 	
 	
 	<!-- ==========================  현규 끝 -->

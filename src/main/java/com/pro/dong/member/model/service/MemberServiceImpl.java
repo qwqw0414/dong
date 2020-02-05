@@ -107,7 +107,17 @@ public class MemberServiceImpl implements MemberService{
 	public int updateMemberName(Map<String, String> param) {
 		return md.updateMemberName(param);
 	}
+	@Override
+	public int updateMemberPhone(Map<String, String> param) {
+		return md.updateMemberPhone(param);
+	}
+	@Override
+	public int updateMemberEmail(Map<String, String> param) {
+		return md.updateMemberEmail(param);
+	}
 	//==========================  현규 끝
+
+
 
 	
 }

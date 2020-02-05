@@ -106,6 +106,14 @@ public class MemberDAOImpl implements MemberDAO{
 	public int updateMemberName(Map<String, String> param) {
 		return sst.update("member.updateMemberName",param);
 	}
+	@Override
+	public int updateMemberPhone(Map<String, String> param) {
+		return sst.update("member.updateMemberPhone",param);
+	}
+	@Override
+	public int updateMemberEmail(Map<String, String> param) {
+		return sst.update("member.updateMemberEmail",param);
+	}
 	
 	//==========================  현규 끝
 }
