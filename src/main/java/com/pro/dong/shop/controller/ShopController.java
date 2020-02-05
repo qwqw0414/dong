@@ -77,11 +77,25 @@ public class ShopController {
 		return mav;
 	}
 	
-	/*@RequestMapping("/shop/updateShopInfo")
-	public Shop shopInfoUpdate(@RequestParam("memberId") String memberId) {
+	@RequestMapping("/shop/updateShopInfo")
+	public ModelAndView shopInfoUpdate(@RequestParam("memberId") String memberId,
+							           @RequestParam("shopInfo") String shopInfo) {
 		
+		Shop shop = new Shop();
+		shop.setMemberId(memberId);
+		shop.setShopInfo(shopInfo);
 		
-	}*/
+		ModelAndView mav = new ModelAndView();
+		
+		int result = ss.updateShopInfo(shop);
+
+		log.debug("result={}", result);
+		
+		Map<String, String> map = ss.selectOneShop(memberId);
+		mav.addObject("map", map);
+		
+		return mav;
+	}
 	
 	
 	

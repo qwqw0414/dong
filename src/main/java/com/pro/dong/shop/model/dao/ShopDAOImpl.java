@@ -60,6 +60,12 @@ public class ShopDAOImpl implements ShopDAO{
 	public Map<String, String> selectOneShop(String memberId) {
 		return sst.selectOne("shop.selectOneShop", memberId);
 	}
+
+
+	@Override
+	public int updateShopInfo(Shop shop) {
+		return sst.update("shop.updateShopInfo", shop);
+	}
 	
 	
 	//========================== 주영 끝
