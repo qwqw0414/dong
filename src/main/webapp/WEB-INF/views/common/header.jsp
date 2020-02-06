@@ -154,7 +154,6 @@ $(()=>{
 						<a class="dropdown-item"
 							href="${pageContext.request.contextPath }/member/memberLogOut.do">로그아웃</a>
 					</c:if>
-					<a class="dropdown-item" href="${pageContext.request.contextPath }/member/chargePoint.do">포인트 충전</a>
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/member/findPassword.do">비밀번호
 						찾기</a>
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/member/findId.do">아이디 찾기</a>

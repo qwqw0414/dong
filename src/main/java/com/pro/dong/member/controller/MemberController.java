@@ -43,16 +43,6 @@ public class MemberController {
 	BCryptPasswordEncoder passwordEncoder;
 	
 // 민호 시작 ==========================
-	@RequestMapping("/chargePoint.do")
-	public ModelAndView chargePoint(ModelAndView mav, HttpServletRequest request) {
-		
-		Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
-		Map<String, String> memberInfo = ms.selectMemberPoints(memberLoggedIn);
-		mav.addObject("map", memberInfo);
-		mav.setViewName("member/chargePoint");
-		return mav;
-
-	}
 	@RequestMapping("/updatePoint")
 	@ResponseBody
 	public Map<String, String> updatePoint(ModelAndView mav, @RequestParam("pointAmount") int pointAmount, @RequestParam("memberId") String memberId, HttpServletRequest request) {
