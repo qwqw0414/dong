@@ -253,10 +253,10 @@ public class BoardController {
 		
 	}
 	
-	@RequestMapping("/insertComments")
-	public Board insertComments(Board board, @RequestParam(comment) String comment) {
-		
-	}
+//	@RequestMapping("/insertComments")
+//	public Board insertComments(Board board, @RequestParam(comment) String comment) {
+//		
+//	}
 	
 	
 	//========================== 현규 끝
