@@ -34,7 +34,7 @@
 	<!-- ==========================  하진 끝 -->
 	
 	<!-- 근호 시작 ========================== -->
-	<select id="selectLoginMember" resultType=member>
+	<select id="selectLoginMember" resultType="member">
 		select * from member M left join member_valid V on M.member_id = V.member_id
 		where M.member_id = #{memberId}
 	</select>
