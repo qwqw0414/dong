@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.pro.dong.board.model.dao.BoardDAOImpl;
-import com.pro.dong.member.model.vo.Address;
 import com.pro.dong.member.model.vo.Member;
 
 @Repository
