@@ -33,15 +33,11 @@ public interface MemberService {
 	
 	// 예찬 시작 ==========================
 	int idDuplicate(String memberId);
-
 	int insertMember(Member member);
-
 	int insertAddress(Address address);
-
 	int insertValid(String memberId);
-
 	int insertPoint(String memberId);
-
+	int insertShop(String memberId);
 
 	//==========================  예찬 끝
 	
