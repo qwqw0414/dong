@@ -23,6 +23,7 @@ public class ProductDAOImpl implements ProductDAO{
 	public List<Category> selectCategory() {
 		return sst.selectList("product.selectCategory");
 	}
+
 	
 	
 	
@@ -37,7 +38,10 @@ public class ProductDAOImpl implements ProductDAO{
 	//========================== 지은 끝
 		
 	//예찬 시작 ==========================
-		
+	@Override
+	public List<Category> selectCategory(Category category) {
+		return sst.selectList("product.selectCategory1", category);
+	}
 	//========================== 예찬 끝
 		
 	//주영 시작 ==========================
