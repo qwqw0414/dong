@@ -2,7 +2,7 @@ package com.pro.dong.admin.model.service;
 
 import java.util.List;
 
-import com.pro.dong.member.model.vo.Address;
+
 import com.pro.dong.member.model.vo.Member;
 
 public interface AdminService {

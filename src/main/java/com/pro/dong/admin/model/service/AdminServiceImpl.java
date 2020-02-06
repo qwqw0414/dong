@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.pro.dong.admin.model.dao.AdminDAO;
 import com.pro.dong.board.model.service.BoardServiceImpl;
-import com.pro.dong.member.model.vo.Address;
 import com.pro.dong.member.model.vo.Member;
 
 @Service
