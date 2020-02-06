@@ -2,6 +2,8 @@
 <%@page import="com.pro.dong.board.model.vo.BoardCategory"%>
 <%@page import="java.util.List"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@page import="com.pro.dong.common.util.Utils"%>
 <%@page import="com.pro.dong.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -73,6 +75,7 @@ function loadBoardList(searchType, searchKeyword, boardCategory, cPage){
 			searchType:searchType,
 			searchKeyword:searchKeyword},
 		success: data=>{
+			
 			let header = "<tr><th>글번호</th><th colspan='2'>제목</th><th>글쓴이</th><th>작성일</th><th>조회</th></tr>";
 	    	let $table = $("#tbl-board");
 	    	$table.html("");
@@ -152,7 +155,6 @@ function loadBoardList(searchType, searchKeyword, boardCategory, cPage){
 	      <select class="custom-select" id="boardCategory" required>
 	     	<%=option %>
 	      </select>
-		<div class="form-group mx-sm-3 mb-2 mx-auto">
 	    <div class="input-group mb-3">
 		  <label for="searchKeyword" class="sr-only">검색</label>
 		  <select class="custom-select" id="searchType" required>
@@ -164,7 +166,6 @@ function loadBoardList(searchType, searchKeyword, boardCategory, cPage){
 	      <button class="btn btn-primary mb-2" id="searchBoard">검색하기</button>
           </div>
 	    </div>
-	  </div>
     </div>
 	<p id="totalContents"></p>
 	<input type="button" value="글쓰기" id="btn-add" class="btn btn-outline-success" onclick="fn_goWriteBoard();"/>
