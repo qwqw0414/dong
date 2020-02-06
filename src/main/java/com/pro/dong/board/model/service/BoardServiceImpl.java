@@ -40,6 +40,11 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardCategory> selectBoardCategory() {
 		return bd.selectBoardCategory();
 	}
+	
+	@Override
+	public List<Board> selectBoardNotice() {
+		return bd.selectBoardNotice();
+	}
 
 	
 	//==========================민호 끝

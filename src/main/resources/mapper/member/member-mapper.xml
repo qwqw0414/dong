@@ -70,6 +70,9 @@
 	<insert id="insertPoint">
 		insert into point values(#{memberId},default)
 	</insert>
+	<select id="selectAddress" resultType="address">
+		select * from address where member_id = #{memberId}
+	</select>
 	<!-- ==========================  예찬 끝 -->
 	
 	<!-- 주영 시작 ========================== -->

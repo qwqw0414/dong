@@ -43,16 +43,6 @@ public class MemberController {
 	BCryptPasswordEncoder passwordEncoder;
 	
 // 민호 시작 ==========================
-	@RequestMapping("/chargePoint.do")
-	public ModelAndView chargePoint(ModelAndView mav, HttpServletRequest request) {
-		
-		Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
-		Map<String, String> memberInfo = ms.selectMemberPoints(memberLoggedIn);
-		mav.addObject("map", memberInfo);
-		mav.setViewName("member/chargePoint");
-		return mav;
-
-	}
 	@RequestMapping("/updatePoint")
 	@ResponseBody
 	public Map<String, String> updatePoint(ModelAndView mav, @RequestParam("pointAmount") int pointAmount, @RequestParam("memberId") String memberId, HttpServletRequest request) {
@@ -124,7 +114,7 @@ public class MemberController {
 		
 	}
 	@RequestMapping("/memberLoginId.do")
-	public ModelAndView memberLoginId(@RequestParam String memberId, @RequestParam String password,
+	public ModelAndView memberLoginId(@RequestParam(value="loginMemberId") String memberId, @RequestParam(value="loginPassword") String password,
 			ModelAndView mav, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 	Member m = ms.selectLoginMember(memberId);
@@ -244,6 +234,17 @@ public class MemberController {
 		return result+""; 
 	}
 	
+//	주소 가져오기
+	@RequestMapping(value="/selectAddress", produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String selectAddress(String memberId) {
+		
+		Address address = ms.selectAddress(memberId);
+		Gson gson = new Gson();
+		
+		return gson.toJson(address);
+	}
+	
 	//회원 가입
 	@RequestMapping("/memberEnrollEnd")
 	@ResponseBody
@@ -301,7 +302,7 @@ public class MemberController {
 		log.debug(member.toString());
 		
 		Member m = ms.selectMemberByName(member);
-		
+		log.debug("m={}",m);
 		Gson gson = new Gson();
 		return gson.toJson(m);
 	}

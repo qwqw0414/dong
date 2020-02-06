@@ -4,7 +4,8 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <%
 	Member memberLoggedIn = (Member) request.getSession().getAttribute("memberLoggedIn");
-	Map<String, String> map = (Map<String, String>) request.getAttribute("map");
+	Map<String, Object> map = (Map<String, Object>) request.getAttribute("member");
+	System.out.println("memberView@map="+map);
 %>
 
 
@@ -45,7 +46,7 @@
                     <div id="mypage_point" class="mypage_con shadow p-3 mb-5 bg-white rounded">
                         <h4>내 포인트</h4><br>
                         <div class="ms_content">
-                            <p>보유 포인트 : ${member.POINT}P</p>
+                        보유 포인트 : <span id="memberPoint">${member.POINT}</span>P
                           
 <div class="row">
   <div class="col-sm-6">
@@ -146,7 +147,6 @@
 
 
                         <div class="mypage_btn_more">
-
                             <input type="button" value="수정 바로가기" class="btn_val btn btn-outline-success btn-sm">
                         </div>
 
@@ -159,127 +159,14 @@
         </div>
 
 
-
+	<span>더이상 동네한바퀴를 이용하고 싶지 않다면 <a href="">회원탈퇴</a></span>
     </div>
 </div>
 
 
 
 <script>
-
-    $(() => {
-
-        //수정 버튼 누를시 태그변환
-        $("#memberView #change_btn1").on('click', function () {
-            $("#memberView .before_change1").css("display", "none");
-            $("#memberView .after_change1").css("display", "block")
-        });
-        $("#memberView #change_btn2").on('click', function () {
-            $("#memberView .before_change2").css("display", "none");
-            $("#memberView .after_change2").css("display", "block")
-        });
-        $("#memberView #change_btn3").on('click', function () {
-            $("#memberView .before_change3").css("display", "none");
-            $("#memberView .after_change3").css("display", "block")
-        });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //이름 변경
-        $("#memberView #button-addon1").on('click', function () {
-            var afterName = $("#username").val();
-            console.log(afterName);
-            var regExp = /^[가-힣]{2,5}$/;
-
-            if(!regExp.test(afterName)){
-            alert("잘못된 이름입니다")
-            return;
-        }
-
-            $.ajax({
-                url: "${pageContext.request.contextPath}/member/updateMemberName",
-                data: { afterName: afterName },
-                type: "POST",
-                success: data => {
-                    console.log(data);
-                    $("#curname").text(data.MEMBER_NAME)
-                    $("#memberView .before_change1").css("display", "block");
-                    $("#memberView .after_change1").css("display", "none")
-                },
-                error: (x, s, e) => {
-                    console.log(x, s, e);
-                }
-            });
-        });//end of updatename
-
-
-
-
-        //연락처
-        $("#memberView #button-addon2").on('click', function () {
-            var afterPhone = $("#userphone").val();
-            console.log(afterPhone);
-
-            regExp = /01{1}[016789]{1}[0-9]{7,8}/;
-            if(!regExp.test(afterPhone)){
-            alert("잘못된 번호")
-            return;
-        }
-            
-
-            $.ajax({
-                url: "${pageContext.request.contextPath}/member/updateMemberPhone",
-                data: { afterPhone: afterPhone },
-                type: "POST",
-                success: data => {
-                    console.log(data);
-                    $("#curphone").text(data.PHONE)
-                    $("#memberView .before_change2").css("display", "block");
-                    $("#memberView .after_change2").css("display", "none")
-                },
-                error: (x, s, e) => {
-                    console.log(x, s, e);
-                }
-            });
-        });//end of updatephone
-
-
-
-        //이메일
-        $("#memberView #button-addon3").on('click', function () {
-            var afterEmail = $("#useremail").val();
-            console.log(afterEmail);
-
-            $.ajax({
-                url: "${pageContext.request.contextPath}/member/updateMemberEmail",
-                data: { afterEmail: afterEmail },
-                type: "POST",
-                success: data => {
-                    console.log(data);
-                    $("#curemail").text(data.EMAIL)
-                    $("#memberView .before_change3").css("display", "block");
-                    $("#memberView .after_change3").css("display", "none")
-                },
-                error: (x, s, e) => {
-                    console.log(x, s, e);
-                }
-            });
-        });//end of emailupdate
-
-
-        function test1(){
+function test1(){
 	var pointAmount = $("#pointAmount").val();
 	console.log(pointAmount);
 	var memberId = "<%=memberLoggedIn.getMemberId()%>";
@@ -292,14 +179,13 @@
     	success: data=>{
     		console.log(data);
     		var pointUpdated = data.POINT;
-    		$("#memberPoint").val(pointUpdated);
+    		$("#memberPoint").text(pointUpdated);
     	},
     	error : (x, s, e) => {
 			console.log("ajax 요청 실패!");
 		}
     });//end of ajax
 }
-
 
 function chargePoint(){
 	var IMP = window.IMP; // 생략가능
@@ -369,23 +255,99 @@ if ( rsp.success ) {
     
 }
 
+    $(() => {
+
+        //수정 버튼 누를시 태그변환
+        $("#memberView #change_btn1").on('click', function () {
+            $("#memberView .before_change1").css("display", "none");
+            $("#memberView .after_change1").css("display", "block")
+        });
+        $("#memberView #change_btn2").on('click', function () {
+            $("#memberView .before_change2").css("display", "none");
+            $("#memberView .after_change2").css("display", "block")
+        });
+        $("#memberView #change_btn3").on('click', function () {
+            $("#memberView .before_change3").css("display", "none");
+            $("#memberView .after_change3").css("display", "block")
+        });
+
+        //이름 변경
+        $("#memberView #button-addon1").on('click', function () {
+            var afterName = $("#username").val();
+            console.log(afterName);
+            var regExp = /^[가-힣]{2,5}$/;
+
+            if(!regExp.test(afterName)){
+            alert("잘못된 이름입니다")
+            return;
+        }
+
+            $.ajax({
+                url: "${pageContext.request.contextPath}/member/updateMemberName",
+                data: { afterName: afterName },
+                type: "POST",
+                success: data => {
+                    console.log(data);
+                    $("#curname").text(data.MEMBER_NAME)
+                    $("#memberView .before_change1").css("display", "block");
+                    $("#memberView .after_change1").css("display", "none")
+                },
+                error: (x, s, e) => {
+                    console.log(x, s, e);
+                }
+            });
+        });//end of updatename
+
+        //연락처
+        $("#memberView #button-addon2").on('click', function () {
+            var afterPhone = $("#userphone").val();
+            console.log(afterPhone);
+
+            regExp = /01{1}[016789]{1}[0-9]{7,8}/;
+            if(!regExp.test(afterPhone)){
+            alert("잘못된 번호")
+            return;
+        }
+            
+
+            $.ajax({
+                url: "${pageContext.request.contextPath}/member/updateMemberPhone",
+                data: { afterPhone: afterPhone },
+                type: "POST",
+                success: data => {
+                    console.log(data);
+                    $("#curphone").text(data.PHONE)
+                    $("#memberView .before_change2").css("display", "block");
+                    $("#memberView .after_change2").css("display", "none")
+                },
+                error: (x, s, e) => {
+                    console.log(x, s, e);
+                }
+            });
+        });//end of updatephone
 
 
 
+        //이메일
+        $("#memberView #button-addon3").on('click', function () {
+            var afterEmail = $("#useremail").val();
+            console.log(afterEmail);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+            $.ajax({
+                url: "${pageContext.request.contextPath}/member/updateMemberEmail",
+                data: { afterEmail: afterEmail },
+                type: "POST",
+                success: data => {
+                    console.log(data);
+                    $("#curemail").text(data.EMAIL)
+                    $("#memberView .before_change3").css("display", "block");
+                    $("#memberView .after_change3").css("display", "none")
+                },
+                error: (x, s, e) => {
+                    console.log(x, s, e);
+                }
+            });
+        });//end of emailupdate
 
     });//end of script
 

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.pro.dong.board.model.vo.BoardCategory;
 import com.pro.dong.product.model.service.ProductService;
 import com.pro.dong.product.model.vo.Category;
@@ -72,6 +73,21 @@ public class ProductController {
 		public void productReg() {
 			
 		}
+		
+		@ResponseBody
+		@RequestMapping(value="/categoryList", produces="text/plain;charset=UTF-8")
+		public String categoryList(Category category) {
+			
+			List<Category> list = ps.selectCategory(category);
+			log.debug(list.toString());
+			
+			Gson gson = new Gson();
+			
+			return gson.toJson(list);
+					
+		}
+		
+		
 	//========================== 예찬 끝
 		
 	//주영 시작 ==========================

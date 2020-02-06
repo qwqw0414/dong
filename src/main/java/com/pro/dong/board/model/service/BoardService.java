@@ -19,6 +19,7 @@ public interface BoardService {
 
 	List<BoardCategory> selectBoardCategory();
 
+	List<Board> selectBoardNotice();
 	
 	//==========================민호 끝
 		
