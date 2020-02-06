@@ -244,7 +244,20 @@ public class BoardController {
 	//========================== 주영 끝
 		
 	// 현규 시작 ==========================
-
+	@RequestMapping("/boardComment")
+	public ModelAndView boardComment(ModelAndView mav) {
+		mav=new ModelAndView();
+		
+		return mav;
+		
+	}
+	
+	@RequestMapping("/insertComments")
+	public Board insertComments(Board board, @RequestParam(comment) String comment) {
+		
+	}
+	
+	
 	//========================== 현규 끝
 
 
