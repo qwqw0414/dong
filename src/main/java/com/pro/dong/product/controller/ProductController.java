@@ -152,7 +152,7 @@ public class ProductController {
 				result = ps.insertProduct(product, attachList);
 				
 			}catch(Exception e) {
-				
+				e.printStackTrace();
 			}
 			
 			
