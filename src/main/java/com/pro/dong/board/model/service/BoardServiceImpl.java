@@ -40,6 +40,11 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardCategory> selectBoardCategory() {
 		return bd.selectBoardCategory();
 	}
+	
+	@Override
+	public List<Board> selectBoardNotice() {
+		return bd.selectBoardNotice();
+	}
 
 	
 	//==========================민호 끝
@@ -79,6 +84,16 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int boardInCount(int boardNo) {
 		return bd.boardInCount(boardNo);
+	}
+
+	@Override
+	public List<Attachment> selectAttachmentList(int boardNo) {
+		return bd.selectAttachmentList(boardNo);
+	}
+
+	@Override
+	public int deleteBoard(int boardNo) {
+		return bd.deleteBoard(boardNo);
 	}
 
 	//========================== 지은 끝

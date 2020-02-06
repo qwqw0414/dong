@@ -19,6 +19,7 @@ public interface BoardService {
 
 	List<BoardCategory> selectBoardCategory();
 
+	List<Board> selectBoardNotice();
 	
 	//==========================민호 끝
 		
@@ -35,6 +36,10 @@ public interface BoardService {
 	Board selectOneBoard(int boardNo);
 
 	int boardInCount(int boardNo);
+
+	List<Attachment> selectAttachmentList(int boardNo);
+
+	int deleteBoard(int boardNo);
 
 	//========================== 지은 끝
 		

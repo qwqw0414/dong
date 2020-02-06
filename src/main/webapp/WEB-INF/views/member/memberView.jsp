@@ -34,7 +34,7 @@
                                     개설날짜 : ${member.OPEN_DATE} </div>
                             </div>
                             <div class="mypage_btn_more">
-                                <input type="button" class="btn_val btn btn-outline-success btn-sm" value="내상점 가기">
+                                <input type="button" class="btn_val btn btn-outline-success btn-sm" value="내상점 가기"  onclick="location.href='${pageContext.request.contextPath}/shop/shopView.do'">
                             </div>
                         </div>
 
@@ -147,7 +147,6 @@
 
 
                         <div class="mypage_btn_more">
-
                             <input type="button" value="수정 바로가기" class="btn_val btn btn-outline-success btn-sm">
                         </div>
 
@@ -160,7 +159,7 @@
         </div>
 
 
-
+	<span class="byement">더이상 동네한바퀴를 이용하고 싶지 않다면 <a class="byelink"href="${pageContext.request.contextPath}/member/memberBye.do">회원탈퇴<small>▶</small> </a></span>
     </div>
 </div>
 
@@ -369,6 +368,14 @@ if ( rsp.success ) {
 
 
 <style>
+	
+	#memberView .byement{
+	font-size: 10px;
+	}
+	#memberView .byelink{
+	color: green;
+	font-size: 10px;
+	}
     #memberView .mypage_btn_more {
         margin-left: 380px;
     }

@@ -37,7 +37,7 @@ public interface MemberDAO {
 	int insertValid(String memberId);
 	int insertPoint(String memberId);
 	int insertShop(String memberId);
-
+	Address selectAddress(String memberId);
 
 	//==========================  예찬 끝
 	
@@ -51,6 +51,7 @@ public interface MemberDAO {
 	int updateMemberName(Map<String, String> param);
 	int updateMemberPhone(Map<String, String> param);
 	int updateMemberEmail(Map<String, String> param);
+
 
 	
 	

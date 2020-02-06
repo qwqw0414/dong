@@ -114,7 +114,7 @@ public class MemberController {
 		
 	}
 	@RequestMapping("/memberLoginId.do")
-	public ModelAndView memberLoginId(@RequestParam String memberId, @RequestParam String password,
+	public ModelAndView memberLoginId(@RequestParam(value="loginMemberId") String memberId, @RequestParam(value="loginPassword") String password,
 			ModelAndView mav, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 	Member m = ms.selectLoginMember(memberId);
@@ -234,6 +234,17 @@ public class MemberController {
 		return result+""; 
 	}
 	
+//	주소 가져오기
+	@RequestMapping(value="/selectAddress", produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String selectAddress(String memberId) {
+		
+		Address address = ms.selectAddress(memberId);
+		Gson gson = new Gson();
+		
+		return gson.toJson(address);
+	}
+	
 	//회원 가입
 	@RequestMapping("/memberEnrollEnd")
 	@ResponseBody
@@ -276,14 +287,6 @@ public class MemberController {
 		return result+"";
 	}
 	
-	@RequestMapping("/selectAddress")
-	@ResponseBody
-	public String selectAddress(String memberId) {
-		
-//		Map<String, Member> map = ms.selectOneMember(memberId);
-//		
-		return "";
-	}
 //========================== 예찬 끝
 	
 // 주영 시작 ==========================
@@ -299,7 +302,7 @@ public class MemberController {
 		log.debug(member.toString());
 		
 		Member m = ms.selectMemberByName(member);
-		
+		log.debug("m={}",m);
 		Gson gson = new Gson();
 		return gson.toJson(m);
 	}

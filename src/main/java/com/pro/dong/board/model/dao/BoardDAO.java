@@ -19,7 +19,7 @@ public interface BoardDAO {
 
 	List<BoardCategory> selectBoardCategory();
 
-	
+	List<Board> selectBoardNotice();
 	//==========================민호 끝
 		
 	// 하진 시작 ==========================
@@ -37,6 +37,10 @@ public interface BoardDAO {
 	Board selectOneBoard(int boardNo);
 
 	int boardInCount(int boardNo);
+
+	List<Attachment> selectAttachmentList(int boardNo);
+
+	int deleteBoard(int boardNo);
 
 	//========================== 지은 끝
 		

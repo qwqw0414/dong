@@ -158,9 +158,7 @@ $(()=>{
 						찾기</a>
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/member/findId.do">아이디 찾기</a>
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberView.do">내 정보</a>
-					<c:if test="${memberLoggedIn != null }">
-						<a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberBye.do">회원 탈퇴</a>
-					</c:if>
+					
 				</div>
 			</li>
 
