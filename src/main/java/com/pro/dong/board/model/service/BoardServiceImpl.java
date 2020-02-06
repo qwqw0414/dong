@@ -12,6 +12,7 @@ import com.pro.dong.board.model.dao.BoardDAO;
 import com.pro.dong.board.model.vo.Attachment;
 import com.pro.dong.board.model.vo.Board;
 import com.pro.dong.board.model.vo.BoardCategory;
+import com.pro.dong.member.model.vo.Member;
 @Service
 public class BoardServiceImpl implements BoardService {
 
@@ -41,6 +42,10 @@ public class BoardServiceImpl implements BoardService {
 		return bd.selectBoardNotice();
 	}
 
+	@Override
+	public Member getMemberByMemberId(String memberId) {
+		return bd.getMemberByMemberId(memberId);
+	}
 	
 	//==========================민호 끝
 		
@@ -90,6 +95,7 @@ public class BoardServiceImpl implements BoardService {
 	public int deleteBoard(int boardNo) {
 		return bd.deleteBoard(boardNo);
 	}
+
 
 	//========================== 지은 끝
 		

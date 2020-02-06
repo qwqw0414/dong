@@ -6,6 +6,7 @@ import java.util.Map;
 import com.pro.dong.board.model.vo.Attachment;
 import com.pro.dong.board.model.vo.Board;
 import com.pro.dong.board.model.vo.BoardCategory;
+import com.pro.dong.member.model.vo.Member;
 
 public interface BoardDAO {
 
@@ -18,6 +19,8 @@ public interface BoardDAO {
 	List<BoardCategory> selectBoardCategory();
 
 	List<Board> selectBoardNotice();
+	
+	Member getMemberByMemberId(String memberId);
 	//==========================민호 끝
 		
 	// 하진 시작 ==========================
@@ -39,6 +42,7 @@ public interface BoardDAO {
 	List<Attachment> selectAttachmentList(int boardNo);
 
 	int deleteBoard(int boardNo);
+
 
 	//========================== 지은 끝
 		
