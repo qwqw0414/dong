@@ -13,25 +13,44 @@
 #productReg .product-photo{width: 100px;}
 #productReg select {font-size: 1.2em; width: 300px;}
 #productReg #category-check{top: 275px; width: 800px;}
-#productReg #images img{width: 640px; height: 640px;}
+#productReg #images img{width: auto; height: auto; max-width: 190px; height: 190px;}
+#productReg #images {float: right; width: 200px;}
 </style>
 <div id="productReg" style="font-family: 'MapoPeacefull';">
-<h1>기본정보</h1>
+<h1>상품 등록</h1>
 <hr>
 <div class="input-area" style="height: 350px;">
     <div class="product-tag" style="height: 200px;">상품이미지</div>
     <div class="text-primary product-insert">
-        <div style="margin-bottom: 20px;">
-            <input type="file" class="product-photo">
+        <form enctype="multipart/form-data" id="formData">
             <div id="images">
-                <img src="" id="image1">
+                <input type="file" class="product-photo" id="file-4" name="file4">
+                <br>
+                <img src="" id="img-4">
             </div>
-        </div>
-        <p style="font-weight: bolder;">* 상품 이미지는 640x640에 최적화 되어 있습니다.</p>
-        <p>- 이미지는 상품등록 시 정사각형으로 짤려서 등록됩니다.</p>
-        <p>- 이미지를 클릭 할 경우 원본이미지를 확인할 수 있습니다.</p>
-        <p>- 큰 이미지일경우 이미지가 깨지는 경우가 발생할 수 있습니다.</p>
-        <p>최대 지원 사이즈인 640 X 640 으로 리사이즈 해서 올려주세요.(개당 이미지 최대 10M)</p>
+            <div id="images">
+                <input type="file" class="product-photo" id="file-3" name="file3">
+                <br>
+                <img src="" id="img-2">
+            </div>
+            <div id="images">
+                <input type="file" class="product-photo" id="file-2" name="file2">
+                <br>
+                <img src="" id="img-3">
+            </div>
+            <div id="images">
+                <input type="file" class="product-photo" id="file-1" name="file1">
+                <br>
+                <img src="" id="img-1">
+            </div>
+        </form>
+        <!-- <div style="position: relative; top: 100px;">
+            <p style="font-weight: bolder;">* 상품 이미지는 640x640에 최적화 되어 있습니다.</p>
+            <p>- 이미지는 상품등록 시 정사각형으로 짤려서 등록됩니다.</p>
+            <p>- 이미지를 클릭 할 경우 원본이미지를 확인할 수 있습니다.</p>
+            <p>- 큰 이미지일경우 이미지가 깨지는 경우가 발생할 수 있습니다.</p>
+            <p>최대 지원 사이즈인 640 X 640 으로 리사이즈 해서 올려주세요.(개당 이미지 최대 10M)</p>
+        </div> -->
     </div>
 </div>
 <hr>
@@ -69,11 +88,11 @@
     <div class="product-tag">상태</div>
     <div class="product-insert">
         <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="status-o" name="status" class="custom-control-input">
+            <input type="radio" id="status-o" name="status" class="custom-control-input" value="O">
             <label class="custom-control-label" for="status-o">중고상품</label>
         </div>
         <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="status-n" name="status" class="custom-control-input">
+            <input type="radio" id="status-n" name="status" class="custom-control-input" value="N">
             <label class="custom-control-label" for="status-n">새상품</label>
         </div>
     </div>
@@ -83,11 +102,11 @@
     <div class="product-tag">교환</div>
     <div class="product-insert">
         <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="isTrade-y" name="isTrade" class="custom-control-input">
+            <input type="radio" id="isTrade-y" name="isTrade" class="custom-control-input" value="Y">
             <label class="custom-control-label" for="isTrade-y">교환가능</label>
         </div>
         <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="isTrade-n" name="isTrade" class="custom-control-input">
+            <input type="radio" id="isTrade-n" name="isTrade" class="custom-control-input" value="N">
             <label class="custom-control-label" for="isTrade-n">교환불가</label>
         </div>
     </div>
@@ -96,7 +115,7 @@
 <div class="input-area">
     <div class="product-tag">가격</div class="product-tag">
     <div class="product-insert">
-        <input type="text">
+        <input type="text" id="price">
         <div class="custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input" id="shipping">
             <label class="custom-control-label" for="shipping">무료 배송</label>
@@ -111,11 +130,11 @@
 <div class="input-area">
     <div class="product-tag">설명</div class="product-tag">
     <div class="product-insert">
-        <textarea name="" id="" cols="30" rows="10" class="form-control"></textarea>
+        <textarea name="" id="info" cols="30" rows="10" class="form-control"></textarea>
     </div>
 </div>
 <hr>
-<button>등록하기</button>
+<button id="btn-reg">등록하기</button>
 
 </div>
 
@@ -125,6 +144,134 @@ var $selectPre = $("#productReg #sel-cate-pre");
 var $selectEnd = $("#productReg #sel-cate-end");
 var $selectedCategory = $("#productReg #selectedCategory");
 var ref = "";
+var $file1 = $("#productReg #file-1");
+var $file2 = $("#productReg #file-2");
+var $file3 = $("#productReg #file-3");
+var $file4 = $("#productReg #file-4");
+var $title = $("#productReg #title");
+var $address = $("#productReg #address");
+var $price = $("#productReg #price");
+var $info = $("#productReg #info");
+
+// 상품 등록
+$("#productReg #btn-reg").click(()=>{
+
+    if( $title.val() == null || $title.val().length == 0){
+        alert("제목을 입력해주세요.");
+        $title.focus();
+        return;
+    }
+
+    if($selectPre.val() == null || $selectEnd.val() == null){
+        alert("카테고리를 선택해주세요.");
+        $selectPre.focus();
+        return;
+    }
+
+    if($address.val() == null || $address.val().length == 0){
+        alert("주소를 입력해주세요.");
+        $address.focus();
+        return;
+    }
+
+
+    if($("#productReg [name=status]:checked").val() == null){
+        alert("상태를 선택해주세요.");
+        $("#productReg #status-o").focus();
+        return;
+    }
+
+    if($("#productReg [name=isTrade]:checked").val() == null){
+        alert("교환 여부를 선택해주세요.");
+        $("#productReg #isTrade-y").focus();
+        return;
+    }
+
+    if($price.val() == null || $price.val().length == 0){
+        alert("가격을 입력해주세요.");
+        $price.focus();
+        return;
+    }
+
+    var regex= /[^0-9]/g
+    if(regex.test($price.val())){
+        alert("숫자만 입력해주세요.");
+        $price.focus();
+        return;
+    }
+
+    var addrArr = ($address.val()).split(" ");
+
+    $.ajax({
+        url: "${pageContext.request.contextPath}/product/productReg",
+        data: {
+            title:$title.val(),
+            categoryId:$selectEnd.val(),
+            sido: addrArr[0],
+            sigungu: addrArr[1],
+            dong: addrArr[2],
+            status: $("#productReg [name=status]:checked").val(),
+            isTrade: $("#productReg [name=isTrade]:checked").val(),
+            info: $info.val(),
+            price: $price.val(),
+            shipping: $("#productReg #shipping").prop("checked"),
+            haggle: $("#productReg #haggle").prop("checked"),
+            memberId: '<%=memberLoggedIn.getMemberId()%>'
+        },
+        dataType: "json",
+        success: data =>{
+            if(data == 1){
+                var result = upload();
+
+                if(result > 0){
+                    alert("등록 성공");
+
+
+                }else{
+                    alert("등록 실패");
+                }
+            }else{
+                alert("등록 실패")
+            }
+        },
+        error: (x, s, e) => {
+            console.log("실패", x, s, e);
+        }
+    });
+
+
+});
+
+//첨부파일 등록
+function upload(){
+    var result = 0;
+
+    
+
+
+
+    return result;
+}
+
+
+// 첨부파일 사진 미리보기
+$("#productReg .product-photo").change((e)=>{
+    imagePreview(e.target);
+});
+
+function imagePreview(input){
+
+    if((input.files[0] != undefined)&&(input.files && input.files[0])){
+        var filerdr = new FileReader();
+        filerdr.onload = function(e){
+            $(input).siblings("img").attr('src',e.target.result);
+        }
+        filerdr.readAsDataURL(input.files[0]);
+    }else{
+        $(input).siblings("img").attr('src','');
+    }
+}
+
 
 //대분류 카테고리 가져오기
 $.ajax({

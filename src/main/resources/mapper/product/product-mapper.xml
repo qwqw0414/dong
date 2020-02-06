@@ -34,6 +34,16 @@
 			</if>
 		</where>
 	</select>
+	
+	<select id="selectOneShop" resultType="shop">
+		select * from shop where member_id = #{memberId}
+	</select>
+	
+	<insert id="insertProduct" parameterType="product">
+		insert into product values(
+			seq_product.nextval, #{shopNo}, #{categoryId}, #{title}, #{price}, #{shipping},
+			#{haggle}, #{info}, 0, #{sido}, #{sigungu}, #{dong}, #{status}, #{isTrade}, sysdate)
+	</insert>
 	<!-- ==========================  예찬 끝 -->
 	
 	<!-- 주영 시작 ========================== -->

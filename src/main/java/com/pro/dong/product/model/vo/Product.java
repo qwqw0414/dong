@@ -1,6 +1,7 @@
 package com.pro.dong.product.model.vo;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 import lombok.Data;
 
@@ -23,4 +24,5 @@ public class Product implements Serializable{
 	private String dong;
 	private String status;
 	private String isTrade;
+	private Date regDate;
 }
