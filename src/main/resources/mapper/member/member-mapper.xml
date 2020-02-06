@@ -7,12 +7,9 @@
 	<!-- 민호 시작 ========================== -->
 
 	<select id="selectMemberPoints" resultType="map" parameterType="member">
-		select M.*, p.point, a.sido, a.sigungu, a.dong 
-		from member M join point P 
-		on m.member_id = p.member_id
-		join address A
-		on m.member_id = a. member_id
-		where m.member_id = #{memberId}
+		select * 
+		from member 
+		where member_id = #{memberId}
 	</select>
 	<insert id="updatePoint" parameterType="map">
 		insert into point_status 
@@ -34,7 +31,7 @@
 	<!-- ==========================  하진 끝 -->
 	
 	<!-- 근호 시작 ========================== -->
-	<select id="selectLoginMember" resultType="member">
+	<select id="selectLoginMember" resultType=member>
 		select * from member M left join member_valid V on M.member_id = V.member_id
 		where M.member_id = #{memberId}
 	</select>

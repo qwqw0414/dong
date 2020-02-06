@@ -26,7 +26,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.pro.dong.member.model.exception.MemberException;
 import com.pro.dong.member.model.service.MemberService;
-import com.pro.dong.member.model.vo.Address;
 import com.pro.dong.member.model.vo.Member;
 
 @SessionAttributes(value= {"memberLoggedIn"})
