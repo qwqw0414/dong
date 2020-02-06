@@ -81,7 +81,10 @@ public class MemberDAOImpl implements MemberDAO{
 	public int insertValid(String memberId) {
 		return sst.insert("insertValid", memberId);
 	}
-	
+	@Override
+	public int insertShop(String memberId) {
+		return sst.insert("insertShop", memberId);
+	}
 	@Override
 	public int insertPoint(String memberId) {
 		return sst.insert("insertPoint", memberId);
