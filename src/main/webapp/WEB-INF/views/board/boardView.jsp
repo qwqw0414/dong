@@ -98,7 +98,7 @@ td {
 }
 </style>
 
-<script>
+<!-- <script>
 //수정버튼
 function boardUpdateBtn(){
 	location.href = "${pageContext.request.contextPath}/board/boardUpdateView.do";
@@ -127,7 +127,7 @@ function boardDeleteBtn(){
 	oName = encodeURIComponent(oName);
 	location.href="${pageContext.request.contextPath}/board/fileDownload.do?oName="+oName+"&rName="+rName;
 } */
-</script>
+</script> -->
 
 <body>
 
@@ -170,7 +170,7 @@ function boardDeleteBtn(){
               <th scope="col">작성일</th>
               <td><input type="text" class="form-control" name="writeDate" value="${board.writeDate}" readonly required></td>
             </tr>
-           
+			<input type="hidden" class="form-control" id="boardNo" required>
             <!--display : none-->
             <tr>
               <th scope="row">내용</th>
@@ -196,6 +196,33 @@ function boardDeleteBtn(){
 	<br>
 	<br>
 </div>
+<script>
+$(()=>{
+	var $boardNo = $(".product #boardNo");
+	
+	$("#boardDelete").click(function (){
+		 
+		$.ajax({
+			url: "${pageContext.reuqest.contextPath}/board/boardDelete",
+			data: {
+				boardNo: $boardNo.val()
+			},
+			dataType:"json",
+			type:"POST",
+			success: data => {
+				console.log(data);
+				if(data > 0){
+					$(".product #boardNo").val($boardNo.val());
+				}else{
+					console.log("불가불가불가");
+				}
+			},error: (x,s,e) => {
+				console.log("board삭제 ajax요청 실패!",x,s,e);
+			}
+		});
+	});
+});
+</script>
 <%--==================현규시작================ --%>
 <hr />
 

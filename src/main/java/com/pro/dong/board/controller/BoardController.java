@@ -208,7 +208,7 @@ public class BoardController {
 		return mav;
 	}
 	
-	@RequestMapping("/boardDelete.do")
+	@RequestMapping("/boardDelete")
 	public String boardDelete(ModelAndView mav, int boardNo) {
 		int result = bs.deleteBoard(boardNo);
 		log.debug("boardDelete@boardNo="+boardNo);
