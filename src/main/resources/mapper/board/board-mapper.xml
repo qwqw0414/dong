@@ -63,7 +63,15 @@
 	<!-- ==========================  민호 끝 -->
 	
 	<!-- 하진 시작 ========================== -->
+	<select id="selectBoardList" parameterType="map" resultType="map">
 	
+	<![CDATA[
+SELECT R.* FROM
+(select * from board order by read_count desc) R 
+WHERE ROWNUM < 5
+]]>
+		
+	</select>
 	<!-- ==========================  하진 끝 -->
 	
 	<!-- 근호 시작 ========================== -->

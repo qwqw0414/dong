@@ -45,7 +45,10 @@ public class BoardServiceImpl implements BoardService {
 	//==========================민호 끝
 		
 	// 하진 시작 ==========================
-		
+	@Override
+	public List<Board> selectBoardList() {
+		return bd.selectBoardList();
+	}
 	//========================== 하진 끝
 		
 	// 근호 시작 ==========================

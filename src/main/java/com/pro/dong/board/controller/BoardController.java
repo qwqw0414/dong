@@ -47,7 +47,10 @@ public class BoardController {
 	public ModelAndView boardList(ModelAndView mav) {
 		
 		List<BoardCategory> boardCategoryList = bs.selectBoardCategory();
+		List<Board> boardList = bs.selectBoardList();
+		log.debug("listBoard야야@@@@@@@@@@@@@@@@@@@@={}",boardList);
 		mav.addObject("boardCategoryList",boardCategoryList);
+		mav.addObject("boardList",boardList);
 		mav.setViewName("/board/boardList");
 		return mav;
 		
