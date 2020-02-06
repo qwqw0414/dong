@@ -50,6 +50,8 @@ public interface ShopDAO {
 
 	int updateShopName(Map<String, String> param);
 
+	int updateShopImg(Shop s);
+
 	
 	//========================== 주영 끝
 	
