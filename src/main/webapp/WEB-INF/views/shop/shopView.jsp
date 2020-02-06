@@ -42,8 +42,8 @@
 }
 #imgUpBtn{
 	position: absolute;
-	top: 160px;
-	left: 10px;
+	top: 250px;
+	left: 120px;
 }
 #shopImgDiv{
 	width: 300px;
@@ -51,7 +51,8 @@
 	border: 2px solid black;
 	border-radius: 50%;
 	text-align: center;
-	margin-bottom: 50px;
+	padding-top: 35px;
+	margin-bottom: 30px;
 }
 </style>
 
@@ -67,7 +68,7 @@
 		<img id="shopImg1" class="img-thumbnail" src="${pageContext.request.contextPath}/resources/upload/shopImage/${map.IMAGE}" alt="" />
 	</c:if>
 	</div>
-		<button id="imgUpBtn" type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModal">수정</button>
+		<button id="imgUpBtn" type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#exampleModal">수정</button>
 		<div id="shopDetailInfoDiv">
 			<span id="shopNameSpan">asdasdasd</span> &nbsp;&nbsp;&nbsp;<button onclick="shopNameUp();" id="shopNameBtn" type="button" class="btn btn-outline-success btn-sm">수정</button><br /><br />
 			<input id="shopNameInput" type="text"  value="${map.SHOP_NAME}"/>

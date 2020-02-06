@@ -60,7 +60,7 @@
 	<insert id="insertShop">
 		insert into shop values( seq_shop.nextval, #{memberId}, 'shop'||seq_shop_name.nextval, null, null, sysdate)
 	</insert>
-	<select id="selectAddress" resultType="address">
+	<select id="selectAddress" resultType="member">
 		select * from member where member_id = #{memberId}
 	</select>
 	<!-- ==========================  예찬 끝 -->
