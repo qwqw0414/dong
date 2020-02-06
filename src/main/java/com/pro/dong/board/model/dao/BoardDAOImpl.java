@@ -49,7 +49,10 @@ public class BoardDAOImpl implements BoardDAO {
 	//==========================민호 끝
 		
 	// 하진 시작 ==========================
-		
+	@Override
+	public List<Board> selectBoardList() {
+		return sst.selectList("board.selectBoardList");
+	}
 	//========================== 하진 끝
 		
 	// 근호 시작 ==========================
