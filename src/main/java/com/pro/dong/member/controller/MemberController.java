@@ -124,7 +124,7 @@ public class MemberController {
 		
 	}
 	@RequestMapping("/memberLoginId.do")
-	public ModelAndView memberLoginId(@RequestParam String memberId, @RequestParam String password,
+	public ModelAndView memberLoginId(@RequestParam(value="loginMemberId") String memberId, @RequestParam(value="loginPassword") String password,
 			ModelAndView mav, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 	Member m = ms.selectLoginMember(memberId);
@@ -301,7 +301,7 @@ public class MemberController {
 		log.debug(member.toString());
 		
 		Member m = ms.selectMemberByName(member);
-		
+		log.debug("m={}",m);
 		Gson gson = new Gson();
 		return gson.toJson(m);
 	}
