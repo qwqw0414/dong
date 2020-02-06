@@ -43,16 +43,6 @@ public class MemberController {
 	BCryptPasswordEncoder passwordEncoder;
 	
 // 민호 시작 ==========================
-	@RequestMapping("/chargePoint.do")
-	public ModelAndView chargePoint(ModelAndView mav, HttpServletRequest request) {
-		
-		Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
-		Map<String, String> memberInfo = ms.selectMemberPoints(memberLoggedIn);
-		mav.addObject("map", memberInfo);
-		mav.setViewName("member/chargePoint");
-		return mav;
-
-	}
 	@RequestMapping("/updatePoint")
 	@ResponseBody
 	public Map<String, String> updatePoint(ModelAndView mav, @RequestParam("pointAmount") int pointAmount, @RequestParam("memberId") String memberId, HttpServletRequest request) {
@@ -242,6 +232,17 @@ public class MemberController {
 		int result = ms.idDuplicate(memberId);
 		
 		return result+""; 
+	}
+	
+//	주소 가져오기
+	@RequestMapping(value="/selectAddress", produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String selectAddress(String memberId) {
+		
+		Address address = ms.selectAddress(memberId);
+		Gson gson = new Gson();
+		
+		return gson.toJson(address);
 	}
 	
 	//회원 가입

@@ -23,7 +23,17 @@
 	<!-- ==========================  지은 끝 -->
 	
 	<!-- 예찬 시작 ========================== -->
-	
+	<select id="selectCategory1" parameterType="category" resultType="category">
+		select * from product_category
+		<where>
+			<if test="categoryRef != null">
+				category_ref = #{categoryRef}							
+			</if>
+			<if test="categoryRef == null">
+				category_level = 1							
+			</if>
+		</where>
+	</select>
 	<!-- ==========================  예찬 끝 -->
 	
 	<!-- 주영 시작 ========================== -->

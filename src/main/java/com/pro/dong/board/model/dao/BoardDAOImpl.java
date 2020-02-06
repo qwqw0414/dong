@@ -44,12 +44,18 @@ public class BoardDAOImpl implements BoardDAO {
 		return sst.selectList("board.selectBoardCategory");
 	}
 
-
+	@Override
+	public List<Board> selectBoardNotice() {
+		return sst.selectList("board.selectBoardNotice");
+	}
 	
 	//==========================민호 끝
 		
 	// 하진 시작 ==========================
-		
+	@Override
+	public List<Board> selectBoardList() {
+		return sst.selectList("board.selectBoardList");
+	}
 	//========================== 하진 끝
 		
 	// 근호 시작 ==========================
@@ -75,6 +81,8 @@ public class BoardDAOImpl implements BoardDAO {
 	public int boardInCount(int boardNo) {
 		return sst.update("board.boardInCount", boardNo);
 	}
+
+	
 
 	//========================== 지은 끝
 		

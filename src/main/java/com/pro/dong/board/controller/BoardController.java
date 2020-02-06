@@ -47,7 +47,10 @@ public class BoardController {
 	public ModelAndView boardList(ModelAndView mav) {
 		
 		List<BoardCategory> boardCategoryList = bs.selectBoardCategory();
+		List<Board> boardList = bs.selectBoardList();//인기글 조회
+		log.debug("listBoard야야@@@@@@@@@@@@@@@@@@@@={}",boardList);
 		mav.addObject("boardCategoryList",boardCategoryList);
+		mav.addObject("boardList",boardList);
 		mav.setViewName("/board/boardList");
 		return mav;
 		
@@ -55,7 +58,7 @@ public class BoardController {
 	
 	@RequestMapping("/loadBoardList")
 	@ResponseBody
-	public Map<String, Object> loadBoardList(@RequestParam(value="boardCategory",defaultValue="") String boardCategory,@RequestParam(value="cPage",defaultValue="1") int cPage, @RequestParam("memberId") String memberId){
+	public Map<String, Object> loadBoardList(@RequestParam(value="searchType", defaultValue="")String searchType, @RequestParam(value="searchKeyword",defaultValue="") String searchKeyword, @RequestParam(value="boardCategory",defaultValue="") String boardCategory,@RequestParam(value="cPage",defaultValue="1") int cPage, @RequestParam("memberId") String memberId){
 		log.debug("boardCategory={}",boardCategory);
 		final int numPerPage = 10;
 		Map<String, Object> result = new HashMap<>();
@@ -63,7 +66,8 @@ public class BoardController {
 		Address addr = bs.getAddrByMemberId(memberId);
 		// 게시판 카테고리 조회
 		List<BoardCategory> boardCategoryList = bs.selectBoardCategory();
-		
+		// 공지글 조회
+		List<Board> noticeList = bs.selectBoardNotice();
 		// 파라미터 생성
 		Map<String, String> param = new HashMap<>();
 		String sido = addr.getSido();
@@ -73,6 +77,8 @@ public class BoardController {
 		param.put("sigungu", sigungu);
 		param.put("dong", dong);
 		param.put("boardCategory", boardCategory);
+		param.put("searchType", searchType);
+		param.put("searchKeyword", searchKeyword);
 		// 페이징바 작업
 		int totalContents = bs.selectBoardTotalContents(param);
 		// 게시글 조회
@@ -83,10 +89,11 @@ public class BoardController {
 		result.put("dong", dong);
 		result.put("list", list);
 		result.put("boardCategoryList", boardCategoryList);
+		result.put("noticeList", noticeList);
 		result.put("cPage", cPage);
 		result.put("numPerPage", numPerPage);
 		result.put("totalContents", totalContents);
-		String function = "loadBoardList('"+boardCategory+"',";
+		String function = "loadBoardList('"+searchType+"','"+searchKeyword+"','"+boardCategory+"',";
 		String pageBar = Utils.getAjaxPageBar(totalContents, cPage, numPerPage, function);
 		result.put("pageBar", pageBar);
 		return result;
