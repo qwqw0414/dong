@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.pro.dong.member.model.vo.Address;
 import com.pro.dong.member.model.vo.Member;
 
 @Repository
@@ -74,23 +73,11 @@ public class MemberDAOImpl implements MemberDAO{
 		return sst.insert("insertMember", member);
 	}
 	@Override
-	public int insertAddress(Address address) {
-		return sst.insert("insertAddress", address);
-	}
-	@Override
-	public int insertValid(String memberId) {
-		return sst.insert("insertValid", memberId);
-	}
-	@Override
 	public int insertShop(String memberId) {
 		return sst.insert("insertShop", memberId);
 	}
 	@Override
-	public int insertPoint(String memberId) {
-		return sst.insert("insertPoint", memberId);
-	}
-	@Override
-	public Address selectAddress(String memberId) {
+	public Member selectAddress(String memberId) {
 		return sst.selectOne("selectAddress", memberId);
 	}
 	//==========================  예찬 끝

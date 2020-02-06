@@ -2,7 +2,6 @@ package com.pro.dong.member.model.dao;
 
 import java.util.Map;
 
-import com.pro.dong.member.model.vo.Address;
 import com.pro.dong.member.model.vo.Member;
 
 public interface MemberDAO {
@@ -33,11 +32,8 @@ public interface MemberDAO {
 	// 예찬 시작 ==========================
 	int idDuplicate(String memberId);
 	int insertMember(Member member);
-	int insertAddress(Address address);
-	int insertValid(String memberId);
-	int insertPoint(String memberId);
 	int insertShop(String memberId);
-	Address selectAddress(String memberId);
+	Member selectAddress(String memberId);
 
 	//==========================  예찬 끝
 	

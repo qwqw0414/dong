@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pro.dong.member.model.dao.MemberDAO;
-import com.pro.dong.member.model.vo.Address;
 import com.pro.dong.member.model.vo.Member;
 
 @Service
@@ -76,24 +75,12 @@ public class MemberServiceImpl implements MemberService{
 		return md.insertMember(member);
 	}
 	@Override
-	public int insertAddress(Address address) {
-		return md.insertAddress(address);
-	}
-	@Override
-	public int insertValid(String memberId) {
-		return md.insertValid(memberId);
-	}
-	@Override
 	public int insertShop(String memberId) {
 		return md.insertShop(memberId);
 	}
 	
 	@Override
-	public int insertPoint(String memberId) {
-		return md.insertPoint(memberId);
-	}
-	@Override
-	public Address selectAddress(String memberId) {
+	public Member selectAddress(String memberId) {
 		return md.selectAddress(memberId);
 	}
 	//==========================  예찬 끝

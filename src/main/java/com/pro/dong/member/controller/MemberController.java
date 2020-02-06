@@ -26,7 +26,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.pro.dong.member.model.exception.MemberException;
 import com.pro.dong.member.model.service.MemberService;
-import com.pro.dong.member.model.vo.Address;
 import com.pro.dong.member.model.vo.Member;
 
 @SessionAttributes(value= {"memberLoggedIn"})
@@ -239,43 +238,26 @@ public class MemberController {
 	@ResponseBody
 	public String selectAddress(String memberId) {
 		
-		Address address = ms.selectAddress(memberId);
+		Member member= ms.selectAddress(memberId);
 		Gson gson = new Gson();
 		
-		return gson.toJson(address);
+		return gson.toJson(member);
 	}
 	
 	//회원 가입
 	@RequestMapping("/memberEnrollEnd")
 	@ResponseBody
-	public String memberEnrollEnd(Member member, Address address) {
+	public String memberEnrollEnd(Member member) {
 		int result = 0;
 		try {
 //		    비밀번호 암호화
 			member.setPassword(passwordEncoder.encode(member.getPassword()));
 			log.debug(member.toString());
+			
 			result = ms.insertMember(member);
 			
 			if(result > 0) {
-				result = ms.insertAddress(address);
-			}else {
-				throw new MemberException("회원가입 오류");
-			}
-			
-			if(result > 0) {
 				result = ms.insertShop(member.getMemberId());
-			}else {
-				throw new MemberException("회원가입 오류");
-			}
-			
-			if(result > 0) {
-				result = ms.insertPoint(member.getMemberId());
-			}else {
-				throw new MemberException("회원가입 오류");
-			}
-			
-			if(result > 0) {
-				result = ms.insertValid(member.getMemberId());
 			}else {
 				throw new MemberException("회원가입 오류");
 			}

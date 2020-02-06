@@ -1,6 +1,7 @@
 <%@page import="java.util.Date"%>
 <%@page import="com.pro.dong.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <%
 	Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
@@ -14,44 +15,62 @@
 	position: relative;
 }
 #shopImg1{
-	width: 300px;
-	height: 300px;
+	width: 200px;
+	height: 200px;
 	display: inline-block;
-	margin-bottom: 50px;
+	padding: auto;
+	/* margin-bottom: 50px; */
+	/* border-radius: 50%; */
+	/* border: 2px solid black; */
 }
 #shopInfoDiv{
 	width: 1100px;
 	height: 300px;
 	display: inline-block;
 }
-/* #shopImageDiv{
-	display: inline-block;
-	position: relative;
-	top: -130px;
-} */
 #shopDetailInfoDiv{
 	display: inline-block;
 	position: absolute;
 	width: 600px;	
-	left: 380px;
-	top: 50px;
+	left: 350px;
+	top: 30px;
 }
 .my-hr3 {
     border: 0;
     height: 3px;
     background: #ccc;
-  }
+}
+#imgUpBtn{
+	position: absolute;
+	top: 250px;
+	left: 120px;
+}
+#shopImgDiv{
+	width: 300px;
+	height: 300px;
+	border: 2px solid black;
+	border-radius: 50%;
+	text-align: center;
+	padding-top: 35px;
+	margin-bottom: 30px;
+}
 </style>
 
 <input type="hidden" name="memberLoggedIn" value="<%= memberLoggedIn.getMemberId()%>"/>
 
  <div id="shopView" class="mx-center">
 	<div id="shopDiv">
-		<!-- <div id="shopImageDiv"> -->
-			<img id="shopImg1" src="${pageContext.request.contextPath}/resources/images/dog.png" alt="" />
-		<!-- </div> -->
+	<div id="shopImgDiv">
+	<c:if test="${map.IMAGE == null}">
+		<img id="shopImg1" class="img-circle" src="${pageContext.request.contextPath}/resources/upload/shopImage/shopping-store.png" alt="" />
+	</c:if>
+	<c:if test="${map.IMAGE != null}">
+		<img id="shopImg1" class="img-thumbnail" src="${pageContext.request.contextPath}/resources/upload/shopImage/${map.IMAGE}" alt="" />
+	</c:if>
+	</div>
+		<button id="imgUpBtn" type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#exampleModal">수정</button>
 		<div id="shopDetailInfoDiv">
-			<span id="shopNameSpan">${map.SHOP_NAME}</span> &nbsp;&nbsp;&nbsp;<button onclick="shopNameUp();" id="shopNameBtn" type="button" class="btn btn-outline-success btn-sm">수정</button><br /><br />
+			<span id="shopNameSpan">asdasdasd</span> &nbsp;&nbsp;&nbsp;<button onclick="shopNameUp();" id="shopNameBtn" type="button" class="btn btn-outline-success btn-sm">수정</button><br /><br />
 			<input id="shopNameInput" type="text"  value="${map.SHOP_NAME}"/>
 			<button id="shopNameUpdateBtn" onclick="shopNameUpdateEnd();" type="button" class="btn btn-outline-success btn-sm">수정</button>
 			<span id="shopNameCheck"></span><br />
@@ -69,25 +88,96 @@
 		</div>
 	</div>
 	
-	<script>
+	<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">회원 이미지 등록</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form id="ajaxFrom" method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/shop/shopImageUpload.do" >
+			<div class="modal-body">
+				<!-- 파일 선택 div -->
+				<div class="input-group mb-3" style="padding:0px;">
+		  			<div class="input-group-prepend" style="padding:0px;">
+		    			<!-- <span class="input-group-text">회원이미지</span> -->
+		  			</div>
+		  			<div class="custom-file">
+		  				<input type="hidden" name="memberId" value="<%=memberLoggedIn.getMemberId() %>" />
+		    			<input type="file" class="custom-file-input" name="upFile" id="upShopFile" >
+		    			<label class="custom-file-label" for="upFile" id="fileName">파일을 선택하세요</label>
+		  			</div>
+				</div>
+				<!-- 파일 선택 div -->
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+				<button disabled id="shopImgUpdateBtn" type="submit" class="btn btn-primary">수정하기</button>
+			</div>
+			</form>
+		</div>
+	</div>
+</div>
+	
+<script>
+/* 첨부파일 관련 */
+$(function(){
+//파일선택 | 취소시에 파일명 노출하기
+	$("[name=upFile]").on("change", function(){
+		//파일 입력 취소
+		if($(this).prop("files")[0] === undefined){
+			$(this).next(".custom-file-label").html("파일을 선택하세요.");
+			$("#shopImgUpdateBtn").attr("disabled", true);
+			return;
+		}
+		var fileName = $(this).prop('files')[0].name;
+		$(this).next(".custom-file-label").html(fileName);
+		$("#shopImgUpdateBtn").attr("disabled", false);
+		});
+	});
+	
+	function fileUpload(){
+		/* var form = $("#ajaxFrom")[0];
+		console.log("form="+form);
+		
+		var formData = new FormData(form);
+		formData.append("upShopFile", $("#upShopFile")[0].files[0]);
+
+		
+		console.log("formData="+formData); */
+		
+		/* $.ajax({
+			url : "${pageContext.request.contextPath}/shop/shopImageUpload",
+			contentType : false,
+			enctype: 'multipart/form-data',
+			success : data => {
+				console.log(data);
+			},
+			error : (x, s, e) => {
+				console.log("ajax 요청 실패!");
+			}
+		}); */
+		//location.href = "${pageContext.request.contextPath}/shop/shopImageUpload.do"
+	}
+	
+	/* 상점수정 관련 */
 	$("#shopNameInput").keyup(function() {
 		var shopName = $("#shopNameInput").val();
 		var memberId = $("[name=memberLoggedIn]").val();
-		var currentShopName = $("#shopNameSpan").val();
-		console.log("중복memberId="+memberId);
-		console.log("중복shopName="+shopName);
-		console.log("현재shopName="+currentShopName);
+		var currentShopName = $("#shopNameSpan").text();
 		$.ajax({
 			url : "${pageContext.request.contextPath}/shop/shopNameCheck",
 			method : "POST",
 			data : {memberId : memberId,
 				    shopName : shopName},
 			success : data => {
-				console.log("넘어온 숫자는?"+data.checkResult);
-				/* if(currentShopName == shopName){
+				if(currentShopName == shopName){
 					$("#shopNameUpdateBtn").attr("disabled", false);
-				} */
-				if(shopName.length == 0){
+				}
+				else if(shopName.length == 0){
 					$("#shopNameCheck").html("상점명을 입력하세요.");
 					$("#shopNameCheck").css("color", "red");
 					$("#shopNameUpdateBtn").attr("disabled", true);
