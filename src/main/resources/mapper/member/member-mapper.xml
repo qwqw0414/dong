@@ -56,22 +56,14 @@
 		select count(*) from member where member_id = #{memberId}
 	</select>
 	<insert id="insertMember" parameterType="member">
-		insert into member values(#{memberId}, #{password}, #{memberName}, #{gender}, #{birth}, #{phone}, #{email}, default)
-	</insert>
-	<insert id="insertAddress" parameterType="address">
-		insert into address values(#{memberId}, #{sido}, #{sigungu}, #{dong})
-	</insert>
-	<insert id="insertValid">
-		insert into member_valid values(#{memberId},default,default)
+		insert into member values(#{memberId}, #{password}, #{memberName}, #{gender}, #{birth}, #{phone}, #{email}, default,
+			#{sido}, #{sigungu}, #{dong}, 'N', 'N', 0)
 	</insert>
 	<insert id="insertShop">
 		insert into shop values( seq_shop.nextval, #{memberId}, 'shop'||seq_shop_name.nextval, null, null, sysdate)
 	</insert>
-	<insert id="insertPoint">
-		insert into point values(#{memberId},default)
-	</insert>
 	<select id="selectAddress" resultType="address">
-		select * from address where member_id = #{memberId}
+		select * from member where member_id = #{memberId}
 	</select>
 	<!-- ==========================  예찬 끝 -->
 	
