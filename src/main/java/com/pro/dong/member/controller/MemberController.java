@@ -286,6 +286,14 @@ public class MemberController {
 		return result+"";
 	}
 	
+	@RequestMapping("/selectAddress")
+	@ResponseBody
+	public String selectAddress(String memberId) {
+		
+//		Map<String, Member> map = ms.selectOneMember(memberId);
+//		
+		return "";
+	}
 //========================== 예찬 끝
 	
 // 주영 시작 ==========================
