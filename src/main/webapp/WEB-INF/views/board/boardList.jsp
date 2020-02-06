@@ -22,6 +22,7 @@ $(function(){
 	
 	//카테고리로 정렬
 	$("#boardCategory").change(function(){
+		$("#searchKeyword").val('');
 		var cPage = $("#cPage").val();
 		var boardCategory = $("#boardCategory").val();
 		console.log(boardCategory);
@@ -72,16 +73,26 @@ function loadBoardList(searchType, searchKeyword, boardCategory, cPage){
 			searchType:searchType,
 			searchKeyword:searchKeyword},
 		success: data=>{
-			let header = "<tr><th>카테고리</th><th>번호</th><th>작성자</th><th>제목</th><th>작성일</th><th>조회수</th></tr>";
+			let header = "<tr><th>글번호</th><th colspan='2'>제목</th><th>글쓴이</th><th>작성일</th><th>조회</th></tr>";
 	    	let $table = $("#tbl-board");
 	    	$table.html("");
+	    	//공지사항
 			let	html = "";
+	    	for(var i=0; i<data.noticeList.length;i++){
+	    		html += "<tr>";
+	    		html += "<td><span class='badge badge-pill badge-danger'>공지</span></td>";
+	    		html += "<td colspan='2'><a href='${pageContext.request.contextPath}/board/boardView.do?boardNo="+data.noticeList[i].BOARD_NO+"'>"+data.noticeList[i].BOARD_TITLE+"</a></td>";
+	    		html += "<td>"+data.noticeList[i].MEMBER_ID+"</td>";
+	    		html += "<td>"+data.noticeList[i].WRITE_DATE+"</td>";
+	    		html += "<td>"+data.noticeList[i].READ_COUNT+"</td>";
+	    		html += "</tr>";
+	    	}
+			//일반 게시글
 	    	for(var i=0; i<data.list.length;i++){
 	    		html += "<tr>";
-	    		html += "<td>"+data.list[i].CATEGORY_NAME+"</td>";
 	    		html += "<td>"+data.list[i].BOARD_NO+"</td>";
+	    		html += "<td colspan='2'><a href='${pageContext.request.contextPath}/board/boardView.do?boardNo="+data.list[i].BOARD_NO+"'>"+data.list[i].BOARD_TITLE+"</a></td>";
 	    		html += "<td>"+data.list[i].MEMBER_ID+"</td>";
-	    		html += "<td><a href='${pageContext.request.contextPath}/board/boardView.do?boardNo="+data.list[i].BOARD_NO+"'>"+data.list[i].BOARD_TITLE+"</a></td>";
 	    		html += "<td>"+data.list[i].WRITE_DATE+"</td>";
 	    		html += "<td>"+data.list[i].READ_COUNT+"</td>";
 	    		html += "</tr>";
@@ -157,6 +168,7 @@ function loadBoardList(searchType, searchKeyword, boardCategory, cPage){
     </div>
 	<p id="totalContents"></p>
 	<input type="button" value="글쓰기" id="btn-add" class="btn btn-outline-success" onclick="fn_goWriteBoard();"/>
+	
 	<table id="tbl-board" class="table table-striped table-hover">
 		
 	</table>
