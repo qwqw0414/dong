@@ -108,7 +108,7 @@ public class MemberServiceImpl implements MemberService{
 	// 현규 시작 ==========================
 	
 	@Override
-	public Map<String, Object> selectOneMember(String memberId) {
+	public Member selectOneMember(String memberId) {
 		return md.selectOneMember(memberId);
 	}
 	@Override
