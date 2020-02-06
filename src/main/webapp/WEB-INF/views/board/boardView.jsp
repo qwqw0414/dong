@@ -203,16 +203,18 @@ $(()=>{
 	$("#boardDelete").click(function (){
 		 
 		$.ajax({
-			url: "${pageContext.reuqest.contextPath}/board/boardDelete",
+			url: "${pageContext.reuqest.contextPath}/board/boardDelete.do?boardNo="+${board.boardNo}",
 			data: {
 				boardNo: $boardNo.val()
 			},
 			dataType:"json",
-			type:"POST",
+			type:"POST", /* update도 post select만 get */
 			success: data => {
 				console.log(data);
 				if(data > 0){
-					$(".product #boardNo").val($boardNo.val());
+					console.log("성공");
+					/* 경로설정 */
+					location.href="${pageContext.request.contextPath}/board/boardList.do"
 				}else{
 					console.log("불가불가불가");
 				}
