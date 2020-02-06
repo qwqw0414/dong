@@ -80,7 +80,7 @@ td {
 }
 
 #filebox{
-border-radius: 10px;
+	border-radius: 10px;
 }
 
 #boardUpdate{
@@ -109,17 +109,18 @@ function boardDeleteBtn(){
 	var result = confirm("게시글을 삭제하시겠습니까?");
 	
 	if(result){
-		location.href = "${pageContext.request.contextPath}/board/boardDelete.do";
+		location.href = "${pageContext.request.contextPath}/board/boardDelete.do?boardNo="+${board.boardNo};
+	}else{
+		alert("삭제 불가합니다.");
 	}
 	
-	return;
 }
 
-function fileDownload(oName, rName){
+/* function fileDownload(oName, rName){
 	//한글파일명이 있을 수 있으므로, 명시적으로 encoding
 	oName = encodeURIComponent(oName);
 	location.href="${pageContext.request.contextPath}/board/fileDownload.do?oName="+oName+"&rName="+rName;
-}
+} */
 </script>
 
 <body>
@@ -169,14 +170,18 @@ function fileDownload(oName, rName){
               <th scope="row">내용</th>
               <td><textarea class="form-control" name="boardContent" placeholder="내용" required>${board.boardContents }</textarea></td>
             </tr>
-
-	<c:forEach items="${attachmentList}" var="a" varStatus="vs">
+            <tr>
+              <th scope="col">첨부파일</th>
+<%--               <td><input type="text" class="form-control" name="upFile" id="upFile" value="${attachmentList.renamedFileName}" readonly></td>--%>
+<%--  	<c:forEach items="${attachmentList}" var="a" varStatus="vs">
 		<button type="button" 
 				class="btn btn-outline-success btn-block"
 				onclick="fileDownload('${a.originalFileName}','${a.renamedFileName }');">
 			첨부파일${vs.count} - ${a.originalFileName }
 		</button>
-	</c:forEach>
+	</c:forEach>  --%>
+            </tr>
+			
        
         </table>
         <!--table-->
@@ -188,24 +193,6 @@ function fileDownload(oName, rName){
 
   
 </body>
-
-	<%-- <input type="text" class="form-control" placeholder="제목" name="boardTitle" id="boardTitle" value="${board.boardTitle }" required>
-	<input type="text" class="form-control" name="boardWriter" value="${memberLoggedIn.memberId}" readonly required>
-	<input type="text" class="form-control" name="categoryId" value="${board.categoryId}" readonly required>
-	<input type="text" class="form-control" name="writeDate" value="${board.writeDate}" readonly required>
-	<input type="text" class="form-control" name="writeDate" value="${board.readCount}" readonly required>
-
-	 <c:forEach items="" var="a" varStatus="vs">
-		<button type="button" 
-				class="btn btn-outline-success btn-block"
-				onclick="fileDownload('','');">
-			첨부파일${vs.count}  ${a.originalFileName }
-		</button>
-	</c:forEach> 
-	
-     <textarea class="form-control" name="boardContent" placeholder="내용" required>${board.boardContents }</textarea>
- --%>
-
 
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

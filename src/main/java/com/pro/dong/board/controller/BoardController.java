@@ -181,12 +181,15 @@ public class BoardController {
 	// 지은 시작 ==========================
 	@RequestMapping("/boardView")
 	public String boardView(Model model, @RequestParam("boardNo") int boardNo) {
+		
 		Board board = bs.selectOneBoard(boardNo);
 		log.debug("boardNo="+boardNo);
-		
+		List<Attachment> attachmentList = bs.selectAttachmentList(boardNo);
 		int readCount = bs.boardInCount(boardNo);
-		model.addAttribute("board", board);
 		log.debug("readCount="+readCount);
+		
+		model.addAttribute("board", board);
+		model.addAttribute("attachmentList", attachmentList);
 		
 		return "board/boardView";
 		
@@ -196,17 +199,24 @@ public class BoardController {
 	public ModelAndView boardUpdate(ModelAndView mav, Board board) {
 		
 		
+		
 		return mav;
 	}
 	
-	@RequestMapping("boardDelete")
-	public String boardDelete(ModelAndView mav, int boardNo) {
-//		int result = bs.deleteBoard(boardNo);
-//		log.debug("boardDelete@boardNo=",boardNo);
-//		
-//		mav.addObject("msg", result>0?"삭제성공":"삭제실패");
+	@RequestMapping("/boardDelete.do")
+	public ModelAndView boardDelete(ModelAndView mav, int boardNo) {
+		int result = bs.deleteBoard(boardNo);
+		log.debug("boardDelete@boardNo="+boardNo);
 		
-		return "board/boardList";
+		if(result>0) {
+			log.debug("board삭제 성공!!!!!");
+		}else {
+			log.debug("board삭제 실패!!!");
+		}
+		
+		mav.setViewName("board/boardList");
+		
+		return mav;
 	}
 	
 	

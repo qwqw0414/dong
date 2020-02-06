@@ -36,6 +36,10 @@ public interface BoardService {
 
 	int boardInCount(int boardNo);
 
+	List<Attachment> selectAttachmentList(int boardNo);
+
+	int deleteBoard(int boardNo);
+
 	//========================== 지은 끝
 		
 	// 예찬 시작 ==========================
