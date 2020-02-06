@@ -13,6 +13,7 @@
 #productReg .product-photo{width: 100px;}
 #productReg select {font-size: 1.2em; width: 300px;}
 #productReg #category-check{top: 275px; width: 800px;}
+#productReg #images img{width: 640px; height: 640px;}
 </style>
 <div id="productReg" style="font-family: 'MapoPeacefull';">
 <h1>기본정보</h1>
@@ -22,6 +23,9 @@
     <div class="text-primary product-insert">
         <div style="margin-bottom: 20px;">
             <input type="file" class="product-photo">
+            <div id="images">
+                <img src="" id="image1">
+            </div>
         </div>
         <p style="font-weight: bolder;">* 상품 이미지는 640x640에 최적화 되어 있습니다.</p>
         <p>- 이미지는 상품등록 시 정사각형으로 짤려서 등록됩니다.</p>
