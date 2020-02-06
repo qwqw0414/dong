@@ -19,15 +19,36 @@
 $(function(){
 	loadBoardList();
 	
+	//카테고리로 정렬
 	$("#boardCategory").change(function(){
 		var cPage = $("#cPage").val();
 		var boardCategory = $("#boardCategory").val();
+		var boardCategory = $("#boardCategory").val();
+		var searchType = $("#searchType").val();
 		console.log(boardCategory);
 		console.log(cPage);
-		loadBoardList(boardCategory,cPage);
+		loadBoardList(searchType,searchKeyword,boardCategory,cPage);
 	});
+	
+	//검색어 입력
+	$("#searchBoard").click(function(){
+		var cPage = $("#cPage").val();
+		var boardCategory = $("#boardCategory").val();
+		var searchType = $("#searchType").val();
+		var searchKeyword = $("#searchKeyword").val();
+		if(searchKeyword.length==0){
+			alert("검색어를 입력하세요");
+			$("#searchKeyword").focus();
+			return;
+		} else {
+			loadBoardList(searchType,searchKeyword,boardCategory,cPage);
+		}
+		
+	});
+	
+	
 });
-function loadBoardList(boardCategory, cPage){
+function loadBoardList(searchType,searchKeyword, boardCategory, cPage){
 	if(<%=memberLoggedIn==null%>){
 		var memberId = "";		
 	} else {
@@ -35,13 +56,17 @@ function loadBoardList(boardCategory, cPage){
 	}
 	var cPage = cPage;
 	var boardCategory = boardCategory;
+	var searchType = searchType;
+	var searchKeyword = searchKeyword;
 	$("#cPage").val(cPage);
 	$.ajax({
 		url: "${pageContext.request.contextPath}/board/loadBoardList",
 		type: "GET",
 		data: {memberId:memberId,
 			cPage:cPage,
-			boardCategory:boardCategory},
+			boardCategory:boardCategory,
+			searchType:searchType,
+			searchKeyword:searchKeyword},
 		success: data=>{
 			let header = "<tr><th>카테고리</th><th>번호</th><th>작성자</th><th>제목</th><th>작성일</th><th>조회수</th></tr>";
 	    	let $table = $("#tbl-board");
@@ -75,10 +100,11 @@ function loadBoardList(boardCategory, cPage){
  <h1>커뮤니티 게시판</h1>
 <section id="board-container" class="container">
 	<div class="col-md-3 mb-3">
-      <label for="boardCategory">카테고리</label>
-      <select class="custom-select" id="boardCategory" required>
-     	<%=option %>
-      </select>
+	      <label for="boardCategory">카테고리</label>
+	      <select class="custom-select" id="boardCategory" required>
+	     	<%=option %>
+	      </select>
+
     </div>
 	<p id="totalContents"></p>
 	<input type="button" value="글쓰기" id="btn-add" class="btn btn-outline-success" onclick="fn_goWriteBoard();"/>
@@ -89,6 +115,19 @@ function loadBoardList(boardCategory, cPage){
 	<div id="pageBar">
 	
 	</div>
+		<div class="form-group mx-sm-3 mb-2 mx-auto">
+	    <div class="input-group mb-3">
+		  <label for="searchKeyword" class="sr-only">검색</label>
+		  <select class="custom-select" id="searchType" required>
+	     	<option value="member_id" selected>아이디</option>
+	     	<option value="board_title">글제목</option>
+	      </select>
+		  <input type="text" size="30" id="searchKeyword" placeholder="검색어를 입력하세요">
+		  <div class="input-group-append">
+	      <button class="btn btn-primary mb-2" id="searchBoard">검색하기</button>
+          </div>
+	    </div>
+	  </div>
 	<input type="hidden" name="cPage" id="cPage"/>
 <script>
 function fn_goWriteBoard(){
