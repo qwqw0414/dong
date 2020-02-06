@@ -47,7 +47,7 @@ public class BoardController {
 	public ModelAndView boardList(ModelAndView mav) {
 		
 		List<BoardCategory> boardCategoryList = bs.selectBoardCategory();
-		List<Board> boardList = bs.selectBoardList();
+		List<Board> boardList = bs.selectBoardList();//인기글 조회
 		log.debug("listBoard야야@@@@@@@@@@@@@@@@@@@@={}",boardList);
 		mav.addObject("boardCategoryList",boardCategoryList);
 		mav.addObject("boardList",boardList);
@@ -66,7 +66,8 @@ public class BoardController {
 		Address addr = bs.getAddrByMemberId(memberId);
 		// 게시판 카테고리 조회
 		List<BoardCategory> boardCategoryList = bs.selectBoardCategory();
-		
+		// 공지글 조회
+		List<Board> noticeList = bs.selectBoardNotice();
 		// 파라미터 생성
 		Map<String, String> param = new HashMap<>();
 		String sido = addr.getSido();
@@ -88,6 +89,7 @@ public class BoardController {
 		result.put("dong", dong);
 		result.put("list", list);
 		result.put("boardCategoryList", boardCategoryList);
+		result.put("noticeList", noticeList);
 		result.put("cPage", cPage);
 		result.put("numPerPage", numPerPage);
 		result.put("totalContents", totalContents);
