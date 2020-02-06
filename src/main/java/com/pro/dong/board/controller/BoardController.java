@@ -187,6 +187,25 @@ public class BoardController {
 		
 	}
 	
+	@RequestMapping("/boardUpdateView.do")
+	public ModelAndView boardUpdate(ModelAndView mav, Board board) {
+		
+		
+		return mav;
+	}
+	
+	@RequestMapping("boardDelete")
+	public String boardDelete(ModelAndView mav, int boardNo) {
+//		int result = bs.deleteBoard(boardNo);
+//		log.debug("boardDelete@boardNo=",boardNo);
+//		
+//		mav.addObject("msg", result>0?"삭제성공":"삭제실패");
+		
+		return "board/boardList";
+	}
+	
+	
+	
 
 	//========================== 지은 끝
 		
