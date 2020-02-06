@@ -3,6 +3,8 @@ package com.pro.dong.product.model.dao;
 import java.util.List;
 
 import com.pro.dong.product.model.vo.Category;
+import com.pro.dong.product.model.vo.Product;
+import com.pro.dong.shop.model.vo.Shop;
 
 public interface ProductDAO {
 
@@ -28,7 +30,17 @@ public interface ProductDAO {
 		
 	//예찬 시작 ==========================
 	List<Category> selectCategory(Category category);	
+	Shop selectOneShop(String memberId);
+	int insertProduct(Product product);
 	//========================== 예찬 끝
+
+
+
+
+
+
+
+
 		
 	//주영 시작 ==========================
 		
