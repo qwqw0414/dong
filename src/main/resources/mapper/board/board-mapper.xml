@@ -27,6 +27,9 @@
 			<if test="boardCategory!=null and boardCategory!=''">
 				and c.category_id = #{boardCategory}
 			</if>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+				and b.${searchType} like '%${searchKeyword}%'
+			</if>
 		</where>
 	</select>
 	<select id="loadBoardList" parameterType="map" resultType="map">
@@ -48,16 +51,30 @@
 			<if test="boardCategory!=null and boardCategory!=''">
 				and c.category_id = #{boardCategory}
 			</if>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+				and b.${searchType} like '%${searchKeyword}%'
+			</if>
 		</where>
 		order by b.board_no desc
 	</select>
 	<select id="selectBoardCategory" resultType="boardCategory">
 		select * from board_category
 	</select>
+	<select id="selectBoardNotice" resultType="map">
+		select * from board where category_id = 'A03'
+	</select>
 	<!-- ==========================  민호 끝 -->
 	
 	<!-- 하진 시작 ========================== -->
+	<select id="selectBoardList" parameterType="map" resultType="map">
 	
+	<![CDATA[
+	SELECT R.* FROM
+		(select * from board order by read_count desc) R 
+	WHERE ROWNUM < 5
+	]]>
+		
+	</select>
 	<!-- ==========================  하진 끝 -->
 	
 	<!-- 근호 시작 ========================== -->
@@ -94,6 +111,14 @@
 	<update id="boardInCount" parameterType="_int">
 		update board set read_count = read_count + 1 where board_no = #{boardNo} 
 	</update>
+	
+	<select id="selectAttachmentList" resultType="_int">
+	select * from board_attachment where board_no = #{boardNo}
+	</select>
+	
+	<delete id="deleteBoard">
+	delete from board where board_no = #{boardNo}
+	</delete>
 	
 	<!-- ==========================  지은 끝 -->
 	

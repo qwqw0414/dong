@@ -92,6 +92,10 @@ public class MemberServiceImpl implements MemberService{
 	public int insertPoint(String memberId) {
 		return md.insertPoint(memberId);
 	}
+	@Override
+	public Address selectAddress(String memberId) {
+		return md.selectAddress(memberId);
+	}
 	//==========================  예찬 끝
 
 	// 주영 시작 ==========================
@@ -120,6 +124,8 @@ public class MemberServiceImpl implements MemberService{
 		return md.updateMemberEmail(param);
 	}
 	//==========================  현규 끝
+
+
 
 
 

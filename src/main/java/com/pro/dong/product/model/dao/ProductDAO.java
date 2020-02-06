@@ -11,7 +11,8 @@ public interface ProductDAO {
 	//==========================민호 끝
 		
 	//하진 시작 ==========================
-	List<Category> selectCategory();	
+	List<Category> selectCategory();
+
 	
 	
 	
@@ -26,7 +27,7 @@ public interface ProductDAO {
 	//========================== 지은 끝
 		
 	//예찬 시작 ==========================
-		
+	List<Category> selectCategory(Category category);	
 	//========================== 예찬 끝
 		
 	//주영 시작 ==========================

@@ -8,6 +8,11 @@
 	<!-- ==========================  민호 끝 -->
 	
 	<!-- 하진 시작 ========================== -->
+	<select id="selectMemberList" parameterType="map" resultType="map">
+		select M.*, A.*
+		from member M left join address A on m.member_id = a.member_id
+	</select>
+	
 	
 	<!-- ==========================  하진 끝 -->
 	

@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <h1>비밀번호 찾기</h1>
 <div id="pwdFrm">
 	<div class="form-group">
 		<label for="exampleInputPassword1">아이디</label>
-		<input type="text" class="form-control" id="memberId" required>
+		<input type="text" class="form-control" id="passwordMemberId" required>
 	</div>
 	<div class="form-group">
 		<label for="exampleInputPassword1">이메일</label>
-		<input type="email" class="form-control" id="email" required>
+		<input type="email" class="form-control" id="passwordEmail" required>
 	</div>
 	<button type="submit" class="btn btn-primary" id="btn-Update">비밀번호 변경</button>
 </div>
@@ -15,9 +16,9 @@
 <div id="pwdUpdateFrm">
 	<div class="form-group">
 		<label for="exampleInputPassword1">비밀번호</label>
-		<input type="password" class="form-control" id="password" required>
+		<input type="password" class="form-control" id="findPassword" required>
 	</div>
-	<input type="hidden" class="form-control" id="memberId" required>
+	<input type="hidden" class="form-control" id="passwordMemberId" required>
 	<div class="form-group">
 		<label for="exampleInputPassword1">비밀번호 확인</label>
 		<input type="password" class="form-control" id="passwordCheck" required>
@@ -33,9 +34,9 @@
 
 
 	$(() => {
-		var $memberId = $("#pwdFrm #memberId");
-		var $email = $("#pwdFrm #email");
-		var $pwd = $("#pwdUpdateFrm #password");
+		var $memberId = $("#pwdFrm #passwordMemberId");
+		var $email = $("#pwdFrm #passwordEmail");
+		var $pwd = $("#pwdUpdateFrm #findPassword");
 		var $pwdChk = $("#pwdUpdateFrm #passwordCheck");
 
 
@@ -54,7 +55,7 @@
 					if (data > 0) {
 						$("#pwdFrm").hide();
 						$("#pwdUpdateFrm").show();
-						$("#pwdUpdateFrm #memberId").val($memberId.val());
+						$("#pwdUpdateFrm #passwordMemberId").val($memberId.val());
 					} else {
 						console.log("입력한 값 없음");
 					}
@@ -97,7 +98,7 @@
 			$.ajax({
 				url: "${pageContext.request.contextPath}/member/passwordUpdate",
 				data: {
-					memberId: $("#pwdUpdateFrm #memberId").val(),
+					memberId: $("#pwdUpdateFrm #passwordMemberId").val(),
 					password: $pwd.val()
 				},
 				dataType: "json",

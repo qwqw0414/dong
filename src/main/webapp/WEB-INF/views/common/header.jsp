@@ -154,14 +154,11 @@ $(()=>{
 						<a class="dropdown-item"
 							href="${pageContext.request.contextPath }/member/memberLogOut.do">로그아웃</a>
 					</c:if>
-					<a class="dropdown-item" href="${pageContext.request.contextPath }/member/chargePoint.do">포인트 충전</a>
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/member/findPassword.do">비밀번호
 						찾기</a>
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/member/findId.do">아이디 찾기</a>
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberView.do">내 정보</a>
-					<c:if test="${memberLoggedIn != null }">
-						<a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberBye.do">회원 탈퇴</a>
-					</c:if>
+					
 				</div>
 			</li>
 
@@ -197,6 +194,19 @@ $(()=>{
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/shop/shopView.do">내 상점</a>
+
+				</div>
+			</li>
+			
+			<!-- 관리자 -->
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false">
+					관리자
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/member/memberList.do">회원관리</a>
 
 				</div>
 			</li>

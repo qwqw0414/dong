@@ -26,5 +26,11 @@ public @Data class Member implements Serializable{
 	private String phone;
 	private String email;
 	private Date enrollDate;
+	private String sido;
+	private String sigungu;
+	private String dong;
+	private String isValid;
+	private String isAdmin;
+	private int point;
 	
 }

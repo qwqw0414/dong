@@ -89,6 +89,10 @@ public class MemberDAOImpl implements MemberDAO{
 	public int insertPoint(String memberId) {
 		return sst.insert("insertPoint", memberId);
 	}
+	@Override
+	public Address selectAddress(String memberId) {
+		return sst.selectOne("selectAddress", memberId);
+	}
 	//==========================  예찬 끝
 
 	
