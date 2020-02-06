@@ -108,11 +108,17 @@ function boardUpdateBtn(){
 function boardDeleteBtn(){
 	var result = confirm("게시글을 삭제하시겠습니까?");
 	
-	if(result){
+	if(result=true){
 		location.href = "${pageContext.request.contextPath}/board/boardDelete.do?boardNo="+${board.boardNo};
 	}else{
 		alert("삭제 불가합니다.");
 	}
+/* 	var result = confirm("정말로 삭제하시겠습니까?");
+	if(!result)
+		return false;
+	
+	return location.href = "${pageContext.request.contextPath}/board/boardDelete.do?boardNo="+${board.boardNo};
+} */
 	
 }
 

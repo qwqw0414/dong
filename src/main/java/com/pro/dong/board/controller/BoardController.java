@@ -9,7 +9,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -206,21 +209,26 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/boardDelete.do")
-	public ModelAndView boardDelete(ModelAndView mav, int boardNo) {
+	public String boardDelete(ModelAndView mav, int boardNo) {
 		int result = bs.deleteBoard(boardNo);
 		log.debug("boardDelete@boardNo="+boardNo);
 		
+		String msg = "";
 		if(result>0) {
 			log.debug("board삭제 성공!!!!!");
+			msg="게시물 삭제에 성공하였습니다!";
+			
 		}else {
 			log.debug("board삭제 실패!!!");
+			msg="게시물 삭제에 실패하였습니다!";
 		}
 		
-		mav.setViewName("board/boardList");
 		
-		return mav;
+		return "board/boardList";
 	}
 	
+	
+
 	
 	
 
