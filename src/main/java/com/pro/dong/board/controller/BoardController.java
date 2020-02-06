@@ -31,7 +31,6 @@ import com.pro.dong.board.model.vo.Attachment;
 import com.pro.dong.board.model.vo.Board;
 import com.pro.dong.board.model.vo.BoardCategory;
 import com.pro.dong.common.util.Utils;
-import com.pro.dong.member.model.vo.Address;
 
 import sun.java2d.pipe.SpanShapeRenderer.Simple;
 
@@ -66,19 +65,19 @@ public class BoardController {
 		final int numPerPage = 10;
 		Map<String, Object> result = new HashMap<>();
 		// 주소 조회
-		Address addr = bs.getAddrByMemberId(memberId);
+//		Address addr = bs.getAddrByMemberId(memberId);
 		// 게시판 카테고리 조회
 		List<BoardCategory> boardCategoryList = bs.selectBoardCategory();
 		// 공지글 조회
 		List<Board> noticeList = bs.selectBoardNotice();
 		// 파라미터 생성
 		Map<String, String> param = new HashMap<>();
-		String sido = addr.getSido();
-		String sigungu = addr.getSigungu();
-		String dong = addr.getDong();
-		param.put("sido", sido);
-		param.put("sigungu", sigungu);
-		param.put("dong", dong);
+//		String sido = addr.getSido();
+//		String sigungu = addr.getSigungu();
+//		String dong = addr.getDong();
+//		param.put("sido", sido);
+//		param.put("sigungu", sigungu);
+//		param.put("dong", dong);
 		param.put("boardCategory", boardCategory);
 		param.put("searchType", searchType);
 		param.put("searchKeyword", searchKeyword);
@@ -87,9 +86,9 @@ public class BoardController {
 		// 게시글 조회
 		List<Board> list = bs.loadBoardList(cPage, numPerPage, param);
 		// 넘겨줄map에 담기
-		result.put("sido", sido);
-		result.put("sigungu", sigungu);
-		result.put("dong", dong);
+//		result.put("sido", sido);
+//		result.put("sigungu", sigungu);
+//		result.put("dong", dong);
 		result.put("list", list);
 		result.put("boardCategoryList", boardCategoryList);
 		result.put("noticeList", noticeList);

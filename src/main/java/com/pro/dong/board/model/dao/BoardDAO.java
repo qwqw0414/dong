@@ -6,7 +6,6 @@ import java.util.Map;
 import com.pro.dong.board.model.vo.Attachment;
 import com.pro.dong.board.model.vo.Board;
 import com.pro.dong.board.model.vo.BoardCategory;
-import com.pro.dong.member.model.vo.Address;
 
 public interface BoardDAO {
 
