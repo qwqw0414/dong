@@ -76,6 +76,11 @@ public class ShopDAOImpl implements ShopDAO{
 		return sst.update("shop.updateShopName", param);
 	}
 
+	@Override
+	public int updateShopImg(Shop s) {
+		return sst.update("shop.updateShopImg", s);
+	}
+
 	
 	
 	//========================== 주영 끝

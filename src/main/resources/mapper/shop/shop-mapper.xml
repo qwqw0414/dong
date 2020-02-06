@@ -42,6 +42,10 @@
 	<update id="updateShopName">
 		update shop set shop_name = #{shopName} where member_id = #{memberId}
 	</update>
+	
+	<update id="updateShopImg">
+		update shop set image = #{image} where member_id = #{memberId}
+	</update>
 	<!-- ==========================  주영 끝 -->
 	
 	<!-- 현규 시작 ========================== -->
