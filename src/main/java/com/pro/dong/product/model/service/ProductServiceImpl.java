@@ -22,7 +22,8 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public List<Category> selectCategory() {
 		return pd.selectCategory();
-	}	
+	}
+
 	
 	
 	
@@ -38,7 +39,10 @@ public class ProductServiceImpl implements ProductService{
 	//========================== 지은 끝
 		
 	//예찬 시작 ==========================
-		
+	@Override
+	public List<Category> selectCategory(Category category) {
+		return pd.selectCategory(category);
+	}	
 	//========================== 예찬 끝
 		
 	//주영 시작 ==========================
