@@ -1,5 +1,7 @@
 package com.pro.dong.admin.model.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.pro.dong.board.model.dao.BoardDAOImpl;
+import com.pro.dong.member.model.vo.Address;
+import com.pro.dong.member.model.vo.Member;
 
 @Repository
 public class AdminDAOImpl implements AdminDAO {
@@ -20,7 +24,10 @@ public class AdminDAOImpl implements AdminDAO {
 	// ==========================민호 끝
 
 	// 하진 시작 ==========================
-
+	@Override
+	public List<Member> selectMemberList() {
+		return sst.selectList("admin.selectMemberList");
+	}
 	// ========================== 하진 끝
 
 	// 근호 시작 ==========================
