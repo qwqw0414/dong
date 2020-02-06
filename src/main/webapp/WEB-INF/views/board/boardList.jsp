@@ -9,6 +9,7 @@
 	List<BoardCategory> list = new ArrayList<>();
 	list = (List<BoardCategory>)request.getAttribute("boardCategoryList");
 	String option = "";
+	option += "<option value=''/>전체</option>";
 	for(BoardCategory bc: list){
 		option +=  "<option value=\""+bc.getCategoryId()+"\">"+bc.getCategoryName()+"</option>";
 	}

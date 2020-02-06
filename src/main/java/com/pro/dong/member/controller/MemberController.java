@@ -134,7 +134,7 @@ public class MemberController {
 	String loc = "/";
 	if(m == null) {
 		msg = "존재하지 않는 아이디입니다.";
-		loc = "/member/memberLogin.do";
+		loc = "/";
 	}
 	else {
 		
@@ -171,7 +171,7 @@ public class MemberController {
 		}
 		else {
 			msg = "비밀번호가 틀렸습니다.";
-			loc = "/member/memberLogin.do";
+			loc = "/";
 		}
 	}
 	log.debug("password={}",password);
