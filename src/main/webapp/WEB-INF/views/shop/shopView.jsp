@@ -19,6 +19,7 @@
 	height: 200px;
 	display: inline-block;
 	padding: auto;
+	border-radius: 50%;
 	/* margin-bottom: 50px; */
 	/* border-radius: 50%; */
 	/* border: 2px solid black; */
@@ -28,6 +29,9 @@
 	height: 300px;
 	display: inline-block;
 }
+.img-thumbnail{
+	border: 2px solid lightgray !important;
+} 
 #shopDetailInfoDiv{
 	display: inline-block;
 	position: absolute;
@@ -48,8 +52,6 @@
 #shopImgDiv{
 	width: 300px;
 	height: 300px;
-	border: 2px solid black;
-	border-radius: 50%;
 	text-align: center;
 	padding-top: 35px;
 	margin-bottom: 30px;
@@ -62,7 +64,7 @@
 	<div id="shopDiv">
 	<div id="shopImgDiv">
 	<c:if test="${map.IMAGE == null}">
-		<img id="shopImg1" class="img-circle" src="${pageContext.request.contextPath}/resources/upload/shopImage/shopping-store.png" alt="" />
+		<img id="shopImg1" class="img-thumbnail" src="${pageContext.request.contextPath}/resources/upload/shopImage/shopping-store.png" alt="" />
 	</c:if>
 	<c:if test="${map.IMAGE != null}">
 		<img id="shopImg1" class="img-thumbnail" src="${pageContext.request.contextPath}/resources/upload/shopImage/${map.IMAGE}" alt="" />
@@ -70,7 +72,7 @@
 	</div>
 		<button id="imgUpBtn" type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#exampleModal">수정</button>
 		<div id="shopDetailInfoDiv">
-			<span id="shopNameSpan">asdasdasd</span> &nbsp;&nbsp;&nbsp;<button onclick="shopNameUp();" id="shopNameBtn" type="button" class="btn btn-outline-success btn-sm">수정</button><br /><br />
+			<span id="shopNameSpan">${map.SHOP_NAME}</span> &nbsp;&nbsp;&nbsp;<button onclick="shopNameUp();" id="shopNameBtn" type="button" class="btn btn-outline-success btn-sm">수정</button><br /><br />
 			<input id="shopNameInput" type="text"  value="${map.SHOP_NAME}"/>
 			<button id="shopNameUpdateBtn" onclick="shopNameUpdateEnd();" type="button" class="btn btn-outline-success btn-sm">수정</button>
 			<span id="shopNameCheck"></span><br />
