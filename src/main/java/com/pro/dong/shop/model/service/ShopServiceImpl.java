@@ -76,6 +76,11 @@ public class ShopServiceImpl implements ShopService{
 		return sd.updateShopName(param);
 	}
 
+	@Override
+	public int updateShopImg(Shop s) {
+		return sd.updateShopImg(s);
+	}
+
 
 	
 	
