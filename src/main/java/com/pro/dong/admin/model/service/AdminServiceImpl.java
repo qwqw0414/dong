@@ -11,7 +11,7 @@ import com.pro.dong.board.model.service.BoardServiceImpl;
 @Service
 public class AdminServiceImpl implements AdminService {
 
-	static Logger log = LoggerFactory.getLogger(BoardServiceImpl.class);
+	static Logger log = LoggerFactory.getLogger(AdminServiceImpl.class);
 	@Autowired
 	AdminDAO ad;
 

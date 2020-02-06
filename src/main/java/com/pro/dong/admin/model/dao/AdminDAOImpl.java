@@ -11,7 +11,7 @@ import com.pro.dong.board.model.dao.BoardDAOImpl;
 @Repository
 public class AdminDAOImpl implements AdminDAO {
 
-	static Logger log = LoggerFactory.getLogger(BoardDAOImpl.class);
+	static Logger log = LoggerFactory.getLogger(AdminDAOImpl.class);
 	@Autowired
 	SqlSessionTemplate sst;
 

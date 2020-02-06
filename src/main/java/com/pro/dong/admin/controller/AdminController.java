@@ -13,7 +13,7 @@ import com.pro.dong.board.controller.BoardController;
 @Controller
 public class AdminController {
 
-	static Logger log = LoggerFactory.getLogger(BoardController.class);
+	static Logger log = LoggerFactory.getLogger(AdminController.class);
 	
 	@Autowired
 	AdminService as;
