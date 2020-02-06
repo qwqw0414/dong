@@ -12,7 +12,6 @@ import com.pro.dong.board.model.dao.BoardDAO;
 import com.pro.dong.board.model.vo.Attachment;
 import com.pro.dong.board.model.vo.Board;
 import com.pro.dong.board.model.vo.BoardCategory;
-import com.pro.dong.member.model.vo.Address;
 @Service
 public class BoardServiceImpl implements BoardService {
 
@@ -21,10 +20,6 @@ public class BoardServiceImpl implements BoardService {
 	BoardDAO bd;
 	
 	// 민호 시작 ==========================
-	@Override
-	public Address getAddrByMemberId(String memberId) {
-		return bd.getAddrByMemberId(memberId);
-	}
 
 	@Override
 	public List<Board> loadBoardList(int cPage, int numPerPage, Map<String, String> param) {

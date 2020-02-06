@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
 import com.pro.dong.board.model.vo.Attachment;
 import com.pro.dong.board.model.vo.Board;
 import com.pro.dong.board.model.vo.BoardCategory;
-import com.pro.dong.member.model.vo.Address;
 @Repository
 public class BoardDAOImpl implements BoardDAO {
 
@@ -22,10 +21,6 @@ public class BoardDAOImpl implements BoardDAO {
 	SqlSessionTemplate sst;
 	
 	// 민호 시작 ==========================
-	@Override
-	public Address getAddrByMemberId(String memberId) {
-		return sst.selectOne("board.getAddrByMemberId", memberId);
-	}
 	
 	@Override
 	public int selectBoardTotalContents(Map<String, String> param) {
