@@ -7,12 +7,9 @@
 	<!-- 민호 시작 ========================== -->
 
 	<select id="selectMemberPoints" resultType="map" parameterType="member">
-		select M.*, p.point, a.sido, a.sigungu, a.dong 
-		from member M join point P 
-		on m.member_id = p.member_id
-		join address A
-		on m.member_id = a. member_id
-		where m.member_id = #{memberId}
+		select * 
+		from member 
+		where member_id = #{memberId}
 	</select>
 	<insert id="updatePoint" parameterType="map">
 		insert into point_status 
@@ -35,8 +32,9 @@
 	
 	<!-- 근호 시작 ========================== -->
 	<select id="selectLoginMember" resultType="member">
-		select * from member M left join member_valid V on M.member_id = V.member_id
-		where M.member_id = #{memberId}
+		select * from member 
+		where member_id = #{memberId}
+
 	</select>
 	<!-- ==========================  근호 끝 -->
 	
@@ -56,22 +54,14 @@
 		select count(*) from member where member_id = #{memberId}
 	</select>
 	<insert id="insertMember" parameterType="member">
-		insert into member values(#{memberId}, #{password}, #{memberName}, #{gender}, #{birth}, #{phone}, #{email}, default)
-	</insert>
-	<insert id="insertAddress" parameterType="address">
-		insert into address values(#{memberId}, #{sido}, #{sigungu}, #{dong})
-	</insert>
-	<insert id="insertValid">
-		insert into member_valid values(#{memberId},default,default)
+		insert into member values(#{memberId}, #{password}, #{memberName}, #{gender}, #{birth}, #{phone}, #{email}, default,
+			#{sido}, #{sigungu}, #{dong}, 'N', 'N', 0)
 	</insert>
 	<insert id="insertShop">
 		insert into shop values( seq_shop.nextval, #{memberId}, 'shop'||seq_shop_name.nextval, null, null, sysdate)
 	</insert>
-	<insert id="insertPoint">
-		insert into point values(#{memberId},default)
-	</insert>
 	<select id="selectAddress" resultType="address">
-		select * from address where member_id = #{memberId}
+		select * from member where member_id = #{memberId}
 	</select>
 	<!-- ==========================  예찬 끝 -->
 	

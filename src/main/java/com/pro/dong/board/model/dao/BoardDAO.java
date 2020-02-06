@@ -6,12 +6,10 @@ import java.util.Map;
 import com.pro.dong.board.model.vo.Attachment;
 import com.pro.dong.board.model.vo.Board;
 import com.pro.dong.board.model.vo.BoardCategory;
-import com.pro.dong.member.model.vo.Address;
 
 public interface BoardDAO {
 
 	// 민호 시작 ==========================
-	Address getAddrByMemberId(String memberId);
 
 	List<Board> loadBoardList(int cPage, int numPerPage, Map<String, String> param);
 
