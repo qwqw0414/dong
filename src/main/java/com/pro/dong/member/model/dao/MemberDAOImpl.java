@@ -93,7 +93,7 @@ public class MemberDAOImpl implements MemberDAO{
 	
 	// 현규 시작 ==========================
 	@Override
-	public Member selectOneMember(String memberId) {
+	public Map<String, Object> selectOneMember(String memberId) {
 		return sst.selectOne("member.selectOneMember", memberId);
 	}
 	@Override
