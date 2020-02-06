@@ -371,6 +371,7 @@ if ( rsp.success ) {
 	
 	#memberView .byement{
 	font-size: 10px;
+	margin-left: 900px;
 	}
 	#memberView .byelink{
 	color: green;

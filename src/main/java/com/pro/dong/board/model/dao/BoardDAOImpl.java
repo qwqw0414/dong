@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.pro.dong.board.model.vo.Attachment;
 import com.pro.dong.board.model.vo.Board;
 import com.pro.dong.board.model.vo.BoardCategory;
+import com.pro.dong.member.model.vo.Member;
 @Repository
 public class BoardDAOImpl implements BoardDAO {
 
@@ -42,6 +43,11 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public List<Board> selectBoardNotice() {
 		return sst.selectList("board.selectBoardNotice");
+	}
+	
+	@Override
+	public Member getMemberByMemberId(String memberId) {
+		return sst.selectOne("board.getMemberByMemberId", memberId);
 	}
 	
 	//==========================민호 끝
@@ -86,6 +92,7 @@ public class BoardDAOImpl implements BoardDAO {
 	public int deleteBoard(int boardNo) {
 		return sst.delete("board.deleteBoard", boardNo);
 	}
+
 	
 
 	//========================== 지은 끝

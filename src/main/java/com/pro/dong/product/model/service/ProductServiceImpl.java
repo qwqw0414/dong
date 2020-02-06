@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.pro.dong.product.model.dao.ProductDAO;
 import com.pro.dong.product.model.vo.Category;
+import com.pro.dong.product.model.vo.Product;
+import com.pro.dong.shop.model.vo.Shop;
 
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -43,7 +45,25 @@ public class ProductServiceImpl implements ProductService{
 	public List<Category> selectCategory(Category category) {
 		return pd.selectCategory(category);
 	}	
+	@Override
+	public Shop selectOneShop(String memberId) {
+		return pd.selectOneShop(memberId);
+	}
+	@Override
+	public int insertProduct(Product product) {
+		return pd.insertProduct(product);
+	}
 	//========================== 예찬 끝
+
+
+
+
+
+
+
+
+
+
 		
 	//주영 시작 ==========================
 		

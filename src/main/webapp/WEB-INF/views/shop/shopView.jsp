@@ -19,21 +19,22 @@
 	height: 200px;
 	display: inline-block;
 	padding: auto;
-	/* margin-bottom: 50px; */
-	/* border-radius: 50%; */
-	/* border: 2px solid black; */
+	border-radius: 50%;
 }
 #shopInfoDiv{
 	width: 1100px;
 	height: 300px;
 	display: inline-block;
 }
+.img-thumbnail{
+	border: 2px solid lightgray !important;
+} 
 #shopDetailInfoDiv{
 	display: inline-block;
 	position: absolute;
 	width: 600px;	
 	left: 350px;
-	top: 30px;
+	top: 60px;
 }
 .my-hr3 {
     border: 0;
@@ -45,14 +46,21 @@
 	top: 250px;
 	left: 120px;
 }
+#up_btn{
+	position: absolute;
+	left: 240px;
+	width: 50px;
+	height: 54px;
+}
 #shopImgDiv{
 	width: 300px;
 	height: 300px;
-	border: 2px solid black;
-	border-radius: 50%;
 	text-align: center;
 	padding-top: 35px;
 	margin-bottom: 30px;
+}
+#shopNameSpan{
+	font-weight: bold;
 }
 </style>
 
@@ -60,31 +68,41 @@
 
  <div id="shopView" class="mx-center">
 	<div id="shopDiv">
-	<div id="shopImgDiv">
-	<c:if test="${map.IMAGE == null}">
-		<img id="shopImg1" class="img-circle" src="${pageContext.request.contextPath}/resources/upload/shopImage/shopping-store.png" alt="" />
-	</c:if>
-	<c:if test="${map.IMAGE != null}">
-		<img id="shopImg1" class="img-thumbnail" src="${pageContext.request.contextPath}/resources/upload/shopImage/${map.IMAGE}" alt="" />
-	</c:if>
-	</div>
+		<div id="shopImgDiv">
+			<c:if test="${map.IMAGE == null}">
+				<img id="shopImg1" class="img-thumbnail" src="${pageContext.request.contextPath}/resources/upload/shopImage/shopping-store.png" alt="" />
+			</c:if>
+			<c:if test="${map.IMAGE != null}">
+				<img id="shopImg1" class="img-thumbnail" src="${pageContext.request.contextPath}/resources/upload/shopImage/${map.IMAGE}" alt="" />
+			</c:if>
+		</div>
 		<button id="imgUpBtn" type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#exampleModal">수정</button>
 		<div id="shopDetailInfoDiv">
-			<span id="shopNameSpan">${map.SHOP_NAME}</span> &nbsp;&nbsp;&nbsp;<button onclick="shopNameUp();" id="shopNameBtn" type="button" class="btn btn-outline-success btn-sm">수정</button><br /><br />
-			<input id="shopNameInput" type="text"  value="${map.SHOP_NAME}"/>
-			<button id="shopNameUpdateBtn" onclick="shopNameUpdateEnd();" type="button" class="btn btn-outline-success btn-sm">수정</button>
-			<span id="shopNameCheck"></span><br />
+			<div id="shopNameSpanDiv">
+				<img id="shopIcon" src="${pageContext.request.contextPath}/resources/images/shopIcon.png" />
+				<span id="shopNameSpan">${map.SHOP_NAME}</span> &nbsp;&nbsp;&nbsp;<button onclick="shopNameUp();" id="shopNameBtn" type="button" class="btn btn-outline-success btn-sm">수정</button><br />
+			</div>
+			<div id="shopNameInputDiv">
+				<input id="shopNameInput" type="text"  value="${map.SHOP_NAME}"/>
+				<button id="shopNameUpdateBtn" onclick="shopNameUpdateEnd();" type="button" class="btn btn-outline-success btn-sm">수정</button>
+				<span id="shopNameCheck"></span>
+			</div><hr />
 			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-open@2x.png" width="14" height="13">상점오픈일 ${map.SINCE} 일째
 			&nbsp;&nbsp;&nbsp;
 			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-user@2x.png" width="14" height="13">상점방문수 10명
 			&nbsp;&nbsp;&nbsp;
 			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-sell@2x.png" width="14" height="13">상품판매 0회
 			&nbsp;&nbsp;&nbsp;
-			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-dell@2x.png" width="14" height="13">택배발송 2회
-			<br /><br /><span id="shopInfoDetail">${map.SHOP_INFO}</span> &nbsp;&nbsp;&nbsp;
-			<button onclick="showUpdate();" id="hiddenBtn" type="button" class="btn btn-outline-success btn-sm">수정</button><br />
-			<textarea  name="updateInfo" id="updateInfo" cols="30" rows="3">${map.SHOP_INFO }</textarea>
-			<button onclick="shopUpdateEnd();" type="button" class="btn btn-outline-success btn-sm" id="up_btn">수정</button>
+			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-dell@2x.png" width="14" height="13">택배발송 2회<hr />
+			<div id="shopInfoSpanDiv">
+				<img id="shopIcon" src="${pageContext.request.contextPath}/resources/images/shopInfoIcon.png" />
+				<span id="shopInfoDetail">${map.SHOP_INFO}</span> &nbsp;&nbsp;&nbsp;
+				<button onclick="showUpdate();" id="hiddenBtn" type="button" class="btn btn-outline-success btn-sm">수정</button><br />
+			</div>
+			<div id="shopInfoTextDiv">
+				<textarea  name="updateInfo" id="updateInfo" cols="30" rows="2">${map.SHOP_INFO }</textarea>
+				<button onclick="shopUpdateEnd();" type="button" class="btn btn-outline-success btn-sm" id="up_btn">수정</button>
+			</div>
 		</div>
 	</div>
 	
@@ -139,29 +157,6 @@ $(function(){
 		});
 	});
 	
-	function fileUpload(){
-		/* var form = $("#ajaxFrom")[0];
-		console.log("form="+form);
-		
-		var formData = new FormData(form);
-		formData.append("upShopFile", $("#upShopFile")[0].files[0]);
-
-		
-		console.log("formData="+formData); */
-		
-		/* $.ajax({
-			url : "${pageContext.request.contextPath}/shop/shopImageUpload",
-			contentType : false,
-			enctype: 'multipart/form-data',
-			success : data => {
-				console.log(data);
-			},
-			error : (x, s, e) => {
-				console.log("ajax 요청 실패!");
-			}
-		}); */
-		//location.href = "${pageContext.request.contextPath}/shop/shopImageUpload.do"
-	}
 	
 	/* 상점수정 관련 */
 	$("#shopNameInput").keyup(function() {
@@ -218,65 +213,42 @@ $(function(){
 				$("#shopNameCheck").html("");
 				$("#shopNameSpan").html(data.SHOP_NAME);
 				
-				var $shopNameInput = $("#shopNameInput");
-				var $shopNameUpdateBtn = $("#shopNameUpdateBtn");
+				var $shopNameSpanDiv = $("#shopNameSpanDiv");
+				var $shopNameInputDiv = $("#shopNameInputDiv");
 				
-				$shopNameInput.hide();
-				$shopNameUpdateBtn.hide();
-				
-				var $shopNameSpan = $("#shopNameSpan");
-				var $shopNameBtn = $("#shopNameBtn");
-				
-				 $shopNameSpan.show();
-				 $shopNameBtn.show();
+				$shopNameSpanDiv.show();
+				$shopNameInputDiv.hide();
 			},
 			error : (x, s, e) => {
 				console.log("ajax 요청 실패!");
 			}
 		});
-		
 	}
 	
 	function shopNameUp(){
-		var $shopNameSpan = $("#shopNameSpan");
-		var $shopNameBtn = $("#shopNameBtn");
+		var $shopNameInputDiv = $("#shopNameInputDiv");
+		var $shopNameSpanDiv = $("#shopNameSpanDiv");
 		
-		$shopNameSpan.hide();
-		$shopNameBtn.hide();
-		
-		var $shopNameInput = $("#shopNameInput");
-		var $shopNameUpdateBtn = $("#shopNameUpdateBtn");
-		
-		$shopNameInput.show();
-		$shopNameUpdateBtn.show();
+		$shopNameInputDiv.show();
+		$shopNameSpanDiv.hide();
 	}
 	
 	$(function(){
-		var $textarea = $("#updateInfo");
-		var $update_btn = $("#up_btn");
+		var $shopInfoTextDiv = $("#shopInfoTextDiv");
+		var $shopNameInputDiv = $("#shopNameInputDiv");
 		
-		$textarea.hide();
-		$update_btn.hide();
+		$shopNameInputDiv.hide();
+		$shopInfoTextDiv.hide();
 		
-		var $shopNameInput = $("#shopNameInput");
-		var $shopNameUpdateBtn = $("#shopNameUpdateBtn");
-		
-		$shopNameInput.hide();
-		$shopNameUpdateBtn.hide();
 	}); 
 	
 	function showUpdate(){
-		var $textarea = $("#updateInfo");
-		var $update_btn = $("#up_btn");
 		
-		$textarea.show();
-		$update_btn.show();
+		var $shopInfoTextDiv = $("#shopInfoTextDiv");
+		$shopInfoTextDiv.show();
 		
-		var $shopInfoSpan = $("#shopInfoDetail");
-		var $update_btn1 = $("#hiddenBtn");
-		
-		$shopInfoSpan.hide();
-		$update_btn1.hide();
+		var $shopInfoSpanDiv = $("#shopInfoSpanDiv");
+		$shopInfoSpanDiv.hide();
 	};
 	
 	function shopUpdateEnd(){
@@ -293,19 +265,13 @@ $(function(){
 					updateInfo : updateInfo},
 			success : data => {
 				console.log(data);
-				var $textarea = $("#updateInfo");
-				var $update_btn = $("#up_btn");
+				var $shopInfoTextDiv = $("#shopInfoTextDiv");
+				$shopInfoTextDiv.hide();
 				
-				$textarea.hide();
-				$update_btn.hide();
-				
-				var $shopInfoSpan = $("#shopInfoDetail");
-				var $update_btn1 = $("#hiddenBtn");
-				 $('#shopInfoDetail').html(data.SHOP_INFO);
-				 console.log(data.SHOP_INFO);
-				
-				$shopInfoSpan.show();
-				$update_btn1.show();
+				$('#shopInfoDetail').html(data.SHOP_INFO);
+
+				var $shopInfoSpanDiv = $("#shopInfoSpanDiv");
+				$shopInfoSpanDiv.show();
 			},
 			error : (x, s, e) => {
 				console.log("ajax 요청 실패!");

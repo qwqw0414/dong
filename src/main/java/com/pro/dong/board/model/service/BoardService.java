@@ -6,6 +6,7 @@ import java.util.Map;
 import com.pro.dong.board.model.vo.Attachment;
 import com.pro.dong.board.model.vo.Board;
 import com.pro.dong.board.model.vo.BoardCategory;
+import com.pro.dong.member.model.vo.Member;
 
 public interface BoardService {
 
@@ -38,6 +39,8 @@ public interface BoardService {
 	List<Attachment> selectAttachmentList(int boardNo);
 
 	int deleteBoard(int boardNo);
+
+	Member getMemberByMemberId(String memberId);
 
 	//========================== 지은 끝
 		

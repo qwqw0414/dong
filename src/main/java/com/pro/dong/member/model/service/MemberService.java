@@ -46,7 +46,7 @@ public interface MemberService {
 	//==========================  주영 끝
 	
 	// 현규 시작 ==========================
-	Member selectOneMember(String memberId);
+	Map<String, Object> selectOneMember(String memberId);
 	int updateMemberName(Map<String, String> param);
 	int updateMemberPhone(Map<String, String> param);
 	int updateMemberEmail(Map<String, String> param);

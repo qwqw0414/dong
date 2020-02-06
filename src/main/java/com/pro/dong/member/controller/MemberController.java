@@ -293,102 +293,104 @@ public class MemberController {
 	
 // 현규 시작 ==========================
 	@RequestMapping("/memberView.do")
-	public Member memberView(HttpSession session) {
+	public ModelAndView memberView(HttpSession session, ModelAndView mav) {
 		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
-		Member m = ms.selectOneMember(memberLoggedIn.getMemberId());
-		log.debug("member={}",m);
-		return m;
+		mav = new ModelAndView();
+		Map<String, Object> map = ms.selectOneMember(memberLoggedIn.getMemberId());
+		mav.addObject("member", map);
+		log.debug("mav={}",mav);
+		mav.setViewName("member/memberView");
+		return mav;
 	}
 	
+	@RequestMapping("/updateMemberName")
+	@ResponseBody
+	public Map<String, Object> updateMemberName(HttpSession session, @RequestParam("afterName") String afterName) {
+		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
+		
+		log.info("세션 memberId={}",memberLoggedIn.getMemberId());
+		log.info("바꿀 membername={}",afterName);
+
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String,String> param = new HashMap<String, String>();
+		param.put("memberId", memberLoggedIn.getMemberId());
+		param.put("afterName", afterName);
+		
+		log.info("map={}",map);
+		
+		int result = ms.updateMemberName(param);
+		log.info("result={}",result);
+		
+		
+		if (result>0) {
+			map=ms.selectOneMember(memberLoggedIn.getMemberId());
+		}
+				
+		log.info("바뀐멤버객체={}",map);
+		
+		
+		return map;
+	}
+	@RequestMapping("/updateMemberPhone")
+	@ResponseBody
+	public Map<String, Object> updateMemberPhone(HttpSession session, @RequestParam("afterPhone") String afterPhone) {
+		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
+		
+		log.info("세션 memberId={}",memberLoggedIn.getMemberId());
+		log.info("바꿀 afterPhone={}",afterPhone);
+		
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String,String> param = new HashMap<String, String>();
+		param.put("memberId", memberLoggedIn.getMemberId());
+		param.put("afterPhone", afterPhone);
+		
+		log.info("map={}",map);
+		
+		int result = ms.updateMemberPhone(param);
+		log.info("result={}",result);
+		
+		
+		if (result>0) {
+			map=ms.selectOneMember(memberLoggedIn.getMemberId());
+		}
+		
+		log.info("바뀐멤버객체={}",map);
+		
+		
+		return map;
+	}
 	
-//	@RequestMapping("/updateMemberName")
-//	@ResponseBody
-//	public Map<String, Object> updateMemberName(HttpSession session, @RequestParam("afterName") String afterName) {
-//		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
-//		
-//		log.info("세션 memberId={}",memberLoggedIn.getMemberId());
-//		log.info("바꿀 membername={}",afterName);
-//
-//		
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		Map<String,String> param = new HashMap<String, String>();
-//		param.put("memberId", memberLoggedIn.getMemberId());
-//		param.put("afterName", afterName);
-//		
-//		log.info("map={}",map);
-//		
-//		int result = ms.updateMemberName(param);
-//		log.info("result={}",result);
-//		
-//		
-//		if (result>0) {
-//			map=ms.selectOneMember(memberLoggedIn.getMemberId());
-//		}
-//				
-//		log.info("바뀐멤버객체={}",map);
-//		
-//		
-//		return map;
-//	}
-//	@RequestMapping("/updateMemberPhone")
-//	@ResponseBody
-//	public Map<String, Object> updateMemberPhone(HttpSession session, @RequestParam("afterPhone") String afterPhone) {
-//		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
-//		
-//		log.info("세션 memberId={}",memberLoggedIn.getMemberId());
-//		log.info("바꿀 afterPhone={}",afterPhone);
-//		
-//		
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		Map<String,String> param = new HashMap<String, String>();
-//		param.put("memberId", memberLoggedIn.getMemberId());
-//		param.put("afterPhone", afterPhone);
-//		
-//		log.info("map={}",map);
-//		
-//		int result = ms.updateMemberPhone(param);
-//		log.info("result={}",result);
-//		
-//		
-//		if (result>0) {
-//			map=ms.selectOneMember(memberLoggedIn.getMemberId());
-//		}
-//		
-//		log.info("바뀐멤버객체={}",map);
-//		
-//		
-//		return map;
-//	}
-//	
-//	@RequestMapping("/updateMemberEmail")
-//	@ResponseBody
-//	public Map<String, Object> updateMemberEmail(HttpSession session, @RequestParam("afterEmail") String afterEmail) {
-//		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
-//		
-//		log.info("세션 memberId={}",memberLoggedIn.getMemberId());
-//		log.info("바꿀 afterEmail={}",afterEmail);
-//		
-//		
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		Map<String,String> param = new HashMap<String, String>();
-//		param.put("memberId", memberLoggedIn.getMemberId());
-//		param.put("afterEmail", afterEmail);
-//		
-//		log.info("map={}",map);
-//		
-//		int result = ms.updateMemberEmail(param);
-//		log.info("result={}",result);
-//		
-//		
-//		if (result>0) {
-//			map=ms.selectOneMember(memberLoggedIn.getMemberId());
-//		}
-//		
-//		log.info("바뀐멤버객체={}",map);
-//		
-//		
-//		return map;
-//	}
+	@RequestMapping("/updateMemberEmail")
+	@ResponseBody
+	public Map<String, Object> updateMemberEmail(HttpSession session, @RequestParam("afterEmail") String afterEmail) {
+		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
+		
+		log.info("세션 memberId={}",memberLoggedIn.getMemberId());
+		log.info("바꿀 afterEmail={}",afterEmail);
+		
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String,String> param = new HashMap<String, String>();
+		param.put("memberId", memberLoggedIn.getMemberId());
+		param.put("afterEmail", afterEmail);
+		
+		log.info("map={}",map);
+		
+		int result = ms.updateMemberEmail(param);
+		log.info("result={}",result);
+		
+		
+		if (result>0) {
+			map=ms.selectOneMember(memberLoggedIn.getMemberId());
+		}
+		
+		log.info("바뀐멤버객체={}",map);
+		
+		
+		return map;
+	}
 	
 //========================== 현규 끝
 
