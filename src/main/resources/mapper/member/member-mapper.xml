@@ -64,6 +64,9 @@
 	<insert id="insertValid">
 		insert into member_valid values(#{memberId},default,default)
 	</insert>
+	<insert id="insertShop">
+		insert into shop values( seq_shop.nextval, #{memberId}, 'shop'||seq_shop_name.nextval, null, null, sysdate)
+	</insert>
 	<insert id="insertPoint">
 		insert into point values(#{memberId},default)
 	</insert>

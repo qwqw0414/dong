@@ -83,6 +83,10 @@ public class MemberServiceImpl implements MemberService{
 	public int insertValid(String memberId) {
 		return md.insertValid(memberId);
 	}
+	@Override
+	public int insertShop(String memberId) {
+		return md.insertShop(memberId);
+	}
 	
 	@Override
 	public int insertPoint(String memberId) {

@@ -262,6 +262,12 @@ public class MemberController {
 			}
 			
 			if(result > 0) {
+				result = ms.insertShop(member.getMemberId());
+			}else {
+				throw new MemberException("회원가입 오류");
+			}
+			
+			if(result > 0) {
 				result = ms.insertPoint(member.getMemberId());
 			}else {
 				throw new MemberException("회원가입 오류");
