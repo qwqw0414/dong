@@ -1,6 +1,11 @@
+<%@page import="java.util.Map"%>
+<%@page import="com.pro.dong.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
-
+<%
+	Member memberLoggedIn = (Member) request.getSession().getAttribute("memberLoggedIn");
+	Map<String, String> map = (Map<String, String>) request.getAttribute("map");
+%>
 
 
 <h1 style="text-align: center;">마이페이지</h1><br>
@@ -28,7 +33,7 @@
                                     개설날짜 : ${member.OPEN_DATE} </div>
                             </div>
                             <div class="mypage_btn_more">
-                                <input type="button" class="btn_val btn btn-outline-success btn-sm" value="수정 바로가기">
+                                <input type="button" class="btn_val btn btn-outline-success btn-sm" value="내상점 가기">
                             </div>
                         </div>
 
@@ -41,11 +46,22 @@
                         <h4>내 포인트</h4><br>
                         <div class="ms_content">
                             <p>보유 포인트 : ${member.POINT}P</p>
+                          
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+      
 
+        <input type="number" name="pointAmount" id="pointAmount" min="0" max="100000"/>&nbsp;<button class="btn btn-outline-success btn-sm" onclick="chargePoint();">충전하기</button>
+      </div>
+    </div>
+</div>
+<input type="button" class="btn_val btn btn-outline-success btn-sm" value="내역보기">
+<button class="btn btn-outline-success btn-sm"onclick="test1();">포인트 충전 실험</button>
+ </div>
                             <div class="mypage_btn">
-                                <input type="button" class="btn_val btn btn-outline-success btn-sm" value="충전">
-                                <input type="button" class="btn_val btn btn-outline-success btn-sm" value="환불">
-                                <input type="button" class="btn_val btn btn-outline-success btn-sm" value="내역보기">
+                               
                             </div>
                         </div>
 
@@ -69,7 +85,7 @@
                                             id="change_btn1" class="btn btn-outline-success btn-sm" value="수정" />
                                     </div>
                                     <div class="after after_change1" style="display: none;">
-                                        <input type="text" id="username" placeholder="변경할 이름 입력">
+                                        <input type="text" id="username" placeholder="변경할 이름">
                                         <button type="button" class="btn btn-outline-success btn-sm" id="button-addon1"
                                             class="btn btn-outline-success btn-sm">확인</button>
                                     </div>
@@ -84,7 +100,7 @@
 
                                     <div class="after after_change2" style="display: none;">
                                         <input type="text" id="userphone" maxlength="11"
-                                            placeholder=" 변경할 연락처 입력 (-제외)">
+                                            placeholder=" 변경할 연락처 (-제외)">
                                         <button type="button" class="btn btn-outline-success btn-sm"
                                             id="button-addon2">확인</button>
                                     </div>
@@ -100,7 +116,7 @@
                                     </div>
 
                                     <div class="after after_change3" style="display: none;">
-                                        <input type="email" id="useremail" placeholder="변경할 이메일 입력">
+                                        <input type="email" id="useremail" placeholder="변경할 이메일">
                                         <button type="button" class="btn btn-outline-success btn-sm"
                                             id="button-addon3">확인</button>
                                     </div>
@@ -206,7 +222,7 @@
                     console.log(x, s, e);
                 }
             });
-        });
+        });//end of updatename
 
 
 
@@ -237,7 +253,9 @@
                     console.log(x, s, e);
                 }
             });
-        });
+        });//end of updatephone
+
+
 
         //이메일
         $("#memberView #button-addon3").on('click', function () {
@@ -258,12 +276,124 @@
                     console.log(x, s, e);
                 }
             });
-        });
+        });//end of emailupdate
 
 
-    })
+        function test1(){
+	var pointAmount = $("#pointAmount").val();
+	console.log(pointAmount);
+	var memberId = "<%=memberLoggedIn.getMemberId()%>";
+	console.log(memberId);
+	$.ajax({
+    	url: "${pageContext.request.contextPath}/member/updatePoint",
+    	data: {pointAmount:pointAmount,
+    		memberId:memberId},
+    	type: "POST",
+    	success: data=>{
+    		console.log(data);
+    		var pointUpdated = data.POINT;
+    		$("#memberPoint").val(pointUpdated);
+    	},
+    	error : (x, s, e) => {
+			console.log("ajax 요청 실패!");
+		}
+    });//end of ajax
+}
 
 
+function chargePoint(){
+	var IMP = window.IMP; // 생략가능
+    IMP.init('imp29966768'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+    var msg;
+    var pointAmount = $("#pointAmount").val();
+    var email = "testing1@naver.com";
+    var email = "testing1@naver.com";
+    var name = "${member.MEMBER_NAME}";
+    var phone = "${member.PHONE}";
+    var addr = "${member.SIDO}"+"${member.SIGUNGU}"+"${member.DONG}";
+    var postcode = '123-456';
+    console.log(email);
+    console.log(name);
+    console.log(phone);
+    console.log(addr);
+    console.log(postcode);
+
+    IMP.request_pay({
+        pg : 'kakaopay',
+        pay_method : 'card',
+        merchant_uid : 'merchant_' + new Date().getTime(),
+        name : '민호마켓',
+        amount : pointAmount,
+    buyer_email : email,
+    buyer_name : name,
+    buyer_tel : phone,
+    buyer_addr : addr,
+    buyer_postcode : postcode,
+//m_redirect_url : 'http://www.naver.com'
+}, function(rsp) {
+if ( rsp.success ) {
+
+    jQuery.ajax({
+        url: "", // url
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            imp_uid : rsp.imp_uid
+            //기타 필요한 데이터가 있으면 추가 전달
+        }
+    }).done(function(data) {
+        //[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
+        if ( everythings_fine ) {
+            msg = '결제가 완료되었습니다.';
+            msg += '\n고유ID : ' + rsp.imp_uid;
+            msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+            msg += '\결제 금액 : ' + rsp.paid_amount;
+            msg += '카드 승인번호 : ' + rsp.apply_num;
+
+            alert(msg);
+            
+        } else {
+        }
+    });
+    //성공시 이동할 페이지
+    //ex)
+    //location.href='<%=request.getContextPath()%>/order/paySuccess?msg='+msg;
+} else {
+    msg = '결제에 실패하였습니다.';
+    msg += '에러내용 : ' + rsp.error_msg;
+    //실패시 이동할 페이지
+    //location.href="<%=request.getContextPath()%>/order/payFail";
+    alert(msg);
+}
+});
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    });//end of script
+
+
+    
+    
+    
+    
 
 
 
