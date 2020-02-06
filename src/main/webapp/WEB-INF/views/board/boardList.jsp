@@ -23,11 +23,10 @@ $(function(){
 	$("#boardCategory").change(function(){
 		var cPage = $("#cPage").val();
 		var boardCategory = $("#boardCategory").val();
-		var boardCategory = $("#boardCategory").val();
-		var searchType = $("#searchType").val();
 		console.log(boardCategory);
-		console.log(cPage);
-		loadBoardList(searchType,searchKeyword,boardCategory,cPage);
+		var searchType = '';
+		var searchKeyword = '';
+		loadBoardList(searchType,searchKeyword, boardCategory,cPage);
 	});
 	
 	//검색어 입력
@@ -41,14 +40,14 @@ $(function(){
 			$("#searchKeyword").focus();
 			return;
 		} else {
-			loadBoardList(searchType,searchKeyword,boardCategory,cPage);
+			loadBoardList(searchType, searchKeyword, boardCategory,cPage);
 		}
 		
 	});
 	
 	
 });
-function loadBoardList(searchType,searchKeyword, boardCategory, cPage){
+function loadBoardList(searchType, searchKeyword, boardCategory, cPage){
 	if(<%=memberLoggedIn==null%>){
 		var memberId = "";		
 	} else {
@@ -58,6 +57,10 @@ function loadBoardList(searchType,searchKeyword, boardCategory, cPage){
 	var boardCategory = boardCategory;
 	var searchType = searchType;
 	var searchKeyword = searchKeyword;
+	console.log("boardCategory"+boardCategory);
+	console.log("searchType"+searchType);
+	console.log("searchKeyword"+searchKeyword);
+	console.log("cPage"+cPage);
 	$("#cPage").val(cPage);
 	$.ajax({
 		url: "${pageContext.request.contextPath}/board/loadBoardList",
@@ -104,17 +107,6 @@ function loadBoardList(searchType,searchKeyword, boardCategory, cPage){
 	      <select class="custom-select" id="boardCategory" required>
 	     	<%=option %>
 	      </select>
-
-    </div>
-	<p id="totalContents"></p>
-	<input type="button" value="글쓰기" id="btn-add" class="btn btn-outline-success" onclick="fn_goWriteBoard();"/>
-	<table id="tbl-board" class="table table-striped table-hover">
-		
-	</table>
-	<!-- pageBar 출력 -->
-	<div id="pageBar">
-	
-	</div>
 		<div class="form-group mx-sm-3 mb-2 mx-auto">
 	    <div class="input-group mb-3">
 		  <label for="searchKeyword" class="sr-only">검색</label>
@@ -128,6 +120,16 @@ function loadBoardList(searchType,searchKeyword, boardCategory, cPage){
           </div>
 	    </div>
 	  </div>
+    </div>
+	<p id="totalContents"></p>
+	<input type="button" value="글쓰기" id="btn-add" class="btn btn-outline-success" onclick="fn_goWriteBoard();"/>
+	<table id="tbl-board" class="table table-striped table-hover">
+		
+	</table>
+	<!-- pageBar 출력 -->
+	<div id="pageBar">
+	
+	</div>
 	<input type="hidden" name="cPage" id="cPage"/>
 <script>
 function fn_goWriteBoard(){
