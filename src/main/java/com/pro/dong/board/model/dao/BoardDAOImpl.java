@@ -82,6 +82,15 @@ public class BoardDAOImpl implements BoardDAO {
 		return sst.update("board.boardInCount", boardNo);
 	}
 
+	@Override
+	public List<Attachment> selectAttachmentList(int boardNo) {
+		return sst.selectList("board.selectAttachmentList", boardNo);
+	}
+
+	@Override
+	public int deleteBoard(int boardNo) {
+		return sst.delete("board.deleteBoard", boardNo);
+	}
 	
 
 	//========================== 지은 끝

@@ -38,7 +38,9 @@ public interface BoardDAO {
 
 	int boardInCount(int boardNo);
 
-	
+	List<Attachment> selectAttachmentList(int boardNo);
+
+	int deleteBoard(int boardNo);
 
 	//========================== 지은 끝
 		

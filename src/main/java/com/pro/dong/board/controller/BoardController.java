@@ -9,7 +9,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -183,16 +186,50 @@ public class BoardController {
 	// 지은 시작 ==========================
 	@RequestMapping("/boardView")
 	public String boardView(Model model, @RequestParam("boardNo") int boardNo) {
+		
 		Board board = bs.selectOneBoard(boardNo);
 		log.debug("boardNo="+boardNo);
-		
+		List<Attachment> attachmentList = bs.selectAttachmentList(boardNo);
 		int readCount = bs.boardInCount(boardNo);
-		model.addAttribute("board", board);
 		log.debug("readCount="+readCount);
+		
+		model.addAttribute("board", board);
+		model.addAttribute("attachmentList", attachmentList);
 		
 		return "board/boardView";
 		
 	}
+	
+	@RequestMapping("/boardUpdateView.do")
+	public ModelAndView boardUpdate(ModelAndView mav, Board board) {
+		
+		
+		
+		return mav;
+	}
+	
+	@RequestMapping("/boardDelete.do")
+	public String boardDelete(ModelAndView mav, int boardNo) {
+		int result = bs.deleteBoard(boardNo);
+		log.debug("boardDelete@boardNo="+boardNo);
+		
+		String msg = "";
+		if(result>0) {
+			log.debug("board삭제 성공!!!!!");
+			msg="게시물 삭제에 성공하였습니다!";
+			
+		}else {
+			log.debug("board삭제 실패!!!");
+			msg="게시물 삭제에 실패하였습니다!";
+		}
+		
+		
+		return "board/boardList";
+	}
+	
+	
+
+	
 	
 
 	//========================== 지은 끝

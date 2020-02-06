@@ -1,5 +1,10 @@
 package com.pro.dong.admin.model.dao;
 
+import java.util.List;
+
+import com.pro.dong.member.model.vo.Address;
+import com.pro.dong.member.model.vo.Member;
+
 public interface AdminDAO {
 
 	// 민호 시작 ==========================
@@ -7,7 +12,7 @@ public interface AdminDAO {
 	// ==========================민호 끝
 
 	// 하진 시작 ==========================
-
+	List<Member> selectMemberList();
 	// ========================== 하진 끝
 
 	// 근호 시작 ==========================

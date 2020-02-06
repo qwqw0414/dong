@@ -112,6 +112,14 @@
 		update board set read_count = read_count + 1 where board_no = #{boardNo} 
 	</update>
 	
+	<select id="selectAttachmentList" resultType="_int">
+	select * from board_attachment where board_no = #{boardNo}
+	</select>
+	
+	<delete id="deleteBoard">
+	delete from board where board_no = #{boardNo}
+	</delete>
+	
 	<!-- ==========================  지은 끝 -->
 	
 	<!-- 예찬 시작 ========================== -->
