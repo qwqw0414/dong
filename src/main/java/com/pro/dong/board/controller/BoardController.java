@@ -58,7 +58,7 @@ public class BoardController {
 	
 	@RequestMapping("/loadBoardList")
 	@ResponseBody
-	public Map<String, Object> loadBoardList(@RequestParam(value="boardCategory",defaultValue="") String boardCategory,@RequestParam(value="cPage",defaultValue="1") int cPage, @RequestParam("memberId") String memberId){
+	public Map<String, Object> loadBoardList(@RequestParam(value="searchType", defaultValue="")String searchType, @RequestParam(value="searchKeyword",defaultValue="") String searchKeyword, @RequestParam(value="boardCategory",defaultValue="") String boardCategory,@RequestParam(value="cPage",defaultValue="1") int cPage, @RequestParam("memberId") String memberId){
 		log.debug("boardCategory={}",boardCategory);
 		final int numPerPage = 10;
 		Map<String, Object> result = new HashMap<>();
@@ -76,6 +76,8 @@ public class BoardController {
 		param.put("sigungu", sigungu);
 		param.put("dong", dong);
 		param.put("boardCategory", boardCategory);
+		param.put("searchType", searchType);
+		param.put("searchKeyword", searchKeyword);
 		// 페이징바 작업
 		int totalContents = bs.selectBoardTotalContents(param);
 		// 게시글 조회
@@ -89,7 +91,7 @@ public class BoardController {
 		result.put("cPage", cPage);
 		result.put("numPerPage", numPerPage);
 		result.put("totalContents", totalContents);
-		String function = "loadBoardList('"+boardCategory+"',";
+		String function = "loadBoardList('"+searchType+"','"+searchKeyword+"','"+boardCategory+"',";
 		String pageBar = Utils.getAjaxPageBar(totalContents, cPage, numPerPage, function);
 		result.put("pageBar", pageBar);
 		return result;

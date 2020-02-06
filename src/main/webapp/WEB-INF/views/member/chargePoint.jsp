@@ -1,11 +1,11 @@
 <%@page import="java.util.Map"%>
 <%@page import="com.pro.dong.member.model.vo.Member"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<jsp:include page="/WEB-INF/views/common/header.jsp" />
 <%
-	Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
-	Map<String, String> map = (Map<String,String>)request.getAttribute("map");
-	
+	Member memberLoggedIn = (Member) request.getSession().getAttribute("memberLoggedIn");
+	Map<String, String> map = (Map<String, String>) request.getAttribute("map");
 %>
 <script>
 function test1(){
@@ -101,15 +101,18 @@ if ( rsp.success ) {
 
 <h1>포인트 충전</h1>
 <div class="row">
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">${memberLoggedIn.memberName }(${memberLoggedIn.memberId })님의 포인트 현황</h5>
-        <input class="card-text" id="memberPoint" value="${map.POINT }" readonly/>점<br>
-        <input type="number" name="pointAmount" id="pointAmount" min="0" max="100000"/>&nbsp;<button class="btn btn-warning" onclick="chargePoint();">충전하기</button>
-      </div>
-    </div>
-  </div>
- </div>
+	<div class="col-sm-6">
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">${memberLoggedIn.memberName }(${memberLoggedIn.memberId })님의
+					포인트 현황</h5>
+				<input class="card-text" id="memberPoint" value="${map.POINT }"
+					readonly />점<br> <input type="number" name="pointAmount"
+					id="pointAmount" min="0" max="100000" />&nbsp;
+				<button class="btn btn-warning" onclick="chargePoint();">충전하기</button>
+			</div>
+		</div>
+	</div>
+</div>
 <button onclick="test1();">포인트 충전 실험</button>
-<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+<jsp:include page="/WEB-INF/views/common/footer.jsp" />

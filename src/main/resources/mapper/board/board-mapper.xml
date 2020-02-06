@@ -27,6 +27,9 @@
 			<if test="boardCategory!=null and boardCategory!=''">
 				and c.category_id = #{boardCategory}
 			</if>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+				and b.${searchType} like '%${searchKeyword}%'
+			</if>
 		</where>
 	</select>
 	<select id="loadBoardList" parameterType="map" resultType="map">
@@ -47,6 +50,9 @@
 			</if>
 			<if test="boardCategory!=null and boardCategory!=''">
 				and c.category_id = #{boardCategory}
+			</if>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+				and b.${searchType} like '%${searchKeyword}%'
 			</if>
 		</where>
 		order by b.board_no desc
