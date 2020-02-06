@@ -60,6 +60,9 @@
 	<select id="selectBoardCategory" resultType="boardCategory">
 		select * from board_category
 	</select>
+	<select id="selectBoardNotice" resultType="map">
+		select * from board where category_id = 'A03'
+	</select>
 	<!-- ==========================  민호 끝 -->
 	
 	<!-- 하진 시작 ========================== -->
