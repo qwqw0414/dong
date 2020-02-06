@@ -22,24 +22,24 @@
 <div class="input-area" style="height: 350px;">
     <div class="product-tag" style="height: 200px;">상품이미지</div>
     <div class="text-primary product-insert">
-        <form enctype="multipart/form-data" id="formData">
+        <form enctype="multipart/form-data" id="formData" method="post">
             <div id="images">
-                <input type="file" class="product-photo" id="file-4" name="file4">
+                <input type="file" class="product-photo" id="file-4" name="upFile">
                 <br>
                 <img src="" id="img-4">
             </div>
             <div id="images">
-                <input type="file" class="product-photo" id="file-3" name="file3">
+                <input type="file" class="product-photo" id="file-3" name="upFile">
                 <br>
                 <img src="" id="img-2">
             </div>
             <div id="images">
-                <input type="file" class="product-photo" id="file-2" name="file2">
+                <input type="file" class="product-photo" id="file-2" name="upFile">
                 <br>
                 <img src="" id="img-3">
             </div>
             <div id="images">
-                <input type="file" class="product-photo" id="file-1" name="file1">
+                <input type="file" class="product-photo" id="file-1" name="upFile">
                 <br>
                 <img src="" id="img-1">
             </div>
@@ -202,36 +202,40 @@ $("#productReg #btn-reg").click(()=>{
 
     var addrArr = ($address.val()).split(" ");
 
+    var $form = $("#productReg #formData");
+
+    var formData = new FormData();
+
+    formData.append("title",$title.val());
+    formData.append("categoryId",$selectEnd.val());
+    formData.append("sido",addrArr[0]);
+    formData.append("sigungu",addrArr[1]);
+    formData.append("dong",addrArr[2]);
+    formData.append("status",$("#productReg [name=status]:checked").val());
+    formData.append("isTrade",$("#productReg [name=isTrade]:checked").val());
+    formData.append("info",$info.val());
+    formData.append("price",$price.val());
+    formData.append("shipping",$("#productReg #shipping").prop("checked"));
+    formData.append("haggle",$("#productReg #haggle").prop("checked"));
+    formData.append("memberId",'<%=memberLoggedIn.getMemberId()%>');
+    formData.append("files", $file1[0].files[0]);
+    formData.append("files", $file2[0].files[0]);
+    formData.append("files", $file3[0].files[0]);
+    formData.append("files", $file4[0].files[0]);
+
+
     $.ajax({
         url: "${pageContext.request.contextPath}/product/productReg",
-        data: {
-            title:$title.val(),
-            categoryId:$selectEnd.val(),
-            sido: addrArr[0],
-            sigungu: addrArr[1],
-            dong: addrArr[2],
-            status: $("#productReg [name=status]:checked").val(),
-            isTrade: $("#productReg [name=isTrade]:checked").val(),
-            info: $info.val(),
-            price: $price.val(),
-            shipping: $("#productReg #shipping").prop("checked"),
-            haggle: $("#productReg #haggle").prop("checked"),
-            memberId: '<%=memberLoggedIn.getMemberId()%>'
-        },
+        data: formData,
         dataType: "json",
+        type: "post",
+        contentType: false,
+        processData: false,
         success: data =>{
             if(data == 1){
-                var result = upload();
-
-                if(result > 0){
-                    alert("등록 성공");
-
-
-                }else{
-                    alert("등록 실패");
-                }
+                alert("등록 성공");
             }else{
-                alert("등록 실패")
+                alert("실패");
             }
         },
         error: (x, s, e) => {
@@ -245,10 +249,27 @@ $("#productReg #btn-reg").click(()=>{
 //첨부파일 등록
 function upload(){
     var result = 0;
+    var $form = $("#productReg #formData");
 
-    
+    var formData = new FormData();
+    formData.append("files", $file1[0].files[0]);
+    formData.append("files", $file2[0].files[0]);
+    formData.append("files", $file3[0].files[0]);
+    formData.append("files", $file4[0].files[0]);
 
-
+    $.ajax({
+        url: "${pageContext.request.contextPath}/product/filesUpload",
+        type: "post",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: data=>{
+            console.log(data);
+        },
+        error: (x, s, e) => {
+            console.log("실패", x, s, e);
+        }
+    })
 
     return result;
 }

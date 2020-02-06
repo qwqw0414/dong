@@ -40,10 +40,21 @@
 	</select>
 	
 	<insert id="insertProduct" parameterType="product">
-		insert into product values(
+		insert into product(product_no, shop_no, category_id, title, price, shipping, haggle, 
+							info, incount, sido, sigungu, dong, status, is_trade, reg_date)
+		values(
 			seq_product.nextval, #{shopNo}, #{categoryId}, #{title}, #{price}, #{shipping},
 			#{haggle}, #{info}, 0, #{sido}, #{sigungu}, #{dong}, #{status}, #{isTrade}, sysdate)
+		<selectKey keyProperty="abcd" resultType="_int" order="AFTER">
+			select seq_product.currval from dual
+		</selectKey>
 	</insert>
+	<insert id="insertAttachment">
+		insert into product_attachment values(
+			seq_product_attachment.nextval, #{abcd} ,#{photo}
+		)
+	</insert>
+	
 	<!-- ==========================  예찬 끝 -->
 	
 	<!-- 주영 시작 ========================== -->

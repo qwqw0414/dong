@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.pro.dong.product.model.vo.Category;
 import com.pro.dong.product.model.vo.Product;
+import com.pro.dong.product.model.vo.ProductAttachment;
 import com.pro.dong.shop.model.vo.Shop;
 
 public interface ProductDAO {
@@ -32,7 +33,12 @@ public interface ProductDAO {
 	List<Category> selectCategory(Category category);	
 	Shop selectOneShop(String memberId);
 	int insertProduct(Product product);
+	int insertAttachment(ProductAttachment pa);
 	//========================== 예찬 끝
+
+
+
+
 
 
 

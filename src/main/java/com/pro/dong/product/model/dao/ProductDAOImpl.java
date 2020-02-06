@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.pro.dong.product.model.vo.Category;
 import com.pro.dong.product.model.vo.Product;
+import com.pro.dong.product.model.vo.ProductAttachment;
 import com.pro.dong.shop.model.vo.Shop;
 
 @Repository
@@ -52,7 +53,15 @@ public class ProductDAOImpl implements ProductDAO{
 	public int insertProduct(Product product) {
 		return sst.insert("product.insertProduct", product);
 	}
+	@Override
+	public int insertAttachment(ProductAttachment pa) {
+		return sst.insert("product.insertAttachment", pa);
+	}
 	//========================== 예찬 끝
+
+
+
+
 
 
 
