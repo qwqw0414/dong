@@ -147,7 +147,6 @@
 
 
                         <div class="mypage_btn_more">
-
                             <input type="button" value="수정 바로가기" class="btn_val btn btn-outline-success btn-sm">
                         </div>
 
@@ -160,7 +159,7 @@
         </div>
 
 
-
+	<span>더이상 동네한바퀴를 이용하고 싶지 않다면 <a href="">회원탈퇴</a></span>
     </div>
 </div>
 
