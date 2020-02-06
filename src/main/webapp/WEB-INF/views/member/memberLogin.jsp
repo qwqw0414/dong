@@ -21,11 +21,11 @@ if(cookies != null){
 		<h1>로그인</h1>
 		<form action="${pageContext.request.contextPath}/member/memberLoginId.do" method="post">
 			<div class="login-form" id="loginPage">
-				<input type="text" name="memberId" id="memberId" placeholder="로그인할 아이디를 입력해주세요."
+				<input type="text" name="loginMemberId" id="loginMemberId" placeholder="로그인할 아이디를 입력해주세요."
 					class="form-control form-control-lg" value="<%=saveId?memberId:""%>" />
 
 				<br />
-				<input type="password" name="password" id="password" placeholder="비밀번호를 입력해주세요."
+				<input type="password" name="loginPassword" id="loginPassword" placeholder="비밀번호를 입력해주세요."
 					class="form-control form-control-lg" />
 			</div>
 			<br />
