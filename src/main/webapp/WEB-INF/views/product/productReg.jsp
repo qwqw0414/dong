@@ -34,7 +34,7 @@
 <div class="input-area" style="height: 80px;">
     <div class="product-tag">제목</div>
     <div class="product-insert">
-        <input type="text" maxlength="40">
+        <input type="text" id="title" maxlength="40">
     </div>
 </div>
 <hr>
@@ -57,7 +57,7 @@
     <div class="product-tag">거래지역</div>
     <div class="product-insert">
         <button id="btn-myLoaction">내 위치</button> <button>주소 검색</button> <br>
-        <input type="text" readonly>
+        <input type="text" id="address" readonly>
     </div>
 </div>
 <hr>
@@ -174,14 +174,18 @@ function selectedCategory(){
 
 });
 
-$("#productRef #btn-myLoaction").click(()=>{
+$("#productReg #btn-myLoaction").click(()=>{
     $.ajax({
         url: "${pageContext.request.contextPath}/member/selectAddress",
         data: {memberId: '<%=memberLoggedIn.getMemberId()%>'},
         dataType: "json",
         success: data => {
-            console.log(data);
-            
+            let html = "";
+            html += data.sido + " ";
+            html += data.sigungu + " ";
+            html += data.dong;
+
+            $("#productReg #address").val(html);
         },
         error: (x, s, e) => {
             console.log("실패", x, s, e);

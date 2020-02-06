@@ -86,6 +86,15 @@ public class BoardServiceImpl implements BoardService {
 		return bd.boardInCount(boardNo);
 	}
 
+	@Override
+	public List<Attachment> selectAttachmentList(int boardNo) {
+		return bd.selectAttachmentList(boardNo);
+	}
+
+	@Override
+	public int deleteBoard(int boardNo) {
+		return bd.deleteBoard(boardNo);
+	}
 
 	//========================== 지은 끝
 		
