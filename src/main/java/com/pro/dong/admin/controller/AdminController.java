@@ -9,10 +9,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.pro.dong.admin.model.service.AdminService;
 import com.pro.dong.board.controller.BoardController;
+import com.pro.dong.board.model.vo.BoardCategory;
+import com.pro.dong.board.model.vo.BoardReport;
 import com.pro.dong.member.model.vo.Member;
 
 @RequestMapping("/admin")
@@ -36,6 +39,19 @@ public class AdminController {
 		log.debug("memberList@@@@@@@={}",list);
 		mav.addObject("list", list);
 		mav.setViewName("/admin/member/memberList");
+		return mav;
+	}
+	
+	@RequestMapping("/member/memberView.do")
+	public ModelAndView memberView(ModelAndView mav, @RequestParam("memberId") String memberId) {
+		List<BoardReport> list = as.selectOneMember(memberId);
+		Member m = as.selectMemberView(memberId);
+		
+		log.debug("memberId 게시판 @@@@@ ={}",list);
+		log.debug("member객체 @@@@@={}",m);
+		mav.addObject("list",list);
+		mav.addObject("m",m);
+		mav.setViewName("/admin/member/memberView");
 		return mav;
 	}
 	// ========================== 하진 끝
