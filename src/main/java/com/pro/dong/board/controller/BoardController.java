@@ -48,7 +48,7 @@ public class BoardController {
 		
 		List<BoardCategory> boardCategoryList = bs.selectBoardCategory();
 		List<Board> boardList = bs.selectBoardList();//인기글 조회
-		log.debug("listBoard야야@@@@@@@@@@@@@@@@@@@@={}",boardList);
+		
 		mav.addObject("boardCategoryList",boardCategoryList);
 		mav.addObject("boardList",boardList);
 		mav.setViewName("/board/boardList");
