@@ -113,10 +113,11 @@ $(()=>{
   console.log($mainPage.find(".productList").length);
 
   for(var i = 0; i < $mainPage.find(".productList").length; i++){
-
     categoryId = $mainPage.find(".productList").eq(i).attr("id");
-    console.log(categoryId);
+    loadProduct(categoryId);
+  }
 
+  function loadProduct(categoryId){
     $.ajax({
       url: "${pageContext.request.contextPath}/product/selectProductListTop10",
       data: { categoryId: categoryId },
@@ -126,6 +127,7 @@ $(()=>{
         let html = "";
 
         data.forEach(product => {
+          console.log(product);
           html += "<div class='card'>";
           html += "<img src='${pageContext.request.contextPath}/resources/upload/product/" + product.photo + "' class='card-img-top'>";
           html += '<div class="card-body">';
@@ -134,13 +136,11 @@ $(()=>{
           html += '</div></div>'
         });
 
-        $mainPage.find("#" + categoryId + " .product").html(html);
-
+        $("#main-page #" + categoryId + " .product").html(html);
       },
       error: (x, s, e) => {
         console.log("실패", x, s, e);
       }
-
     });
   }
 
