@@ -10,6 +10,7 @@
   <input type="text" class="form-control" id="comments_board" placeholder="댓글을 입력해 주세요">
   <div class="input-group-append">
     <button class="btn btn-outline-secondary" type="button" id="comments_insert">등록</button>
+    <button class="btn btn-outline-secondary" type="button" id="commenttest">댓글조회</button>
   </div>
 </div>
 <div id="commentView"></div>
@@ -20,6 +21,28 @@
 
 <script>
 $(()=>{
+	
+	//댓글 조회
+$("#commentView #commenttest").on('click',function(){
+	var boardNo=285;
+	
+	$.ajax({
+		url: "${pageContext.request.contextPath}/board/selectBoardComment",
+		data:{boardNo:boardNo},
+		type:"GET",
+		success:data=>{
+			console.log(data)
+		},
+		 error : (x,s,e) =>{
+		        console.log("실패",x,s,e);
+		      }
+	});//end of ajax
+	
+});//end of function
+	
+	
+	
+	
 	$("#commentView #comments_insert").on('click',function(){
 		var boardNo= 285;    //보드넘버 바꾸면서 테스트 하면댐
 		var contents = $("#comments_board").val();
@@ -39,8 +62,7 @@ $(()=>{
 			      }
 		
 		});//end of ajax
-	});
-
+	});//end of function
 	
 });//end of script
 

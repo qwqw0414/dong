@@ -269,6 +269,22 @@ public class BoardController {
 		return result+"";
 	}
 	
+	@RequestMapping("/selectBoardComment")
+	@ResponseBody
+	public Map<String,Object> selectBoardCommentList(@RequestParam("boardNo") int boardNo) {
+		BoardComment bc = new BoardComment();
+		log.debug("BoardNO={}",boardNo);
+		
+		Map<String,Object> map = new HashMap<>();
+		Map<String,Object> param = new HashMap<>();
+		param.put("boardNo", boardNo);
+		map=bs.selectBoardCommentList(param);
+		log.info("댓글리스트={}",map);
+		
+		
+		return map;
+	}
+	
 	
 	//========================== 현규 끝
 
