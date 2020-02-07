@@ -263,10 +263,9 @@ public class BoardController {
 		
 		log.info("bc={}",bc);
 		
-		int result=1;
 		
-//		int result = bs.insertBoardComment(bc);
-//		log.info("result={}",result);
+		int result = bs.insertBoardComment(bc);
+		log.info("result={}",result);
 		
 		
 		
