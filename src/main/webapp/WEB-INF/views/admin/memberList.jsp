@@ -1,6 +1,4 @@
 <%@page import="com.pro.dong.common.util.Utils"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
@@ -30,7 +28,7 @@ $(function(){
 			$("#searchKeyword").focus();
 			return;
 		} else {
-			loadBoardList(searchType, searchKeyword,cPage);
+			loadMemberList(searchType, searchKeyword,cPage);
 		}
 		
 	});
@@ -55,21 +53,22 @@ function loadMemberList(searchType, searchKeyword, cPage){
 			let header = "<tr><th>아이디</th><th>이름</th><th>성별</th><th>생년월일</th><th>연락처</th><th>주소</th><th>이메일</th><th>가입일</th></tr>";
 	    	let $table = $("#member-list-tbl");
 	    	$table.html("");
+	    	let	html = "";
 	    	for(var i=0; i<data.list.length;i++){
 	    		html += "<tr>";
-	    		html += "<td>"+data.list[i].MEMBER_ID+"</td>";
+	    		html += "<td><a href='${pageContext.request.contextPath}/admin/memberView.do?memberId="+data.list[i].MEMBER_ID+"'>"+data.list[i].MEMBER_ID+"</a></td>";
 	    		html += "<td>"+data.list[i].MEMBER_NAME+"</td>";
 	    		html += "<td>"+data.list[i].GENDER+"</td>";
 	    		html += "<td>"+data.list[i].BIRTH+"</td>";
 	    		html += "<td>"+data.list[i].PHONE+"</td>";
-	    		html += "<td>"+data.list[i].SIDO+data.list[i].SIGUNGU+data.list[i].DONG"</td>";
+	    		html += "<td>"+data.list[i].SIDO+data.list[i].SIGUNGU+data.list[i].DONG+"</td>";
 	    		html += "<td>"+data.list[i].EMAIL+"</td>";
 	    		html += "<td>"+data.list[i].ENROLL_DATE+"</td>";
 	    		html += "</tr>";
 	    	}
 	    	$table.append(header+html);
 	    	$("#totalContents").text("총 "+data.totalContents+"명의 회원");
-			/* $("#pageBar").html(data.pageBar); */
+			$("#pageBar").html(data.pageBar);
 	    	
 	    	
 		},
@@ -105,7 +104,9 @@ function loadMemberList(searchType, searchKeyword, cPage){
 		
 	</table>
 </div>
-<%-- ${pageBar} --%>
+<div id="pageBar">
+	
+</div>
 <input type="hidden" name="cPage" id="cPage"/>
 
 
