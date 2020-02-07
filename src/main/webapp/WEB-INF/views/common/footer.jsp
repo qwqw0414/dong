@@ -32,6 +32,7 @@ footer .text-center{
 }
 
 </style>
+</div>
 <footer>
     <div class="line"></div>
     	<div class="footer">

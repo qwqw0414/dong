@@ -13,6 +13,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -253,8 +254,18 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/insertComments")
-	public Board insertComments(Board board, @RequestParam(comment) String comment) {
+	public Board insertComments(HttpSession session, @RequestParam("comment") String comment, 
+			 							@RequestParam("boardNo") String boardNo) {
+		Board board = new Board();
+		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
+		log.info("게시판 번호{}",boardNo);
+		log.info("comment={}",comment);
+		log.info("댓글 작성자 아이디={}",memberLoggedIn.getMemberId());
 		
+		
+		
+		
+		return board;
 	}
 	
 	

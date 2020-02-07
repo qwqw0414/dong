@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.pro.dong.product.model.vo.Category;
+import com.pro.dong.product.model.vo.Product;
+import com.pro.dong.product.model.vo.ProductAttachment;
+import com.pro.dong.shop.model.vo.Shop;
 
 @Repository
 public class ProductDAOImpl implements ProductDAO{
@@ -42,7 +45,31 @@ public class ProductDAOImpl implements ProductDAO{
 	public List<Category> selectCategory(Category category) {
 		return sst.selectList("product.selectCategory1", category);
 	}
+	@Override
+	public Shop selectOneShop(String memberId) {
+		return sst.selectOne("product.selectOneShop", memberId);
+	}
+	@Override
+	public int insertProduct(Product product) {
+		return sst.insert("product.insertProduct", product);
+	}
+	@Override
+	public int insertAttachment(ProductAttachment pa) {
+		return sst.insert("product.insertAttachment", pa);
+	}
 	//========================== 예찬 끝
+
+
+
+
+
+
+
+
+
+
+
+
 		
 	//주영 시작 ==========================
 		

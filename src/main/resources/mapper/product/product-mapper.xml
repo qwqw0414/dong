@@ -34,6 +34,28 @@
 			</if>
 		</where>
 	</select>
+	
+	<select id="selectOneShop" resultType="shop">
+		select * from shop where member_id = #{memberId}
+	</select>
+	
+	<insert id="insertProduct">
+		insert into product(product_no, shop_no, category_id, title, price, shipping, haggle, 
+							info, incount, sido, sigungu, dong, status, is_trade, reg_date)
+		values(
+			seq_product.nextval, #{shopNo}, #{categoryId}, #{title}, #{price}, #{shipping},
+			#{haggle}, #{info}, 0, #{sido}, #{sigungu}, #{dong}, #{status}, #{isTrade}, sysdate)
+		<selectKey keyProperty="productNo" resultType="_int" order="AFTER">
+			select seq_product.currval from dual
+		</selectKey>
+	</insert>
+	<insert id="insertAttachment">
+		insert into product_attachment(attachment_no, product_no, photo)
+		values(
+			seq_product_attachment.nextval, seq_product.currval ,#{photo}
+		)
+	</insert>
+	
 	<!-- ==========================  예찬 끝 -->
 	
 	<!-- 주영 시작 ========================== -->

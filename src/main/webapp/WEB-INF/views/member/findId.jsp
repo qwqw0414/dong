@@ -11,10 +11,15 @@
 		<input type="email" class="form-control" name="email" id="memberEmail">
 	</div>
 	<button type="button" class="btn btn-primary btn-findId">아이디찾기</button>
+	<button type="button" class="btn btn-primary returnIndex">취소</button>
 </div>
 <div id="findId-result"></div>
 
 <script>
+	$(".returnIndex").click(function(){
+		location.href = "${pageContext.request.contextPath}/";
+	});
+
 	$("#form-idSearch .btn-findId").click(function () {
 
 		var name = $("#IDmemberName").val().trim();
@@ -42,8 +47,9 @@
 					findId.append("입력하신 정보의 회원은 존재하지 않습니다.");
 				}
 				else {
-					findId.append(data.memberName + "님의 아이디는 " + data.memberId + "입니다.")
+					findId.append(data.memberName + "님의 아이디는 " + data.memberId + "입니다.");
 				}
+				findId.append("<button type="button" class="btn btn-primary returnIndex">로그인하기</button>");
 				$("#findId-result").html(findId);
 			},
 			error: (x, s, e) => {
