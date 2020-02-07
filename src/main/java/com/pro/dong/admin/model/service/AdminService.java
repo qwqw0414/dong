@@ -2,6 +2,8 @@ package com.pro.dong.admin.model.service;
 
 import java.util.List;
 
+
+import com.pro.dong.board.model.vo.BoardReport;
 import com.pro.dong.member.model.vo.Member;
 
 public interface AdminService {
@@ -12,6 +14,8 @@ public interface AdminService {
 
 	// 하진 시작 ==========================
 	List<Member> selectMemberList();
+	List<BoardReport> selectOneMember(String memberId);
+	Member selectMemberView(String memberId);
 	// ========================== 하진 끝
 
 	// 근호 시작 ==========================

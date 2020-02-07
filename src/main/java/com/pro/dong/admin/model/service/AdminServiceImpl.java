@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.pro.dong.admin.model.dao.AdminDAO;
 import com.pro.dong.board.model.service.BoardServiceImpl;
+import com.pro.dong.board.model.vo.BoardReport;
 import com.pro.dong.member.model.vo.Member;
 
 @Service
@@ -26,6 +27,14 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public List<Member> selectMemberList() {
 		return ad.selectMemberList();
+	}
+	@Override
+	public List<BoardReport> selectOneMember(String memberId) {
+		return ad.selectOneMember(memberId);
+	}
+	@Override
+	public Member selectMemberView(String memberId) {
+		return ad.selectMemberView(memberId);
 	}
 	// ========================== 하진 끝
 

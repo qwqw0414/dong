@@ -11,6 +11,7 @@
 		<input type="email" class="form-control" id="passwordEmail" required>
 	</div>
 	<button type="submit" class="btn btn-primary" id="btn-Update">비밀번호 변경</button>
+	<button class="btn btn-primary returnIndex">돌아가기</button>
 </div>
 
 <div id="pwdUpdateFrm">
@@ -24,10 +25,20 @@
 		<input type="password" class="form-control" id="passwordCheck" required>
 	</div>
 	<button type="submit" class="btn btn-primary" id="btn-pwdUpdate">변경</button>
+	<button class="btn btn-primary returnIndex">변경 취소</button>
+	
 </div>
 
 
 <script>
+$(".returnIndex").click(function(){
+	location.href = "${pageContext.request.contextPath}/";
+});
+
+$(document).on("click",".returnIndex",function(){
+	location.href = "${pageContext.request.contextPath}/";
+});
+	
 	$(function () {
 		$("#pwdUpdateFrm").hide();
 	});
