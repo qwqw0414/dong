@@ -130,11 +130,16 @@
 	
 	<!-- 현규 시작 ========================== -->
 	
+	
+	
 	<insert id="insertBoardComment">
 	insert into board_comment values(seq_board_comment.nextval,#{boardNo},#{memberId},#{contents},default,#{commentRef},sysdate)
 	</insert>
 	
-	<select id="selectBoardCommentList" resultType="boardComment">
+	<resultMap type="map" id="resultMap"></resultMap>
+	
+	
+	<select id="selectBoardCommentList" resultType="boardComment" resultMap="resultMap">
 	select *
 	from board_comment
 	where board_no=#{boardNo}

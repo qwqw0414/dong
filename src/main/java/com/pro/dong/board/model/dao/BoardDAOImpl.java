@@ -114,9 +114,10 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public Map<String, Object> selectBoardCommentList(Map<String,Object>param) {
-		return (Map<String, Object>) sst.selectList("board.selectBoardCommentList",param);
+	public List<Map<String, String>> selectBoardCommentList(int boardNo) {
+		return sst.selectList("board.selectBoardCommentList");
 	}
+
 
 	//========================== 현규 끝
 
