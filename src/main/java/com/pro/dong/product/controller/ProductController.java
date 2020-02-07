@@ -154,10 +154,19 @@ public class ProductController {
 		}
 		
 		@ResponseBody
-		@RequestMapping(value="/productList", produces="text/plain;charset=UTF-8")
-		public String selectProductList() {
+		@RequestMapping(value="/selectProductListTop10", produces="text/plain;charset=UTF-8")
+		public String selectProductListTop10(String categoryId) {
 			
-			return "";
+			List<Map<String, String>> list = null;
+			
+			try {
+				list = ps.selectProductListTop10(categoryId);
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+			return gson.toJson(list);
 		}
 	//========================== 예찬 끝
 		

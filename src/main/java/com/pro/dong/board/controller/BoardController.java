@@ -17,12 +17,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.pro.dong.board.model.service.BoardService;
 import com.pro.dong.board.model.vo.Attachment;
 import com.pro.dong.board.model.vo.Board;
@@ -37,6 +39,7 @@ import com.pro.dong.member.model.vo.Member;
 public class BoardController {
 	
 	static Logger log = LoggerFactory.getLogger(BoardController.class);
+	static Gson gson = new Gson();
 	@Autowired
 	BoardService bs;
 	
@@ -47,7 +50,7 @@ public class BoardController {
 		
 		List<BoardCategory> boardCategoryList = bs.selectBoardCategory();
 		List<Board> boardList = bs.selectBoardList();//인기글 조회
-		log.debug("listBoard야야@@@@@@@@@@@@@@@@@@@@={}",boardList);
+		
 		mav.addObject("boardCategoryList",boardCategoryList);
 		mav.addObject("boardList",boardList);
 		mav.setViewName("/board/boardList");
@@ -241,13 +244,11 @@ public class BoardController {
 		
 	// 현규 시작 ==========================
 	@RequestMapping("/boardComment.do")
-	public ModelAndView boardComment(ModelAndView mav) {
-		mav=new ModelAndView();
-		return mav;
-	}
+	public void boardComment() {}
 	
 	@RequestMapping("/insertComments")
-	public int insertComments(HttpSession session, @RequestParam("contents") String contents, 
+	@ResponseBody
+	public String insertComments(HttpSession session, @RequestParam("contents") String contents, 
 			 							@RequestParam("boardNo") int boardNo) {
 		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
 		log.info("게시판 번호{}",boardNo);
@@ -267,15 +268,21 @@ public class BoardController {
 		int result = bs.insertBoardComment(bc);
 		log.info("result={}",result);
 		
-		
-		
-		
+		return result+"";
+	}
 	
+	
+	//댓글 불러들이기
+	@ResponseBody
+	@RequestMapping(value="/selectBoardComment", produces="text/plain;charset=UTF-8")
+	public String selectBoardCommentList(@RequestParam("boardNo") int boardNo) {
+		log.info("파라미터로받아온 boardNo{}",boardNo);
+		List<Map<String,String>>list = null;
 		
+		list = bs.selectBoardCommentList(boardNo);
+		log.debug("DB에서 가져온 리스트={}",list);
 		
-		
-		
-		return result;
+		return gson.toJson(list);
 	}
 	
 	

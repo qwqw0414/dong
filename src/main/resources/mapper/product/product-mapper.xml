@@ -50,12 +50,27 @@
 		</selectKey>
 	</insert>
 	<insert id="insertAttachment">
-		insert into product_attachment(attachment_no, product_no, photo)
+		insert into product_attachment(attachment_no, product_no, photo, thumbnail)
 		values(
-			seq_product_attachment.nextval, seq_product.currval ,#{photo}
+			seq_product_attachment.nextval, seq_product.currval ,#{photo}, #{thumbnail}
 		)
 	</insert>
 	
+	<select id="selectProductListTop10" parameterType="product" resultMap="product1:1AttachMap">
+		select * from(
+		select p.*, pa.photo,
+		(select category_ref from product_category where category_id = p.category_id) category
+		from product p join product_attachment pa on p.product_no = pa.product_no
+		where pa.thumbnail = 'Y'
+		order by incount desc, reg_date desc
+		)
+		where category = #{category_id}
+		
+	</select>
+	
+	<resultMap type="map" id="product1:1AttachMap">
+		<result column="photo" property="photo"/>
+	</resultMap>
 	<!-- ==========================  예찬 끝 -->
 	
 	<!-- 주영 시작 ========================== -->
