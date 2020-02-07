@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -47,7 +48,7 @@ public class BoardController {
 		
 		List<BoardCategory> boardCategoryList = bs.selectBoardCategory();
 		List<Board> boardList = bs.selectBoardList();//인기글 조회
-		log.debug("listBoard야야@@@@@@@@@@@@@@@@@@@@={}",boardList);
+		
 		mav.addObject("boardCategoryList",boardCategoryList);
 		mav.addObject("boardList",boardList);
 		mav.setViewName("/board/boardList");
@@ -241,13 +242,11 @@ public class BoardController {
 		
 	// 현규 시작 ==========================
 	@RequestMapping("/boardComment.do")
-	public ModelAndView boardComment(ModelAndView mav) {
-		mav=new ModelAndView();
-		return mav;
-	}
+	public void boardComment() {}
 	
 	@RequestMapping("/insertComments")
-	public int insertComments(HttpSession session, @RequestParam("contents") String contents, 
+	@ResponseBody
+	public String insertComments(HttpSession session, @RequestParam("contents") String contents, 
 			 							@RequestParam("boardNo") int boardNo) {
 		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
 		log.info("게시판 번호{}",boardNo);
@@ -263,20 +262,11 @@ public class BoardController {
 		
 		log.info("bc={}",bc);
 		
-		int result=1;
 		
-//		int result = bs.insertBoardComment(bc);
-//		log.info("result={}",result);
+		int result = bs.insertBoardComment(bc);
+		log.info("result={}",result);
 		
-		
-		
-		
-	
-		
-		
-		
-		
-		return result;
+		return result+"";
 	}
 	
 	

@@ -131,7 +131,7 @@
 	<!-- 현규 시작 ========================== -->
 	
 	<insert id="insertBoardComment">
-	insert into board_comment values(seq_board_comment.nextval,#{boardNo},#{memberId},#{contents},default,#{setCommentRef},sysdate);
+	insert into board_comment values(seq_board_comment.nextval,#{boardNo},#{memberId},#{contents},default,#{commentRef},sysdate)
 	</insert>
 	
 	<!-- ==========================  현규 끝 -->

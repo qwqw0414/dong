@@ -1,7 +1,9 @@
 package com.pro.dong.admin.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,12 +27,22 @@ public class AdminDAOImpl implements AdminDAO {
 
 	// 하진 시작 ==========================
 	@Override
-	public List<Member> selectMemberList() {
-		return sst.selectList("admin.selectMemberList");
+	public List<Member> selectMemberList(int cPage, int numPerPage) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return sst.selectList("admin.selectMemberList",null,rowBounds);
 	}
 	@Override
-	public List<BoardReport> selectOneMember(String memberId) {
-		return sst.selectList("admin.selectOneMember",memberId);
+	public int selectMemberTotalContent() {
+		return sst.selectOne("admin.selectMemberTotalContent");
+	}
+	@Override
+	public List<BoardReport> selectOneMember(int cPage, int numPerPage, Map<String, String> param) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sst.selectList("admin.selectOneMember",param,rowBounds);
+	}
+	@Override
+	public int adselectBoardReportTotalContent(Map<String, String> param) {
+		return sst.selectOne("admin.adselectBoardReportTotalContent",param);
 	}
 	@Override
 	public Member selectMemberView(String memberId) {

@@ -188,7 +188,12 @@ $(()=>{
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/member/memberList.do">회원관리</a>
+
+					
+
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/memberList.do">회원관리</a>
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/productList.do">상품관리</a>
+
 
 				</div>
 			</li>
