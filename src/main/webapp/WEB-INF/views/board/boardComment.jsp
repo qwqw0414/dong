@@ -21,7 +21,7 @@
 <script>
 $(()=>{
 	$("#commentView #comments_insert").on('click',function(){
-		var boardNo= 284;
+		var boardNo= 285;    //보드넘버 바꾸면서 테스트 하면댐
 		var contents = $("#comments_board").val();
 		console.log(contents);
 		
@@ -41,9 +41,6 @@ $(()=>{
 		});//end of ajax
 	});
 
-	
-	
-	
 	
 });//end of script
 

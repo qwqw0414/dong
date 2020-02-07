@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.pro.dong.admin.model.service.AdminService;
-import com.pro.dong.board.controller.BoardController;
-import com.pro.dong.board.model.vo.BoardCategory;
 import com.pro.dong.board.model.vo.BoardReport;
 import com.pro.dong.common.util.Utils;
 import com.pro.dong.member.model.vo.Member;
@@ -31,7 +29,10 @@ public class AdminController {
 	AdminService as;
 	
 	// 민호 시작 ==========================
-	
+	@RequestMapping("productList.do")
+	public void productList() {
+		
+	}
 	// ==========================민호 끝
 	
 	// 하진 시작 ==========================
