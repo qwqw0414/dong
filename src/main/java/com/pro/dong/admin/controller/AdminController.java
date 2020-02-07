@@ -2,7 +2,9 @@ package com.pro.dong.admin.controller;
 
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +18,7 @@ import com.pro.dong.admin.model.service.AdminService;
 import com.pro.dong.board.controller.BoardController;
 import com.pro.dong.board.model.vo.BoardCategory;
 import com.pro.dong.board.model.vo.BoardReport;
+import com.pro.dong.common.util.Utils;
 import com.pro.dong.member.model.vo.Member;
 
 @RequestMapping("/admin")
@@ -32,28 +35,50 @@ public class AdminController {
 	// ==========================민호 끝
 	
 	// 하진 시작 ==========================
-	@RequestMapping("/member/memberList.do")
-	public ModelAndView memberList(ModelAndView mav) {
-		List<Member> list = as.selectMemberList();
+	@RequestMapping("/memberList.do")
+	public ModelAndView memberList(ModelAndView mav,@RequestParam(defaultValue="1") int cPage) {
+		// 페이징바 작업
+		final int numPerPage = 10;
 		
-		log.debug("memberList@@@@@@@={}",list);
+		List<Member> list = as.selectMemberList(cPage,numPerPage);
+		int totalContents = as.selectMemberTotalContent();
+		
 		mav.addObject("list", list);
-		mav.setViewName("/admin/member/memberList");
+		mav.addObject("totalContents",totalContents);
+		mav.addObject("numPerPage",numPerPage);
+		mav.addObject("cPage",cPage);
+		mav.setViewName("/admin/memberList");
+		
 		return mav;
 	}
-	
-	@RequestMapping("/member/memberView.do")
-	public ModelAndView memberView(ModelAndView mav, @RequestParam("memberId") String memberId) {
-		List<BoardReport> list = as.selectOneMember(memberId);
+
+	@RequestMapping("/memberView.do")
+	public ModelAndView memberView(ModelAndView mav,
+					@RequestParam("memberId") String memberId
+									,@RequestParam(defaultValue="1") int cPage) {
+
+		final int numPerPage = 10;
+
+		Map<String, Object> result = new HashMap<>();
+		
 		Member m = as.selectMemberView(memberId);
 		
-		log.debug("memberId 게시판 @@@@@ ={}",list);
-		log.debug("member객체 @@@@@={}",m);
+		Map<String, String> param = new HashMap<>();
+		param.put("memberId", memberId);
+		
+		// 페이징바 작업
+		int totalContents = as.selectBoardReportTotalContent(param);
+		List<BoardReport> list = as.selectOneMember(cPage, numPerPage, param);
+		
 		mav.addObject("list",list);
 		mav.addObject("m",m);
-		mav.setViewName("/admin/member/memberView");
+		mav.addObject("cPage",cPage);
+		mav.addObject("numPerPage",numPerPage);
+		mav.addObject("totalContents",totalContents);
+		mav.setViewName("admin/memberView");
 		return mav;
 	}
+
 	// ========================== 하진 끝
 	
 	// 근호 시작 ==========================

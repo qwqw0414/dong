@@ -1,6 +1,7 @@
 package com.pro.dong.admin.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,12 +26,20 @@ public class AdminServiceImpl implements AdminService {
 
 	// 하진 시작 ==========================
 	@Override
-	public List<Member> selectMemberList() {
-		return ad.selectMemberList();
+	public List<Member> selectMemberList(int cPage, int numPerPage) {
+		return ad.selectMemberList(cPage,numPerPage);
 	}
 	@Override
-	public List<BoardReport> selectOneMember(String memberId) {
-		return ad.selectOneMember(memberId);
+	public int selectMemberTotalContent() {
+		return ad.selectMemberTotalContent();
+	}
+	@Override
+	public List<BoardReport> selectOneMember(int cPage, int numPerPage, Map<String, String> param) {
+		return ad.selectOneMember(cPage,numPerPage,param);
+	}
+	@Override
+	public int selectBoardReportTotalContent(Map<String, String> param) {
+		return ad.adselectBoardReportTotalContent(param);
 	}
 	@Override
 	public Member selectMemberView(String memberId) {

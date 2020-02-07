@@ -1,8 +1,23 @@
+<%@page import="com.pro.dong.member.model.vo.Member"%>
+<%@page import="com.pro.dong.board.model.vo.BoardReport"%>
+<%@page import="java.util.List"%>
+<%@page import="com.pro.dong.common.util.Utils"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<%
+//페이지바 작업
+int totalContents = (int)(request.getAttribute("totalContents"));
+int cPage = (int)(request.getAttribute("cPage"));
+int numPerPage = (int)(request.getAttribute("numPerPage"));
+Member m = (Member)request.getAttribute("m");
+String memberId = m.getMemberId();
+String url = "memberView.do?memberId="+memberId+"&";
 
+String pageBar = Utils.getMemberIdPageBar(totalContents, cPage, numPerPage, url);
+pageContext.setAttribute("pageBar", pageBar);
+%>
 <h1>회원상세보기</h1>
 
 	<div class="table-responsive">
@@ -57,7 +72,9 @@
 	</div>
 
 
-
+	<div>
+	${pageBar}
+	</div>
 
 
 
