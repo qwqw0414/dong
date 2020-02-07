@@ -22,8 +22,6 @@
 
 $(()=>{
 	
-	
-	//댓글리스트 불러오기
 	function showCommentList(){
 	//댓글 조회
 	var boardNo=285;
@@ -32,6 +30,8 @@ $(()=>{
 		url: "${pageContext.request.contextPath}/board/selectBoardComment",
 		data:{boardNo:boardNo},
 		type:"GET",
+		dataType:"json",
+		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 		success:data=>{
 			console.log(data);
 		},
@@ -41,8 +41,8 @@ $(()=>{
 		});//end of ajax
 	}
 	
-	
-	
+	//댓글리스트 불러오기
+	showCommentList();
 	
 	$("#commentView #comments_insert").on('click',function(){
 		var boardNo= 285;    //보드넘버 바꾸면서 테스트 하면댐
