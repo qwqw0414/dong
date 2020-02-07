@@ -2,7 +2,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <style>
 #main-page #productList-category .cate-title{font-family: MapoPeacefull; font-size: 1.5em;}
-#main-page .card {width: 201px; border-radius: 0;}
+#main-page .card {width: 201px; border-radius: 0; height: 300px;}
 #main-page .card img{width: 200px; height: 190px; border: none;}
 #main-page .productList .product .card{float: left; margin: 10px 8px 10px 8px}
 #main-page .product {width: 1200px; display: block; margin: auto; height: 680px;}
