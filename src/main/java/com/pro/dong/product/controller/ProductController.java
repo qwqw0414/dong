@@ -92,7 +92,6 @@ public class ProductController {
 		public String categoryList(Category category) {
 			
 			List<Category> list = ps.selectCategory(category);
-			log.debug(list.toString());
 			
 			Gson gson = new Gson();
 			
