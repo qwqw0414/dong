@@ -259,19 +259,32 @@ header #categoryDiv .cate-text{margin: 10px;}
 $(()=>{
 var $preList = $("header #categoryDiv #category-list-pre");
 var $endList = $("header #categoryDiv #category-list-end");
+var $cateList = $("#categoryDiv .cate-list");
 var $categoryBar = $("header #categoryDiv #headerMenu");
 var $categoryDiv = $("header #categoryDiv");
+var isCateShow = false;
 // 카테고리 검색 창 활성화
 	$categoryDiv.mouseenter((e)=>{
-		console.log($(e.target).find(".cate-list"));
 		$(e.target).find(".cate-list").show();
 	});
 
 // 창 비활성화
-	$(".cate-list").mouseleave((e) => {
+	$categoryDiv.mouseleave((e)=>{
+		setTimeout(function() {
+			if(!isCateShow){
+				$(e.target).find(".cate-list").hide();
+				isCateShow = false;
+			}
+		},300);
+	});
+
+	$cateList.mouseenter(()=>{isCateShow = true});
+
+	$cateList.mouseleave((e) => {
 		$("header #categoryDiv .cate-list").hide();
 		$endList.children("ul").html("");
 		$("header #categoryDiv #cate-autowire").css("width","220px");
+		isCateShow = false;
 	});
 
 //  대분류 불러오기
