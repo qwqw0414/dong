@@ -1,8 +1,10 @@
 package com.pro.dong.shop.model.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import com.pro.dong.shop.model.vo.Shop;
+import com.pro.dong.shop.model.vo.ShopInquriy;
 
 public interface ShopDAO {
 
@@ -51,6 +53,8 @@ public interface ShopDAO {
 	int updateShopName(Map<String, String> param);
 
 	int updateShopImg(Shop s);
+
+	List<ShopInquriy> selectShopInquiry(int shopNo);
 
 	
 	//========================== 주영 끝

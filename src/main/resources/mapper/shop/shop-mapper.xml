@@ -46,6 +46,10 @@
 	<update id="updateShopImg">
 		update shop set image = #{image} where member_id = #{memberId}
 	</update>
+	
+	<select id="selectShopInquiry" resultType="map" parameterType="map">
+		select * from shop_inquiry where shop_no = #{shopNo}
+	</select>
 	<!-- ==========================  주영 끝 -->
 	
 	<!-- 현규 시작 ========================== -->

@@ -1,5 +1,6 @@
 package com.pro.dong.shop.model.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.pro.dong.member.model.dao.MemberDAOImpl;
 import com.pro.dong.shop.model.vo.Shop;
+import com.pro.dong.shop.model.vo.ShopInquriy;
 
 @Repository
 public class ShopDAOImpl implements ShopDAO{
@@ -79,6 +81,11 @@ public class ShopDAOImpl implements ShopDAO{
 	@Override
 	public int updateShopImg(Shop s) {
 		return sst.update("shop.updateShopImg", s);
+	}
+
+	@Override
+	public List<ShopInquriy> selectShopInquiry(int shopNo) {
+		return sst.selectList("shop.selectShopInquiry", shopNo);
 	}
 
 	

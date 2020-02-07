@@ -19,13 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.Gson;
 import com.pro.dong.member.model.vo.Member;
 import com.pro.dong.shop.model.service.ShopService;
 import com.pro.dong.shop.model.vo.Shop;
+import com.pro.dong.shop.model.vo.ShopInquriy;
 
 @Controller
 @RequestMapping("/shop")
@@ -195,38 +194,20 @@ public class ShopController {
 		return mav;
 	}
 	
-	   /*@RequestMapping("/shopImageUpload.do")
-	   @ResponseBody
-	    public String shopImageUpload(ModelAndView mav, Board board,
-							@RequestParam(value = "upFile", required = false) MultipartFile[] upFile, HttpServletRequest request) {
-	        String src = mtfRequest.getParameter("upFile");
-	        System.out.println("src value : " + src);
-	        MultipartFile mf = mtfRequest.getFile("file");
-
-	        String saveDirectory = mtfRequest.getServletContext().getRealPath("/resources/upload/shopImage");
-	        
-	        File dir = new File(saveDirectory);
-			if(dir.exists() == false)
-				dir.mkdir();
-			
-			String originFileName = mf.getOriginalFilename(); // 원본 파일 명
-			String ext = originFileName.substring(originFileName.lastIndexOf("."));
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
-			int rndNum = (int)(Math.random()*1000);
-			String renamedFileName = sdf.format(new Date())+"_"+rndNum+ext;
-	        
-	        System.out.println("originFileName : " + originFileName);
-
-	        try {
-	            mf.transferTo(new File(saveDirectory+"/"+renamedFileName));
-	        } catch (IllegalStateException e) {
-	            e.printStackTrace();
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-
-	        return "redirect:/";
-	    }*/
+	@RequestMapping("/selectShopInquriy")
+	@ResponseBody
+	public Map<String, Object> selectShopInquriy(@RequestParam("shopNo") int shopNo){
+		log.info("들어왔나요?");
+		List<ShopInquriy> list = new ArrayList<>();
+		list = ss.selectShopInquiry(shopNo);
+		log.info("list={}", list);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("list", list);
+		
+		return map;
+	}
+	
 
 	//========================== 주영 끝
 	
