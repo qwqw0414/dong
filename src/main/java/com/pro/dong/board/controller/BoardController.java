@@ -9,10 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -20,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,10 +27,9 @@ import com.pro.dong.board.model.service.BoardService;
 import com.pro.dong.board.model.vo.Attachment;
 import com.pro.dong.board.model.vo.Board;
 import com.pro.dong.board.model.vo.BoardCategory;
+import com.pro.dong.board.model.vo.BoardComment;
 import com.pro.dong.common.util.Utils;
 import com.pro.dong.member.model.vo.Member;
-
-import sun.java2d.pipe.SpanShapeRenderer.Simple;
 
 
 @RequestMapping("/board")
@@ -245,27 +240,43 @@ public class BoardController {
 	//========================== 주영 끝
 		
 	// 현규 시작 ==========================
-	@RequestMapping("/boardComment")
+	@RequestMapping("/boardComment.do")
 	public ModelAndView boardComment(ModelAndView mav) {
 		mav=new ModelAndView();
-		
 		return mav;
-		
 	}
 	
 	@RequestMapping("/insertComments")
-	public Board insertComments(HttpSession session, @RequestParam("comment") String comment, 
-			 							@RequestParam("boardNo") String boardNo) {
-		Board board = new Board();
+	public int insertComments(HttpSession session, @RequestParam("contents") String contents, 
+			 							@RequestParam("boardNo") int boardNo) {
 		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
 		log.info("게시판 번호{}",boardNo);
-		log.info("comment={}",comment);
+		log.info("contents={}",contents);
 		log.info("댓글 작성자 아이디={}",memberLoggedIn.getMemberId());
 		
 		
+		BoardComment bc = new BoardComment();
+		bc.setBoardNo(boardNo);
+		bc.setMemberId(memberLoggedIn.getMemberId());
+		bc.setContents(contents);
+		bc.setCommentRef(1);
+		
+		log.info("bc={}",bc);
+		
+		int result=1;
+		
+//		int result = bs.insertBoardComment(bc);
+//		log.info("result={}",result);
 		
 		
-		return board;
+		
+		
+	
+		
+		
+		
+		
+		return result;
 	}
 	
 	

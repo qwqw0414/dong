@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.pro.dong.board.model.dao.BoardDAOImpl;
+import com.pro.dong.board.model.vo.BoardReport;
 import com.pro.dong.member.model.vo.Member;
 
 @Repository
@@ -26,6 +27,14 @@ public class AdminDAOImpl implements AdminDAO {
 	@Override
 	public List<Member> selectMemberList() {
 		return sst.selectList("admin.selectMemberList");
+	}
+	@Override
+	public List<BoardReport> selectOneMember(String memberId) {
+		return sst.selectList("admin.selectOneMember",memberId);
+	}
+	@Override
+	public Member selectMemberView(String memberId) {
+		return sst.selectOne("admin.selectMemberView",memberId);
 	}
 	// ========================== 하진 끝
 

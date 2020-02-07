@@ -21,13 +21,13 @@
 <script>
 $(()=>{
 	$("#commentView #comments_insert").on('click',function(){
-		var boardNo="284"
-		var comment = $("#comments_board").val();
-		console.log(comment);
+		var boardNo= 284;
+		var contents = $("#comments_board").val();
+		console.log(contents);
 		
 		$.ajax({
 			url: "${pageContext.request.contextPath}/board/insertComments",
-			data:{comment:comment, 
+			data:{contents:contents, 
 				  boardNo:boardNo},
 			
 			type:"POST",

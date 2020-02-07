@@ -21,7 +21,7 @@
 		</tr>
 		<c:forEach items="${list}" var="list" varStatus="vs">
 			<tr>
-				<td>${list.MEMBER_ID}</td>
+				<td><a href="${pageContext.request.contextPath}/admin/member/memberView.do?memberId=${list.MEMBER_ID}">${list.MEMBER_ID}</a></td>
 				<td>${list.MEMBER_NAME}</td>
 				<td>${list.GENDER == 'F'?"여":"남"}</td>
 				<td>${list.BIRTH}</td>
