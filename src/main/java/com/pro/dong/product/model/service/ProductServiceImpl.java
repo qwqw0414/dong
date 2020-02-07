@@ -63,10 +63,8 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public int insertProduct(Product product, List<ProductAttachment> attachList) {
 		
-		log.debug("111");
 		int result = pd.insertProduct(product);
 		for(ProductAttachment pa : attachList) {
-			log.debug(pa.toString());
 			pd.insertAttachment(pa);
 		}
 		return result;
