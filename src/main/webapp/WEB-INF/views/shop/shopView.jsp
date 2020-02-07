@@ -291,13 +291,38 @@ $(function(){
 	#shopView-nav .shop-nav-disabled{border: 1px gray solid; border-bottom: 1px black soid; background-color: rgba(238, 243, 243); color: rgb(90, 90, 90); opacity: 0.8;}
 	#shopView-nav .shop-nav{cursor: pointer;}
 	#shopView-nav #shop-contents{margin-top: 80px;}
+	/* 주영시작 */
+	.lhyUQc {
+    	width: 100%;
+    	height: 80px;
+    	padding: 20px;
+    	border-bottom: 1px solid rgb(238, 238, 238);
+	}
+	/* 주영 끝 */
 	</style>
 	
 	<div id="shopView-nav">
 		<div style="height: 20px;">
 			<ul>
 				<li><div class="shop-nav-selected shop-nav">내 상품</div></li>
-				<li><div class="shop-nav-disabled shop-nav">상점문의</div></li>
+				<!-- 주영 시작 -->
+				<li>
+					<div class="shop-nav-disabled shop-nav">상점문의</div>
+					<div class="sc-cmIlrE kLywYQ">
+					<div class="sc-kEmuub gWosNC">
+					<div class="sc-bbkauy lhyUQc">
+					<textarea placeholder="상품문의 입력" class="sc-fihHvN czJdZE">
+					</textarea>
+					</div>
+					<div class="sc-ghsgMZ hLhJqi">
+					<div class="sc-dznXNo hinWMV">0 / 100</div>
+					<button class="sc-ekulBa fMwNqH">
+					<img src="https://assets.bunjang.co.kr/bunny_desktop/images/register@2x.png" width="15" height="16" alt="문의등록버튼 아이콘">등록</button>
+					</div>
+					</div>
+					</div>
+				</li>
+				<!-- 주영 끝 -->
 				<li><div class="shop-nav-disabled shop-nav">찜 목록</div></li>
 				<li><div class="shop-nav-disabled shop-nav">상점후기</div></li>
 				<li><div class="shop-nav-disabled shop-nav">팔로우</div></li>
@@ -360,10 +385,9 @@ $(()=>{
 			case "팔로워": $("#shopView-nav #nav-follower").show();break;
 		}
 	})
-
-
-
 });
+/* 주영 시작 */
+/* 주영 끝 */
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
