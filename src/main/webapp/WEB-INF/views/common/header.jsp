@@ -197,17 +197,6 @@ $(()=>{
 	</div>
 </nav>
 
-<style>
-/* 카테고리 바 CSS */
-header #categoryDiv hr{margin: 0;}
-header #categoryDiv ul{list-style: none; padding: 0; margin: 0;}
-header #categoryDiv li:hover{background-color: rgb(255, 30, 60); color: white; cursor: pointer;}
-header #categoryDiv p{padding: 5px 0 5px 25px; margin: 0;}
-header #categoryDiv .cate-list{border: rgb(233, 233, 233) 1px solid; position: absolute; z-index: 1; background-color: white; left: 50px; margin-top: 30px; font-family: 'MapoPeacefull'; font-size: 1em;}
-header #categoryDiv .cate-list-content{width: 220px; margin: 20px 0 5px 0; float: left;}
-header #categoryDiv .cate-text{margin: 10px;}
-</style>
-
 <!-- 페이지 시작 -->
 <div class="container" style="width: 1400px;">
 	<div id="headerImgDiv" class="text-center">

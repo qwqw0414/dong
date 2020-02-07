@@ -35,7 +35,7 @@ import com.pro.dong.shop.model.vo.Shop;
 public class ProductController {
 
 	static Logger log = LoggerFactory.getLogger(ProductController.class);
-
+	static Gson gson = new Gson();
 	@Autowired
 	ProductService ps;
 	
@@ -90,13 +90,8 @@ public class ProductController {
 		@ResponseBody
 		@RequestMapping(value="/categoryList", produces="text/plain;charset=UTF-8")
 		public String categoryList(Category category) {
-			
 			List<Category> list = ps.selectCategory(category);
-			
-			Gson gson = new Gson();
-			
 			return gson.toJson(list);
-					
 		}
 		
 		@ResponseBody
@@ -159,12 +154,11 @@ public class ProductController {
 		}
 		
 		@ResponseBody
-		@RequestMapping(value="/filesUpload", produces="text/plain;charset=UTF-8")
-		public String filesUpload(MultipartFile[] files) {
+		@RequestMapping(value="/productList", produces="text/plain;charset=UTF-8")
+		public String selectProductList() {
 			
 			return "";
 		}
-		
 	//========================== 예찬 끝
 		
 	//주영 시작 ==========================
