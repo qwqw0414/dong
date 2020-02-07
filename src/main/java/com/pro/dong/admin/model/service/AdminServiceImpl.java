@@ -26,12 +26,12 @@ public class AdminServiceImpl implements AdminService {
 
 	// 하진 시작 ==========================
 	@Override
-	public List<Member> selectMemberList(int cPage, int numPerPage) {
-		return ad.selectMemberList(cPage,numPerPage);
+	public List<Member> selectMemberList(int cPage, int numPerPage, Map<String, String> param) {
+		return ad.selectMemberList(cPage,numPerPage,param);
 	}
 	@Override
-	public int selectMemberTotalContent() {
-		return ad.selectMemberTotalContent();
+	public int selectMemberTotalContent(Map<String, String> param) {
+		return ad.selectMemberTotalContent(param);
 	}
 	@Override
 	public List<BoardReport> selectOneMember(int cPage, int numPerPage, Map<String, String> param) {

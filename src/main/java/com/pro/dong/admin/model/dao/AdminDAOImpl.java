@@ -27,13 +27,13 @@ public class AdminDAOImpl implements AdminDAO {
 
 	// 하진 시작 ==========================
 	@Override
-	public List<Member> selectMemberList(int cPage, int numPerPage) {
-		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage,numPerPage);
-		return sst.selectList("admin.selectMemberList",null,rowBounds);
+	public List<Member> selectMemberList(int cPage, int numPerPage, Map<String, String> param) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sst.selectList("admin.selectMemberList",param,rowBounds);
 	}
 	@Override
-	public int selectMemberTotalContent() {
-		return sst.selectOne("admin.selectMemberTotalContent");
+	public int selectMemberTotalContent(Map<String, String> param) {
+		return sst.selectOne("admin.selectMemberTotalContent", param);
 	}
 	@Override
 	public List<BoardReport> selectOneMember(int cPage, int numPerPage, Map<String, String> param) {

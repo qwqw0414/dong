@@ -13,8 +13,8 @@ public interface AdminService {
 	// ==========================민호 끝
 
 	// 하진 시작 ==========================
-	List<Member> selectMemberList(int cPage, int numPerPage);
-	int selectMemberTotalContent();
+	List<Member> selectMemberList(int cPage, int numPerPage, Map<String, String> param);
+	int selectMemberTotalContent(Map<String, String> param);
 	List<BoardReport> selectOneMember(int cPage, int numPerPage, Map<String, String> param);
 	int selectBoardReportTotalContent(Map<String, String> param);
 	Member selectMemberView(String memberId);
