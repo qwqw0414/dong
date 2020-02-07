@@ -247,7 +247,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/insertComments")
-	public int insertComments(HttpSession session, @RequestParam("contents") String contents, 
+	public String insertComments(HttpSession session, @RequestParam("contents") String contents, 
 			 							@RequestParam("boardNo") int boardNo) {
 		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
 		log.info("게시판 번호{}",boardNo);
@@ -267,15 +267,7 @@ public class BoardController {
 		int result = bs.insertBoardComment(bc);
 		log.info("result={}",result);
 		
-		
-		
-		
-	
-		
-		
-		
-		
-		return result;
+		return result+"";
 	}
 	
 	

@@ -42,9 +42,6 @@ $(()=>{
 	});
 
 	
-	
-	
-	
 });//end of script
 
 </script>
