@@ -59,6 +59,8 @@ public interface BoardDAO {
 	// 현규 시작 ==========================
 	int insertBoardComment(BoardComment bc);
 
+	Map<String, Object> selectBoardCommentList(Map<String,Object>param);
+
 	//========================== 현규 끝
 
 

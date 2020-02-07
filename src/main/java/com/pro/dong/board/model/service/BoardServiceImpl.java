@@ -115,6 +115,11 @@ public class BoardServiceImpl implements BoardService {
 		return bd.insertBoardComment(bc);
 	}
 
+	@Override
+	public Map<String, Object> selectBoardCommentList(Map<String,Object>param) {
+		return bd.selectBoardCommentList(param);
+	}
+
 	//========================== 현규 끝
 
 
