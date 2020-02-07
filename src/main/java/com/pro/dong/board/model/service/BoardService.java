@@ -57,6 +57,9 @@ public interface BoardService {
 	// 현규 시작 ==========================
 	int insertBoardComment(BoardComment bc);
 
+	List<Map<String, String>> selectBoardCommentList(int boardNo);
+
+
 	//========================== 현규 끝
 
 

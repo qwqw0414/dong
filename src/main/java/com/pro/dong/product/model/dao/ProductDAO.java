@@ -1,6 +1,7 @@
 package com.pro.dong.product.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.pro.dong.product.model.vo.Category;
 import com.pro.dong.product.model.vo.Product;
@@ -34,13 +35,8 @@ public interface ProductDAO {
 	Shop selectOneShop(String memberId);
 	int insertProduct(Product product);
 	int insertAttachment(ProductAttachment pa);
+	List<Map<String, String>> selectProductListTop10(String categoryId);
 	//========================== 예찬 끝
-
-
-
-
-
-
 
 
 

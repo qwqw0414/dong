@@ -1,5 +1,6 @@
 package com.pro.dong.shop.model.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.pro.dong.member.model.service.MemberServiceImpl;
 import com.pro.dong.shop.model.dao.ShopDAO;
 import com.pro.dong.shop.model.vo.Shop;
+import com.pro.dong.shop.model.vo.ShopInquriy;
 
 @Service
 public class ShopServiceImpl implements ShopService{
@@ -79,6 +81,11 @@ public class ShopServiceImpl implements ShopService{
 	@Override
 	public int updateShopImg(Shop s) {
 		return sd.updateShopImg(s);
+	}
+
+	@Override
+	public List<ShopInquriy> selectShopInquiry(int shopNo) {
+		return sd.selectShopInquiry(shopNo);
 	}
 
 

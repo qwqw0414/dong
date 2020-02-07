@@ -1,6 +1,7 @@
 package com.pro.dong.product.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,12 +65,27 @@ public class ProductServiceImpl implements ProductService{
 	public int insertProduct(Product product, List<ProductAttachment> attachList) {
 		
 		int result = pd.insertProduct(product);
+		String thumbnail = "Y";
+		
 		for(ProductAttachment pa : attachList) {
+			pa.setThumbnail(thumbnail);
 			pd.insertAttachment(pa);
+
+			if("Y".equals(thumbnail)) thumbnail = "N";
 		}
+		
 		return result;
 	}
+	@Override
+	public List<Map<String, String>> selectProductListTop10(String categoryId) {
+		return pd.selectProductListTop10(categoryId);
+	}
 	//========================== 예찬 끝
+
+
+
+
+
 
 
 

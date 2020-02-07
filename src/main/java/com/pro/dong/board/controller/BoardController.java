@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.pro.dong.board.model.service.BoardService;
 import com.pro.dong.board.model.vo.Attachment;
 import com.pro.dong.board.model.vo.Board;
@@ -38,6 +39,7 @@ import com.pro.dong.member.model.vo.Member;
 public class BoardController {
 	
 	static Logger log = LoggerFactory.getLogger(BoardController.class);
+	static Gson gson = new Gson();
 	@Autowired
 	BoardService bs;
 	
@@ -267,6 +269,20 @@ public class BoardController {
 		log.info("result={}",result);
 		
 		return result+"";
+	}
+	
+	
+	//댓글 불러들이기
+	@ResponseBody
+	@RequestMapping(value="/selectBoardComment", produces="text/plain;charset=UTF-8")
+	public String selectBoardCommentList(@RequestParam("boardNo") int boardNo) {
+		log.info("파라미터로받아온 boardNo{}",boardNo);
+		List<Map<String,String>>list = null;
+		
+		list = bs.selectBoardCommentList(boardNo);
+		log.debug("DB에서 가져온 리스트={}",list);
+		
+		return gson.toJson(list);
 	}
 	
 	

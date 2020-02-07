@@ -113,6 +113,12 @@ public class BoardDAOImpl implements BoardDAO {
 		return sst.insert("board.insertBoardComment",bc);
 	}
 
+	@Override
+	public List<Map<String, String>> selectBoardCommentList(int boardNo) {
+		return sst.selectList("board.selectBoardCommentList",boardNo);
+	}
+
+
 	//========================== 현규 끝
 
 
