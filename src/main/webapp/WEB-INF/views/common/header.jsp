@@ -299,29 +299,32 @@ var $categoryDiv = $("header #categoryDiv");
 	function loadEndList(){
 		$preList.find("li").mouseenter((e)=>{
 
-			//카테고리 div 확장
-			$(e.target).parents("#cate-autowire").css("width","440px");
+			setTimeout(function() {
 
-			var categoryRef = $(e.target).siblings("input").val();
+				//카테고리 div 확장
+				$(e.target).parents("#cate-autowire").css("width","440px");
+				var categoryRef = $(e.target).siblings("input").val();
 
-			$.ajax({
-				url: "${pageContext.request.contextPath}/product/categoryList",
-				data: {categoryRef: categoryRef},
-				type: "GET",
-				dataType: "json",
-				success: data => {
-					let html = "";
+				$.ajax({
+					url: "${pageContext.request.contextPath}/product/categoryList",
+					data: {categoryRef: categoryRef},
+					type: "GET",
+					dataType: "json",
+					success: data => {
+						let html = "";
 
-					data.forEach(cate => {
-						html += "<li><p>" + cate.categoryName + "</p><input type='hidden' value='" + cate.categoryId + "'></li>";
-					});
+						data.forEach(cate => {
+							html += "<li><p>" + cate.categoryName + "</p><input type='hidden' value='" + cate.categoryId + "'></li>";
+						});
 
-					$endList.children("ul").html(html);
-				},
-				error: (x, s, e) => {
-					console.log("실패", x, s, e);
-				}
-			});
+						$endList.children("ul").html(html);
+					},
+					error: (x, s, e) => {
+						console.log("실패", x, s, e);
+					}
+				});
+
+			}, 100);
 		});
 		
 	}
