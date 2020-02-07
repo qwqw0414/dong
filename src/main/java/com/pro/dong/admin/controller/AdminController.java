@@ -99,6 +99,7 @@ public class AdminController {
 		mav.addObject("totalContents",totalContents);
 		mav.setViewName("admin/memberView");
 		return mav;
+		
 	}
 
 	// ========================== 하진 끝
