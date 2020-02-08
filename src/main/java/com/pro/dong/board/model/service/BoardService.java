@@ -43,6 +43,7 @@ public interface BoardService {
 
 	Member getMemberByMemberId(String memberId);
 
+	int boardUpdate(Board board);
 
 	//========================== 지은 끝
 		
@@ -58,6 +59,7 @@ public interface BoardService {
 	int insertBoardComment(BoardComment bc);
 
 	List<Map<String, String>> selectBoardCommentList(int boardNo);
+
 
 
 	//========================== 현규 끝

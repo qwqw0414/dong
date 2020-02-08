@@ -200,12 +200,20 @@ public class BoardController {
 		
 	}
 	
-	@RequestMapping("/boardUpdateView.do")
-	public ModelAndView boardUpdate(ModelAndView mav, Board board) {
+	@RequestMapping("/boardUpdate")
+	public String boardUpdate(Board board) {
+		int result = bs.boardUpdate(board);
+		log.debug("boardUpdate@board", board);
+		String msg = "";
+		if(result>0) {
+			log.debug("게시글 수정성공!");
+			msg = "게시글 수정이 완료되었습니다.";
+		}else {
+			log.debug("게시글 수정실패!");
+			msg = "게시글 수정에 실패하였습니다.";
+		}
 		
-		
-		
-		return mav;
+		return result+"";
 	}
 	
 	@RequestMapping("/boardDelete")

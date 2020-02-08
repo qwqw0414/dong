@@ -95,6 +95,10 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 
+	@Override
+	public int boardUpdate(Board board) {
+		return sst.update("board.boardUpdate", board);
+	}
 	
 
 	//========================== 지은 끝
@@ -117,6 +121,7 @@ public class BoardDAOImpl implements BoardDAO {
 	public List<Map<String, String>> selectBoardCommentList(int boardNo) {
 		return sst.selectList("board.selectBoardCommentList",boardNo);
 	}
+
 
 
 	//========================== 현규 끝
