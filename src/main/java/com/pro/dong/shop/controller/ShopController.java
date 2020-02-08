@@ -267,6 +267,7 @@ public class ShopController {
 		log.info("들어왔나요?");
 		
 		int result = ss.deleteShopInquriy(deleteCommentBtn);
+		log.info("result={}", result);
 		Map<String, Integer> map = new HashMap<>();
 		map.put("result", result);
 		return map;

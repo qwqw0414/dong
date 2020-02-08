@@ -65,7 +65,7 @@
 	</insert>
 	
 	<delete id="deleteShopInquriy">
-		delete from shop_inquiry  where inquiry_no = #{deleteCommentBtn}
+		delete from shop_inquiry where inquiry_no = #{deleteCommentBtn} or inquiry_ref = #{deleteCommentBtn}
 	</delete>
 	
 	<select id="selectTotalInpuiry" resultType="_int">
