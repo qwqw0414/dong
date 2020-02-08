@@ -58,6 +58,10 @@
 	<insert id="insertShopInquriy">
 		insert into shop_inquiry values(seq_shop_inquiry.nextval, #{memberId}, #{shopNo}, #{inquiryContent}, 1, default, null)
 	</insert>
+	
+	<delete id="deleteShopInquriy">
+		delete from shop_inquiry  where inquiry_no = #{deleteCommentBtn}
+	</delete>
 	<!-- ==========================  주영 끝 -->
 	
 	<!-- 현규 시작 ========================== -->

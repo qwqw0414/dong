@@ -58,6 +58,8 @@ public interface ShopDAO {
 
 	int insertShopInquriy(Map<String, String> param);
 
+	int deleteShopInquriy(int deleteCommentBtn);
+
 	
 	//========================== 주영 끝
 	

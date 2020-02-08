@@ -93,6 +93,11 @@ public class ShopDAOImpl implements ShopDAO{
 		return sst.insert("shop.insertShopInquriy", param);
 	}
 
+	@Override
+	public int deleteShopInquriy(int deleteCommentBtn) {
+		return sst.delete("shop.deleteShopInquriy", deleteCommentBtn);
+	}
+
 	
 	
 	//========================== 주영 끝

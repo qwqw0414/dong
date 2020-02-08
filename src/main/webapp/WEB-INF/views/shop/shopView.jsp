@@ -342,8 +342,16 @@ $(function(){
 		display: block;
 	}
 	.commentBtn{
-		outline: none;
 		background-color: white;
+		outline: none;
+		border: 1px solid lightgray;
+		margin-left: 70px;
+	}
+	.commentDelBtn{
+		background-color: white;
+		outline: none;
+		border: 1px solid lightgray;
+		margin-left: 5px;
 	}
 	/* 주영 끝 */
 	</style>
@@ -352,7 +360,7 @@ $(function(){
 		<div style="height: 20px;">
 			<ul>
 				<li><div class="shop-nav-selected shop-nav">내 상품</div></li>
-				<li><div id="shopInquiryDiv" class="shop-nav-disabled shop-nav">상점문의</div></li>
+				<li><div id="shopInquiryDiv" onclick="selectInquiry();" class="shop-nav-disabled shop-nav">상점문의</div></li>
 				<li><div class="shop-nav-disabled shop-nav">찜 목록</div></li>
 				<li><div class="shop-nav-disabled shop-nav">상점후기</div></li>
 				<li><div class="shop-nav-disabled shop-nav">팔로우</div></li>
@@ -448,7 +456,7 @@ $(()=>{
 	
 });
 
-$("#shopInquiryDiv").on("click", function(){
+function selectInquiry(){
 	console.log("에이작스입장");
 	var shopNo = ${map.SHOP_NO};
 	$.ajax({
@@ -468,15 +476,23 @@ $("#shopInquiryDiv").on("click", function(){
 					html += "<span>"+data.list[i].WRITE_DAY +"</span>";
 					html += "<p>"+data.list[i].INQUIRY_CONTENT+"</p>";
 					html += "</div>";
+					html += "<button  class='commentBtn' >"
+					html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/reply@2x.png' width='17' height='14'>";
+					html +=	"댓글";
+				    html += "</button>";
+				    html += "<button id='deleteCommentBtn' value="+data.list[i].INQUIRY_NO+" onclick='deleteComment();' class='commentDelBtn'>";
+				    html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='14'>";
+				    html += "삭제";
+				    html += "</button>";
+				    /* html += "</div></div>"; */
 			}
-			$listDiv.append(html);
-			$listDiv.append("</div></div>");
+			$listDiv.html(html);
 		},
 		error : (x, s, e) => {
 			console.log("ajax 요청 실패!");
 		}
 	});
-});
+}
 
 function insertInquiry(){
 	
@@ -493,19 +509,26 @@ function insertInquiry(){
 			console.log("insertdata="+data);
 			$("#shopInquiryText").val('');
 			/* 이중 에이작스  */
-			let $listDiv = $("#shopInquiryList");
-			let	html = "";
-					html += "<hr width='745px'  align='left'/>";
-					html += "<img id='inquiryImgTag' src='${pageContext.request.contextPath}/resources/upload/shopImage/"+data.list[i].IMAGE+"'/>";
-					html += "<div id='inquiryDetail'>";
-					html += "<span id='inquiryWriterTag'>"+data.list[i].MEMBER_ID+"</span>";
-					html += "&nbsp;&nbsp;";
-					html += "<span>"+data.list[i].WRITE_DAY +"</span>";
-					html += "<p>"+data.list[i].INQUIRY_CONTENT+"</p>";
-					html += "</div>";
-			$listDiv.append(html);
-			$listDiv.append("</div></div>");
+			selectInquiry();
 			/* 이중 에이작스  */
+		},
+		error : (x, s, e) => {
+			console.log("ajax 요청 실패!");
+		}
+	});
+	
+}
+
+function deleteComment(){
+	
+	var deleteCommentBtn = $("#deleteCommentBtn").val();
+	$.ajax({
+		url : "${pageContext.request.contextPath}/shop/deleteShopInquriy",
+		method : "POST",
+		data : {deleteCommentBtn : deleteCommentBtn},
+		success : data => {
+			console.log(data);
+			selectInquiry();
 		},
 		error : (x, s, e) => {
 			console.log("ajax 요청 실패!");

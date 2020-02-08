@@ -93,6 +93,11 @@ public class ShopServiceImpl implements ShopService{
 		return sd.insertShopInquriy(param);
 	}
 
+	@Override
+	public int deleteShopInquriy(int deleteCommentBtn) {
+		return sd.deleteShopInquriy(deleteCommentBtn);
+	}
+
 
 	
 	
