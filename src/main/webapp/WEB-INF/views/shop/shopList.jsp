@@ -1,76 +1,70 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
-
-<div class="jumbotron jumbotron-fluid">
-  <div class="container">
-
-    <h1>AWS 연결 테스트</h1>
-
-    <div class="input-group mb-3" id="test">
-      <input type="text" class="form-control" placeholder="test" maxlength="30">
-      <div class="input-group-append">
-        <button class="btn btn-outline-secondary" type="button">작성</button>
-      </div>
+<style>
+#shopList #shop-list img{width: 100px; height: 100px;}
+#shopList #shop-list{margin: auto; padding: 20px;}
+#shopList{background-color: rgb(245, 245, 245);}
+#shopList .shop{border: rgb(219, 219, 219) 1px solid; position: relative;}
+#shopList .shop .title{display: inline;}
+#shopList .shop .date{float: right; position: absolute; right: 0px; top: 40px;}
+</style>
+<div id="shopList">
+    
+    <div id="shop-list">
+        <div class="shop">
+            <img src=".">
+            <div class="title">
+                <a href="">타이틀</a>
+            </div>
+            <div class="date">
+                가입일
+            </div>
+        </div>
     </div>
-    <div id="testShow"></div>
-  </div>
+
 </div>
-<!-- ${pageContext.request.contextPath}/test/test.do -->
+
 <script>
-
 $(()=>{
-  $("#test [type=text").keyup((e)=>{
-    if(e.keyCode == 13) testInsert();
-  })
-  $("#test button").click(()=>{
-    testInsert();
-  });
-});
+    $("header #search-bar").val('@${keyword}');
 
-function testInsert(){
-  var $text = $("#test [type=text]");
+    shopList('${keyword}');
 
-  if($text.val().length == 0) return;
+    function shopList(keyword){
+        $.ajax({
+            url: "${pageContext.request.contextPath}/shop/searchShop",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: {keyword:keyword},
+            success: data =>{
+                let html = "";
+                var photo = "";
+            
+                data.forEach(shop => {
 
-  $.ajax({
-    url: "${pageContext.request.contextPath}/test/test",
-    data: {text:$text.val()},
-    type: "POST",
-    success : data => {
+                    if(shop.image === undefined)
+                        photo = "${pageContext.request.contextPath}/resources/upload/shopImage/shopping-store.png";
+                    else
+                        photo = '${pageContext.request.contextPath}/resources/upload/shopImage/'+shop.image;
 
-      $text.val("");
-      if(data != "0") testReload();
-    },
-    error : (x,s,e) =>{
-      console.log("실패",x,s,e);
-    }
-  });
-}
+                    html += '<div class="shop">';
+                    html += '<img src="'+photo+'">';
+                    html += '<div class="title">';
+                    html += '<a href="#">';
+                    html += shop.shopName+'</a></div>';
+                    html += '<div class="date">';
+                    html += shop.openDate;
+                    html += '</div></div>';
+                });
 
-function testReload(){
-  $.ajax({
-      url: "${pageContext.request.contextPath}/test/test",
-      dataType: "json",
-      success : data => {
-        let table = '<table class="table table-sm"><thead><tr><th scope="col">No</th>'
-                  + '<th scope="col">Text</th><th scope="col">Date</th></tr></thead><tbody>';
-        $.each(data,(idx, test)=>{
-          table += '<tr>';
-          table += '<td>'+test.testNo+'</td>';
-          table += '<td>'+test.testText+'</td>';
-          table += '<td>'+test.testDate+'</td>';
-          table += '</tr>';
+                $("#shopList #shop-list").html(html);
+            },
+            error: (x, s, e)=>{
+                console.log(x, s, e);
+            }
         });
-        table += '</tbody></table>';
-        $("#testShow").html(table);
-      },
-      error : (x,s,e) =>{
-        console.log("실패",x,s,e);
-      }
-    });
-}
-
+    }
+});
 </script>
-
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
