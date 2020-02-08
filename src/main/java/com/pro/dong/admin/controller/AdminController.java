@@ -19,6 +19,7 @@ import com.pro.dong.admin.model.service.AdminService;
 import com.pro.dong.board.model.vo.BoardReport;
 import com.pro.dong.common.util.Utils;
 import com.pro.dong.member.model.vo.Member;
+import com.pro.dong.product.model.vo.Product;
 
 @RequestMapping("/admin")
 @Controller
@@ -33,6 +34,31 @@ public class AdminController {
 	@RequestMapping("productList.do")
 	public void productList() {
 		
+	}
+	@RequestMapping("/loadProductList")
+	@ResponseBody
+	public Map<String, Object> loadProductList(@RequestParam(value="searchType", defaultValue="")String searchType, @RequestParam(value="searchKeyword",defaultValue="") String searchKeyword, @RequestParam(value="productCategory",defaultValue="") String productCategory,@RequestParam(value="cPage",defaultValue="1") int cPage){
+		final int numPerPage = 10;
+		Map<String, Object> result = new HashMap<>();
+		
+		Map<String, String> param = new HashMap<>();
+		param.put("productCategory", productCategory);
+		param.put("searchType", searchType);
+		param.put("searchKeyword", searchKeyword);
+		
+		//페이징바 작업
+		int totalContents = as.selectProductTotalContents(param);
+		//상품 조회
+		List<Product> list = as.loadProductList(cPage, numPerPage, param);
+		result.put("list", list);
+		result.put("productCategory", productCategory);
+		result.put("cPage", cPage);
+		result.put("numPerPage", numPerPage);
+		result.put("totalContents", totalContents);
+		String function = "loadProductList('"+searchType+"','"+searchKeyword+"','"+productCategory+"',";
+		String pageBar = Utils.getAjaxPageBar(totalContents, cPage, numPerPage, function);
+		result.put("pageBar", pageBar);
+		return result;
 	}
 	// ==========================민호 끝
 	
