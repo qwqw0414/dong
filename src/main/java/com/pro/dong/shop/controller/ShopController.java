@@ -272,6 +272,35 @@ public class ShopController {
 		map.put("result", result);
 		return map;
 	}
+	
+	@RequestMapping("/insertInquiryComment")
+	@ResponseBody
+	public Map<String, Object> insertInquiryComment(@RequestParam("inquiryRefNo") int inquiryRefNo,
+												 	@RequestParam("shopInquiryCommentText") String shopInquiryCommentText,
+												 	@RequestParam("shopInquiryCommentWriter") String shopInquiryCommentWriter,
+												 	@RequestParam("shopInquiryCommentShopNo") int shopInquiryCommentShopNo){
+		
+		ShopInquriy s = new ShopInquriy();
+		s.setInquiryRef(inquiryRefNo);
+		s.setInquiryContent(shopInquiryCommentText);
+		s.setMemberId(shopInquiryCommentWriter);
+		s.setShopNo(shopInquiryCommentShopNo);
+		
+		
+		Map<String, String> param = new HashMap<>();
+		param.put("inquiryRefNo", Integer.toString(inquiryRefNo));
+		param.put("shopInquiryCommentText", shopInquiryCommentText);
+		param.put("shopInquiryCommentWriter", shopInquiryCommentWriter);
+		param.put("shopInquiryCommentShopNo", Integer.toString(shopInquiryCommentShopNo));
+		
+		Map<String, Object> map = new HashMap<>();
+		int result = ss.insertInquiryComment(param);
+		log.info("resultInsert={}", result);
+		
+		map.put("s", s);
+		
+		return map;
+	}
 
 	//========================== 주영 끝
 	

@@ -109,6 +109,10 @@ public class ShopDAOImpl implements ShopDAO{
 	public int selectTotalInpuiry(int shopNo) {
 		return sst.selectOne("shop.selectTotalInpuiry", shopNo);
 	}
+	@Override
+	public int insertInquiryComment(Map<String, String> param) {
+		return sst.insert("shop.insertInquiryComment", param);
+	}
 
 
 	

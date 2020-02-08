@@ -1,10 +1,13 @@
+<%@page import="com.pro.dong.shop.model.vo.Shop"%>
 <%@page import="java.util.Date"%>
 <%@page import="com.pro.dong.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <%
-	Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
+Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
+	/* Shop shop = (Shop)request.getAttribute("map");
+	System.out.println("넘어온shop="+shop); */
 %>
 <style>
 #shopView{
@@ -370,6 +373,9 @@ $(function(){
 		position: relative;
 		top: -8px;
 	}
+	#inquiryCommentDiv{
+		margin-left: 35px;
+	}
 	/* 주영 끝 */
 	</style>
 	
@@ -455,7 +461,6 @@ $(()=>{
 /* 주영 시작 */
 $(()=>{
 	$("#shopInquiryTotalDiv").hide();
-	
 });
 
 $("#shopInquiryText").keyup(function() {
@@ -476,10 +481,12 @@ function selectInquiry(){
 			console.log(data);
 			let $totalInquiry = $("#totalInquiry");
 			$totalInquiry.html(data.totalInquiry);
+			var memberId = $("[name=memberLoggedIn]").val();
 			
 			let $listDiv = $("#shopInquiryList");
 			let	html = "";
 			for(var i=0; i<data.list.length;i++){
+				/* 댓글이라면 */
 				if(data.list[i].INQUIRY_LEVEL == 1){
 					html += "<hr width='745px'  align='left'/>";
 					html += "<img id='inquiryImgTag' src='${pageContext.request.contextPath}/resources/upload/shopImage/"+data.list[i].IMAGE+"'/>";
@@ -489,15 +496,21 @@ function selectInquiry(){
 					html += "<span>"+data.list[i].WRITE_DAY +"</span>";
 					html += "<p>"+data.list[i].INQUIRY_CONTENT+"</p>";
 					html += "</div>";
-					html += "<button onclick='insertInquiryComment();' id='insertInquiryCommentBtn' class='commentBtn' >"
-					html += "<img  src='https://assets.bunjang.co.kr/bunny_desktop/images/reply@2x.png' width='17' height='17'>";
-					html +=	"댓글";
-				    html += "</button>";
-				    html += "<button id='deleteCommentBtn' value="+data.list[i].INQUIRY_NO+" onclick='deleteComment();' class='commentDelBtn'>";
-				    html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='17'>";
-				    html += "삭제";
-				    html += "</button>";
-				}
+					if(memberId == data.list[i].MEMBER_ID){
+						html += "<button onclick='insertInquiryComment(this);' value="+data.list[i].INQUIRY_NO+" id='insertInquiryCommentBtn' class='commentBtn' >"
+						html += "<img  src='https://assets.bunjang.co.kr/bunny_desktop/images/reply@2x.png' width='17' height='17'>";
+						html +=	"댓글";
+				    	html += "</button>";
+						}
+					if("${map.MEMBER_ID}" == memberId){
+				    	html += "<button id='deleteCommentBtn' value="+data.list[i].INQUIRY_NO+" onclick='deleteComment();' class='commentDelBtn'>";
+				    	html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='17'>";
+				    	html += "삭제";
+				    	html += "</button>";
+				    	html += "<div class='inquiryCommentDiv' id='inquiryCommentDiv'></div>";
+						}
+					}
+				/* 대댓글이라면 */
 				else{
 					html += "<hr width='745px'  align='left'/>";
 					html += "<img id='inquiryImgTag' src='${pageContext.request.contextPath}/resources/upload/shopImage/"+data.list[i].IMAGE+"'/>";
@@ -516,10 +529,6 @@ function selectInquiry(){
 			console.log("ajax 요청 실패!");
 		}
 	});
-}
-
-function cancleRecommentBtn(){
-	$("#inquiryCommentDiv").hide();
 }
 
 function insertInquiry(){
@@ -565,8 +574,58 @@ function deleteComment(){
 	});
 }
 
-function insertInquiryComment(){
+function insertInquiryComment(div){
+	console.log("댓글추가함수에들어왔다");
+	console.log($(div).next().next());
+	/* var inquiryRefNo = $("#insertInquiryCommentBtn").val(); */
+	var inquiryRefNo = $(div).val();
+	console.log("234="+inquiryRefNo);
+	let html = "";
+	html += "<br/>";
+	/* html += "<div class='inquiryCommentDiv' id='inquiryCommentDiv'>"; */
+	html += "<textarea id='shopInquiryCommentText' cols='80' rows='1' placeholder='댓글내용을 입력하세요.'></textarea>&nbsp;&nbsp;";
+	html += "<button onclick='insertInquiryCommentEnd();' value='"+inquiryRefNo+"' id='shopInquiryCommentEndBtn'>";
+	html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/register@2x.png' width='15' height='14' >";
+	html += "등록";
+	html += "</button>";
+	html += "<button onclick='cancleRecommentBtn(this);' id='cancleRecommentBtn' class='commentDelBtn'>";
+	html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='14'>";
+	html += "취소";
+	html += "</button>";
+	html += "</div>";
+	$(div).next().next().html(html);
 	
+}
+
+function cancleRecommentBtn(div){
+	console.log("취소버튼함수에들어왔다");
+	console.log($(div).prev().prev().parent());
+	$(div).prev().prev().parent().empty();
+	
+}
+
+function insertInquiryCommentEnd(){
+	var inquiryRefNo = $("#shopInquiryCommentEndBtn").val();
+	console.log(inquiryRefNo);
+	var shopInquiryCommentText = $("#shopInquiryCommentText").val();
+	var shopInquiryCommentWriter = $("[name=memberLoggedIn]").val();
+	var shopInquiryCommentShopNo = ${map.SHOP_NO}
+	
+	$.ajax({
+		url : "${pageContext.request.contextPath}/shop/insertInquiryComment",
+		method : "POST",
+		data : {inquiryRefNo : inquiryRefNo,
+				shopInquiryCommentText : shopInquiryCommentText,
+				shopInquiryCommentWriter : shopInquiryCommentWriter,
+				shopInquiryCommentShopNo : shopInquiryCommentShopNo},
+		success : data => {
+			console.log(data);
+			selectInquiry();
+		},
+		error : (x, s, e) => {
+			console.log("ajax 요청 실패!");
+		}
+	});
 }
 
 /* 주영 끝 */
