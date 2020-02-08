@@ -197,7 +197,6 @@ public class ShopController {
 	@RequestMapping("/selectShopInquriy")
 	@ResponseBody
 	public Map<String, Object> selectShopInquriy(@RequestParam("shopNo") int shopNo){
-		log.info("들어왔나요?");
 		List<ShopInquriy> list = new ArrayList<>();
 		list = ss.selectShopInquiry(shopNo);
 		log.info("list={}", list);
@@ -208,6 +207,33 @@ public class ShopController {
 		return map;
 	}
 	
+	@RequestMapping("/insertShopInquriy")
+	@ResponseBody
+	public Map<String, Object> insertShopInquriy(@RequestParam("memberId") String memberId,
+												 @RequestParam("inquiryContent") String inquiryContent,
+												 @RequestParam("shopNo") int shopNo){
+		log.info("들어왔나요?");
+		
+		ShopInquriy s = new ShopInquriy();
+		s.setInquiryLevel(1);
+		s.setInquiryContent(inquiryContent);
+		s.setShopNo(shopNo);
+		log.info("s={}", s);
+		
+		
+		Map<String, String> param = new HashMap<>();
+		param.put("memberId", memberId);
+		param.put("inquiryContent", inquiryContent);
+		param.put("shopNo",  Integer.toString(shopNo));
+		
+		Map<String, Object> map = new HashMap<>();
+		int result = ss.insertShopInquriy(param);
+		map.put("s", s);
+		log.info("result={}", result);
+		
+		
+		return map;
+	}
 
 	//========================== 주영 끝
 	

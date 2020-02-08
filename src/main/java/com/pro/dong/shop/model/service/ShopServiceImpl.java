@@ -88,6 +88,11 @@ public class ShopServiceImpl implements ShopService{
 		return sd.selectShopInquiry(shopNo);
 	}
 
+	@Override
+	public int insertShopInquriy(Map<String, String> param) {
+		return sd.insertShopInquriy(param);
+	}
+
 
 	
 	

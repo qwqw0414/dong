@@ -88,6 +88,11 @@ public class ShopDAOImpl implements ShopDAO{
 		return sst.selectList("shop.selectShopInquiry", shopNo);
 	}
 
+	@Override
+	public int insertShopInquriy(Map<String, String> param) {
+		return sst.insert("shop.insertShopInquriy", param);
+	}
+
 	
 	
 	//========================== 주영 끝
