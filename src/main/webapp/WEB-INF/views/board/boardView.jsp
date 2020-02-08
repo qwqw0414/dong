@@ -223,7 +223,35 @@ td {
 			}
 		});
 	});
+	
+		
+		$("#boardDelete").click(function (){
+			 
+			$.ajax({
+				url: "${pageContext.reuqest.contextPath}/board/boardDelete.do?boardNo="+${"board.boardNo"};",
+				data: {
+					boardNo: $boardNo.val()
+				},
+				dataType:"json",
+				type:"POST", /* update도 post select만 get */
+				success: data => {
+					console.log(data);
+					if(data > 0){
+						console.log("성공");
+						/* 경로설정 */
+						location.href="${pageContext.request.contextPath}/board/boardList.do"
+					}else{
+						console.log("불가불가불가");
+					}
+				},error: (x,s,e) => {
+					console.log("board삭제 ajax요청 실패!",x,s,e);
+				}
+			});
+		});
+	}); 
 }); 
+ 
+ 
 </script>
 
 <%--==================현규시작================ --%>
