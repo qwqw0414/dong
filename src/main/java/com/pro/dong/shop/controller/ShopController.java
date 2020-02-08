@@ -79,7 +79,6 @@ public class ShopController {
 		ModelAndView mav = new ModelAndView();
 		
 		Map<String, String> map = ss.selectOneShop(memberId);
-		log.debug("memberShop={}", map);
 		
 		mav.addObject("map", map);
 		
@@ -97,8 +96,6 @@ public class ShopController {
 		
 		int result = ss.updateShopInfo(param);
 
-		log.info("result={}", result);
-		
 		Map<String, String> resultShop = ss.selectOneShop(memberId);
 		
 		return resultShop;
@@ -137,14 +134,11 @@ public class ShopController {
 		Map<String, String> param = new HashMap<>();
 		param.put("memberId", memberId);
 		param.put("shopName", shopName);
-		log.debug("param={}", param);
 		
 		int result = ss.updateShopName(param);
-		log.debug("result={}", result);
 		Map<String, String> resultShop = new HashMap<>();
 		
 		resultShop = ss.selectOneShop(memberId);	
-		log.info("넘어온값으로 찾은 상점={}", resultShop);
 		
 		return resultShop;
 	}
@@ -197,10 +191,8 @@ public class ShopController {
 	@RequestMapping("/selectShopInquriy")
 	@ResponseBody
 	public Map<String, Object> selectShopInquriy(@RequestParam("shopNo") int shopNo){
-		log.info("들어왔나요?");
 		List<ShopInquriy> list = new ArrayList<>();
 		list = ss.selectShopInquiry(shopNo);
-		log.info("list={}", list);
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("list", list);
@@ -208,6 +200,41 @@ public class ShopController {
 		return map;
 	}
 	
+	@RequestMapping("/insertShopInquriy")
+	@ResponseBody
+	public Map<String, Object> insertShopInquriy(@RequestParam("memberId") String memberId,
+												 @RequestParam("inquiryContent") String inquiryContent,
+												 @RequestParam("shopNo") int shopNo){
+		
+		//inquiryContent.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\\n", "<br/>");
+		
+		ShopInquriy s = new ShopInquriy();
+		s.setInquiryLevel(1);
+		s.setInquiryContent(inquiryContent);
+		s.setShopNo(shopNo);
+		
+		Map<String, String> param = new HashMap<>();
+		param.put("memberId", memberId);
+		param.put("inquiryContent", inquiryContent);
+		param.put("shopNo",  Integer.toString(shopNo));
+		
+		Map<String, Object> map = new HashMap<>();
+		int result = ss.insertShopInquriy(param);
+		map.put("s", s);
+		
+		return map;
+	}
+	
+	@RequestMapping("/deleteShopInquriy")
+	@ResponseBody
+	public Map<String, Integer> deleteShopInquriy(@RequestParam("deleteCommentBtn") int deleteCommentBtn){
+		log.info("들어왔나요?");
+		
+		int result = ss.deleteShopInquriy(deleteCommentBtn);
+		Map<String, Integer> map = new HashMap<>();
+		map.put("result", result);
+		return map;
+	}
 
 	//========================== 주영 끝
 	

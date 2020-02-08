@@ -255,7 +255,7 @@ public class BoardController {
 	@RequestMapping("/boardComment.do")
 	public void boardComment() {}
 	
-	@RequestMapping("/insertComments")
+	@RequestMapping(value="/insertComments", produces="text/plain;charset=UTF-8")
 	@ResponseBody
 	public String insertComments(HttpSession session, @RequestParam("contents") String contents, 
 			 							@RequestParam("boardNo") int boardNo) {
@@ -275,9 +275,18 @@ public class BoardController {
 		
 		
 		int result = bs.insertBoardComment(bc);
+		
+		
+		
+		List<Map<String,String>>list = null;
+		if (result>0) {
+			list = bs.selectBoardCommentList(boardNo);
+		}
+		
+		
 		log.info("result={}",result);
 		
-		return result+"";
+		return gson.toJson(list)+"";
 	}
 	
 	
@@ -291,7 +300,7 @@ public class BoardController {
 		list = bs.selectBoardCommentList(boardNo);
 		log.debug("DB에서 가져온 리스트={}",list);
 		
-		return gson.toJson(list);
+		return gson.toJson(list)+"";
 	}
 	
 	

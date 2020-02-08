@@ -12,7 +12,7 @@ public @Data class ShopInquriy implements Serializable {
 	private int inquiryNo;
 	private String memberId;
 	private int shopNo;
-	private String inquriyContent;
+	private String inquiryContent;
 	private int inquiryLevel;
 	private Date writerDate;
 	private int inquiryRef;
