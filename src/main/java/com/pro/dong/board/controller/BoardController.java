@@ -282,7 +282,7 @@ public class BoardController {
 		list = bs.selectBoardCommentList(boardNo);
 		log.debug("DB에서 가져온 리스트={}",list);
 		
-		return gson.toJson(list);
+		return gson.toJson(list)+"";
 	}
 	
 	

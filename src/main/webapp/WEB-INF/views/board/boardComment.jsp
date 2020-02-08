@@ -21,6 +21,7 @@
 <script>
 
 $(()=>{
+	showCommentList();
 	
 	function showCommentList(){
 	//댓글 조회
@@ -35,9 +36,11 @@ $(()=>{
 		success:data=>{
 			console.log(data);
 			let html="";
-			data.forEach(data => {
+			data.forEach(comment => {
+				console.log(comment);
 				html+="<div>";
-				html+="<p>"+data+"</p>";
+				html+="<ul>"
+				html+="<li><p>"+comment.MEMBER_ID + comment.CONTENTS + comment.WRITE_DATE + "</p></li></ul>";
 				html+="<div>";
 			});//end of forEach
 			$("#commentListView").html(html)
@@ -50,7 +53,7 @@ $(()=>{
 	}
 	
 	//댓글리스트 불러오기
-	showCommentList();
+	
 	
 	
 	//댓글등록
@@ -67,9 +70,7 @@ $(()=>{
 			type:"POST",
 			success:data=>{
 				console.log(data);
-				if(data>0){
 					showCommentList();
-				}
 			},
 			 error : (x,s,e) =>{
 			        console.log("실패",x,s,e);
