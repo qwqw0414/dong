@@ -21,6 +21,8 @@ public interface AdminService {
 	List<BoardReport> selectOneMember(int cPage, int numPerPage, Map<String, String> param);
 	int selectBoardReportTotalContent(Map<String, String> param);
 	Member selectMemberView(String memberId);
+	
+	int memberDelete(String memberId);
 	// ========================== 하진 끝
 
 

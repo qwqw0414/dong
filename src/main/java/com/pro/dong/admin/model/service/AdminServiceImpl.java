@@ -53,6 +53,11 @@ public class AdminServiceImpl implements AdminService {
 	public Member selectMemberView(String memberId) {
 		return ad.selectMemberView(memberId);
 	}
+	
+	@Override
+	public int memberDelete(String memberId) {
+		return ad.memberDelete(memberId);
+	}
 	// ========================== 하진 끝
 
 

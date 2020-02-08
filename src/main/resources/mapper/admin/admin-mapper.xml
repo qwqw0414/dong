@@ -62,6 +62,11 @@
 		select * from member
 		where member_id = #{memberId}
 	</select>
+	
+	<delete id="memberDelete">
+		DELETE FROM member
+		WHERE member_id = #{memberId}
+	</delete>
 	<!-- ==========================  하진 끝 -->
 	
 	<!-- 근호 시작 ========================== -->

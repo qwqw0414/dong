@@ -18,10 +18,27 @@ String url = "memberView.do?memberId="+memberId+"&";
 String pageBar = Utils.getMemberIdPageBar(totalContents, cPage, numPerPage, url);
 pageContext.setAttribute("pageBar", pageBar);
 %>
+
+<script>
+$(function(){
+	$("#memberDelete-btn").click(function(){
+		 var memberId = $("[name=memberDelId]").val();
+		 console.log(memberId);
+		 var confirmflag = confirm("회원을 정말로 삭제하시겠습니까?");
+		
+		 if(confirmflag){
+			location.href="${pageContext.request.contextPath}/admin/memberDelete.do?memberId="+memberId;
+		}
+	});
+});
+</script>
+
 <h1>회원상세보기</h1>
 
 	<div class="table-responsive">
-		<table class="table col-md-3">
+		<div class="col-md-3"></div>
+				<input type="hidden" value="${m.memberId}" name="memberDelId" />
+		<table class="table col-md-3 text-center">
 			<tr>
 				<th>아이디</th>
 				<td>${m.memberId}</td>
@@ -38,10 +55,13 @@ pageContext.setAttribute("pageBar", pageBar);
             	<th>연락처</th>
             	<td>${m.phone}</td>
             </tr>
-            
 		</table>
-		<br /><br />
+		<div>
+			<button type="button" class="btn btn-danger" id="memberDelete-btn">회원삭제</button>
+		</div>
+		<br /><br /><br /><br />
 	</div>
+
 
 <h1>게시판 신고내역</h1>
 	<div class="table-responsive">
@@ -70,7 +90,6 @@ pageContext.setAttribute("pageBar", pageBar);
 		</c:if>
 		</table>
 	</div>
-
 
 	<div>
 	${pageBar}
