@@ -37,8 +37,8 @@ public interface ShopDAO {
 	
 	
 	// 예찬 시작 ==========================
-	
-	
+	List<Shop> searchShop(Map<String,String> param);
+	Shop selectOneShopByShopNo(int shopNo);
 	
 	//========================== 예찬 끝
 	

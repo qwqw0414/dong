@@ -20,7 +20,12 @@
 	<!-- ==========================  지은 끝 -->
 	
 	<!-- 예찬 시작 ========================== -->
-	
+	<select id="searchShop" resultType="shop" parameterType="map">
+		select * from shop where shop_name like '%${keyword}%'
+	</select>
+	<select id="selectOneShopByShopNo" parameterType="_int" resultType="shop">
+		select * from shop where shop_no = #{shopNo}
+	</select>
 	<!-- ==========================  예찬 끝 -->
 	
 	<!-- 주영 시작 ========================== -->

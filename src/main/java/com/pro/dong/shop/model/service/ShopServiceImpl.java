@@ -51,8 +51,14 @@ public class ShopServiceImpl implements ShopService{
 	
 	
 	// 예찬 시작 ==========================
-	
-	
+	@Override
+	public List<Shop> searchShop(Map<String,String> param) {
+		return sd.searchShop(param);
+	}
+	@Override
+	public Shop selectOneShopByShopNo(int shopNo) {
+		return sd.selectOneShopByShopNo(shopNo);
+	}
 	
 	//========================== 예찬 끝
 	
@@ -102,6 +108,9 @@ public class ShopServiceImpl implements ShopService{
 	public int selectTotalInpuiry(int shopNo) {
 		return sd.selectTotalInpuiry(shopNo);
 	}
+
+
+
 
 
 
