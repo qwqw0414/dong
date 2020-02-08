@@ -6,6 +6,7 @@ import java.util.Map;
 import com.pro.dong.board.model.vo.Attachment;
 import com.pro.dong.board.model.vo.Board;
 import com.pro.dong.board.model.vo.BoardCategory;
+import com.pro.dong.board.model.vo.BoardComment;
 import com.pro.dong.member.model.vo.Member;
 
 public interface BoardService {
@@ -42,6 +43,7 @@ public interface BoardService {
 
 	Member getMemberByMemberId(String memberId);
 
+
 	//========================== 지은 끝
 		
 	// 예찬 시작 ==========================
@@ -53,6 +55,10 @@ public interface BoardService {
 	//========================== 주영 끝
 		
 	// 현규 시작 ==========================
+	int insertBoardComment(BoardComment bc);
+
+	List<Map<String, String>> selectBoardCommentList(int boardNo);
+
 
 	//========================== 현규 끝
 

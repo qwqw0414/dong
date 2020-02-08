@@ -9,10 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,14 +24,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.pro.dong.board.model.service.BoardService;
 import com.pro.dong.board.model.vo.Attachment;
 import com.pro.dong.board.model.vo.Board;
 import com.pro.dong.board.model.vo.BoardCategory;
+import com.pro.dong.board.model.vo.BoardComment;
 import com.pro.dong.common.util.Utils;
 import com.pro.dong.member.model.vo.Member;
-
-import sun.java2d.pipe.SpanShapeRenderer.Simple;
 
 
 @RequestMapping("/board")
@@ -41,6 +39,7 @@ import sun.java2d.pipe.SpanShapeRenderer.Simple;
 public class BoardController {
 	
 	static Logger log = LoggerFactory.getLogger(BoardController.class);
+	static Gson gson = new Gson();
 	@Autowired
 	BoardService bs;
 	
@@ -51,7 +50,7 @@ public class BoardController {
 		
 		List<BoardCategory> boardCategoryList = bs.selectBoardCategory();
 		List<Board> boardList = bs.selectBoardList();//인기글 조회
-		log.debug("listBoard야야@@@@@@@@@@@@@@@@@@@@={}",boardList);
+		
 		mav.addObject("boardCategoryList",boardCategoryList);
 		mav.addObject("boardList",boardList);
 		mav.setViewName("/board/boardList");
@@ -245,18 +244,47 @@ public class BoardController {
 	//========================== 주영 끝
 		
 	// 현규 시작 ==========================
-	@RequestMapping("/boardComment")
-	public ModelAndView boardComment(ModelAndView mav) {
-		mav=new ModelAndView();
+	@RequestMapping("/boardComment.do")
+	public void boardComment() {}
+	
+	@RequestMapping("/insertComments")
+	@ResponseBody
+	public String insertComments(HttpSession session, @RequestParam("contents") String contents, 
+			 							@RequestParam("boardNo") int boardNo) {
+		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
+		log.info("게시판 번호{}",boardNo);
+		log.info("contents={}",contents);
+		log.info("댓글 작성자 아이디={}",memberLoggedIn.getMemberId());
 		
-		return mav;
 		
+		BoardComment bc = new BoardComment();
+		bc.setBoardNo(boardNo);
+		bc.setMemberId(memberLoggedIn.getMemberId());
+		bc.setContents(contents);
+		bc.setCommentRef(1);
+		
+		log.info("bc={}",bc);
+		
+		
+		int result = bs.insertBoardComment(bc);
+		log.info("result={}",result);
+		
+		return result+"";
 	}
 	
-//	@RequestMapping("/insertComments")
-//	public Board insertComments(Board board, @RequestParam(comment) String comment) {
-//		
-//	}
+	
+	//댓글 불러들이기
+	@ResponseBody
+	@RequestMapping(value="/selectBoardComment", produces="text/plain;charset=UTF-8")
+	public String selectBoardCommentList(@RequestParam("boardNo") int boardNo) {
+		log.info("파라미터로받아온 boardNo{}",boardNo);
+		List<Map<String,String>>list = null;
+		
+		list = bs.selectBoardCommentList(boardNo);
+		log.debug("DB에서 가져온 리스트={}",list);
+		
+		return gson.toJson(list);
+	}
 	
 	
 	//========================== 현규 끝

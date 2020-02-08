@@ -57,25 +57,6 @@
 #button-addon2{
     height: 38px;
 }
- ul{list-style:none; margin:0px; padding:0px; }
-.one{float:left;}/* 전체 메뉴를 float 시킴 */
-.one > li{float:left;}   /*1단 메뉴를 일렬로 늘어놓기 */
-.one ul{display:none;}  /*2단, 3단 메뉴를 숨기기 */
-.one li:hover > ul {display:block; background: white; z-index: 1;}  /*주 메뉴에 마우스 오버했을 때 부 메뉴 드러내기 */
-.two{position:absolute; left:0px; top: 35px; }  /*2단 메뉴 절대 위치*/
-.three{position:absolute;left:90px; top: 0px;}  /*3단 메뉴 절대 위치*/
-
-ul li a{text-decoration:none; display:block; width:90px;height: 30px;line-height: 30px;text-align:center;} 
-.one  li {width:90px;}  
-one li:hover{background-color:#EAEAEA;}
-a{
-	text-decoration: none !important;
-	color: black;
-}
-#categoryDiv {position:relative; margin-left:5px; zoom:1;} 
-#categoryDiv:before, #header:after{content: " "; display: block; clear: both;}
-#categoryDiv:after{clear: both;} 
-#contents{width:50%; height: 300px; float:left ;margin:5px;}
 </style>
 
 <body>
@@ -207,7 +188,12 @@ $(()=>{
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/member/memberList.do">회원관리</a>
+
+					
+
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/memberList.do">회원관리</a>
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/productList.do">상품관리</a>
+
 
 				</div>
 			</li>
@@ -216,42 +202,34 @@ $(()=>{
 	</div>
 </nav>
 
+<!-- 페이지 시작 -->
+<div class="container" style="width: 1400px;">
+	<div id="headerImgDiv" class="text-center">
+		<a href="${pageContext.request.contextPath}">
+			<img id="headerImg" src="${pageContext.request.contextPath}/resources/images/header.PNG"/>
+		</a>
+	</div>
 
-<div id="headerImgDiv" style="min-width: 1400px;">
-	<a href="${pageContext.request.contextPath}">
-		<img id="headerImg" src="${pageContext.request.contextPath}/resources/images/header.PNG"/>
-	</a>
-</div>
-
-
-<div class="container" style="min-width: 1000px;">
-	<div class="row">
-		
-		<div id="categoryDiv"> 
-			<ul class="one"> 
-  				<li>
-  					<div id="menuImgDiv">
-  						<a href="#" class="categoryA"><img id="headerMenu" src="${pageContext.request.contextPath}/resources/images/menuImg.PNG"/></a>
-    				</div>
-    				<ul class="two">
-       					<li id="categoryOneList"><a href="#"></a>
-       						<ul class="three">
-         						<li><a href="#">여성패션</a></li>
-       						</ul>
-       					</li>
-       					<li><a href="#">sub2</a>
-       						<ul class="three">
-         						<li><a href="#">xcvxcvxcvxcvxcv</a></li>
-       						</ul>
-       					</li>
-    				</ul>
-    				
-  				</li>
-			</ul>
+	<!-- 카테고리 바 -->
+	<div class="row text-right" style="width: 1200px;">
+		<div id="categoryDiv" class="col-md-1"> 
+			<img id="headerMenu" src="${pageContext.request.contextPath}/resources/images/menuImg.PNG"/>
+			<div class="cate-list text-left" style="display: none;">
+				<p>전체 카테고리</p>
+				<hr>
+				<div id="cate-autowire" style="width: 220px;">
+					<div id="category-list-pre" class="cate-list-content">
+						<ul></ul>
+					</div>
+					<div id="category-list-end" class="cate-list-content">
+						<ul></ul>
+					</div>
+				</div>
+			</div>
 		</div>
 	
 		<!--검색창-->
-		<div class="input-group col-md-7">
+		<div class="input-group col-md-6">
   			<input type="text" class="form-control" placeholder="검색어를 입력하세요" aria-label="Recipient's username" aria-describedby="button-addon2">
   			<div class="input-group-append">
     			<button class="btn btn-outline-secondary" type="button" id="button-addon2">
@@ -261,48 +239,128 @@ $(()=>{
 		</div>
 		
 		<!--메뉴-->
-		<div>
+		<div class="col-md text-left">
 			<a style="color:black; text-decoration: none;" href=""><img id="saleImg" src="${pageContext.request.contextPath}/resources/images/sale.PNG"/> 판매하기</a>
-		</div>
-		<div>
 			<a style="color:black; text-decoration: none;" href="${pageContext.request.contextPath}/shop/shopView.do"><img id="shopImg" src="${pageContext.request.contextPath}/resources/images/shop.PNG"/> 내 상점</a>
-		</div>
-		<div>
 			<a style="color:black; text-decoration: none;"href=""><img id="chatImg" src="${pageContext.request.contextPath}/resources/images/chat.PNG"/> 동네톡</a>
 		</div>
 	</div>
-</div>	
 
 
 </header>
 
 <script>
-$("#categoryDiv .categoryA").hover(function(e){
-	
-	var $categoryOneList =  $("#categoryOneList");
-	
+$(()=>{
+var $preList = $("header #categoryDiv #category-list-pre");
+var $endList = $("header #categoryDiv #category-list-end");
+var $cateList = $("#categoryDiv .cate-list");
+var $categoryBar = $("header #categoryDiv #headerMenu");
+var $categoryDiv = $("header #categoryDiv");
+var isCateShow = false;
+// 카테고리 검색 창 활성화
+	$categoryDiv.mouseenter((e)=>{
+		$(e.target).find(".cate-list").show();
+	});
+
+// 창 비활성화
+	$categoryDiv.mouseleave((e)=>{
+		setTimeout(function() {
+			if(!isCateShow){
+				$(e.target).find(".cate-list").hide();
+				isCateShow = false;
+			}
+		},300);
+	});
+
+	$cateList.mouseenter(()=>{isCateShow = true});
+
+	$cateList.mouseleave((e) => {
+		$("header #categoryDiv .cate-list").hide();
+		$endList.children("ul").html("");
+		$("header #categoryDiv #cate-autowire").css("width","220px");
+		isCateShow = false;
+	});
+
+//  대분류 불러오기
 	$.ajax({
-		url:"${pageContext.request.contextPath}/product/categoryView",
+		url:"${pageContext.request.contextPath}/product/categoryList",
 		type: "GET",
 		dataType: "json",
 		success: data => {
-			console.log("성공");
+			let html = "";
 			
-			let categoryHtml = "";
-			for(var i=0; i<data.cateboryList.length; i++){
-				categoryHtml += "<li><a href='#'>"+data.cateboryList[i].CATEGORY_NAME+"</a></li>";
-			}
-			$categoryOneList.html(categoryHtml);
+			data.forEach(cate => {
+				html += "<li><p>"+cate.categoryName+"</p><input type='hidden' value='"+cate.categoryId+"'></li>";
+			});
 			
+			$preList.children("ul").html(html);
 		},
 		error: (x,s,e)=>{
 			console.log("실패",x,s,e);
+		},
+		complete: ()=>{
+			loadEndList();
 		}
 	});
+// 소분류 불려오기
+	function loadEndList(){
+		$preList.find("li").mouseenter((e)=>{
+
+			setTimeout(function() {
+
+				//카테고리 div 확장
+				$(e.target).parents("#cate-autowire").css("width","440px");
+				var categoryRef = $(e.target).siblings("input").val();
+
+				$.ajax({
+					url: "${pageContext.request.contextPath}/product/categoryList",
+					data: {categoryRef: categoryRef},
+					type: "GET",
+					dataType: "json",
+					success: data => {
+						let html = "";
+
+						data.forEach(cate => {
+							html += "<li><p>" + cate.categoryName + "</p><input type='hidden' value='" + cate.categoryId + "'></li>";
+						});
+
+						$endList.children("ul").html(html);
+					},
+					error: (x, s, e) => {
+						console.log("실패", x, s, e);
+					}
+				});
+
+			}, 100);
+		});
+		
+	}
 });
 
 
-
+// $("#categoryDiv .categoryA").hover(function(e){
+	
+// 	var $categoryOneList =  $("#categoryOneList");
+	
+// 	$.ajax({
+// 		url:"${pageContext.request.contextPath}/product/categoryView",
+// 		type: "GET",
+// 		dataType: "json",
+// 		success: data => {
+// 			console.log("성공");
+			
+// 			let categoryHtml = "";
+// 			for(var i=0; i<data.cateboryList.length; i++){
+// 				categoryHtml += "<li><a href='#'>"+data.cateboryList[i].CATEGORY_NAME+"</a></li>";
+// 			}
+// 			$categoryOneList.html(categoryHtml);
+			
+// 		},
+// 		error: (x,s,e)=>{
+// 			console.log("실패",x,s,e);
+// 		}
+// 	});
+// });
 </script>
 
 

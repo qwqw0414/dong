@@ -39,11 +39,38 @@
 		select * from shop where member_id = #{memberId}
 	</select>
 	
-	<insert id="insertProduct" parameterType="product">
-		insert into product values(
+	<insert id="insertProduct">
+		insert into product(product_no, shop_no, category_id, title, price, shipping, haggle, 
+							info, incount, sido, sigungu, dong, status, is_trade, reg_date)
+		values(
 			seq_product.nextval, #{shopNo}, #{categoryId}, #{title}, #{price}, #{shipping},
 			#{haggle}, #{info}, 0, #{sido}, #{sigungu}, #{dong}, #{status}, #{isTrade}, sysdate)
+		<selectKey keyProperty="productNo" resultType="_int" order="AFTER">
+			select seq_product.currval from dual
+		</selectKey>
 	</insert>
+	<insert id="insertAttachment">
+		insert into product_attachment(attachment_no, product_no, photo, thumbnail)
+		values(
+			seq_product_attachment.nextval, seq_product.currval ,#{photo}, #{thumbnail}
+		)
+	</insert>
+	
+	<select id="selectProductListTop10" parameterType="product" resultMap="product1:1AttachMap">
+		select * from(
+		select p.*, pa.photo,
+		(select category_ref from product_category where category_id = p.category_id) category
+		from product p join product_attachment pa on p.product_no = pa.product_no
+		where pa.thumbnail = 'Y'
+		order by incount desc, reg_date desc
+		)
+		where category = #{category_id}
+		
+	</select>
+	
+	<resultMap type="map" id="product1:1AttachMap">
+		<result column="photo" property="photo"/>
+	</resultMap>
 	<!-- ==========================  예찬 끝 -->
 	
 	<!-- 주영 시작 ========================== -->

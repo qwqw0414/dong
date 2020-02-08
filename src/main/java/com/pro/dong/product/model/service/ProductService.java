@@ -1,9 +1,11 @@
 package com.pro.dong.product.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.pro.dong.product.model.vo.Category;
 import com.pro.dong.product.model.vo.Product;
+import com.pro.dong.product.model.vo.ProductAttachment;
 import com.pro.dong.shop.model.vo.Shop;
 
 public interface ProductService {
@@ -32,8 +34,14 @@ public interface ProductService {
 	//예찬 시작 ==========================
 	List<Category> selectCategory(Category category);	
 	Shop selectOneShop(String memberId);
-	int insertProduct(Product product);
+	int insertProduct(Product product, List<ProductAttachment> attachList);
+	List<Map<String, String>> selectProductListTop10(String categoryId);
 	//========================== 예찬 끝
+
+
+
+
+
 
 
 

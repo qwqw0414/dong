@@ -12,6 +12,7 @@ import com.pro.dong.board.model.dao.BoardDAO;
 import com.pro.dong.board.model.vo.Attachment;
 import com.pro.dong.board.model.vo.Board;
 import com.pro.dong.board.model.vo.BoardCategory;
+import com.pro.dong.board.model.vo.BoardComment;
 import com.pro.dong.member.model.vo.Member;
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -97,6 +98,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 
+
 	//========================== 지은 끝
 		
 	// 예찬 시작 ==========================
@@ -108,6 +110,16 @@ public class BoardServiceImpl implements BoardService {
 	//========================== 주영 끝
 		
 	// 현규 시작 ==========================
+	@Override
+	public int insertBoardComment(BoardComment bc) {
+		return bd.insertBoardComment(bc);
+	}
+
+	@Override
+	public List<Map<String, String>> selectBoardCommentList(int boardNo) {
+		return bd.selectBoardCommentList(boardNo);
+	}
+
 
 	//========================== 현규 끝
 

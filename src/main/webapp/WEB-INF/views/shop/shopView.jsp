@@ -291,13 +291,46 @@ $(function(){
 	#shopView-nav .shop-nav-disabled{border: 1px gray solid; border-bottom: 1px black soid; background-color: rgba(238, 243, 243); color: rgb(90, 90, 90); opacity: 0.8;}
 	#shopView-nav .shop-nav{cursor: pointer;}
 	#shopView-nav #shop-contents{margin-top: 80px;}
+	/* 주영시작 */
+	#shopInquiryText{
+		outline: none;
+		resize: none;
+	}
+	#shopInquiryText::placeholder {
+		padding-top: 25px;
+		padding-left: 5px;
+	}
+	#shopInquiryTextDiv{
+		margin-top: 20px;
+		margin-bottom: 0px;
+	}
+	#shopInquiryBtn{
+		background-color: white;
+		outline: none;
+		border: 1px solid lightgray;
+		width: 70px;
+		height: 30px;
+		margin: 10px 10px;
+	}
+	#shopInquiryBtnDiv{
+		margin-top: 0px;
+		border: 1px solid lightgray;
+		width: 740px;
+		text-align: right;
+	}
+	#inquiryContentCheck{
+		float: left;
+		margin-top: 15px;
+		margin-left: 10px;
+	}
+	/* 주영 끝 */
 	</style>
 	
 	<div id="shopView-nav">
 		<div style="height: 20px;">
 			<ul>
 				<li><div class="shop-nav-selected shop-nav">내 상품</div></li>
-				<li><div class="shop-nav-disabled shop-nav">상점문의</div></li>
+				<li><div id="shopInquiryDiv" class="shop-nav-disabled shop-nav">상점문의</div></li>
 				<li><div class="shop-nav-disabled shop-nav">찜 목록</div></li>
 				<li><div class="shop-nav-disabled shop-nav">상점후기</div></li>
 				<li><div class="shop-nav-disabled shop-nav">팔로우</div></li>
@@ -310,7 +343,15 @@ $(function(){
 				<h1>내 상품</h1>
 			</div>
 			<div id="nav-inquiry">
-				<h1>상점 문의</h1>
+				<h3>상점 문의<span style="color:red;">8</span></h3>
+				<div id="shopInquiryTextDiv">
+					<textarea name="shopInquiryText" id="shopInquiryText" cols="100" rows="3" placeholder="문의내용을 입력하세요."></textarea>
+				</div>
+				<div id="shopInquiryBtnDiv">
+					<span id="inquiryContentCheck">0/100</span>
+					<button id="shopInquiryBtn"><img src="https://assets.bunjang.co.kr/bunny_desktop/images/register@2x.png" width="15" height="16" >등록</button>
+				</div>
+				<div id="shopInquiryList"></div>
 			</div>
 			<div id="nav-wishlist">
 				<h1>찜</h1>
@@ -353,17 +394,48 @@ $(()=>{
 
 		switch ($(e.target).text()) {
 			case "내 상품": $("#shopView-nav #nav-product").show();break;
-			case "상점문의": $("#shopView-nav #nav-inquiry").show();break;
+			case "상점문의": $("#shopView-nav #nav-inquiry").show(); $("#shopInquiryTotalDiv").show();break;
 			case "찜 목록": $("#shopView-nav #nav-wishlist").show();break;
 			case "상점후기": $("#shopView-nav #nav-review").show();break;
 			case "팔로우": $("#shopView-nav #nav-follow").show();break;
 			case "팔로워": $("#shopView-nav #nav-follower").show();break;
 		}
 	})
-
-
-
 });
+/* 주영 시작 */
+$(()=>{
+	$("#shopInquiryTotalDiv").hide();
+	
+});
+
+$("#shopInquiryDiv").on("click", function(){
+	console.log("에이작스입장");
+	var shopNo = ${map.SHOP_NO};
+	$.ajax({
+		url : "${pageContext.request.contextPath}/shop/selectShopInquriy",
+		method : "POST",
+		data : {shopNo : shopNo},
+		success : data => {
+			console.log(data);
+			let $listDiv = $("#shopInquiryList");
+			let	html = "";
+			for(var i=0; i<data.list.length;i++){
+				html += "<div>";
+				html += "<hr/>";
+				html += "<span>"+data.list[i].MEMBER_ID+"</span>";
+				html += "<span>"+data.list[i].INQUIRY_CONTENT+"</span>";
+				html += "<span>"+data.list[i].WRITER_DATE+"</span>";
+				html += "</div>";
+				html += "<br/>";
+			}
+			$listDiv.append(html);
+		},
+		error : (x, s, e) => {
+			console.log("ajax 요청 실패!");
+		}
+	});
+});
+/* 주영 끝 */
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

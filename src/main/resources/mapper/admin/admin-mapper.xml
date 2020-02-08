@@ -9,11 +9,38 @@
 	
 	<!-- 하진 시작 ========================== -->
 	<select id="selectMemberList" parameterType="map" resultType="map">
-		select M.*, A.*
-		from member M left join address A on m.member_id = a.member_id
+		select * from member
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+				and ${searchType} like '%${searchKeyword}%'
+			</if>
+		</where>
+		order by member_id
 	</select>
 	
+	<select id="selectMemberTotalContent" parameterType="map" resultType="_int">
+		select count(*) from member
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+				and ${searchType} like '%${searchKeyword}%'
+			</if>
+		</where>
+	</select>
 	
+	<select id="adselectBoardReportTotalContent" resultType="_int">
+		select count(*) from board_report R left join board B on R.board_no=B.board_no
+		where B.member_id=#{memberId}
+	</select>
+	
+	<select id="selectOneMember" parameterType="map" resultType="map">
+		select * from board_report R left join board B on R.board_no=B.board_no
+		where B.member_id=#{memberId}
+	</select>
+	
+	<select id="selectMemberView" resultType="member">
+		select * from member
+		where member_id = #{memberId}
+	</select>
 	<!-- ==========================  하진 끝 -->
 	
 	<!-- 근호 시작 ========================== -->

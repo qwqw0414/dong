@@ -1,13 +1,16 @@
 package com.pro.dong.product.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.pro.dong.product.model.vo.Category;
 import com.pro.dong.product.model.vo.Product;
+import com.pro.dong.product.model.vo.ProductAttachment;
 import com.pro.dong.shop.model.vo.Shop;
 
 @Repository
@@ -52,7 +55,25 @@ public class ProductDAOImpl implements ProductDAO{
 	public int insertProduct(Product product) {
 		return sst.insert("product.insertProduct", product);
 	}
+	@Override
+	public int insertAttachment(ProductAttachment pa) {
+		return sst.insert("product.insertAttachment", pa);
+	}
+	@Override
+	public List<Map<String, String>> selectProductListTop10(String categoryId) {
+
+		RowBounds rowBounds = new RowBounds(0,10);
+		return sst.selectList("product.selectProductListTop10", categoryId, rowBounds);
+	}
 	//========================== 예찬 끝
+
+
+
+
+
+
+
+
 
 
 
