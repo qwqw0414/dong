@@ -14,7 +14,7 @@ public class Product implements Serializable{
 	private int shopNo;
 	private String categoryId;
 	private String title;
-	private int price;
+	private long price;
 	private String shipping;
 	private String haggle;
 	private String info;

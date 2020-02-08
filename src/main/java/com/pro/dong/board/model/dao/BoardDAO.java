@@ -45,6 +45,7 @@ public interface BoardDAO {
 	int deleteBoard(int boardNo);
 
 
+	int boardUpdate(Board board);
 
 	//========================== 지은 끝
 		
@@ -60,6 +61,7 @@ public interface BoardDAO {
 	int insertBoardComment(BoardComment bc);
 
 	List<Map<String, String>> selectBoardCommentList(int boardNo);
+
 
 
 	//========================== 현규 끝

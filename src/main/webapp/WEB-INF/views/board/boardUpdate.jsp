@@ -100,9 +100,9 @@ td {
 
  <script>
 //수정버튼
-/* function boardUpdateBtn(){
+function boardUpdateBtn(){
 	location.href = "${pageContext.request.contextPath}/board/boardUpdate.do";
-} */
+}
 
 //삭제버튼
 /* function boardDeleteBtn(){
@@ -164,7 +164,15 @@ td {
             </tr>
             <tr>
                <th scope="col">카테고리</th>
-               <td><input type="text" class="form-control" name="categoryId" value="${board.categoryId}" readonly required></td> 
+             <%-- <td><input type="text" class="form-control" name="categoryId" value="${board.categoryId}" readonly required></td> --%>
+              <td><select class="form-control" name="select"
+               style="width: 150px; display: inline-block;" required="required">
+               <option value="">카테고리 선택</option>
+               <option value="A01 "<%="A01".equals(b.getCategoryId())?"selected":""%>>자유</option>
+               <option value="A02" <%="A02".equals(b.getCategoryId())?"selected":""%>>홍보</option>
+               <option value="A03" <%="A03".equals(b.getCategoryId())?"selected":""%>>정보</option>
+               
+            </select>
             </tr>
             <tr>
               <th scope="col">작성일</th>
@@ -196,63 +204,6 @@ td {
 	<br>
 	<br>
 </div>
-<script>
- $(()=>{
-	var $boardNo = $(".product #boardNo");
-	
-	$("#boardUpdate").click(function (){
-		 
-		$.ajax({
-			url: "${pageContext.reuqest.contextPath}/board/boardUpdate.do?boardNo="+${board.boardNo}",
-			data: {
-				boardNo: $boardNo.val()
-			},
-			dataType:"json",
-			type:"GET", 
-			success: data => {
-				console.log(data);
-				if(data > 0){
-					console.log("성공");
-					/* 경로설정 */
-					location.href="${pageContext.request.contextPath}/board/boardList.do"
-				}else{
-					console.log("불가불가불가");
-				}
-			},error: (x,s,e) => {
-				console.log("board수정 ajax요청 실패!",x,s,e);
-			}
-		});
-	});
-	
-		
-		$("#boardDelete").click(function (){
-			 
-			$.ajax({
-				url: "${pageContext.reuqest.contextPath}/board/boardDelete.do?boardNo="+${"board.boardNo"};",
-				data: {
-					boardNo: $boardNo.val()
-				},
-				dataType:"json",
-				type:"POST", /* update도 post select만 get */
-				success: data => {
-					console.log(data);
-					if(data > 0){
-						console.log("성공");
-						/* 경로설정 */
-						location.href="${pageContext.request.contextPath}/board/boardList.do"
-					}else{
-						console.log("불가불가불가");
-					}
-				},error: (x,s,e) => {
-					console.log("board삭제 ajax요청 실패!",x,s,e);
-				}
-			});
-		});
-	}); 
-}); 
- 
- 
-</script>
 
 <%--==================현규시작================ --%>
 <hr />

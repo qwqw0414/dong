@@ -97,6 +97,10 @@ public class BoardServiceImpl implements BoardService {
 		return bd.deleteBoard(boardNo);
 	}
 
+	@Override
+	public int boardUpdate(Board board) {
+		return bd.boardUpdate(board);
+	}
 
 
 	//========================== 지은 끝
@@ -119,6 +123,7 @@ public class BoardServiceImpl implements BoardService {
 	public List<Map<String, String>> selectBoardCommentList(int boardNo) {
 		return bd.selectBoardCommentList(boardNo);
 	}
+
 
 
 	//========================== 현규 끝
