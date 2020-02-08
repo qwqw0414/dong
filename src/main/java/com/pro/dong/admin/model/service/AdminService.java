@@ -5,10 +5,13 @@ import java.util.Map;
 
 import com.pro.dong.board.model.vo.BoardReport;
 import com.pro.dong.member.model.vo.Member;
+import com.pro.dong.product.model.vo.Product;
 
 public interface AdminService {
 
 	// 민호 시작 ==========================
+	int selectProductTotalContents(Map<String, String> param);
+	List<Product> loadProductList(int cPage, int numPerPage, Map<String, String> param);
 
 	// ==========================민호 끝
 
@@ -19,6 +22,7 @@ public interface AdminService {
 	int selectBoardReportTotalContent(Map<String, String> param);
 	Member selectMemberView(String memberId);
 	// ========================== 하진 끝
+
 
 	// 근호 시작 ==========================
 

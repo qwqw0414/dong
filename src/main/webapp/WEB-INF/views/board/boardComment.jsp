@@ -17,10 +17,10 @@
 
 
 
-
 <script>
 
 $(()=>{
+	showCommentList();
 	
 	function showCommentList(){
 	//댓글 조회
@@ -35,9 +35,12 @@ $(()=>{
 		success:data=>{
 			console.log(data);
 			let html="";
-			data.forEach(data => {
-				html+="<div>";
-				html+="<p>"+data+"</p>";
+			data.forEach(comment => {
+				console.log(comment);
+				html+="<div id="+"commentListlevel2"+">";
+				html+="<ul>";
+// 				html+="<input type='hidden' value="+comment.COMMENT_NO+" id="+commentNo_+"/>";
+				html+="<li><span>"+comment.MEMBER_ID+ " : " + comment.CONTENTS + " [ " +comment.WRITE_DATE + "]</span><button id="+"comment2_insert"+">답글</button></li></ul>";
 				html+="<div>";
 			});//end of forEach
 			$("#commentListView").html(html)
@@ -50,11 +53,11 @@ $(()=>{
 	}
 	
 	//댓글리스트 불러오기
-	showCommentList();
+	
 	
 	
 	//댓글등록
-	$("#commentView #comments_insert").on('click',function(){
+	$("#commentInsertView #comments_insert").on('click',function(){
 		var boardNo= 285;    //보드넘버 바꾸면서 테스트 하면댐
 		var contents = $("#comments_board").val();
 		console.log(contents);
@@ -67,9 +70,7 @@ $(()=>{
 			type:"POST",
 			success:data=>{
 				console.log(data);
-				if(data>0){
 					showCommentList();
-				}
 			},
 			 error : (x,s,e) =>{
 			        console.log("실패",x,s,e);
@@ -78,7 +79,19 @@ $(()=>{
 		});//end of ajax
 	});//end of function
 	
+	
+	
+	
+	//답글등록
+	$("#commentListlevel2 #comment2_insert").on('click',function(){
+		console.log("대댓글");
+	});//end of function
+	
+	
+	
+	
 });//end of script
+
 
 </script>
 

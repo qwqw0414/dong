@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.pro.dong.board.model.dao.BoardDAOImpl;
 import com.pro.dong.board.model.vo.BoardReport;
 import com.pro.dong.member.model.vo.Member;
+import com.pro.dong.product.model.vo.Product;
 
 @Repository
 public class AdminDAOImpl implements AdminDAO {
@@ -22,7 +23,15 @@ public class AdminDAOImpl implements AdminDAO {
 	SqlSessionTemplate sst;
 
 	// 민호 시작 ==========================
-
+	@Override
+	public int selectProductTotalContents(Map<String, String> param) {
+		return sst.selectOne("admin.selectProductTotalContents", param);
+	}
+	@Override
+	public List<Product> loadProductList(int cPage, int numPerPage, Map<String, String> param) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sst.selectList("admin.loadProductList", param, rowBounds);
+	}
 	// ==========================민호 끝
 
 	// 하진 시작 ==========================
@@ -49,6 +58,7 @@ public class AdminDAOImpl implements AdminDAO {
 		return sst.selectOne("admin.selectMemberView",memberId);
 	}
 	// ========================== 하진 끝
+
 
 	// 근호 시작 ==========================
 

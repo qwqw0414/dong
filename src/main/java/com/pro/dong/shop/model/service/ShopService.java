@@ -56,6 +56,10 @@ public interface ShopService {
 
 	List<ShopInquriy> selectShopInquiry(int shopNo);
 
+	int insertShopInquriy(Map<String, String> param);
+
+	int deleteShopInquriy(int deleteCommentBtn);
+
 	
 	
 	//========================== 주영 끝
