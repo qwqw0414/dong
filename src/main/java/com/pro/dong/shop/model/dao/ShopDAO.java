@@ -56,6 +56,8 @@ public interface ShopDAO {
 
 	List<ShopInquriy> selectShopInquiry(int shopNo);
 
+	int insertShopInquriy(Map<String, String> param);
+
 	
 	//========================== 주영 끝
 	

@@ -27,3 +27,8 @@ function getLocation() {
     console.log(result);
     return result;
 }
+
+//금액 단위 처리 
+function numberComma(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}

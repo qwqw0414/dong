@@ -230,7 +230,7 @@ $(()=>{
 	
 		<!--검색창-->
 		<div class="input-group col-md-6">
-  			<input type="text" class="form-control" placeholder="검색어를 입력하세요" aria-label="Recipient's username" aria-describedby="button-addon2">
+  			<input type="text" class="form-control" placeholder="상품명,지역명,@상점명 입력" aria-label="Recipient's username" aria-describedby="button-addon2">
   			<div class="input-group-append">
     			<button class="btn btn-outline-secondary" type="button" id="button-addon2">
     				<img id="bogiImg" src="${pageContext.request.contextPath}/resources/images/bogi.png"/>

@@ -63,6 +63,12 @@ public class AdminController {
 	// ==========================민호 끝
 	
 	// 하진 시작 ==========================
+	@RequestMapping("/memberList.do")
+	public ModelAndView memberList(ModelAndView mav) {
+		mav.setViewName("/admin/memberList");
+		return mav;
+	}
+	
 	@RequestMapping("/memberList")
 	@ResponseBody
 	public Map<String, Object> memberList(@RequestParam(value="searchType", defaultValue="")String searchType, 
@@ -88,7 +94,7 @@ public class AdminController {
 		result.put("cPage", cPage);
 		result.put("numPerPage", numPerPage);
 		result.put("totalContents", totalContents);
-		String function = "memberList('"+searchType+"','"+searchKeyword;
+		String function = "loadMemberList('"+searchType+"','"+searchKeyword+"',";
 		String pageBar = Utils.getAjaxPageBar(totalContents, cPage, numPerPage, function);
 		result.put("pageBar", pageBar);
 		return result;
@@ -96,8 +102,8 @@ public class AdminController {
 
 	@RequestMapping("/memberView.do")
 	public ModelAndView memberView(ModelAndView mav,
-					@RequestParam("memberId") String memberId
-									,@RequestParam(defaultValue="1") int cPage) {
+			@RequestParam(value = "memberId") String memberId
+			,@RequestParam(value = "cPage" ,defaultValue="1") int cPage) {
 
 		final int numPerPage = 10;
 
@@ -119,6 +125,7 @@ public class AdminController {
 		mav.addObject("totalContents",totalContents);
 		mav.setViewName("admin/memberView");
 		return mav;
+		
 	}
 
 	// ========================== 하진 끝
