@@ -296,6 +296,10 @@ $(function(){
 		outline: none;
 		resize: none;
 	}
+	#shopInquiryCommentText{
+		outline: none;
+		resize: none;
+	}
 	#shopInquiryText::placeholder {
 		padding-top: 25px;
 		padding-left: 5px;
@@ -353,6 +357,19 @@ $(function(){
 		border: 1px solid lightgray;
 		margin-left: 5px;
 	}
+	#cancleRecommentBtn{
+		position: relative;
+		top: -8px;
+	}
+	
+	#shopInquiryCommentEndBtn{
+		background-color: white;
+		outline: none;
+		border: 1px solid lightgray;
+		margin-left: 5px;
+		position: relative;
+		top: -8px;
+	}
 	/* 주영 끝 */
 	</style>
 	
@@ -371,6 +388,7 @@ $(function(){
 		<div id="shop-contents">
 			<div id="nav-product">
 				<h1>내 상품</h1>
+				
 			</div>
 			<div id="nav-inquiry">
 				<h3>상점 문의&nbsp;<span id="totalInquiry" style="color:green;"></span></h3>
@@ -382,10 +400,11 @@ $(function(){
 					<button onclick="insertInquiry();" id="shopInquiryBtn"><img src="https://assets.bunjang.co.kr/bunny_desktop/images/register@2x.png" width="15" height="16" >등록</button>
 				</div>
 				<div id="shopInquiryList">
-					
+				<!-- select해온 문의사항 리스트 -->
 				</div></div>
 			<div id="nav-wishlist">
 				<h1>찜</h1>
+				
 			</div>
 			<div id="nav-review">
 				<h1>상점 후기</h1>
@@ -439,8 +458,15 @@ $(()=>{
 	
 });
 
+$("#shopInquiryText").keyup(function() {
+	var content = $(this).val();
+	console.log("content.length="+content.length);
+	
+	var inquiryContentCheck = $("#inquiryContentCheck");
+	inquiryContentCheck.html(content.length + '/100');
+});
+
 function selectInquiry(){
-	console.log("에이작스입장");
 	var shopNo = ${map.SHOP_NO};
 	$.ajax({
 		url : "${pageContext.request.contextPath}/shop/selectShopInquriy",
@@ -463,12 +489,12 @@ function selectInquiry(){
 					html += "<span>"+data.list[i].WRITE_DAY +"</span>";
 					html += "<p>"+data.list[i].INQUIRY_CONTENT+"</p>";
 					html += "</div>";
-					html += "<button onclick='insertInquiryComment();' class='commentBtn' >"
-					html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/reply@2x.png' width='17' height='14'>";
+					html += "<button onclick='insertInquiryComment();' id='insertInquiryCommentBtn' class='commentBtn' >"
+					html += "<img  src='https://assets.bunjang.co.kr/bunny_desktop/images/reply@2x.png' width='17' height='17'>";
 					html +=	"댓글";
 				    html += "</button>";
 				    html += "<button id='deleteCommentBtn' value="+data.list[i].INQUIRY_NO+" onclick='deleteComment();' class='commentDelBtn'>";
-				    html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='14'>";
+				    html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='17'>";
 				    html += "삭제";
 				    html += "</button>";
 				}
@@ -484,6 +510,7 @@ function selectInquiry(){
 				}
 			}
 			$listDiv.html(html);
+			
 		},
 		error : (x, s, e) => {
 			console.log("ajax 요청 실패!");
@@ -491,8 +518,12 @@ function selectInquiry(){
 	});
 }
 
+function cancleRecommentBtn(){
+	$("#inquiryCommentDiv").hide();
+}
+
 function insertInquiry(){
-	
+	$("#inquiryContentCheck").html("0/100");
 	var memberId = $("[name=memberLoggedIn]").val(); 
 	var inquiryContent = $("#shopInquiryText").val();
 	var shopNo = ${map.SHOP_NO};
@@ -519,6 +550,7 @@ function insertInquiry(){
 function deleteComment(){
 	
 	var deleteCommentBtn = $("#deleteCommentBtn").val();
+	console.log(deleteCommentBtn);
 	$.ajax({
 		url : "${pageContext.request.contextPath}/shop/deleteShopInquriy",
 		method : "POST",
@@ -534,20 +566,9 @@ function deleteComment(){
 }
 
 function insertInquiryComment(){
-	$.ajax({
-		url : "${pageContext.request.contextPath}/shop/insertInquiryComment",
-		method : "POST",
-		data : {deleteCommentBtn : deleteCommentBtn},
-		success : data => {
-			console.log(data);
-			selectInquiry();
-		},
-		error : (x, s, e) => {
-			console.log("ajax 요청 실패!");
-		}
-	});
 	
 }
+
 /* 주영 끝 */
 </script>
 
