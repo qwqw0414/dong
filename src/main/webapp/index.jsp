@@ -161,7 +161,7 @@ $(()=>{
     var diffHour = Math.ceil((now.getTime() - regDate.getTime())/60000/60) - 9;
 
     if(diffHour > 23){
-      return Math.ceil(diffHour/24)+"일 전";
+      return Math.floor(diffHour/24)+"일 전";
     }
 
     return diffHour+"시간 전";
