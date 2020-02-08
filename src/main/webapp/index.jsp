@@ -2,12 +2,14 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <style>
 #main-page #productList-category .cate-title{font-family: MapoPeacefull; font-size: 1.5em;}
-#main-page .card {width: 201px; border-radius: 0; height: 300px;}
-#main-page .card img{width: 200px; height: 190px; border: none;}
+.productList .card {width: 201px; border-radius: 0; height: 280px;}
+.productList .card img{width: 200px; height: 200px; border: none;}
 #main-page .productList .product .card{float: left; margin: 10px 8px 10px 8px}
-#main-page .product {width: 1200px; display: block; margin: auto; height: 680px;}
+#main-page .product {width: 1200px; display: block; margin: auto; height: 620px;}
 #main-page {width: 1300px;}
 #main-page .productList{width: 100%;}
+.productList .card-body{padding: 10px 0 0px 8px;}
+.productList .regDate{font-size: 0.9em; position: absolute; right: 10px; bottom: 10px;}
 </style>
 
 
@@ -110,8 +112,6 @@ $(()=>{
   var categoryId;
   var cateArr = {};
 
-  console.log($mainPage.find(".productList").length);
-
   for(var i = 0; i < $mainPage.find(".productList").length; i++){
     categoryId = $mainPage.find(".productList").eq(i).attr("id");
     loadProduct(categoryId);
@@ -127,12 +127,18 @@ $(()=>{
         let html = "";
 
         data.forEach(product => {
-          console.log(product);
+
+          let preTitle = product.TITLE;
+
+          if(preTitle.length > 12) 
+            preTitle = preTitle.substring(0,12)+"..."
+
           html += "<div class='card'>";
           html += "<img src='${pageContext.request.contextPath}/resources/upload/product/" + product.photo + "' class='card-img-top'>";
           html += '<div class="card-body">';
-          html += '<p class="card-title">' + product.TITLE + '</p>';
-          html += '<p class="card-text">' + product.PRICE + '<small>원</small></p>';
+          html += '<p class="card-title">' + preTitle + '</p>';
+          html += '<p class="card-text"><span>' + numberComma(product.PRICE) + '<small>원</small></span></p>';
+          html += '<div class="regDate">'+lastDate(product.REG_DATE)+'</div>';
           html += '</div></div>'
         });
 
@@ -142,6 +148,23 @@ $(()=>{
         console.log("실패", x, s, e);
       }
     });
+  }
+
+  function numberComma(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  function lastDate(date){
+    var regDate = new Date(date);
+    var now = new Date();
+
+    var diffHour = Math.ceil((now.getTime() - regDate.getTime())/60000/60) - 9;
+
+    if(diffHour > 23){
+      return Math.ceil(diffHour/24)+"일 전";
+    }
+
+    return diffHour+"시간 전";
   }
 
 });
