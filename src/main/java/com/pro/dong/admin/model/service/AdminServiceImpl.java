@@ -12,6 +12,7 @@ import com.pro.dong.admin.model.dao.AdminDAO;
 import com.pro.dong.board.model.service.BoardServiceImpl;
 import com.pro.dong.board.model.vo.BoardReport;
 import com.pro.dong.member.model.vo.Member;
+import com.pro.dong.product.model.vo.Product;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -21,7 +22,14 @@ public class AdminServiceImpl implements AdminService {
 	AdminDAO ad;
 
 	// 민호 시작 ==========================
-
+	@Override
+	public int selectProductTotalContents(Map<String, String> param) {
+		return ad.selectProductTotalContents(param);
+	}
+	@Override
+	public List<Product> loadProductList(int cPage, int numPerPage, Map<String, String> param) {
+		return ad.loadProductList(cPage, numPerPage, param);
+	}
 	// ==========================민호 끝
 
 	// 하진 시작 ==========================
@@ -46,6 +54,9 @@ public class AdminServiceImpl implements AdminService {
 		return ad.selectMemberView(memberId);
 	}
 	// ========================== 하진 끝
+
+
+
 
 	// 근호 시작 ==========================
 

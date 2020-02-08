@@ -4,7 +4,28 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="admin">
 	<!-- 민호 시작 ========================== -->
-	
+	<select id="selectProductTotalContents" parameterType="map" resultType="_int">
+		select count(*) cnt from product
+		<where>
+			<if test="productCategory!=null and productCategory!=''">
+				category_id = #{productCategory}
+			</if>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+				and b.${searchType} like '%${searchKeyword}%'
+			</if>
+		</where>
+	</select>
+	<select id="loadProductList" parameterType="map" resultType="map">
+		select * from product
+		<where>
+			<if test="productCategory!=null and productCategory!=''">
+				category_id = #{productCategory}
+			</if>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+				and b.${searchType} like '%${searchKeyword}%'
+			</if>
+		</where>
+	</select>
 	<!-- ==========================  민호 끝 -->
 	
 	<!-- 하진 시작 ========================== -->
