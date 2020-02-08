@@ -48,8 +48,16 @@
 	</update>
 	
 	<select id="selectShopInquiry" resultType="map" parameterType="map">
-		select * from shop_inquiry where shop_no = #{shopNo}
+		select i.*, to_char(writer_date,'yyyy-mm-dd hh24:mi:ss') as write_day, s.image  
+		from shop_inquiry I left join shop S on i.member_id = s.member_id 
+		where i.shop_no = #{shopNo}
+		start with inquiry_level = 1
+		connect by inquiry_ref = prior inquiry_no
 	</select>
+	
+	<insert id="insertShopInquriy">
+		insert into shop_inquiry values(seq_shop_inquiry.nextval, #{memberId}, #{shopNo}, #{inquiryContent}, 1, default, null)
+	</insert>
 	<!-- ==========================  주영 끝 -->
 	
 	<!-- 현규 시작 ========================== -->
