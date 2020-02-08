@@ -33,6 +33,14 @@
 		</interceptor>
 	</interceptors> -->
 	
+		<!-- #9. handlerInterceptor(인터셉터) 등록  우리가 만든 인터셉터 -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/admin/**/*.do"/>
+			<beans:bean id="loginInterceptor" class="com.pro.dong.common.interceptor.LoginInterceptor"/>
+		</interceptor>
+	</interceptors>
+	
 	<!-- 파일 업로드 -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">   
 		<beans:property name="maxUploadSize" value="10485760" />

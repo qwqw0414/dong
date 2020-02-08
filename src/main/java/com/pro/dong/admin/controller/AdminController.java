@@ -126,6 +126,29 @@ public class AdminController {
 		return mav;
 		
 	}
+	
+	@RequestMapping("/memberDelete.do")
+	public ModelAndView memberDelete(ModelAndView mav, @RequestParam(value="memberId") String memberId) {
+		
+		String msg = "";
+		String loc = "/";
+		
+		int result = as.memberDelete(memberId);
+		
+		if(result<0) {
+			msg="회원삭제 실패";
+			loc="/admin/memberView.do";
+		}
+		else {
+			msg="회원삭제 성공";
+			loc="/admin/memberList.do";
+		}
+		mav.addObject("msg", msg);
+		mav.addObject("loc", loc);
+		mav.setViewName("common/msg");
+		
+		return mav;
+	}
 
 	// ========================== 하진 끝
 	
