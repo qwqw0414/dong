@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.pro.dong.admin.model.service.AdminService;
@@ -37,26 +38,46 @@ public class AdminController {
 	
 	// 하진 시작 ==========================
 	@RequestMapping("/memberList.do")
-	public ModelAndView memberList(ModelAndView mav,@RequestParam(defaultValue="1") int cPage) {
+	public ModelAndView memberList(ModelAndView mav) {
+		mav.setViewName("/admin/memberList");
+		return mav;
+	}
+	
+	@RequestMapping("/memberList")
+	@ResponseBody
+	public Map<String, Object> memberList(@RequestParam(value="searchType", defaultValue="")String searchType, 
+											@RequestParam(value="searchKeyword",defaultValue="") String searchKeyword,
+											@RequestParam(value="cPage",defaultValue="1") int cPage) {
+		
+		
 		// 페이징바 작업
 		final int numPerPage = 10;
 		
-		List<Member> list = as.selectMemberList(cPage,numPerPage);
-		int totalContents = as.selectMemberTotalContent();
+		Map<String, Object> result = new HashMap<>();
+
+		Map<String, String> param = new HashMap<>();
+		param.put("searchType", searchType);
+		param.put("searchKeyword", searchKeyword);
 		
-		mav.addObject("list", list);
-		mav.addObject("totalContents",totalContents);
-		mav.addObject("numPerPage",numPerPage);
-		mav.addObject("cPage",cPage);
-		mav.setViewName("/admin/memberList");
+		int totalContents = as.selectMemberTotalContent(param);
+		List<Member> list = as.selectMemberList(cPage,numPerPage,param);
 		
-		return mav;
+		log.debug("member객체@@@@@@={}",list);
+		
+		result.put("list", list);
+		result.put("cPage", cPage);
+		result.put("numPerPage", numPerPage);
+		result.put("totalContents", totalContents);
+		String function = "loadMemberList('"+searchType+"','"+searchKeyword+"',";
+		String pageBar = Utils.getAjaxPageBar(totalContents, cPage, numPerPage, function);
+		result.put("pageBar", pageBar);
+		return result;
 	}
 
 	@RequestMapping("/memberView.do")
 	public ModelAndView memberView(ModelAndView mav,
-					@RequestParam("memberId") String memberId
-									,@RequestParam(defaultValue="1") int cPage) {
+			@RequestParam(value = "memberId") String memberId
+			,@RequestParam(value = "cPage" ,defaultValue="1") int cPage) {
 
 		final int numPerPage = 10;
 
@@ -78,6 +99,7 @@ public class AdminController {
 		mav.addObject("totalContents",totalContents);
 		mav.setViewName("admin/memberView");
 		return mav;
+		
 	}
 
 	// ========================== 하진 끝
