@@ -88,8 +88,6 @@ public class AdminController {
 		int totalContents = as.selectMemberTotalContent(param);
 		List<Member> list = as.selectMemberList(cPage,numPerPage,param);
 		
-		log.debug("member객체@@@@@@={}",list);
-		
 		result.put("list", list);
 		result.put("cPage", cPage);
 		result.put("numPerPage", numPerPage);
@@ -117,6 +115,7 @@ public class AdminController {
 		// 페이징바 작업
 		int totalContents = as.selectBoardReportTotalContent(param);
 		List<BoardReport> list = as.selectOneMember(cPage, numPerPage, param);
+		log.debug("신고 카ㅌ테고리 @@@@@@@@@@@={}",list);
 		
 		mav.addObject("list",list);
 		mav.addObject("m",m);

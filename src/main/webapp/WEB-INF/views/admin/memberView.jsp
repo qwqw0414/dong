@@ -57,7 +57,7 @@ pageContext.setAttribute("pageBar", pageBar);
 		<c:if test="${not empty list}">
 			<c:forEach items="${list}" var="list">
 				<tr>
-					<td>${list.CATEGORY_ID}</td>
+					<td>${list.REPORT_TYPE}</td>
 					<td>${list.BOARD_NO}</td>
 					<td>${list.MEMBER_ID}</td>
 					<td>${list.REPORT_COMMENT}</td>
