@@ -98,6 +98,12 @@ public class ShopServiceImpl implements ShopService{
 		return sd.deleteShopInquriy(deleteCommentBtn);
 	}
 
+	@Override
+	public int selectTotalInpuiry(int shopNo) {
+		return sd.selectTotalInpuiry(shopNo);
+	}
+
+
 
 	
 	

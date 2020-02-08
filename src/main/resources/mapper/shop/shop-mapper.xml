@@ -62,6 +62,10 @@
 	<delete id="deleteShopInquriy">
 		delete from shop_inquiry  where inquiry_no = #{deleteCommentBtn}
 	</delete>
+	
+	<select id="selectTotalInpuiry" resultType="_int">
+		select count(*) as totalInquiry from shop_inquiry where shop_no = #{shopNo} and inquiry_level = 1
+	</select>
 	<!-- ==========================  주영 끝 -->
 	
 	<!-- 현규 시작 ========================== -->

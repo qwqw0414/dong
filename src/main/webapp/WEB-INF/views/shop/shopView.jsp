@@ -373,7 +373,7 @@ $(function(){
 				<h1>내 상품</h1>
 			</div>
 			<div id="nav-inquiry">
-				<h3>상점 문의<span style="color:red;">8</span></h3>
+				<h3>상점 문의&nbsp;<span id="totalInquiry" style="color:green;"></span></h3>
 				<div id="shopInquiryTextDiv">
 					<textarea name="shopInquiryText" id="shopInquiryText" cols="100" rows="3" placeholder="문의내용을 입력하세요."></textarea>
 				</div>
@@ -382,25 +382,8 @@ $(function(){
 					<button onclick="insertInquiry();" id="shopInquiryBtn"><img src="https://assets.bunjang.co.kr/bunny_desktop/images/register@2x.png" width="15" height="16" >등록</button>
 				</div>
 				<div id="shopInquiryList">
-					<hr width="745px"  align="left"/>
-					<img id="inquiryImgTag" src="${pageContext.request.contextPath}/resources/images/shopIcon.png"/>
-					<div id="inquiryDetail">
-						<span id="inquiryWriterTag">larva223</span>
-						<span>2020-02-07 11:02</span>
-						<p>여긴 뭘파는 상점입니까?</p>
-						<button class="commentBtn">
-							<img src="https://assets.bunjang.co.kr/bunny_desktop/images/reply@2x.png" width="17" height="14">
-								댓글
-						</button>
-						<button>
-							<img src="https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png" width="15" height="14">
-							삭제
-						</button>
-					</div>
-					<div id="replyDiv">
-						<p>물건을 파는 곳이지 어디겟니?</p>
-					</div>
-				</div>
+					
+				</div></div>
 			<div id="nav-wishlist">
 				<h1>찜</h1>
 			</div>
@@ -465,9 +448,13 @@ function selectInquiry(){
 		data : {shopNo : shopNo},
 		success : data => {
 			console.log(data);
+			let $totalInquiry = $("#totalInquiry");
+			$totalInquiry.html(data.totalInquiry);
+			
 			let $listDiv = $("#shopInquiryList");
 			let	html = "";
 			for(var i=0; i<data.list.length;i++){
+				if(data.list[i].INQUIRY_LEVEL == 1){
 					html += "<hr width='745px'  align='left'/>";
 					html += "<img id='inquiryImgTag' src='${pageContext.request.contextPath}/resources/upload/shopImage/"+data.list[i].IMAGE+"'/>";
 					html += "<div id='inquiryDetail'>";
@@ -476,7 +463,7 @@ function selectInquiry(){
 					html += "<span>"+data.list[i].WRITE_DAY +"</span>";
 					html += "<p>"+data.list[i].INQUIRY_CONTENT+"</p>";
 					html += "</div>";
-					html += "<button  class='commentBtn' >"
+					html += "<button onclick='insertInquiryComment();' class='commentBtn' >"
 					html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/reply@2x.png' width='17' height='14'>";
 					html +=	"댓글";
 				    html += "</button>";
@@ -484,7 +471,17 @@ function selectInquiry(){
 				    html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='14'>";
 				    html += "삭제";
 				    html += "</button>";
-				    /* html += "</div></div>"; */
+				}
+				else{
+					html += "<hr width='745px'  align='left'/>";
+					html += "<img id='inquiryImgTag' src='${pageContext.request.contextPath}/resources/upload/shopImage/"+data.list[i].IMAGE+"'/>";
+					html += "<div id='inquiryDetail'>";
+					html += "<span id='inquiryWriterTag'>"+data.list[i].MEMBER_ID+"</span>";
+					html += "&nbsp;&nbsp;";
+					html += "<span>"+data.list[i].WRITE_DAY +"</span>";
+					html += "<p>"+data.list[i].INQUIRY_CONTENT+"</p>";
+					html += "</div>";
+				}
 			}
 			$listDiv.html(html);
 		},
@@ -524,6 +521,21 @@ function deleteComment(){
 	var deleteCommentBtn = $("#deleteCommentBtn").val();
 	$.ajax({
 		url : "${pageContext.request.contextPath}/shop/deleteShopInquriy",
+		method : "POST",
+		data : {deleteCommentBtn : deleteCommentBtn},
+		success : data => {
+			console.log(data);
+			selectInquiry();
+		},
+		error : (x, s, e) => {
+			console.log("ajax 요청 실패!");
+		}
+	});
+}
+
+function insertInquiryComment(){
+	$.ajax({
+		url : "${pageContext.request.contextPath}/shop/insertInquiryComment",
 		method : "POST",
 		data : {deleteCommentBtn : deleteCommentBtn},
 		success : data => {

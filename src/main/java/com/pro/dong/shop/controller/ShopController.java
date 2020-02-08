@@ -194,8 +194,11 @@ public class ShopController {
 		List<ShopInquriy> list = new ArrayList<>();
 		list = ss.selectShopInquiry(shopNo);
 		
+		int totalInquiry = ss.selectTotalInpuiry(shopNo);
+		
 		Map<String, Object> map = new HashMap<>();
 		map.put("list", list);
+		map.put("totalInquiry", totalInquiry);
 		
 		return map;
 	}

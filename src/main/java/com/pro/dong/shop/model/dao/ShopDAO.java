@@ -60,6 +60,9 @@ public interface ShopDAO {
 
 	int deleteShopInquriy(int deleteCommentBtn);
 
+	int selectTotalInpuiry(int shopNo);
+
+
 	
 	//========================== 주영 끝
 	
