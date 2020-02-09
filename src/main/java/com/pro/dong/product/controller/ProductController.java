@@ -24,11 +24,14 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.pro.dong.board.model.vo.Attachment;
 import com.pro.dong.board.model.vo.BoardCategory;
+import com.pro.dong.member.model.vo.Member;
 import com.pro.dong.product.model.service.ProductService;
 import com.pro.dong.product.model.vo.Category;
 import com.pro.dong.product.model.vo.Product;
 import com.pro.dong.product.model.vo.ProductAttachment;
 import com.pro.dong.shop.model.vo.Shop;
+
+import lombok.Builder.Default;
 
 @Controller
 @RequestMapping("/product")
@@ -167,6 +170,36 @@ public class ProductController {
 			}
 			
 			return gson.toJson(list);
+		}
+		
+		@RequestMapping("/productList.do")
+		public ModelAndView productList(ModelAndView mav, String categoryId, String keyword) {
+			
+			mav.addObject("categoryId", categoryId);
+			mav.addObject("keyword", keyword);
+			return mav;
+		}
+		
+		@ResponseBody
+		@RequestMapping(value="/searchProduct", produces="text/plain;charset=UTF-8")
+		public String searchProduct(int cPage, Product product, String keyword) {
+			
+			
+			int numPerPage = 20;
+			Map<String, String> param = new HashMap<>();
+			param.put("categoryId", product.getCategoryId());
+			param.put("keyword", keyword);
+			param.put("sido", product.getSido());
+			param.put("sigungu", product.getSigungu());
+			param.put("dong", product.getDong());
+			
+			List<Map<String, String>> list = ps.selectProduct(cPage,numPerPage,param);
+			
+			Map<String,Object> result = new HashMap<>();
+			result.put("product", list);
+			result.put("pageBar", "");
+			
+			return gson.toJson(result);
 		}
 	//========================== 예찬 끝
 		

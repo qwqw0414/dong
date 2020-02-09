@@ -80,7 +80,16 @@ public class ProductServiceImpl implements ProductService{
 	public List<Map<String, String>> selectProductListTop10(String categoryId) {
 		return pd.selectProductListTop10(categoryId);
 	}
+	@Override
+	public List<Map<String, String>> selectProduct(int cPage, int numPerPage, Map<String, String> param) {
+		return pd.selectProduct(cPage, numPerPage, param);
+	}
 	//========================== 예찬 끝
+
+
+
+
+
 
 
 

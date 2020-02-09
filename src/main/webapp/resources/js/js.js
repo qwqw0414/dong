@@ -28,7 +28,19 @@ function getLocation() {
     return result;
 }
 
-//금액 단위 처리 
 function numberComma(num) {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+function lastDate(date){
+var regDate = new Date(date);
+var now = new Date();
+
+var diffHour = Math.ceil((now.getTime() - regDate.getTime())/60000/60) - 9;
+
+if(diffHour > 23){
+    return Math.floor(diffHour/24)+"일 전";
+}
+
+return diffHour+"시간 전";
 }

@@ -5,9 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <%
-Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
-	/* Shop shop = (Shop)request.getAttribute("map");
-	System.out.println("넘어온shop="+shop); */
+	Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
 %>
 <style>
 #shopView{
@@ -318,6 +316,7 @@ $(function(){
 		width: 70px;
 		height: 30px;
 		margin: 10px 10px;
+		
 	}
 	#shopInquiryBtnDiv{
 		margin-top: 0px;
@@ -364,18 +363,36 @@ $(function(){
 		position: relative;
 		top: -8px;
 	}
-	
 	#shopInquiryCommentEndBtn{
 		background-color: white;
 		outline: none;
 		border: 1px solid lightgray;
 		margin-left: 5px;
+		margin-bottom: -60px;
 		position: relative;
 		top: -8px;
 	}
 	#inquiryCommentDiv{
 		margin-left: 35px;
 	}
+	.recommentDiv{
+		margin-left: 100px;
+	}
+	.replyIcon{
+		width: 50px;
+		height: 50px;
+		display: inline-block;
+		margin-left: -80px;
+		/* margin-bottom: -50px; */
+	}
+	/* .replyIconDiv{
+		display: inline-block;
+	} */
+	#inquiryRecommentDetail{
+		margin-left: 35px;
+   	    margin-top: -17px;
+	}
+	
 	/* 주영 끝 */
 	</style>
 	
@@ -399,11 +416,11 @@ $(function(){
 			<div id="nav-inquiry">
 				<h3>상점 문의&nbsp;<span id="totalInquiry" style="color:green;"></span></h3>
 				<div id="shopInquiryTextDiv">
-					<textarea name="shopInquiryText" id="shopInquiryText" cols="100" rows="3" placeholder="문의내용을 입력하세요."></textarea>
+					<textarea name="shopInquiryText" id="shopInquiryText"  maxlength="100" cols="100" rows="3" placeholder="문의내용을 입력하세요."></textarea>
 				</div>
 				<div id="shopInquiryBtnDiv">
 					<span id="inquiryContentCheck">0/100</span>
-					<button onclick="insertInquiry();" id="shopInquiryBtn"><img src="https://assets.bunjang.co.kr/bunny_desktop/images/register@2x.png" width="15" height="16" >등록</button>
+					<button onclick="insertInquiry();" id="shopInquiryBtn" disabled="disabled"><img src="https://assets.bunjang.co.kr/bunny_desktop/images/register@2x.png" width="15" height="16" >등록</button>
 				</div>
 				<div id="shopInquiryList">
 				<!-- select해온 문의사항 리스트 -->
@@ -467,8 +484,17 @@ $("#shopInquiryText").keyup(function() {
 	var content = $(this).val();
 	console.log("content.length="+content.length);
 	
+	if(content.length > 0){
+		$("#shopInquiryBtn").prop("disabled", false);
+	}
+	
+	if(content.length == 0){
+		$("#shopInquiryBtn").prop("disabled", true);
+	}
+	
 	var inquiryContentCheck = $("#inquiryContentCheck");
 	inquiryContentCheck.html(content.length + '/100');
+	
 });
 
 function selectInquiry(){
@@ -489,7 +515,12 @@ function selectInquiry(){
 				/* 댓글이라면 */
 				if(data.list[i].INQUIRY_LEVEL == 1){
 					html += "<hr width='745px'  align='left'/>";
-					html += "<img id='inquiryImgTag' src='${pageContext.request.contextPath}/resources/upload/shopImage/"+data.list[i].IMAGE+"'/>";
+					if(data.list[i].IMAGE == null){
+						html += "<img id='inquiryImgTag' src='${pageContext.request.contextPath}/resources/images/shopping-store.png'/>";
+					}
+					if(data.list[i].IMAGE != null){
+						html += "<img id='inquiryImgTag' src='${pageContext.request.contextPath}/resources/upload/shopImage/"+data.list[i].IMAGE+"'/>";
+					}
 					html += "<div id='inquiryDetail'>";
 					html += "<span id='inquiryWriterTag'>"+data.list[i].MEMBER_ID+"</span>";
 					html += "&nbsp;&nbsp;";
@@ -503,7 +534,7 @@ function selectInquiry(){
 				    	html += "</button>";
 						}
 					if("${map.MEMBER_ID}" == memberId){
-				    	html += "<button id='deleteCommentBtn' value="+data.list[i].INQUIRY_NO+" onclick='deleteComment();' class='commentDelBtn'>";
+				    	html += "<button id='deleteCommentBtn' value="+data.list[i].INQUIRY_NO+" onclick='deleteComment(this);' class='commentDelBtn'>";
 				    	html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='17'>";
 				    	html += "삭제";
 				    	html += "</button>";
@@ -512,13 +543,16 @@ function selectInquiry(){
 					}
 				/* 대댓글이라면 */
 				else{
-					html += "<hr width='745px'  align='left'/>";
+					html += "<div class='recommentDiv'>";
+					/* html += "<hr width='745px'  align='left'/>"; */
+					html += "<img class='replyIcon' src='${pageContext.request.contextPath}/resources/images/reply.PNG'/>";
 					html += "<img id='inquiryImgTag' src='${pageContext.request.contextPath}/resources/upload/shopImage/"+data.list[i].IMAGE+"'/>";
-					html += "<div id='inquiryDetail'>";
+					html += "<div id='inquiryRecommentDetail'>";
 					html += "<span id='inquiryWriterTag'>"+data.list[i].MEMBER_ID+"</span>";
 					html += "&nbsp;&nbsp;";
 					html += "<span>"+data.list[i].WRITE_DAY +"</span>";
 					html += "<p>"+data.list[i].INQUIRY_CONTENT+"</p>";
+					html += "</div>";
 					html += "</div>";
 				}
 			}
@@ -556,10 +590,11 @@ function insertInquiry(){
 	
 }
 
-function deleteComment(){
+function deleteComment(btn){
 	
-	var deleteCommentBtn = $("#deleteCommentBtn").val();
+	var deleteCommentBtn = $(btn).val();
 	console.log(deleteCommentBtn);
+	
 	$.ajax({
 		url : "${pageContext.request.contextPath}/shop/deleteShopInquriy",
 		method : "POST",
@@ -574,12 +609,15 @@ function deleteComment(){
 	});
 }
 
-function insertInquiryComment(div){
+function insertInquiryComment(btn){
+	$(btn).attr("disabled", true);
+	console.log($(btn).next());
+	/* $(btn).next().css('margin-left','80px'); */
 	console.log("댓글추가함수에들어왔다");
-	console.log($(div).next().next());
+	console.log($(btn).next().next());
 	/* var inquiryRefNo = $("#insertInquiryCommentBtn").val(); */
-	var inquiryRefNo = $(div).val();
-	console.log("234="+inquiryRefNo);
+	var inquiryRefNo = $(btn).val();
+	console.log(inquiryRefNo);
 	let html = "";
 	html += "<br/>";
 	/* html += "<div class='inquiryCommentDiv' id='inquiryCommentDiv'>"; */
@@ -593,14 +631,16 @@ function insertInquiryComment(div){
 	html += "취소";
 	html += "</button>";
 	html += "</div>";
-	$(div).next().next().html(html);
+	$(btn).next().next().html(html);
 	
 }
 
-function cancleRecommentBtn(div){
+function cancleRecommentBtn(btn){
 	console.log("취소버튼함수에들어왔다");
-	console.log($(div).prev().prev().parent());
-	$(div).prev().prev().parent().empty();
+	$(btn).parent().prev().prev().attr("disabled", false);
+	$(btn).prev().prev().parent().empty();
+	/* $("#insertInquiryCommentBtn").show(); */
+	$("#deleteCommentBtn").css('margin-left','5px');
 	
 }
 

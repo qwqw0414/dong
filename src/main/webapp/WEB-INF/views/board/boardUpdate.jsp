@@ -1,10 +1,20 @@
 <%@page import="com.pro.dong.common.util.Utils"%>
 <%@page import="com.pro.dong.member.model.vo.Member"%>
 <%@page import="com.pro.dong.board.model.vo.Board"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.pro.dong.board.model.vo.BoardCategory"%>
+<%@page import="java.util.List"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-	Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
-	Board b = (Board)request.getAttribute("board");
+/* 	Board b = (Board)request.getAttribute("board");
+List<BoardCategory> list = new ArrayList<>();
+list = (List<BoardCategory>)request.getAttribute("boardCategoryList");
+String option = "";
+for(BoardCategory bc: list){
+	option +=  "<option value=\""+bc.getCategoryId()+"\">"+bc.getCategoryName()+"</option>";
+} */
 %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
@@ -83,50 +93,28 @@ td {
 	border-radius: 10px;
 }
 
-#boardUpdate{
+
+#boardUpdateBtn{
 	width: 90px;
 	height: 40px;
 	margin-top: 10px;
     float: right;
-    margin-right: 10px;
 }
-#boardDelete{
-	width: 90px;
-	height: 40px;
-	margin-top: 10px;
-    float: right;
+#titleinput{
+	border: 1px;
 }
 </style>
 
  <script>
-//수정버튼
+/* //수정버튼
 function boardUpdateBtn(){
-	location.href = "${pageContext.request.contextPath}/board/boardUpdate.do";
-}
-
-//삭제버튼
-/* function boardDeleteBtn(){
-	var result = confirm("게시글을 삭제하시겠습니까?");
+	var result = confirm("수정하시겠습니까?");
 	
-	if(result=true){
-		location.href = "${pageContext.request.contextPath}/board/boardDelete.do?boardNo="+${board.boardNo};
-	}else{
-		alert("삭제 불가합니다.");
-	} */
-/* 	var result = confirm("정말로 삭제하시겠습니까?");
-	if(!result)
-		return false;
-	
-	return location.href = "${pageContext.request.contextPath}/board/boardDelete.do?boardNo="+${board.boardNo};
-} 
-	
-} */ 
-
-/* function fileDownload(oName, rName){
-	//한글파일명이 있을 수 있으므로, 명시적으로 encoding
-	oName = encodeURIComponent(oName);
-	location.href="${pageContext.request.contextPath}/board/fileDownload.do?oName="+oName+"&rName="+rName;
+	if(result){
+	location.href = "${pageContext.request.contextPath}/board/boardUpdateEnd.do?boardNo="+${board.boardNo};
+	}
 } */
+
 </script> 
 
 <body>
@@ -136,22 +124,13 @@ function boardUpdateBtn(){
   <div class="container-fluid">
     <div class="section row">
       <div id="filebox" class="img-holder col-lg-4 col-md-4 col-12" style="border: 2px solid #28a745; margin:0 auto;">
-        <div style="background-image: url('../img/naim_ver_080801.png');height:100%;background-size:contain;" class="image"></div>      
       </div>
       <div class="text-holder col-lg-6 col-md-7 col-12">
 
         <table class="product">
           <caption style="caption-side: top;"> 
-          <!-- 작성자와 로그인한 아이디가 같을시에만 삭제,수정가능 -->
-          <% if(b.getMemberId().equals(memberLoggedIn.getMemberId())){ %>
-          <!-- 게시물 삭제는 작성자와 관리자만 가능(관리자 추가 예정) -->
-          <button type="button"  id="boardDelete" class="btn btn-outline-success btn-block" onclick="boardDeleteBtn();">삭제</button>
-          <% } %>
-            <p>
-			<% if(b.getMemberId().equals(memberLoggedIn.getMemberId())){%>       
-            <button type="button"  id="boardUpdate" class="btn btn-outline-success btn-block" onclick="boardUpdateBtn();">수정</button>
-            <% } %>
-            <b>${board.boardTitle }</b></p>
+            <button type="button"  id="boardUpdateBtn" class="btn btn-outline-success btn-block" >확인</button>
+            <b><input id="titleinput" value="${board.boardTitle}"></b>
           </caption>
           <tbody>
             <tr>
@@ -162,18 +141,20 @@ function boardUpdateBtn(){
               <th scope="col">조회수</th>
               <td><input type="text" class="form-control" name="writeDate" value="${board.readCount}" readonly required></td>
             </tr>
-            <tr>
+             <tr>
                <th scope="col">카테고리</th>
-             <%-- <td><input type="text" class="form-control" name="categoryId" value="${board.categoryId}" readonly required></td> --%>
-              <td><select class="form-control" name="select"
-               style="width: 150px; display: inline-block;" required="required">
+              <td>
+               <%-- <select class="custom-select" id="boardCategory" name="boardCategory">
+				   ${board.categoryId}
+			   </select> --%>
+              <select class="form-control" name="select" id="categoryId" style="width: 150px; display: inline-block;" required="required">
                <option value="">카테고리 선택</option>
-               <option value="A01 "<%="A01".equals(b.getCategoryId())?"selected":""%>>자유</option>
-               <option value="A02" <%="A02".equals(b.getCategoryId())?"selected":""%>>홍보</option>
-               <option value="A03" <%="A03".equals(b.getCategoryId())?"selected":""%>>정보</option>
-               
-            </select>
-            </tr>
+               <option value="A01"><c:if test="${board.categoryId eq 'A01'?'selected':''}"></c:if>자유</option>
+               <option value="A02"><c:if test="${board.categoryId eq 'A02'?'selected':''}"></c:if>홍보</option>
+               <option value="A03"><c:if test="${board.categoryId eq 'A03'?'selected':''}"></c:if>정보</option> 
+            </select> 
+               </td>
+            </tr> 
             <tr>
               <th scope="col">작성일</th>
               <td><input type="text" class="form-control" name="writeDate" value="${board.writeDate}" readonly required></td>
@@ -182,7 +163,7 @@ function boardUpdateBtn(){
             <!--display : none-->
             <tr>
               <th scope="row">내용</th>
-              <td><textarea class="form-control" name="boardContent" placeholder="내용" required>${board.boardContents }</textarea></td>
+              <td><textarea class="form-control" name="boardContent" id="boardContent" placeholder="내용" required>${board.boardContents }</textarea></td>
             </tr>
             <tr>
               <th scope="col">첨부파일</th>
@@ -204,6 +185,51 @@ function boardUpdateBtn(){
 	<br>
 	<br>
 </div>
+<script>
+$(()=>{
+	var $boardNo = $(".product #boardNo");
+	var $boardTitle = $(".product #titleinput");
+	var $categoryId = $(".product #categoryId");
+	var $boardContents = $(".product #boardContent");
+		
+	/* 수정 에이작스 */
+		$("#boardUpdateBtn").click(function (){
+			var result = confirm("게시글을 수정하시겠습니까?");
+			
+			if(result>0){
+			
+			$.ajax({
+				url: "${pageContext.request.contextPath}/board/boardUpdateEnd.do",
+				data: {
+					boardNo: $boardNo.val(),
+					boardTitle: $boardTitle.val(),
+					categoryId: $categoryId.val(),
+					boardContents: $boardContents.val()
+				},
+				dataType:"json",
+				type:"POST", 
+				success: data => {
+					console.log(data);
+					if(data > 0){
+						console.log("성공");
+						/* 경로설정 */
+/* 						location.href="${pageContext.request.contextPath}/board/boardList.do" */
+ 					}else{
+						console.log("불가불가불가");
+					}
+				},error: (x,s,e) => {
+					location.href="${pageContext.request.contextPath}/board/boardList.do";
+				}
+			});
+			}else{
+				return;
+			}
+			 
+		});
+		
+
+	}); 
+</script>
 
 <%--==================현규시작================ --%>
 <hr />

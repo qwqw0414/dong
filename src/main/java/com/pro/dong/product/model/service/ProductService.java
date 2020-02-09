@@ -36,7 +36,13 @@ public interface ProductService {
 	Shop selectOneShop(String memberId);
 	int insertProduct(Product product, List<ProductAttachment> attachList);
 	List<Map<String, String>> selectProductListTop10(String categoryId);
+	List<Map<String, String>> selectProduct(int cPage, int numPerPage, Map<String, String> param);
 	//========================== 예찬 끝
+
+
+
+
+
 
 
 
