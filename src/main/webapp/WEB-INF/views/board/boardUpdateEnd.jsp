@@ -3,8 +3,8 @@
 <%@page import="com.pro.dong.board.model.vo.Board"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-	 Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn"); 
-	/* Board b = (Board)request.getAttribute("board"); */
+	Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
+	Board b = (Board)request.getAttribute("board");
 %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
@@ -14,9 +14,9 @@ div#board-container input,div#board-container button{margin-bottom:15px;}
 /* 부트스트랩 : 파일라벨명 정렬*/
 div#board-container label.custom-file-label{text-align:left;}
 
-.head {
     border: 5px solid white;
 }
+
 p {
     font-size: 18px;
     margin:10px 0 0;
@@ -100,33 +100,10 @@ td {
 
  <script>
 //수정버튼
-function boardUpdateBtn(){
-	location.href = "${pageContext.request.contextPath}/board/boardUpdate.do";
-} 
+function boardUpdateEndBtn(){
+	location.href = "${pageContext.request.contextPath}/board/boardUpdateEnd.do";
+}
 
-//삭제버튼
-/* function boardDeleteBtn(){
-	var result = confirm("게시글을 삭제하시겠습니까?");
-	
-	if(result=true){
-		location.href = "${pageContext.request.contextPath}/board/boardDelete.do?boardNo="+${board.boardNo};
-	}else{
-		alert("삭제 불가합니다.");
-	} */
-/* 	var result = confirm("정말로 삭제하시겠습니까?");
-	if(!result)
-		return false;
-	
-	return location.href = "${pageContext.request.contextPath}/board/boardDelete.do?boardNo="+${board.boardNo};
-} 
-	
-} */ 
-
-/* function fileDownload(oName, rName){
-	//한글파일명이 있을 수 있으므로, 명시적으로 encoding
-	oName = encodeURIComponent(oName);
-	location.href="${pageContext.request.contextPath}/board/fileDownload.do?oName="+oName+"&rName="+rName;
-} */
 </script> 
 
 <body>
@@ -142,15 +119,8 @@ function boardUpdateBtn(){
 
         <table class="product">
           <caption style="caption-side: top;"> 
-          <!-- 작성자와 로그인한 아이디가 같을시에만 삭제,수정가능 -->
-          <c:if test="${board.memberId == memberLoggedIn.getMemberId()}">
-          <!-- 게시물 삭제는 작성자와 관리자만 가능(관리자 추가 예정) -->
-          <button type="button"  id="boardDelete" class="btn btn-outline-success btn-block" >삭제</button>
-          </c:if>
+          <button type="button"  id="boardDelete" class="btn btn-outline-success btn-block" onclick="boardUpdateEndBtn();">확인</button>
             <p>
-          <c:if test="${board.memberId == memberLoggedIn.getMemberId()}">
-            <button type="button"  id="boardUpdate" class="btn btn-outline-success btn-block" >수정</button>
-          </c:if>
             <b>${board.boardTitle }</b></p>
           </caption>
           <tbody>
@@ -164,7 +134,15 @@ function boardUpdateBtn(){
             </tr>
             <tr>
                <th scope="col">카테고리</th>
-               <td><input type="text" class="form-control" name="categoryId" value="${board.categoryId}" readonly required></td> 
+             <%-- <td><input type="text" class="form-control" name="categoryId" value="${board.categoryId}" readonly required></td> --%>
+              <td><select class="form-control" name="select"
+               style="width: 150px; display: inline-block;" required="required">
+               <option value="">카테고리 선택</option>
+               <option value="A01 "<%="A01".equals(b.getCategoryId())?"selected":""%>>자유</option>
+               <option value="A02" <%="A02".equals(b.getCategoryId())?"selected":""%>>홍보</option>
+               <option value="A03" <%="A03".equals(b.getCategoryId())?"selected":""%>>정보</option>
+               
+            </select>
             </tr>
             <tr>
               <th scope="col">작성일</th>
@@ -196,37 +174,6 @@ function boardUpdateBtn(){
 	<br>
 	<br>
 </div>
-<script>
- $(()=>{
-	var $boardNo = $(".product #boardNo");
-		
-		$("#boardDelete").click(function (){
-			 
-			$.ajax({
-				url: "${pageContext.reuqest.contextPath}/board/boardDelete.do",
-				data: {
-					boardNo: $boardNo.val()
-				},
-				dataType:"json",
-				type:"POST", /* update도 post select만 get */
-				success: data => {
-					console.log(data);
-					if(data > 0){
-						console.log("성공");
-						/* 경로설정 */
-						location.href="${pageContext.request.contextPath}/board/boardList.do"
-					}else{
-						console.log("불가불가불가");
-					}
-				},error: (x,s,e) => {
-					console.log("board삭제 ajax요청 실패!",x,s,e);
-				}
-			});
-		});
-	}); 
- 
- 
-</script>
 
 <%--==================현규시작================ --%>
 <hr />
