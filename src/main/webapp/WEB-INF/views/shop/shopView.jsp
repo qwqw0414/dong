@@ -515,7 +515,12 @@ function selectInquiry(){
 				/* 댓글이라면 */
 				if(data.list[i].INQUIRY_LEVEL == 1){
 					html += "<hr width='745px'  align='left'/>";
-					html += "<img id='inquiryImgTag' src='${pageContext.request.contextPath}/resources/upload/shopImage/"+data.list[i].IMAGE+"'/>";
+					if(data.list[i].IMAGE == null){
+						html += "<img id='inquiryImgTag' src='${pageContext.request.contextPath}/resources/images/shopping-store.png'/>";
+					}
+					if(data.list[i].IMAGE != null){
+						html += "<img id='inquiryImgTag' src='${pageContext.request.contextPath}/resources/upload/shopImage/"+data.list[i].IMAGE+"'/>";
+					}
 					html += "<div id='inquiryDetail'>";
 					html += "<span id='inquiryWriterTag'>"+data.list[i].MEMBER_ID+"</span>";
 					html += "&nbsp;&nbsp;";
