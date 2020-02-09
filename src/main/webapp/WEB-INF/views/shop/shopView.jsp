@@ -363,18 +363,36 @@ $(function(){
 		position: relative;
 		top: -8px;
 	}
-	
 	#shopInquiryCommentEndBtn{
 		background-color: white;
 		outline: none;
 		border: 1px solid lightgray;
 		margin-left: 5px;
+		margin-bottom: -60px;
 		position: relative;
 		top: -8px;
 	}
 	#inquiryCommentDiv{
 		margin-left: 35px;
 	}
+	.recommentDiv{
+		margin-left: 100px;
+	}
+	.replyIcon{
+		width: 50px;
+		height: 50px;
+		display: inline-block;
+		margin-left: -80px;
+		/* margin-bottom: -50px; */
+	}
+	/* .replyIconDiv{
+		display: inline-block;
+	} */
+	#inquiryRecommentDetail{
+		margin-left: 35px;
+   	    margin-top: -17px;
+	}
+	
 	/* 주영 끝 */
 	</style>
 	
@@ -520,13 +538,16 @@ function selectInquiry(){
 					}
 				/* 대댓글이라면 */
 				else{
-					html += "<hr width='745px'  align='left'/>";
+					html += "<div class='recommentDiv'>";
+					/* html += "<hr width='745px'  align='left'/>"; */
+					html += "<img class='replyIcon' src='${pageContext.request.contextPath}/resources/images/reply.PNG'/>";
 					html += "<img id='inquiryImgTag' src='${pageContext.request.contextPath}/resources/upload/shopImage/"+data.list[i].IMAGE+"'/>";
-					html += "<div id='inquiryDetail'>";
+					html += "<div id='inquiryRecommentDetail'>";
 					html += "<span id='inquiryWriterTag'>"+data.list[i].MEMBER_ID+"</span>";
 					html += "&nbsp;&nbsp;";
 					html += "<span>"+data.list[i].WRITE_DAY +"</span>";
 					html += "<p>"+data.list[i].INQUIRY_CONTENT+"</p>";
+					html += "</div>";
 					html += "</div>";
 				}
 			}
