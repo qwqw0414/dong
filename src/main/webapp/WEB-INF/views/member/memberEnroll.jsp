@@ -16,6 +16,7 @@
 #memberEnroll #btn-3{display: none;}
 #memberEnroll #page-4{display: none;}
 #memberEnroll #btn-4{display: none;}
+#memberEnroll #page-5{display: none;}
 </style>
 <style>
 #memberEnroll .map_wrap {position:relative;width:100%;height:300px;}
@@ -74,9 +75,14 @@
         이메일 인증 추가 예정
         <input type="email" name="email" id="email" value="" class="form-control text-center">
         <input type="button" value="이메일 번호 보내기" id="email-auth" />
-        <input type="text" name="authKey" id="authKey" />
-    </div>
 
+    </div>
+	<div id="page-5">
+        <input type="text" name="authKey" id="authKey" />
+       	<input type="button" name="authKey-btn" id="authKey-btn" value="인증 확인" />
+    	<input type="hidden" name="random" id="random" value="${random }" />
+    </div>
+    	
     <div class="enroll-btn" id="btn-1">
         <button class="btn btn-outline-primary btn-lg" id="next-page2">다음 단계로 진행<br>( 1 / 4 )</button>
     </div>
@@ -100,6 +106,7 @@ $(()=>{
     var $page_2 = $("#memberEnroll #page-2");
     var $page_3 = $("#memberEnroll #page-3");
     var $page_4 = $("#memberEnroll #page-4");
+    var $page_5 = $("#memberEnroll #page-5"); 
     var $btn_1 = $("#memberEnroll #btn-1");
     var $btn_2 = $("#memberEnroll #btn-2");
     var $btn_3 = $("#memberEnroll #btn-3");
@@ -121,21 +128,49 @@ $(()=>{
     var $sigungu = $("#memberEnroll #sigungu");
     var $dong = $("#memberEnroll #dong");
     
+    /* 메일 인증 보내기 */
      $("#email-auth").click(()=>{
     	 var $email = $("#email").val();
+    	/*  var $random = $("#random").val(); */
+    	 console.log($email);
     	 $.ajax({
-    		url: "${pageContext.request.contextPath}/member/emailAuth.do?email="+email,
-    		data: {email:$email},
-    		dataType:"json",
+    		url: "${pageContext.request.contextPath}/member/emailAuth.do?email=",
+    		data: {email:$email
+    			   /* random:$random */},
+    		dataType:"text",
     		success: data => {
-    			
+    			console.log(data);
+    	        $page_4.hide();
+    	        $page_5.show();
     		},
     		error : (x,s,e) =>{
     			console.log("실패", x,s,e);
     		}
     	 })
-    	 
     }); 
+    /* 메일 인증 받기 */
+    $("#authKey-btn").click(()=>{
+    	var $authKey = $("#authKey").val();
+    	/* var $email = $("#email").val(); */
+   	/*  	var $random = $("#random").val(); */
+
+    	$.ajax({
+	    	url: "${pageContext.request.contextPath}/member/verify.do?authKey=",
+			data: {authKey:$authKey
+				   /* email:$email */
+			       /* random:$random */},
+			dataType:"text",
+			success: data=>{
+				console.log(data);
+				alert("성공");
+			},
+			error : (x,s,e) =>{
+				console.log("실패", x,s,e);
+			}
+    	})
+    	
+    });
+     
     //회원 가입
     $("#memberEnroll #btn-enroll").click(()=>{
 

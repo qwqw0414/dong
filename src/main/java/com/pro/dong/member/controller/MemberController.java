@@ -20,6 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -197,17 +198,26 @@ public class MemberController {
 	
 	@RequestMapping("/emailAuth.do")
 	@ResponseBody
-	public String emailAuth(Model model, @RequestParam(value="email") String email) throws MessagingException, UnsupportedEncodingException {
+	public String emailAuth(Model model, 
+							HttpServletRequest request,
+							/*@RequestParam(value="random") int random, */
+							@RequestParam(value="email") String email) throws MessagingException, UnsupportedEncodingException {
 		
-		String authKey = new TempKey().getKey(50, false);
 		Random r = new Random();
-		int dice = r.nextInt(4589362)+49311;
+		int dice = r.nextInt(4589362)+49311; //인증번호 랜덤 생성
+		HttpSession session = request.getSession(true);
 //		Member m = ms.emailAuth(email);
-		log.debug("email121212={}",email);
+		String authCode = String.valueOf(dice);
+		
+		session.setAttribute("authCode", authCode);
+/*		session.setAttribute("random", random);
+*/		log.debug("email121212={}",email);
+
+		//메일 보내기
 		EmailHandler sendMail = new EmailHandler(mailSender);
 		sendMail.setSubject("[홈페이지 이메일 인증]");
 		sendMail.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>")
-				.append("이메일 인증 번호:"+dice+"입니다.")
+				.append("이메일 인증 번호:"+authCode+"입니다.")
 				.toString());
 		/*sendMail.setText("<h1>메일인증</h1>" +
 						 "<a href='http://localhost:9090/dong/verify.do?email=" +email +
@@ -221,11 +231,35 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
+	//인증 번호 입력
 	@RequestMapping(value="/verify.do")
-	public String signSuccess(HttpServletRequest request, @RequestParam(value="email")String email, Model model) {
-		ms.signSuccess(email);
+	@ResponseBody
+	public String signSuccess(/*@RequestParam String random,*/
+							  @RequestParam(value="authKey")String authKey,
+							  HttpSession session,
+							  /*@RequestParam(value="email") String email,*/
+							  HttpServletRequest request, Model model) {
+							/*@RequestParam(value="authKey")String authKey*/
+		
+		String originalKey = (String)session.getAttribute("authCode");
+		/*String originalRandom = Integer.toString((int) session.getAttribute("random"));*/
+		
+		/*if(originalKey.equals(authKey))
+			ms.signSuccess(email);
+		else {
+			throw new MemberException("오류");
+		}*/
+		return "redirect:/";
 //		model.addAttribute("email", email);
-		return "/";
+	/*	
+		String msg = "";
+		if(authKey.equals(dice)) {
+			msg = "번호 일치";
+		}
+		else {
+			msg = "번호 틀림";
+		}
+		return "/";*/
 	}
 //========================== 근호 끝
 	
