@@ -51,7 +51,14 @@ public class ShopDAOImpl implements ShopDAO{
 	
 	
 	// 예찬 시작 ==========================
-	
+	@Override
+	public List<Shop> searchShop(Map<String,String> param) {
+		return sst.selectList("shop.searchShop", param);
+	}
+	@Override
+	public Shop selectOneShopByShopNo(int shopNo) {
+		return sst.selectOne("shop.selectOneShopByShopNo", shopNo);
+	}
 	
 	
 	//========================== 예찬 끝
@@ -101,6 +108,10 @@ public class ShopDAOImpl implements ShopDAO{
 	@Override
 	public int selectTotalInpuiry(int shopNo) {
 		return sst.selectOne("shop.selectTotalInpuiry", shopNo);
+	}
+	@Override
+	public int insertInquiryComment(Map<String, String> param) {
+		return sst.insert("shop.insertInquiryComment", param);
 	}
 
 

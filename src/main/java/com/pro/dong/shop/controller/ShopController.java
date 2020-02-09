@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.pro.dong.member.model.vo.Member;
 import com.pro.dong.shop.model.service.ShopService;
 import com.pro.dong.shop.model.vo.Shop;
@@ -31,7 +32,7 @@ import com.pro.dong.shop.model.vo.ShopInquriy;
 public class ShopController {
 
 	static Logger log = LoggerFactory.getLogger(ShopController.class);
-	
+	static Gson gson = new Gson();
 	@Autowired
 	ShopService ss;
 	
@@ -64,8 +65,40 @@ public class ShopController {
 	
 	
 	// 예찬 시작 ==========================
+	@RequestMapping(value="/shopList.do", produces="text/plain;charset=UTF-8")
+	public ModelAndView shopList(ModelAndView mav, @RequestParam("keyword") String keyword) {
+//		Map<String, String> map = new HashMap<>();
+//		map.put("keyword", keyword);
+//		
+//		List<Shop> list = ss.searchShop(map);
+		
+		mav.addObject("keyword", keyword);
+		
+		return mav;
+	}
 	
+	@RequestMapping(value="/searchShop", produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String searchShop(String keyword) {
+		Map<String, String> map = new HashMap<>();
+		map.put("keyword", keyword);
+		
+		List<Shop> list = ss.searchShop(map);
+		
+		return gson.toJson(list);
+	}
 	
+	@RequestMapping("/shopView1.do")
+	public ModelAndView shopView1(int shopNo) {
+		
+		ModelAndView mav = new ModelAndView();
+		
+		Shop shop = ss.selectOneShopByShopNo(shopNo);
+		
+		mav.addObject("shop", shop);
+		
+		return mav;
+	}
 	
 	//========================== 예찬 끝
 	
@@ -234,8 +267,38 @@ public class ShopController {
 		log.info("들어왔나요?");
 		
 		int result = ss.deleteShopInquriy(deleteCommentBtn);
+		log.info("result={}", result);
 		Map<String, Integer> map = new HashMap<>();
 		map.put("result", result);
+		return map;
+	}
+	
+	@RequestMapping("/insertInquiryComment")
+	@ResponseBody
+	public Map<String, Object> insertInquiryComment(@RequestParam("inquiryRefNo") int inquiryRefNo,
+												 	@RequestParam("shopInquiryCommentText") String shopInquiryCommentText,
+												 	@RequestParam("shopInquiryCommentWriter") String shopInquiryCommentWriter,
+												 	@RequestParam("shopInquiryCommentShopNo") int shopInquiryCommentShopNo){
+		
+		ShopInquriy s = new ShopInquriy();
+		s.setInquiryRef(inquiryRefNo);
+		s.setInquiryContent(shopInquiryCommentText);
+		s.setMemberId(shopInquiryCommentWriter);
+		s.setShopNo(shopInquiryCommentShopNo);
+		
+		
+		Map<String, String> param = new HashMap<>();
+		param.put("inquiryRefNo", Integer.toString(inquiryRefNo));
+		param.put("shopInquiryCommentText", shopInquiryCommentText);
+		param.put("shopInquiryCommentWriter", shopInquiryCommentWriter);
+		param.put("shopInquiryCommentShopNo", Integer.toString(shopInquiryCommentShopNo));
+		
+		Map<String, Object> map = new HashMap<>();
+		int result = ss.insertInquiryComment(param);
+		log.info("resultInsert={}", result);
+		
+		map.put("s", s);
+		
 		return map;
 	}
 

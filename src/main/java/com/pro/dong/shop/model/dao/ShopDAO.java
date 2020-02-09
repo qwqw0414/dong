@@ -37,8 +37,8 @@ public interface ShopDAO {
 	
 	
 	// 예찬 시작 ==========================
-	
-	
+	List<Shop> searchShop(Map<String,String> param);
+	Shop selectOneShopByShopNo(int shopNo);
 	
 	//========================== 예찬 끝
 	
@@ -61,8 +61,8 @@ public interface ShopDAO {
 	int deleteShopInquriy(int deleteCommentBtn);
 
 	int selectTotalInpuiry(int shopNo);
-
-
+	
+	int insertInquiryComment(Map<String, String> param);
 	
 	//========================== 주영 끝
 	

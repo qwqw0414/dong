@@ -54,7 +54,7 @@
 	</select>
 	
 	<select id="selectOneMember" parameterType="map" resultType="map">
-		select * from board_report R left join board B on R.board_no=B.board_no
+		select * from board_report R left join board B on R.board_no=B.board_no left join report_category C on R.category_id = C.category_id
 		where B.member_id=#{memberId}
 	</select>
 	
@@ -62,6 +62,11 @@
 		select * from member
 		where member_id = #{memberId}
 	</select>
+	
+	<delete id="memberDelete">
+		DELETE FROM member
+		WHERE member_id = #{memberId}
+	</delete>
 	<!-- ==========================  하진 끝 -->
 	
 	<!-- 근호 시작 ========================== -->

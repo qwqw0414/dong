@@ -57,6 +57,11 @@ public class AdminDAOImpl implements AdminDAO {
 	public Member selectMemberView(String memberId) {
 		return sst.selectOne("admin.selectMemberView",memberId);
 	}
+	
+	@Override
+	public int memberDelete(String memberId) {
+		return sst.delete("admin.memberDelete",memberId);
+	}
 	// ========================== 하진 끝
 
 

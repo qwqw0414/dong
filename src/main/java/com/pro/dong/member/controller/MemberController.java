@@ -77,7 +77,7 @@ public class MemberController {
 // 하진 시작 ==========================
 	
 	@RequestMapping("/memberBye.do")
-	public ModelAndView memberBye(ModelAndView mav) {
+	public ModelAndView memberBye(ModelAndView mav,SessionStatus sessionStatus) {
 		mav.setViewName("/member/memberBye");
 		return mav;
 	}
@@ -85,7 +85,8 @@ public class MemberController {
 	@RequestMapping("/memberByeForm.do")
 	public ModelAndView memberBye(@RequestParam("memberId") String memberId,
 									@RequestParam("password") String password,
-									ModelAndView mav) {
+									ModelAndView mav,
+									SessionStatus sessionStatus) {
 	
 		String msg = "";
 		String loc = "/";
@@ -98,6 +99,9 @@ public class MemberController {
 			if(passwordEncoder.matches(password, m.getPassword())) {
 				int result = ms.byeMember(memberId);{
 					msg="회원 탈퇴 성공";
+					if(!sessionStatus.isComplete()) {
+						sessionStatus.setComplete();
+					}
 				}
 			}
 			else {

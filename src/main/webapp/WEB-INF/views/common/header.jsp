@@ -230,9 +230,9 @@ $(()=>{
 	
 		<!--검색창-->
 		<div class="input-group col-md-6">
-  			<input type="text" class="form-control" placeholder="상품명,지역명,@상점명 입력" aria-label="Recipient's username" aria-describedby="button-addon2">
+  			<input type="text" class="form-control" placeholder="상품명, 지역명, @상점명 입력" id="search-bar" aria-label="Recipient's username" aria-describedby="button-addon2">
   			<div class="input-group-append">
-    			<button class="btn btn-outline-secondary" type="button" id="button-addon2">
+    			<button class="btn btn-outline-secondary" type="button" id="btn-search">
     				<img id="bogiImg" src="${pageContext.request.contextPath}/resources/images/bogi.png"/>
     			</button>
  			</div>
@@ -240,7 +240,9 @@ $(()=>{
 		
 		<!--메뉴-->
 		<div class="col-md text-left">
-			<a style="color:black; text-decoration: none;" href=""><img id="saleImg" src="${pageContext.request.contextPath}/resources/images/sale.PNG"/> 판매하기</a>
+			<a style="color:black; text-decoration: none;" href="${pageContext.request.contextPath}/product/productReg.do">
+				<img id="saleImg" src="${pageContext.request.contextPath}/resources/images/sale.PNG"/> 판매하기
+			</a>
 			<a style="color:black; text-decoration: none;" href="${pageContext.request.contextPath}/shop/shopView.do"><img id="shopImg" src="${pageContext.request.contextPath}/resources/images/shop.PNG"/> 내 상점</a>
 			<a style="color:black; text-decoration: none;"href=""><img id="chatImg" src="${pageContext.request.contextPath}/resources/images/chat.PNG"/> 동네톡</a>
 		</div>
@@ -335,32 +337,34 @@ var isCateShow = false;
 		});
 		
 	}
+
+	// 검색 기능
+	$("header #btn-search").click(search);
+	$("header #search-bar").keyup((e)=>{if(e.keyCode == 13) search();});
+	$("header .cate-list-content").children("ul").click((e)=>{
+		var $target = $(e.target).siblings("input");
+		location.href = "${pageContext.request.contextPath}/prodcut/productList.do?categoryId="+$target.val();
+	});
+
+	function search(categoryId){
+		var keyWord = $("header #search-bar").val();
+
+		if(keyWord.length == 0) return;
+		
+		var reg = /^@/;		
+		if(reg.test(keyWord)){
+			keyWord = keyWord.substring(1);
+			location.href = "${pageContext.request.contextPath}/shop/shopList.do?keyword="+keyWord;
+		}
+		else{
+			location.href = "${pageContext.request.contextPath}/prodcut/productList.do?keyword="+keyWord+"&categoryId="+categoryId;
+		}
+
+	}
+
+
+
 });
-
-
-// $("#categoryDiv .categoryA").hover(function(e){
-	
-// 	var $categoryOneList =  $("#categoryOneList");
-	
-// 	$.ajax({
-// 		url:"${pageContext.request.contextPath}/product/categoryView",
-// 		type: "GET",
-// 		dataType: "json",
-// 		success: data => {
-// 			console.log("성공");
-			
-// 			let categoryHtml = "";
-// 			for(var i=0; i<data.cateboryList.length; i++){
-// 				categoryHtml += "<li><a href='#'>"+data.cateboryList[i].CATEGORY_NAME+"</a></li>";
-// 			}
-// 			$categoryOneList.html(categoryHtml);
-			
-// 		},
-// 		error: (x,s,e)=>{
-// 			console.log("실패",x,s,e);
-// 		}
-// 	});
-// });
 </script>
 
 
