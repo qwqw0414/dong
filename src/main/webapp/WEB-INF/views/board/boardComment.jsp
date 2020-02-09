@@ -80,6 +80,7 @@ $(()=>{
 			      }
 		
 		});//end of ajax
+		
 	});//end of function
 	
 });//end of script
