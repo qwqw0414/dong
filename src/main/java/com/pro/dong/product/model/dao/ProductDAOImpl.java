@@ -65,7 +65,16 @@ public class ProductDAOImpl implements ProductDAO{
 		RowBounds rowBounds = new RowBounds(0,10);
 		return sst.selectList("product.selectProductListTop10", categoryId, rowBounds);
 	}
+	
+	@Override
+	public List<Map<String, String>> selectProduct(int cPage, int numPerPage, Map<String, String> param) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sst.selectList("product.selectProduct", param, rowBounds);
+	}
 	//========================== 예찬 끝
+
+
+
 
 
 

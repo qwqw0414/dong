@@ -184,8 +184,8 @@ public class BoardController {
 	//========================== 근호 끝
 		
 	// 지은 시작 ==========================
-	@RequestMapping("/boardView")
-	public String boardView(Model model, @RequestParam("boardNo") int boardNo) {
+	@RequestMapping("/boardView.do")
+	public ModelAndView boardView(ModelAndView mav, @RequestParam("boardNo") int boardNo) {
 		
 		Board board = bs.selectOneBoard(boardNo);
 		log.debug("boardNo="+boardNo);
@@ -193,52 +193,77 @@ public class BoardController {
 		int readCount = bs.boardInCount(boardNo);
 		log.debug("readCount="+readCount);
 		
-		model.addAttribute("board", board);
-		model.addAttribute("attachmentList", attachmentList);
+		mav.addObject("board", board);
+		mav.addObject("attachmentList", attachmentList);
+		mav.addObject("memberId", board.getMemberId());
 		
-		return "board/boardView";
+		return mav;
 		
 	}
 	
-	@RequestMapping("/boardUpdate")
-	public String boardUpdate(Board board) {
+	@RequestMapping("/boardUpdate.do")	
+	public ModelAndView boardUpdate( ModelAndView mav, int boardNo) {
+		Board board = bs.selectOneBoard(boardNo);
+		
+		mav.addObject("board", board);
+		mav.addObject("memberId", board.getMemberId());
+		mav.addObject("loc", "/board/boardUpdate.do");
+		return mav;
+	}
+	
+	@RequestMapping("/boardUpdateEnd")
+	@ResponseBody
+//	public String boardUpdateEnd(Board board,HttpServletRequest request) {
+//		int result = bs.boardUpdate(board);
+//		String msg = "";
+//		if(result>0) {
+//			log.debug("게시글 수정성공!");
+//			msg = "게시글 수정이 완료되었습니다.";
+//		}else {
+//			log.debug("게시글 수정실패!");
+//			msg = "게시글 수정에 실패하였습니다.";
+//		}
+//		
+//		return result+"";
+//	}
+	
+	public ModelAndView boardUpdateEnd(ModelAndView mav, Board board) {
 		int result = bs.boardUpdate(board);
 		log.debug("boardUpdate@board", board);
-		String msg = "";
+		
 		if(result>0) {
 			log.debug("게시글 수정성공!");
-			msg = "게시글 수정이 완료되었습니다.";
 		}else {
 			log.debug("게시글 수정실패!");
-			msg = "게시글 수정에 실패하였습니다.";
 		}
 		
-		return result+"";
+		mav.addObject("msg", result>0?"수정성공!":"수정실패!");
+		mav.addObject("loc", "/board/boardList.do");
+		mav.setViewName("common/msg");
+		
+		return mav;
 	}
 	
 	@RequestMapping("/boardDelete")
 	@ResponseBody
-	public String boardDelete(ModelAndView mav, int boardNo) {
+	public ModelAndView boardDelete(ModelAndView mav, int boardNo) {
 		int result = bs.deleteBoard(boardNo);
 		log.debug("boardDelete@boardNo="+boardNo);
 		
-		String msg = "";
+		
 		if(result>0) {
 			log.debug("board삭제 성공!!!!!");
-			msg="게시물 삭제에 성공하였습니다!";
-			
+		
 		}else {
 			log.debug("board삭제 실패!!!");
-			msg="게시물 삭제에 실패하였습니다!";
 		}
 		
-		
-		return "board/boardList";
-	}
-	
-	
+		mav.addObject("msg", result>0?"삭제성공!":"삭제실패!");
+		mav.addObject("loc", "/board/boardList.do");
+		mav.setViewName("common/msg");
 
-	
+		return mav;
+	}
 	
 
 	//========================== 지은 끝

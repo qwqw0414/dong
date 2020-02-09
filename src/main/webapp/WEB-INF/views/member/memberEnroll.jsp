@@ -72,7 +72,9 @@
 
     <div class="enroll-form" id="page-4">
         이메일 인증 추가 예정
-        <input type="email" id="email" value="" class="form-control text-center">
+        <input type="email" name="email" id="email" value="" class="form-control text-center">
+        <input type="button" value="이메일 번호 보내기" id="email-auth" />
+        <input type="text" name="authKey" id="authKey" />
     </div>
 
     <div class="enroll-btn" id="btn-1">
@@ -118,6 +120,22 @@ $(()=>{
     var $sido = $("#memberEnroll #sido");
     var $sigungu = $("#memberEnroll #sigungu");
     var $dong = $("#memberEnroll #dong");
+    
+     $("#email-auth").click(()=>{
+    	 var $email = $("#email").val();
+    	 $.ajax({
+    		url: "${pageContext.request.contextPath}/member/emailAuth.do?email="+email,
+    		data: {email:$email},
+    		dataType:"json",
+    		success: data => {
+    			
+    		},
+    		error : (x,s,e) =>{
+    			console.log("실패", x,s,e);
+    		}
+    	 })
+    	 
+    }); 
     //회원 가입
     $("#memberEnroll #btn-enroll").click(()=>{
 

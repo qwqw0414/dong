@@ -1,8 +1,12 @@
 package com.pro.dong.member.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
+import javax.inject.Inject;
+import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,8 +15,10 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +30,8 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.pro.dong.common.email.EmailHandler;
+import com.pro.dong.common.email.TempKey;
 import com.pro.dong.member.model.exception.MemberException;
 import com.pro.dong.member.model.service.MemberService;
 import com.pro.dong.member.model.vo.Member;
@@ -40,6 +48,9 @@ public class MemberController {
 	
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
+	
+	@Inject
+	private JavaMailSender mailSender;
 	
 // 민호 시작 ==========================
 	@RequestMapping("/updatePoint")
@@ -183,6 +194,39 @@ public class MemberController {
 		}
 		return "redirect:/";
 	}
+	
+	@RequestMapping("/emailAuth.do")
+	@ResponseBody
+	public String emailAuth(Model model, @RequestParam(value="email") String email) throws MessagingException, UnsupportedEncodingException {
+		
+		String authKey = new TempKey().getKey(50, false);
+		Random r = new Random();
+		int dice = r.nextInt(4589362)+49311;
+//		Member m = ms.emailAuth(email);
+		log.debug("email121212={}",email);
+		EmailHandler sendMail = new EmailHandler(mailSender);
+		sendMail.setSubject("[홈페이지 이메일 인증]");
+		sendMail.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>")
+				.append("이메일 인증 번호:"+dice+"입니다.")
+				.toString());
+		/*sendMail.setText("<h1>메일인증</h1>" +
+						 "<a href='http://localhost:9090/dong/verify.do?email=" +email +
+						 "authKey="+authKey+
+						 "' target='_blank'>이메일 인증 확인</a>");*/
+		sendMail.setFrom("dhrmsghss@gmail.com", "오근호");
+		sendMail.setTo(email);
+		sendMail.send();
+		
+		
+		return "redirect:/";
+	}
+	
+	@RequestMapping(value="/verify.do")
+	public String signSuccess(HttpServletRequest request, @RequestParam(value="email")String email, Model model) {
+		ms.signSuccess(email);
+//		model.addAttribute("email", email);
+		return "/";
+	}
 //========================== 근호 끝
 	
 // 지은 시작 ==========================
@@ -251,7 +295,7 @@ public class MemberController {
 	//회원 가입
 	@RequestMapping("/memberEnrollEnd")
 	@ResponseBody
-	public String memberEnrollEnd(Member member) {
+	public String memberEnrollEnd(Member member) throws MessagingException, UnsupportedEncodingException {
 		int result = 0;
 		try {
 //		    비밀번호 암호화
@@ -269,6 +313,7 @@ public class MemberController {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		
 		return result+"";
 	}
