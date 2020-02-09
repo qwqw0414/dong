@@ -340,13 +340,13 @@ var isCateShow = false;
 
 	// 검색 기능
 	$("header #btn-search").click(search);
-	$("header #search-bar").keyup((e)=>{
-		if(e.keyCode == 13){
-			search();
-		}
-	})
+	$("header #search-bar").keyup((e)=>{if(e.keyCode == 13) search();});
+	$("header .cate-list-content").children("ul").click((e)=>{
+		var $target = $(e.target).siblings("input");
+		location.href = "${pageContext.request.contextPath}/prodcut/productList.do?categoryId="+$target.val();
+	});
 
-	function search(){
+	function search(categoryId){
 		var keyWord = $("header #search-bar").val();
 
 		if(keyWord.length == 0) return;
@@ -355,6 +355,9 @@ var isCateShow = false;
 		if(reg.test(keyWord)){
 			keyWord = keyWord.substring(1);
 			location.href = "${pageContext.request.contextPath}/shop/shopList.do?keyword="+keyWord;
+		}
+		else{
+			location.href = "${pageContext.request.contextPath}/prodcut/productList.do?keyword="+keyWord+"&categoryId="+categoryId;
 		}
 
 	}
