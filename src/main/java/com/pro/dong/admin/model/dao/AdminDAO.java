@@ -21,6 +21,8 @@ public interface AdminDAO {
 	List<BoardReport> selectOneMember(int cPage, int numPerPage, Map<String, String> param);
 	int adselectBoardReportTotalContent(Map<String, String> param);
 	Member selectMemberView(String memberId);
+	
+	int memberDelete(String memberId);
 	// ========================== 하진 끝
 
 

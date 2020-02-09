@@ -65,12 +65,16 @@
 	</insert>
 	
 	<delete id="deleteShopInquriy">
-		delete from shop_inquiry  where inquiry_no = #{deleteCommentBtn}
+		delete from shop_inquiry where inquiry_no = #{deleteCommentBtn} or inquiry_ref = #{deleteCommentBtn}
 	</delete>
 	
 	<select id="selectTotalInpuiry" resultType="_int">
 		select count(*) as totalInquiry from shop_inquiry where shop_no = #{shopNo} and inquiry_level = 1
 	</select>
+	
+	<insert id="insertInquiryComment">
+		insert into shop_inquiry values(seq_shop_inquiry.nextval, #{shopInquiryCommentWriter}, #{shopInquiryCommentShopNo}, #{shopInquiryCommentText}, 2, default, #{inquiryRefNo})
+	</insert>
 	<!-- ==========================  주영 끝 -->
 	
 	<!-- 현규 시작 ========================== -->

@@ -108,6 +108,10 @@ public class ShopServiceImpl implements ShopService{
 	public int selectTotalInpuiry(int shopNo) {
 		return sd.selectTotalInpuiry(shopNo);
 	}
+	@Override
+	public int insertInquiryComment(Map<String, String> param) {
+		return sd.insertInquiryComment(param);
+	}
 
 
 

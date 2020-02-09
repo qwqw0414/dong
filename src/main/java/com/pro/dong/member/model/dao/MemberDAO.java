@@ -20,6 +20,8 @@ public interface MemberDAO {
 	
 	// 근호 시작 ==========================
 	Member selectLoginMember(String memberId);
+	Member emailAuth(String email);
+	void signSuccess(String email);
 	
 	//==========================  근호 끝
 	
