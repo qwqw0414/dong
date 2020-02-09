@@ -185,7 +185,7 @@ public class BoardController {
 		
 	// 지은 시작 ==========================
 	@RequestMapping("/boardView")
-	public String boardView(Model model, @RequestParam("boardNo") int boardNo) {
+	public String boardView(Model model, @RequestParam("boardNo") int boardNo,HttpServletRequest request) {
 		
 		Board board = bs.selectOneBoard(boardNo);
 		log.debug("boardNo="+boardNo);
@@ -196,12 +196,19 @@ public class BoardController {
 		model.addAttribute("board", board);
 		model.addAttribute("attachmentList", attachmentList);
 		
+		request.setAttribute("memberId", board.getMemberId());
 		return "board/boardView";
 		
 	}
 	
-	@RequestMapping("/boardUpdate")
-	public String boardUpdate(Board board) {
+	@RequestMapping("/boardUpdate.do")
+	public String boardUpdate() {
+		return "board/boardUpdateView";
+	}
+	
+	@RequestMapping("/boardUpdateEnd.do")
+	@ResponseBody
+	public String boardUpdateEnd(Board board,HttpServletRequest request) {
 		int result = bs.boardUpdate(board);
 		log.debug("boardUpdate@board", board);
 		String msg = "";
@@ -213,8 +220,11 @@ public class BoardController {
 			msg = "게시글 수정에 실패하였습니다.";
 		}
 		
-		return result+"";
+		request.setAttribute("memberId", board.getMemberId());
+		return result+"board/boardUpdate";
 	}
+	
+	
 	
 	@RequestMapping("/boardDelete")
 	@ResponseBody
