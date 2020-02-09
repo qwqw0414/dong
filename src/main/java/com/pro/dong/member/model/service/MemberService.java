@@ -21,6 +21,9 @@ public interface MemberService {
 	
 	// 근호 시작 ==========================
 	Member selectLoginMember(String memberId);
+	Member emailAuth(String email);
+	void signSuccess(String email);
+
 	//==========================  근호 끝
 	
 	// 지은 시작 ==========================
@@ -50,6 +53,7 @@ public interface MemberService {
 	int updateMemberName(Map<String, String> param);
 	int updateMemberPhone(Map<String, String> param);
 	int updateMemberEmail(Map<String, String> param);
+	
 
 	
 	
