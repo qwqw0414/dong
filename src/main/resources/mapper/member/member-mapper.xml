@@ -34,8 +34,15 @@
 	<select id="selectLoginMember" resultType="member">
 		select * from member 
 		where member_id = #{memberId}
-
 	</select>
+	<update id ="signSuccess">
+		update member set is_valid = 'Y'
+		where email = #{email}
+	</update>
+	<!-- <insert id="emailAuth">
+		insert into member(member_Id,email)
+		values(#{memberId}, #{email})
+	</insert> -->
 	<!-- ==========================  근호 끝 -->
 	
 	<!-- 지은 시작 ========================== -->

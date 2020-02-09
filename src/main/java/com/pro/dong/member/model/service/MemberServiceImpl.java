@@ -50,6 +50,15 @@ public class MemberServiceImpl implements MemberService{
 	public Member selectLoginMember(String memberId) {
 		return md.selectLoginMember(memberId);
 	}
+	@Override
+	public Member emailAuth(String email) {
+		return md.emailAuth(email);
+	}
+	@Override
+	public void signSuccess(String email) {
+		md.signSuccess(email);
+	}
+	
 	//==========================  근호 끝
 	
 	// 지은 시작 ==========================
@@ -111,6 +120,14 @@ public class MemberServiceImpl implements MemberService{
 		return md.updateMemberEmail(param);
 	}
 	//==========================  현규 끝
+
+	
+
+	
+
+	
+
+	
 
 
 
