@@ -1,6 +1,8 @@
 <%@page import="com.pro.dong.common.util.Utils"%>
 <%@page import="com.pro.dong.member.model.vo.Member"%>
 <%@page import="com.pro.dong.board.model.vo.Board"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
@@ -11,9 +13,6 @@ div#board-container input,div#board-container button{margin-bottom:15px;}
 /* 부트스트랩 : 파일라벨명 정렬*/
 div#board-container label.custom-file-label{text-align:left;}
 
-.head {
-    border: 5px solid white;
-}
 p {
     font-size: 18px;
     margin:10px 0 0;
@@ -93,38 +92,16 @@ td {
 	margin-top: 10px;
     float: right;
 }
+
 </style>
+<script>
+$(function(){
+	$("#boardUpdate").click(function(){
+		location.href = "${pageContext.request.contextPath}/board/boardUpdate.do?boardNo="+${board.boardNo};
+	});
+});
 
- <script>
-//수정버튼
-function boardUpdateBtn(){
-	location.href = "${pageContext.request.contextPath}/board/boardUpdate.do";
-} 
-
-//삭제버튼
-/* function boardDeleteBtn(){
-	var result = confirm("게시글을 삭제하시겠습니까?");
-	
-	if(result=true){
-		location.href = "${pageContext.request.contextPath}/board/boardDelete.do?boardNo="+${board.boardNo};
-	}else{
-		alert("삭제 불가합니다.");
-	} */
-/* 	var result = confirm("정말로 삭제하시겠습니까?");
-	if(!result)
-		return false;
-	
-	return location.href = "${pageContext.request.contextPath}/board/boardDelete.do?boardNo="+${board.boardNo};
-} 
-	
-} */ 
-
-/* function fileDownload(oName, rName){
-	//한글파일명이 있을 수 있으므로, 명시적으로 encoding
-	oName = encodeURIComponent(oName);
-	location.href="${pageContext.request.contextPath}/board/fileDownload.do?oName="+oName+"&rName="+rName;
-} */
-</script> 
+</script>
 
 <body>
 
@@ -133,22 +110,20 @@ function boardUpdateBtn(){
   <div class="container-fluid">
     <div class="section row">
       <div id="filebox" class="img-holder col-lg-4 col-md-4 col-12" style="border: 2px solid #28a745; margin:0 auto;">
-        <div style="background-image: url('../img/naim_ver_080801.png');height:100%;background-size:contain;" class="image"></div>      
       </div>
       <div class="text-holder col-lg-6 col-md-7 col-12">
 
         <table class="product">
           <caption style="caption-side: top;"> 
           <!-- 작성자와 로그인한 아이디가 같을시에만 삭제,수정가능 -->
-          <c:if test="${board.memberId == memberLoggedIn.getMemberId()}">
+          <c:if test="${board.memberId == memberLoggedIn.memberId || memberLoggedIn.isAdmin eq 'Y'}">
           <!-- 게시물 삭제는 작성자와 관리자만 가능(관리자 추가 예정) -->
           <button type="button"  id="boardDelete" class="btn btn-outline-success btn-block" >삭제</button>
           </c:if>
-            <p>
-          <c:if test="${board.memberId == memberLoggedIn.getMemberId()}">
+          <c:if test="${board.memberId == memberLoggedIn.memberId || memberLoggedIn.isAdmin eq 'Y'}">
             <button type="button"  id="boardUpdate" class="btn btn-outline-success btn-block" >수정</button>
           </c:if>
-            <b>${board.boardTitle }</b></p>
+            <b>${board.boardTitle}</b>
           </caption>
           <tbody>
             <tr>
@@ -161,7 +136,15 @@ function boardUpdateBtn(){
             </tr>
             <tr>
                <th scope="col">카테고리</th>
-               <td><input type="text" class="form-control" name="categoryId" value="${board.categoryId}" readonly required></td> 
+               <td>
+               <input type="text" class="form-control" name="writeDate" value="${board.categoryId}" readonly required>
+			   <%-- <select class="form-control" name="select" id="categoryId" style="width: 150px; display: inline-block;" required="required">
+               <option value="">카테고리 선택</option>
+               <option value="A01"><c:if test="${board.categoryId eq 'A01'?'selected':''}">자유</c:if></option>
+               <option value="A02"><c:if test="${board.categoryId eq 'A02'?'selected':''}">홍보</c:if></option>
+               <option value="A03"><c:if test="${board.categoryId eq 'A03'?'selected':''}">정보</c:if></option> 
+               </select>   --%>             
+            </td>
             </tr>
             <tr>
               <th scope="col">작성일</th>
@@ -171,7 +154,7 @@ function boardUpdateBtn(){
             <!--display : none-->
             <tr>
               <th scope="row">내용</th>
-              <td><textarea class="form-control" name="boardContent" placeholder="내용" required>${board.boardContents }</textarea></td>
+              <td><textarea class="form-control" name="boardContent" placeholder="내용" readonly required>${board.boardContents }</textarea></td>
             </tr>
             <tr>
               <th scope="col">첨부파일</th>
@@ -197,29 +180,40 @@ function boardUpdateBtn(){
  $(()=>{
 	var $boardNo = $(".product #boardNo");
 		
+	/* 삭제 에이작스 */
 		$("#boardDelete").click(function (){
-			 
+			var result = confirm("게시글을 삭제하시겠습니까?");
+			
+			if(result>0){
+			
 			$.ajax({
 				url: "${pageContext.request.contextPath}/board/boardDelete.do",
 				data: {
 					boardNo: $boardNo.val()
 				},
 				dataType:"json",
-				type:"POST", /* update도 post select만 get */
+				type:"POST",
 				success: data => {
 					console.log(data);
 					if(data > 0){
 						console.log("성공");
 						/* 경로설정 */
-						location.href="${pageContext.request.contextPath}/board/boardList.do"
-					}else{
+/* 						location.href="${pageContext.request.contextPath}/board/boardList.do" */
+ 					}else{
 						console.log("불가불가불가");
 					}
 				},error: (x,s,e) => {
-					console.log("board삭제 ajax요청 실패!",x,s,e);
+					alert("삭제가 완료되었습니다.");
+					location.href="${pageContext.request.contextPath}/board/boardList.do";
 				}
 			});
+			}else{
+				return;
+			}
+			 
 		});
+		
+
 	}); 
  
  
