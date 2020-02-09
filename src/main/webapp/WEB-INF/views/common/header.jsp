@@ -343,7 +343,7 @@ var isCateShow = false;
 	$("header #search-bar").keyup((e)=>{if(e.keyCode == 13) search();});
 	$("header .cate-list-content").children("ul").click((e)=>{
 		var $target = $(e.target).siblings("input");
-		location.href = "${pageContext.request.contextPath}/prodcut/productList.do?categoryId="+$target.val();
+		location.href = "${pageContext.request.contextPath}/product/productList.do?keyword=&categoryId="+$target.val();
 	});
 
 	function search(categoryId){
@@ -357,7 +357,7 @@ var isCateShow = false;
 			location.href = "${pageContext.request.contextPath}/shop/shopList.do?keyword="+keyWord;
 		}
 		else{
-			location.href = "${pageContext.request.contextPath}/prodcut/productList.do?keyword="+keyWord+"&categoryId="+categoryId;
+			location.href = "${pageContext.request.contextPath}/product/productList.do?keyword="+keyWord+"&categoryId=";
 		}
 
 	}
