@@ -605,9 +605,9 @@ function deleteComment(btn){
 }
 
 function insertInquiryComment(btn){
-	$(btn).hide();
+	$(btn).attr("disabled", true);
 	console.log($(btn).next());
-	$(btn).next().css('margin-left','80px');
+	/* $(btn).next().css('margin-left','80px'); */
 	console.log("댓글추가함수에들어왔다");
 	console.log($(btn).next().next());
 	/* var inquiryRefNo = $("#insertInquiryCommentBtn").val(); */
@@ -632,8 +632,9 @@ function insertInquiryComment(btn){
 
 function cancleRecommentBtn(btn){
 	console.log("취소버튼함수에들어왔다");
+	$(btn).parent().prev().prev().attr("disabled", false);
 	$(btn).prev().prev().parent().empty();
-	$("#insertInquiryCommentBtn").show();
+	/* $("#insertInquiryCommentBtn").show(); */
 	$("#deleteCommentBtn").css('margin-left','5px');
 	
 }
