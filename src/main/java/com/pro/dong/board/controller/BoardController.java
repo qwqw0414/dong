@@ -184,8 +184,8 @@ public class BoardController {
 	//========================== 근호 끝
 		
 	// 지은 시작 ==========================
-	@RequestMapping("/boardView")
-	public String boardView(Model model, @RequestParam("boardNo") int boardNo,HttpServletRequest request) {
+	@RequestMapping("/boardView.do")
+	public ModelAndView boardView(ModelAndView mav, @RequestParam("boardNo") int boardNo) {
 		
 		Board board = bs.selectOneBoard(boardNo);
 		log.debug("boardNo="+boardNo);
@@ -193,11 +193,11 @@ public class BoardController {
 		int readCount = bs.boardInCount(boardNo);
 		log.debug("readCount="+readCount);
 		
-		model.addAttribute("board", board);
-		model.addAttribute("attachmentList", attachmentList);
+		mav.addObject("board", board);
+		mav.addObject("attachmentList", attachmentList);
+		mav.addObject("memberId", board.getMemberId());
 		
-		request.setAttribute("memberId", board.getMemberId());
-		return "board/boardView";
+		return mav;
 		
 	}
 	

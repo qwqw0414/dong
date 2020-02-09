@@ -2,10 +2,7 @@
 <%@page import="com.pro.dong.member.model.vo.Member"%>
 <%@page import="com.pro.dong.board.model.vo.Board"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%
-	 Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn"); 
-	/* Board b = (Board)request.getAttribute("board"); */
-%>
+
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
 <style>
@@ -203,7 +200,7 @@ function boardUpdateBtn(){
 		$("#boardDelete").click(function (){
 			 
 			$.ajax({
-				url: "${pageContext.reuqest.contextPath}/board/boardDelete.do",
+				url: "${pageContext.request.contextPath}/board/boardDelete.do",
 				data: {
 					boardNo: $boardNo.val()
 				},
