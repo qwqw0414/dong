@@ -34,17 +34,17 @@ $(()=>{
 		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 		success:data=>{
 			console.log(data);
+			console.log(data.length);
 			let html="";
 // 				html+="<div id="+"commentListlevel2"+">";
-			data.forEach(comment => {
-				console.log(comment);
+		for(var i=0; i<data.length;i++){
 				html+="<ul class='testas'>";
-				html+="<input type='hidden' value="+comment.COMMENT_NO+" id='commentNo_'/>";
-				html+="<li><span>"+comment.MEMBER_ID+ " : " + comment.CONTENTS + " [ " +comment.WRITE_DATE + "]</span>";
-				html+="<button id="+"showLevel2form"+" onclick='showLevel2form()'>답글</button>";
-				html+="<button id="+"deleteComment"+">삭제</button></li></ul>";
-				html+="<input type='text' class="+"level2CommentContent"+"></input>";
-			});//end of forEach
+				html+="<input type='hidden' value="+data[i].COMMENT_NO+" id='commentNo_"+i+"'/>";
+				html+="<li><span>"+data[i].MEMBER_ID+ " : " + data[i].CONTENTS + " [ " +data[i].WRITE_DATE + "]</span>";
+				html+="<button id="+"showLevel2form"+i+" onclick='showLevel2form("+i+")'>답글</button>";
+				html+="<button id="+"deleteComment"+i+">삭제</button></li></ul>";
+				html+="<input type='text' id="+"level2CommentContent"+i+"></input>";
+			};//end of forEach
 // 				html+="</div>";
 			$("#commentListView").html(html)
 			
@@ -86,8 +86,8 @@ $(()=>{
 });//end of script
 
 	//대댓글등록
-	function showLevel2form(){
-		$(".testas").next().css("display","block");
+	function showLevel2form(index){	
+		$("#showLevel2form"+index).nextAll().css("display","block");
 	}
 	
 	
@@ -96,7 +96,7 @@ $(()=>{
 
 
 <style>
-#commentListView .level2CommentContent{
+#commentListView #level2CommentContent{
 display:none;
 }
 </style>
