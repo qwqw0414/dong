@@ -73,15 +73,18 @@
 
     <div class="enroll-form" id="page-4">
    	 	<input type="hidden" id="valid-email" value="0">
+   	 	<br />
         <input type="email" name="email" id="email" value="" class="form-control text-center">
         <span id="emailAu"></span>
-        <input type="button" value="이메일 번호 보내기" id="email-auth" />
-
+        <input type="button" value="이메일 번호 보내기" id="email-auth" class="btn btn-primary mb-2"/>
+	
     </div>
-	<div id="page-5">
+	<div class="enroll-btn form-group mx-sm-3 mb-2" id="page-5">
 		<p>이메일을 보냈습니다.</p>
-        <input type="text" name="authKey" id="authKey" />
-       	<input type="button" name="authKey-btn" id="authKey-btn" value="인증 확인" />
+		<input type="hidden" id="valid-auth" value="0">
+        <input type="text" name="authKey" id="authKey" class="form-control"/>
+        <br />
+       	<input type="button" name="authKey-btn" id="authKey-btn" value="인증 확인" class="btn btn-primary mb-2" />
     </div>
     <div id="authOK">
     	<span id="authResult"></span>
@@ -125,56 +128,41 @@ $(()=>{
     var $gender = $("#memberEnroll #gender");
     var $phone = $("#memberEnroll #phone");
     var $email = $("#memberEnroll #email");
+    var $validEmail = $("#memberEnroll #valid-email");
     var $year = $("#memberEnroll #year");
     var $month = $("#memberEnroll #month");
     var $date = $("#memberEnroll #date");
     var $sido = $("#memberEnroll #sido");
     var $sigungu = $("#memberEnroll #sigungu");
     var $dong = $("#memberEnroll #dong");
+    var $validAuth = $("#memberEnroll #valid-auth");
     
+    //----------------------------------------근호
     /* 메일 인증 보내기 */
      $("#email-auth").click(()=>{
     	 var $email = $("#email").val();
+    	 
+    	  if($validEmail.val() != 1){
+         	changeMsg("check_email",'f');
+         	changeForm($email,'f');
+         	$email.focus();
+         	return;
+         } 
+    	 
     	 $.ajax({
     		url: "${pageContext.request.contextPath}/member/emailAuth.do?email=",
     		data: {email:$email},
     		dataType:"text",
     		success: data => {
     			console.log(data);
-    			if(data == "null") {
-    				$("#emailAu").text("이메일을 입력하세요.");
-    			}
-    			else{
     	        $page_4.hide();
     	        $page_5.show();
-    			}
     		},
     		
     		error : (x,s,e) =>{
     			console.log("실패", x,s,e);
     		}
     	 })
-    	 
-    	//email 중복 검사
-         $.ajax({
-         	 url: "${pageContext.request.contextPath}/member/emailDuplicate",
-         	 data: {email:$email},
-         	 dataType: "json",
-         	 contentType: "application/json; charset=utf-8",
-         	 success : data =>{
-         		 if(data == 0){
-         			 $("#emailAu").text("사용가능한 이메일입니다.")
-         		 }
-         		 else{
-         			$("#emailAu").text("이미 있는 이메일입니다..")
-         		 }
-         	 },
-         	 error : (x,s,e) =>{
-         		 console.log("실패",x,s,e);
-         	 }
-         	 
-         });
-    	 
     }); 
     /* 메일 인증 받기 */
     $("#authKey-btn").click(()=>{
@@ -189,8 +177,10 @@ $(()=>{
 			dataType:"text",
 			success: data=>{
 				console.log(data);
-				if(data=="true")
+				if(data=="true") {
+					$validAuth.val(1); 
 					$("#authResult").text("이메일 인증 완료");
+				}
 				else 
 					$("#authResult").text("다시 입력해주세요.");
 			},
@@ -199,7 +189,53 @@ $(()=>{
 			}
     	})
     });
-     
+    
+    /* 이메일 유효성 검사 */
+    $email.keyup((e)=>{
+		var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+		
+		if($validEmail.val() == 1 && e.keyCode == 13){
+            changeForm($email,'t');
+            return;
+        }
+		
+		if(!regExp.test($email.val()) && e.keyCode == 13){
+			changeMsg("check_email",'f');
+			$validEmail.val(0);
+			changeForm($email,'f');
+			return;
+		}
+		
+		if(!regExp.test($email.val())){
+			$validEmail.val(0);
+			changeMsg("check_email");
+			changeForm($email);
+			return;
+				
+		}
+		/* 이메일 중복검사 */
+		$.ajax({
+			url: "${pageContext.request.contextPath}/member/emailDuplicate",
+			data:{email:$email.val()},
+			dataType: "json",
+			success: data =>{
+				if(data == 0){
+					$validEmail.val(1);
+					changeMsg("valid_email",'t');
+                    changeForm($email,'t');
+				}
+				else{
+					$validEmail.val(0);
+                    changeMsg("invalid_email",'f');
+				}
+			},
+			error : (x,s,e) =>{
+				console.log("실패",x,s,e);
+			}
+		})
+	});   
+    //------------------------------------------근호 끝
+    
     //회원 가입
     $("#memberEnroll #btn-enroll").click(()=>{
 
@@ -217,6 +253,13 @@ $(()=>{
             birth += (""+$date.val());
 
         console.log(birth);
+        
+        /* 이메일 인증  유효성*/
+        if($validAuth.val() != 1){
+        	changeMsg("check_auth",'f');
+        	changeForm($email,'f');
+        	return;
+        }
 
         $.ajax({
             url: "${pageContext.request.contextPath}/member/memberEnrollEnd",
@@ -393,7 +436,7 @@ $(()=>{
       
     });
     
-    
+	
 
     //비밀번호 유효성 검사
     $password.keyup((e)=>{
@@ -421,7 +464,6 @@ $(()=>{
             changeMsg("check_passwordChk");
             changeForm($passwordChk);
         }
-        
 
     });
 
@@ -503,6 +545,10 @@ $(()=>{
             case "valid_password":$msg.html("사용 가능한 비밀번호입니다.");break;
             case "check_passwordChk":$msg.html("비밀번호를 다시 한번 확인해주세요.");break;
             case "valid_passwordChk":$msg.html("비밀번호가 일치합니다.");break;
+            case "check_email":$msg.html("이메일 형식으로 입력하세요.");break;
+            case "check_auth":$msg.html("이메일 인증을 해주세요.");break;
+            case "invalid_email":$msg.html("중복된 이메일입니다.");break;
+            case "valid_email":$msg.html("사용 가능한 이메일입니다.");break;
             case "invalid":$msg.html("다시 한번 확인해주세요.");break;
             case "step2":$msg.html("가입에 필요한 개인 정보를<br>입력해주세요.");break;
             case "check_name":$msg.html("본인 성명을 입력해주세요");break;
