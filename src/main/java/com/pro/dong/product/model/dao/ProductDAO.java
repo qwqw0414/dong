@@ -38,7 +38,13 @@ public interface ProductDAO {
 	List<Map<String, String>> selectProductListTop10(String categoryId);
 	List<Map<String, String>> selectProduct(int cPage, int numPerPage, Map<String, String> param);
 	int countProduct(Map<String, String> param);
+	Product selectOneProduct(int productNo);
+	List<ProductAttachment> selectAttachment(int productNo);
 	//========================== 예찬 끝
+
+
+
+
 
 
 

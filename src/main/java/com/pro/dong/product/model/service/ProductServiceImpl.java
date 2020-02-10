@@ -1,5 +1,6 @@
 package com.pro.dong.product.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -88,7 +89,21 @@ public class ProductServiceImpl implements ProductService{
 	public int countProduct(Map<String, String> param) {
 		return pd.countProduct(param);
 	}
+	@Override
+	public Map<String, Object> selectOneProduct(int productNo) {
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("product", pd.selectOneProduct(productNo));
+		map.put("attachment", pd.selectAttachment(productNo));
+		
+		return map;
+	}
 	//========================== 예찬 끝
+
+
+
+
+
 
 
 

@@ -38,7 +38,13 @@ public interface ProductService {
 	List<Map<String, String>> selectProductListTop10(String categoryId);
 	List<Map<String, String>> selectProduct(int cPage, int numPerPage, Map<String, String> param);
 	int countProduct(Map<String, String> param);
+	Map<String, Object> selectOneProduct(int productNo);
 	//========================== 예찬 끝
+
+
+
+
+
 
 
 
