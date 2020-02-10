@@ -50,6 +50,38 @@ public class Utils {
 
 		return pageBar;
 	}
+	public String getOneClickPageBar(int totalContents, int cPage, int numPerPage) {
+		String pageBar = "";
+		final int pageBarSize = 5;
+		final int totalPage = (int) Math.ceil((double) totalContents / numPerPage);
+
+		final int pageStart = ((cPage - 1) / pageBarSize) * pageBarSize + 1;
+		final int pageEnd = pageStart + pageBarSize - 1;
+		int pageNo = pageStart;
+
+		pageBar += "<ul class=\"pagination justify-content-center\">";
+
+		if (pageNo != 1)
+			pageBar += "<li class=\"page-item\"><input type='hidden' value='"+(pageNo-1)+"'><a class=\"page-link\">《</a></li>";
+
+		while (!(pageNo > pageEnd || pageNo > totalPage)) {
+			if (cPage == pageNo) {
+				pageBar += "<li class=\"page-item active\">" + "<a class=\"page-link\">" + pageNo + "</a>" + "</li>";
+			} else {
+				pageBar += "<li class=\"page-item\"><input type='hidden' value='"+pageNo+"'><a class=\"page-link\" >" + pageNo + "</a></li>";
+			}
+
+			pageNo++;
+		}
+
+		// [다음] next
+		if (pageNo <= totalPage)
+			pageBar += "<li class=\"page-item\"><input type='hidden' value='"+pageNo+"'><a class=\"page-link\" >》</a></li>";
+
+		pageBar += "</ul>";
+
+		return pageBar;
+	}
 	
 	public static String getAjaxPageBar(int totalContents, int cPage, int numPerPage, String function) {
 		String pageBar = "";

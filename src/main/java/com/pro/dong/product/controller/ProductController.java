@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.pro.dong.board.model.vo.Attachment;
 import com.pro.dong.board.model.vo.BoardCategory;
+import com.pro.dong.common.util.Utils;
 import com.pro.dong.member.model.vo.Member;
 import com.pro.dong.product.model.service.ProductService;
 import com.pro.dong.product.model.vo.Category;
@@ -185,7 +186,7 @@ public class ProductController {
 		public String searchProduct(int cPage, Product product, String keyword) {
 			
 			
-			int numPerPage = 20;
+			int numPerPage = 40;
 			Map<String, String> param = new HashMap<>();
 			param.put("categoryId", product.getCategoryId());
 			param.put("keyword", keyword);
@@ -195,11 +196,24 @@ public class ProductController {
 			
 			List<Map<String, String>> list = ps.selectProduct(cPage,numPerPage,param);
 			
+			int totalContents = ps.countProduct(param);
+			String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
+			
 			Map<String,Object> result = new HashMap<>();
 			result.put("product", list);
-			result.put("pageBar", "");
+			result.put("pageBar", pageBar);
+			
+			log.debug(pageBar);
 			
 			return gson.toJson(result);
+		}
+		
+		@RequestMapping("/productView.do")
+		public ModelAndView productView(ModelAndView mav, int productNo) {
+			
+			mav.addObject("productNo",productNo);
+			
+			return mav;
 		}
 	//========================== 예찬 끝
 		

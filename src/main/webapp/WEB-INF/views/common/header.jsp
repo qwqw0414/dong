@@ -362,7 +362,9 @@ var isCateShow = false;
 
 	}
 
-
+	function productView(productNo){
+		location.href = "${pageContext.request.contextPath}/product/productView.do?productNo="+productNo;
+	}
 
 });
 </script>
