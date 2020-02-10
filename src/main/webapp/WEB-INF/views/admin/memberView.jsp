@@ -33,12 +33,13 @@ $(function(){
 });
 </script>
 
-<h1>회원상세보기</h1>
 
+<h1>회원상세보기</h1>
+		
 	<div class="table-responsive">
-		<div class="col-md-3"></div>
-				<input type="hidden" value="${m.memberId}" name="memberDelId" />
-		<table class="table col-md-3 text-center">
+	
+		<input type="hidden" value="${m.memberId}" name="memberDelId" />
+		<table class="table col-md-5 text-center">
 			<tr>
 				<th>아이디</th>
 				<td>${m.memberId}</td>
