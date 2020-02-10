@@ -147,7 +147,8 @@
 	select *
 	from board_comment
 	where board_no=#{boardNo}
-	order by comment_no desc
+	start with comment_level = 1
+	connect by comment_ref = prior comment_no 
 	</select>
 	
 	<delete id="deleteLevel1">

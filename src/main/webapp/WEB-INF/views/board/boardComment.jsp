@@ -148,15 +148,9 @@
 				commentRef:commentRef},
 				type:"POST",
 				success:data=>{
-					let html="";
-					html+="<div id='level2list'>";
-					for(var i=0; i<data.length;i++){
-						
-					}
-					
-					
-// 					showCommentList();
-				},
+						console.log(data);
+						showCommentList();
+				},//end of success,
 				 error : (x,s,e) =>{
 				        console.log("실패",x,s,e);
 				}
