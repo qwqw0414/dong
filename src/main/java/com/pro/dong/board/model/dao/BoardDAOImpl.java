@@ -122,6 +122,11 @@ public class BoardDAOImpl implements BoardDAO {
 		return sst.selectList("board.selectBoardCommentList",boardNo);
 	}
 
+	@Override
+	public int deleteLevel1(int commentNo) {
+		return sst.delete("board.deleteLevel1",commentNo);
+	}
+
 
 
 	//========================== 현규 끝

@@ -30,7 +30,10 @@ public class ShopServiceImpl implements ShopService{
 	
 	
 	// 하진 시작 ==========================
-	
+	@Override
+	public List<Map<String, String>> loadMyProductList(String memberId) {
+		return sd.loadMyProductList(memberId);
+	}
 	
 	
 	//========================== 하진 끝

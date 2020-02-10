@@ -8,6 +8,16 @@
 	Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
 %>
 <style>
+
+.productList .card {width: 201px; border-radius: 0; height: 280px;}
+.productList .card img{width: 200px; height: 200px; border: none;}
+#shop-contents .myProductList .myProduct .card{float: left; margin: 10px 8px 10px 8px}
+#shop-contents .myProduct {width: 1200px; display: block; margin: auto; height: 620px;}
+#shop-contents {width: 1300px;}
+#shop-contents .myProductList{width: 100%;}
+.myProductList .card-body{padding: 10px 0 0px 8px;}
+.myProductList .regDate{font-size: 0.9em; position: absolute; right: 10px; bottom: 10px;}
+
 #shopView{
 	width: 1100px;
 }
@@ -396,6 +406,55 @@ $(function(){
 	/* 주영 끝 */
 	</style>
 	
+	
+	
+	<script>
+	/***********하진 시작*/
+	$(()=>{
+		
+		var memberId = $("[name=memberLoggedIn]").val();
+		
+		loadMyProduct(memberId);
+		
+		function loadMyProduct(memberId){
+			$.ajax({
+				url:"${pageContext.request.contextPath}/shop/loadMyProduct",
+				data:{memberId:memberId},
+				dataType: "json",
+				success:data=>{
+					console.log("성");
+					 let html = "";
+					 var $myProduct = $("myProduct");
+				        data.forEach(product => {
+
+				          let preTitle = product.TITLE;
+
+				          if(preTitle.length > 12) 
+				            preTitle = preTitle.substring(0,12)+"..."
+
+				          html += "<div class='card'>";
+				          html += "<img src='${pageContext.request.contextPath}/resources/upload/product/" + product.PHOTO + "' class='card-img-top'>";
+				          html += '<div class="card-body">';
+				          html += '<p class="card-title">' + preTitle + '</p>';
+				          html += '<p class="card-text"><span>' + numberComma(product.PRICE) + '<small>원</small></span></p>';
+				          html += '</div></div>'
+				        });
+				        $("#myProduct").html(html);
+				},
+				error:(x,s,e)=>{
+					console.log("실패",x,s,e);
+				}
+				
+			});
+			
+		}
+		
+		
+	});
+	/*하진 끝***********/
+	</script>
+
+	
 	<div id="shopView-nav">
 		<div style="height: 20px;">
 			<ul>
@@ -411,7 +470,12 @@ $(function(){
 		<div id="shop-contents">
 			<div id="nav-product">
 				<h1>내 상품</h1>
-				
+				<div class="myProductList" >
+      				<div class="myProduct" id="myProduct">
+      				
+      				</div>
+      				<hr/>
+    			</div>
 			</div>
 			<div id="nav-inquiry">
 				<h3>상점 문의&nbsp;<span id="totalInquiry" style="color:green;"></span></h3>
@@ -444,6 +508,7 @@ $(function(){
  </div>
 
 <script>
+
 $(()=>{
 	var $shopNav = $("#shopView-nav .shop-nav");
 
@@ -626,7 +691,7 @@ function insertInquiryComment(btn){
 	html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/register@2x.png' width='15' height='14' >";
 	html += "등록";
 	html += "</button>";
-	html += "<button onclick='cancleRecommentBtn(this);' id='cancleRecommentBtn' class='commentDelBtn'>";
+	html += "<button onclick='c(this);' id='cancleRecommentBtn' class='commentDelBtn'>";
 	html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='14'>";
 	html += "취소";
 	html += "</button>";

@@ -84,7 +84,16 @@ public class ProductServiceImpl implements ProductService{
 	public List<Map<String, String>> selectProduct(int cPage, int numPerPage, Map<String, String> param) {
 		return pd.selectProduct(cPage, numPerPage, param);
 	}
+	@Override
+	public int countProduct(Map<String, String> param) {
+		return pd.countProduct(param);
+	}
 	//========================== 예찬 끝
+
+
+
+
+
 
 
 

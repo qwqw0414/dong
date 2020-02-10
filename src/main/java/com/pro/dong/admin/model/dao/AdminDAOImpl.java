@@ -32,6 +32,18 @@ public class AdminDAOImpl implements AdminDAO {
 		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
 		return sst.selectList("admin.loadProductList", param, rowBounds);
 	}
+	@Override
+	public List<String> selectAddressSido() {
+		return sst.selectList("admin.selectAddressSido");
+	}
+	@Override
+	public List<String> selectAddressSigungu() {
+		return sst.selectList("admin.selectAddressSigungu");
+	}
+	@Override
+	public List<String> selectAddressDong() {
+		return sst.selectList("admin.selectAddressDong");
+	}
 	// ==========================민호 끝
 
 	// 하진 시작 ==========================
@@ -63,6 +75,7 @@ public class AdminDAOImpl implements AdminDAO {
 		return sst.delete("admin.memberDelete",memberId);
 	}
 	// ========================== 하진 끝
+
 
 
 	// 근호 시작 ==========================
