@@ -12,7 +12,9 @@ public interface AdminDAO {
 	// 민호 시작 ==========================
 	int selectProductTotalContents(Map<String, String> param);
 	List<Product> loadProductList(int cPage, int numPerPage, Map<String, String> param);
-
+	List<String> selectAddressSido();
+	List<String> selectAddressSigungu();
+	List<String> selectAddressDong();
 	// ==========================민호 끝
 
 	// 하진 시작 ==========================

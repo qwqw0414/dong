@@ -149,10 +149,8 @@ $(()=>{
         console.log("실패", x, s, e);
       },
       complete: ()=>{
-        $("#main-page .card").mouseup((e)=>{
-          var productNo = $(e.target).find(".productNo").val();
+        $("#main-page .card img").click((e)=>{
           console.log($(e.target));
-          console.log(productNo);
         });
       }
     });
@@ -166,7 +164,7 @@ $(()=>{
     var regDate = new Date(date);
     var now = new Date();
 
-    var diffHour = Math.ceil((now.getTime() - regDate.getTime())/60000/60) - 9;
+    var diffHour = Math.ceil((now.getTime() - regDate.getTime())/60000/60);
 
     if(diffHour > 23){
       return Math.floor(diffHour/24)+"일 전";

@@ -30,6 +30,18 @@ public class AdminServiceImpl implements AdminService {
 	public List<Product> loadProductList(int cPage, int numPerPage, Map<String, String> param) {
 		return ad.loadProductList(cPage, numPerPage, param);
 	}
+	@Override
+	public List<String> selectAddressSido() {
+		return ad.selectAddressSido();
+	}
+	@Override
+	public List<String> selectAddressSigungu() {
+		return ad.selectAddressSigungu();
+	}
+	@Override
+	public List<String> selectAddressDong() {
+		return ad.selectAddressDong();
+	}
 	// ==========================민호 끝
 
 	// 하진 시작 ==========================
@@ -59,6 +71,7 @@ public class AdminServiceImpl implements AdminService {
 		return ad.memberDelete(memberId);
 	}
 	// ========================== 하진 끝
+
 
 
 

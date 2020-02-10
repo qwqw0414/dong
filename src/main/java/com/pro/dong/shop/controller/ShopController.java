@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.pro.dong.common.util.Utils;
 import com.pro.dong.member.model.vo.Member;
 import com.pro.dong.product.model.vo.Product;
 import com.pro.dong.shop.model.service.ShopService;
@@ -48,20 +49,23 @@ public class ShopController {
 	// 하진 시작 ==========================
 	@RequestMapping(value="/loadMyProduct" , produces="text/plain;charset=UTF-8")
 	@ResponseBody
-	public String loadMyProductList(String memberId){
-
+	public String loadMyProductList(String memberId, int cPage){
+		
+		int numPerPage = 40;
+		
 		List<Map<String, String>> list = null;
+			
+		list = ss.loadMyProductList(memberId,cPage,numPerPage);
+		int totalContents = ss.totalCountMyProduct(memberId);
+			
+		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
+			
+		Map<String,Object> result = new HashMap<>();
+			
+		result.put("product", list);
+		result.put("pageBar", pageBar);
 		
-		try {
-			list = ss.loadMyProductList(memberId);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		log.debug("내상품list @@@@@@@@@@@@={}",list);
-		
-		return gson.toJson(list);
+		return gson.toJson(result);
 	}
 	
 	//========================== 하진 끝
