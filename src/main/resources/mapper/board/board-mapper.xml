@@ -137,7 +137,7 @@
 	
 	
 	<insert id="insertBoardComment">
-	insert into board_comment values(seq_board_comment.nextval,#{boardNo},#{memberId},#{contents},default,#{commentRef},sysdate)
+	insert into board_comment values(seq_board_comment.nextval,#{boardNo},#{memberId},#{contents},#{commentLevel},#{commentRef},sysdate)
 	</insert>
 	
 	<resultMap type="map" id="resultMap"></resultMap>

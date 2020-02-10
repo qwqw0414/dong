@@ -12,7 +12,9 @@ public interface AdminService {
 	// 민호 시작 ==========================
 	int selectProductTotalContents(Map<String, String> param);
 	List<Product> loadProductList(int cPage, int numPerPage, Map<String, String> param);
-
+	List<String> selectAddressSido();
+	List<String> selectAddressSigungu();
+	List<String> selectAddressDong();
 	// ==========================민호 끝
 
 	// 하진 시작 ==========================
@@ -24,6 +26,7 @@ public interface AdminService {
 	
 	int memberDelete(String memberId);
 	// ========================== 하진 끝
+	
 
 
 	// 근호 시작 ==========================

@@ -20,9 +20,8 @@ public interface MemberDAO {
 	
 	// 근호 시작 ==========================
 	Member selectLoginMember(String memberId);
-	Member emailAuth(String email);
-	void signSuccess(String email);
-	
+	int emailDuplicate(String email);
+
 	//==========================  근호 끝
 	
 	// 지은 시작 ==========================
@@ -49,7 +48,7 @@ public interface MemberDAO {
 	int updateMemberName(Map<String, String> param);
 	int updateMemberPhone(Map<String, String> param);
 	int updateMemberEmail(Map<String, String> param);
-
+	
 
 	
 	

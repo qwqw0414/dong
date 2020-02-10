@@ -49,12 +49,8 @@ public class MemberDAOImpl implements MemberDAO{
 		return sst.selectOne("member.selectLoginMember", memberId);
 	}
 	@Override
-	public Member emailAuth(String email) {
-		return sst.selectOne("member.emailAuth",email);
-	}
-	@Override
-	public void signSuccess(String email) {
-		sst.update("member.signSuccess",email);
+	public int emailDuplicate(String email) {
+		return sst.selectOne("member.emailDuplicate", email);
 	}
 	
 	//==========================  근호 끝
@@ -117,6 +113,7 @@ public class MemberDAOImpl implements MemberDAO{
 	public int updateMemberEmail(Map<String, String> param) {
 		return sst.update("member.updateMemberEmail",param);
 	}
+	
 	
 	
 	
