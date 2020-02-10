@@ -8,7 +8,14 @@
 	<!-- ==========================  민호 끝 -->
 	
 	<!-- 하진 시작 ========================== -->
-	
+	<select id="loadMyProductList" resultType="map">
+		select P.*, a.photo from product P left join shop S on p.shop_no=s.shop_no 
+                        left join member M on s.member_id =M.member_id 
+                        left join product_attachment A on p.product_no = a.product_no
+                   
+        where M.member_id = #{memberId} 
+                and a.thumbnail='Y'
+	</select>
 	<!-- ==========================  하진 끝 -->
 	
 	<!-- 근호 시작 ========================== -->

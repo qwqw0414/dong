@@ -5,19 +5,18 @@
 %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <style>
-.productList .card {width: 201px; border-radius: 0; height: 280px;}
-.productList .card img{width: 200px; height: 200px; border: none;}
-#productList .productList .card{float: left; margin: 10px 8px 10px 8px}
-#productList .product {width: 1200px; margin: auto; height: 620px;}
-#productList {width: 1300px; min-height: 200px;}
-#productList .productList{width: 1100px;}
-#productList .productList .card-body{padding: 10px 0 0px 8px;}
-#productList .productList .regDate{font-size: 0.9em; position: absolute; right: 10px; bottom: 10px;}
+#productList .productList img{width: 200px; height: 200px;}
+#productList .productList{position: static;}
+#productList .card{width: 201px; height: 300px; float: left;}
+#productList .card .card-body{padding: 5px 0 0 8px;}
+#productList .card .card-text{margin: 0;}
+#productList #pageBar{position: static;}
 </style>
-<div id="productList">
+<div id="productList" style="position: static;">
     <div class="productList">
 
     </div>
+    <div id="pageBar"></div>
 </div>
 
 <script>
@@ -30,6 +29,7 @@ $(()=>{
     var dong = "${memberLoggedIn.dong}";
 
     pageLoad(1);
+    $("header #search-bar").val(keyword);
 
     function pageLoad(cPage){
         console.log(categoryId);
@@ -67,10 +67,15 @@ $(()=>{
                 });
 
                 $("#productList .productList").html(html);
-
+                $("#productList #pageBar").html(data.pageBar);
             },
             error: (x, s, e) => {
             console.log("실패", x, s, e);
+            },
+            complete: ()=>{
+                $("#productList #pageBar a").click((e)=>{
+                    pageLoad($(e.target).siblings("input").val());
+                });
             }
         });
     }

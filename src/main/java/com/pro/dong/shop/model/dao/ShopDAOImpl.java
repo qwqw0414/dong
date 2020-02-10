@@ -30,7 +30,10 @@ public class ShopDAOImpl implements ShopDAO{
 	
 	
 	// 하진 시작 ==========================
-	
+	@Override
+	public List<Map<String, String>> loadMyProductList(String memberId) {
+		return sst.selectList("shop.loadMyProductList",memberId);
+	}
 	
 	
 	//========================== 하진 끝
