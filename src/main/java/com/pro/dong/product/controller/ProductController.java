@@ -94,6 +94,8 @@ public class ProductController {
 				Shop shop = ps.selectOneShop(memberId);
 				product.setShopNo(shop.getShopNo());
 				
+				product.setTitle(product.getTitle().replaceAll("<", "&lt;").replaceAll(">", "&gt;"));
+				product.setInfo(product.getInfo().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\\n", "<br/>"));
 			
 				String saveDirectory = request.getSession().getServletContext().getRealPath("/resources/upload/product");
 				List<ProductAttachment> attachList = new ArrayList<>();
@@ -187,7 +189,10 @@ public class ProductController {
 		@RequestMapping("/productView.do")
 		public ModelAndView productView(ModelAndView mav, int productNo) {
 			
-			mav.addObject("productNo",productNo);
+			Map<String, Object> map = ps.selectOneProduct(productNo);
+			mav.addObject("map",map);
+			
+			log.debug(map.toString());
 			
 			return mav;
 		}

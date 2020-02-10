@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.pro.dong.board.model.vo.Attachment;
 import com.pro.dong.product.model.vo.Category;
 import com.pro.dong.product.model.vo.Product;
 import com.pro.dong.product.model.vo.ProductAttachment;
@@ -75,7 +76,19 @@ public class ProductDAOImpl implements ProductDAO{
 	public int countProduct(Map<String, String> param) {
 		return sst.selectOne("product.countProduct", param);
 	}
+	@Override
+	public Product selectOneProduct(int productNo) {
+		return sst.selectOne("product.selectOneProduct", productNo);
+	}
+	@Override
+	public List<ProductAttachment> selectAttachment(int productNo) {
+		return sst.selectList("product.selectAttachment", productNo);
+	}
 	//========================== 예찬 끝
+
+
+
+
 
 
 

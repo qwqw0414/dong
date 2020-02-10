@@ -122,6 +122,13 @@
 		</where>
 	</select>
 	
+	<select id="selectOneProduct" parameterType="_int" resultType="product">
+		select * from product where product_no = #{productNo}
+	</select>
+	<select id="selectAttachment" parameterType="_int" resultType="productAttachment">
+		select * from product_attachment where product_no = #{productNo}
+	</select>
+	
 	<resultMap type="map" id="selectProductMap">
 		<result column="product_no" property="productNo"/>
 		<result column="price" property="price"/>

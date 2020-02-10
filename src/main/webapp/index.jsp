@@ -134,7 +134,7 @@ $(()=>{
             preTitle = preTitle.substring(0,12)+"..."
 
           html += "<div class='card'>";
-          html += "<input type='hidden' class='productNo' value='"+product.productNo+"'>";
+          html += "<input type='hidden' class='productNo' value='"+product.PRODUCT_NO+"'>";
           html += "<img src='${pageContext.request.contextPath}/resources/upload/product/" + product.photo + "' class='card-img-top'>";
           html += '<div class="card-body">';
           html += '<p class="card-title">' + preTitle + '</p>';
@@ -149,9 +149,9 @@ $(()=>{
         console.log("실패", x, s, e);
       },
       complete: (data)=>{
-        console.log(1);
-        $("#main-page .card img").click(function(){
-          console.log(this);
+        $("#main-page .card").click(function(){
+          var productNo = $(this).children("input").val();
+          location.href = "${pageContext.request.contextPath}/product/productView.do?productNo="+productNo;
         });
       }
     });
