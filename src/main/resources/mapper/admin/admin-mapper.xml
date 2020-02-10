@@ -5,24 +5,30 @@
 <mapper namespace="admin">
 	<!-- 민호 시작 ========================== -->
 	<select id="selectProductTotalContents" parameterType="map" resultType="_int">
-		select count(*) cnt from product
+		select count(*) cnt 
+		from product p join product_attachment pa
+		on p.product_no = pa.product_no
 		<where>
+			pa.thumbnail = 'Y'
 			<if test="productCategory!=null and productCategory!=''">
-				category_id = #{productCategory}
+				and p.category_id = #{productCategory}
 			</if>
 			<if test="searchKeyword!=null and searchKeyword!=''">
-				and b.${searchType} like '%${searchKeyword}%'
+				and p.${searchType} like '%${searchKeyword}%'
 			</if>
 		</where>
 	</select>
 	<select id="loadProductList" parameterType="map" resultType="map">
-		select * from product
+		select p.*, pa.photo 
+		from product p join product_attachment pa
+		on p.product_no = pa.product_no
 		<where>
+			pa.thumbnail = 'Y'
 			<if test="productCategory!=null and productCategory!=''">
-				category_id = #{productCategory}
+				and p.category_id = #{productCategory}
 			</if>
 			<if test="searchKeyword!=null and searchKeyword!=''">
-				and b.${searchType} like '%${searchKeyword}%'
+				and p.${searchType} like '%${searchKeyword}%'
 			</if>
 		</where>
 	</select>
