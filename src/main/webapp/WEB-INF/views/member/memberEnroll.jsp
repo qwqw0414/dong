@@ -72,15 +72,19 @@
     </div>
 
     <div class="enroll-form" id="page-4">
-        이메일 인증 추가 예정
+   	 	<input type="hidden" id="valid-email" value="0">
         <input type="email" name="email" id="email" value="" class="form-control text-center">
+        <span id="emailAu"></span>
         <input type="button" value="이메일 번호 보내기" id="email-auth" />
 
     </div>
 	<div id="page-5">
+		<p>이메일을 보냈습니다.</p>
         <input type="text" name="authKey" id="authKey" />
        	<input type="button" name="authKey-btn" id="authKey-btn" value="인증 확인" />
-    	<input type="hidden" name="random" id="random" value="${random }" />
+    </div>
+    <div id="authOK">
+    	<span id="authResult"></span>
     </div>
     	
     <div class="enroll-btn" id="btn-1">
@@ -131,44 +135,69 @@ $(()=>{
     /* 메일 인증 보내기 */
      $("#email-auth").click(()=>{
     	 var $email = $("#email").val();
-    	/*  var $random = $("#random").val(); */
-    	 console.log($email);
     	 $.ajax({
     		url: "${pageContext.request.contextPath}/member/emailAuth.do?email=",
-    		data: {email:$email
-    			   /* random:$random */},
+    		data: {email:$email},
     		dataType:"text",
     		success: data => {
     			console.log(data);
+    			if(data == "null") {
+    				$("#emailAu").text("이메일을 입력하세요.");
+    			}
+    			else{
     	        $page_4.hide();
     	        $page_5.show();
+    			}
     		},
+    		
     		error : (x,s,e) =>{
     			console.log("실패", x,s,e);
     		}
     	 })
+    	 
+    	//email 중복 검사
+         $.ajax({
+         	 url: "${pageContext.request.contextPath}/member/emailDuplicate",
+         	 data: {email:$email},
+         	 dataType: "json",
+         	 contentType: "application/json; charset=utf-8",
+         	 success : data =>{
+         		 if(data == 0){
+         			 $("#emailAu").text("사용가능한 이메일입니다.")
+         		 }
+         		 else{
+         			$("#emailAu").text("이미 있는 이메일입니다..")
+         		 }
+         	 },
+         	 error : (x,s,e) =>{
+         		 console.log("실패",x,s,e);
+         	 }
+         	 
+         });
+    	 
     }); 
     /* 메일 인증 받기 */
     $("#authKey-btn").click(()=>{
     	var $authKey = $("#authKey").val();
-    	/* var $email = $("#email").val(); */
-   	/*  	var $random = $("#random").val(); */
+    	var $email = $("#email").val(); 
 
     	$.ajax({
-	    	url: "${pageContext.request.contextPath}/member/verify.do?authKey=",
-			data: {authKey:$authKey
-				   /* email:$email */
-			       /* random:$random */},
+	    	url: "${pageContext.request.contextPath}/member/verify.do",
+			data: {authKey:$authKey,
+				   email:$email
+			       },
 			dataType:"text",
 			success: data=>{
 				console.log(data);
-				alert("성공");
+				if(data=="true")
+					$("#authResult").text("이메일 인증 완료");
+				else 
+					$("#authResult").text("다시 입력해주세요.");
 			},
 			error : (x,s,e) =>{
 				console.log("실패", x,s,e);
 			}
     	})
-    	
     });
      
     //회원 가입
@@ -361,7 +390,10 @@ $(()=>{
                 console.log("실패",x,s,e);
             }
         })
+      
     });
+    
+    
 
     //비밀번호 유효성 검사
     $password.keyup((e)=>{

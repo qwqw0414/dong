@@ -51,12 +51,8 @@ public class MemberServiceImpl implements MemberService{
 		return md.selectLoginMember(memberId);
 	}
 	@Override
-	public Member emailAuth(String email) {
-		return md.emailAuth(email);
-	}
-	@Override
-	public void signSuccess(String email) {
-		md.signSuccess(email);
+	public int emailDuplicate(String email) {
+		return md.emailDuplicate(email);
 	}
 	
 	//==========================  근호 끝
@@ -120,6 +116,8 @@ public class MemberServiceImpl implements MemberService{
 		return md.updateMemberEmail(param);
 	}
 	//==========================  현규 끝
+
+	
 
 	
 
