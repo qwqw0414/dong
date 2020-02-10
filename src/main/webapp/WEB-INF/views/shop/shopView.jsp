@@ -626,7 +626,7 @@ function insertInquiryComment(btn){
 	html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/register@2x.png' width='15' height='14' >";
 	html += "등록";
 	html += "</button>";
-	html += "<button onclick='cancleRecommentBtn(this);' id='cancleRecommentBtn' class='commentDelBtn'>";
+	html += "<button onclick='c(this);' id='cancleRecommentBtn' class='commentDelBtn'>";
 	html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='14'>";
 	html += "취소";
 	html += "</button>";

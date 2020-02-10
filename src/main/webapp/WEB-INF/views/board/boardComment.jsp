@@ -22,9 +22,6 @@
 
 	<script>
 
-$(()=>{
-	showCommentList();
-	
 	function showCommentList(){
 	//댓글 조회
 	var boardNo=285;
@@ -39,21 +36,21 @@ $(()=>{
 			console.log(data);
 			console.log(data.length);
 			let html="";
-			html+="<div id='listdiv'>"
+			html+="<div id='listdiv'>";
 		for(var i=0; i<data.length;i++){
 				html+="<div class='testas'>";
 				html+="<input type='hidden' value="+data[i].COMMENT_NO+" id='commentNo_'/>";
 				html+="<p style='margin-bottom:0px'>"+data[i].MEMBER_ID+ " : " + data[i].CONTENTS + " [ " +data[i].WRITE_DATE + "]</p>";
 				html+="<button id='showLevel2form' onclick='showLevel2form(this)'>답글</button>";
-				html+="<button id='deleteComment' id='deleteLevel1'>삭제</button>";
-				html+="<div id='level2Form'>"
+				html+="<button id='deleteLevel1' onclick='deleteLevel1(this)'>삭제</button>";
+				html+="<div id='level2Form'>";
 				html+="<input type='text' id='level2CommentContent' placeholder='대댓글을 입력하세요.'></input>";
-				html+="<button>등록</button><button onclick='hideLevel2form(this)'>취소</button><br>"
-				html+="</div>"
+				html+="<button>등록</button><button onclick='hideLevel2form(this)'>취소</button><br>";
+				html+="</div>";
 				html+="</div>";
 				
 			};//end of forEach
-			html+="</div>"
+			html+="</div>";
 			$("#commentListView").html(html)
 			
 		},//end of success
@@ -64,6 +61,9 @@ $(()=>{
 	}
 	
 	//댓글리스트 불러오기
+$(()=>{
+	showCommentList();
+	
 	
 	
 	
@@ -91,24 +91,37 @@ $(()=>{
 		
 	});//end of function
 	
-	//댓글 삭제
-	$("#commentListView #deleteLevel1").on('click',function(){
-		alert("gdf")
-		
-		
-	});//end of function
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 });//end of script
+
+
+
+	//댓글 삭제
+	function deleteLevel1(e){
+	var commentNo= $(e).prev().prev().prev().val();
+	var boardNo= 285;
+	console.log(commentNo);
+	
+	$.ajax({
+		url:"${pageContext.request.contextPath}/board/deleteLevel1",
+		data:{commentNo:commentNo,
+			boardNo:boardNo},
+		type:"POST",
+		success:data=>{
+			console.log(data);
+			showCommentList();
+		},
+		 error : (x,s,e) =>{
+		        console.log("실패",x,s,e);
+		}
+		
+		
+		
+	})//end of ajax
+	
+	
+	
+	}//end of function
 
 
 
@@ -129,7 +142,7 @@ $(()=>{
 	
 	//대댓글 등록창 숨기기
 	function hideLevel2form(e){
-		$(e).prev().parent().css("display","none");
+		$(e).parent().css("display","none");
 	}
 	
 	
