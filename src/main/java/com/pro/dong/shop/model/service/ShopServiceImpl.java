@@ -31,9 +31,14 @@ public class ShopServiceImpl implements ShopService{
 	
 	// 하진 시작 ==========================
 	@Override
-	public List<Map<String, String>> loadMyProductList(String memberId) {
-		return sd.loadMyProductList(memberId);
+	public List<Map<String, String>> loadMyProductList(String memberId, int cPage, int numPerPage) {
+		return sd.loadMyProductList(memberId,cPage,numPerPage);
 	}
+	@Override
+	public int totalCountMyProduct(String memberId) {
+		return sd.totalCountMyProduct(memberId);
+	}
+
 	
 	
 	//========================== 하진 끝

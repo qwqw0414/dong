@@ -414,25 +414,29 @@ $(function(){
 		
 		var memberId = $("[name=memberLoggedIn]").val();
 		
-		loadMyProduct(memberId);
+		loadMyProduct(1);
 		
-		function loadMyProduct(memberId){
+		function loadMyProduct(cPage){
 			$.ajax({
 				url:"${pageContext.request.contextPath}/shop/loadMyProduct",
-				data:{memberId:memberId},
+				contentType: "application/json; charset=utf-8",
+				data:{
+					memberId:memberId,
+					cPage:cPage
+				},
 				dataType: "json",
 				success:data=>{
 					console.log("성");
 					 let html = "";
 					 var $myProduct = $("myProduct");
-				        data.forEach(product => {
+				        data.product.forEach(product => {
 
 				          let preTitle = product.TITLE;
 
 				          if(preTitle.length > 12) 
 				            preTitle = preTitle.substring(0,12)+"..."
 
-				          html += "<div class='card'>";
+				          html += "<div class='card' style='width: 232px; height: 300px;'>";
 				          html += "<img src='${pageContext.request.contextPath}/resources/upload/product/" + product.PHOTO + "' class='card-img-top'>";
 				          html += '<div class="card-body">';
 				          html += '<p class="card-title">' + preTitle + '</p>';
@@ -440,10 +444,16 @@ $(function(){
 				          html += '</div></div>'
 				        });
 				        $("#myProduct").html(html);
+				        $("#pageBar").html(data.pageBar);
 				},
 				error:(x,s,e)=>{
 					console.log("실패",x,s,e);
-				}
+				},
+				complete: ()=>{
+		            $("#pageBar a").click((e)=>{
+		            	loadMyProduct($(e.target).siblings("input").val());
+		            });
+		        }
 				
 			});
 			
@@ -470,12 +480,13 @@ $(function(){
 		<div id="shop-contents">
 			<div id="nav-product">
 				<h1>내 상품</h1>
-				<div class="myProductList" >
+				<div class="myProductList" id="myProductList">
       				<div class="myProduct" id="myProduct">
       				
       				</div>
-      				<hr/>
+      				
     			</div>
+    			 <div id="pageBar"></div>
 			</div>
 			<div id="nav-inquiry">
 				<h3>상점 문의&nbsp;<span id="totalInquiry" style="color:green;"></span></h3>
