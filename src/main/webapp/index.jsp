@@ -148,9 +148,10 @@ $(()=>{
       error: (x, s, e) => {
         console.log("실패", x, s, e);
       },
-      complete: ()=>{
-        $("#main-page .card img").click((e)=>{
-          console.log($(e.target));
+      complete: (data)=>{
+        console.log(1);
+        $("#main-page .card img").click(function(){
+          console.log(this);
         });
       }
     });

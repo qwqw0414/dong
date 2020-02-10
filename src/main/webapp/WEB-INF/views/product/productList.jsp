@@ -16,8 +16,8 @@
     <div class="productList">
 
     </div>
-    <div id="pageBar"></div>
 </div>
+<div id="pageBar"></div>
 
 <script>
 $(()=>{
@@ -67,13 +67,13 @@ $(()=>{
                 });
 
                 $("#productList .productList").html(html);
-                $("#productList #pageBar").html(data.pageBar);
+                $("#pageBar").html(data.pageBar);
             },
             error: (x, s, e) => {
             console.log("실패", x, s, e);
             },
             complete: ()=>{
-                $("#productList #pageBar a").click((e)=>{
+                $("#pageBar a").click((e)=>{
                     pageLoad($(e.target).siblings("input").val());
                 });
             }
