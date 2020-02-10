@@ -3,6 +3,7 @@ package com.pro.dong.shop.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,8 +32,13 @@ public class ShopDAOImpl implements ShopDAO{
 	
 	// 하진 시작 ==========================
 	@Override
-	public List<Map<String, String>> loadMyProductList(String memberId) {
-		return sst.selectList("shop.loadMyProductList",memberId);
+	public List<Map<String, String>> loadMyProductList(String memberId, int cPage, int numPerPage) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sst.selectList("shop.loadMyProductList",memberId,rowBounds);
+	}
+	@Override
+	public int totalCountMyProduct(String memberId) {
+		return sst.selectOne("shop.totalCountMyProduct",memberId);
 	}
 	
 	
