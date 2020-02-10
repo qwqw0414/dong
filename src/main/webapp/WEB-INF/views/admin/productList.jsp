@@ -37,35 +37,40 @@
 </style>
 <script>
 $(()=>{
-	let sido = $("#sido").val();
-	let sigungu = $("#sigungu").val();
-	let dong = $("#dong").val();
-	
+	var sido = $("#sido").val();
+	var sigungu = $("#sigungu").val();
+	var dong = $("#dong").val();
+	var searchType = $("#searchType").val();
+	var searchKeyword = $("#searchKeyword").val();
+	loadProductList(1);
 	$("#sido").on("change", function(){
-		let sido = $("#sido").val();
+		var sido = $("#sido").val();
 		console.log(sido);
 	});
 	$("#sigungu").on("change", function(){
-		let sigungu = $("#sigungu").val();
+		var sigungu = $("#sigungu").val();
 		console.log(sigungu);
 	});
 	$("#dong").on("change", function(){
-		let dong = $("#dong").val();
+		var dong = $("#dong").val();
 		console.log(dong);
 	});
-	
-	function loadProductList(searchType, searchKeyword, productCategory, cPage){
-		var cPage = cPage;
-		var productCategory = productCategory;
-		var searchKeyword = searchKeyword;
-		var searchType = searchType;
-		var sido = sido;
-		var sigungu = sigungu;
-		var dong = dong;
-		$("#cPage").val(cPage);
+	$("#searchKeyword").on("change", function(){
+		var searchKeyword = $("#searchKeyword").val();
+		console.log(searchKeyword);
+	});
+	$("#search").on("click", function(){
+		loadProductList(1);
+	});//키워드 검색 끝
+
+	function loadProductList(cPage){
+		var sido = $("#sido").val();
+		var sigungu = $("#sigungu").val();
+		var dong = $("#dong").val();
+		var searchType = $("#searchType").val();
+		var searchKeyword = $("#searchKeyword").val();
 		console.log(searchType);
 		console.log(searchKeyword);
-		console.log(productCategory);
 		console.log(cPage);
 		console.log(sido);
 		console.log(sigungu);
@@ -74,7 +79,6 @@ $(()=>{
 			url: "${pageContext.request.contextPath}/admin/loadProductList",
 			type: "GET",
 			data:{cPage:cPage,
-				productCategory:productCategory,
 				searchType:searchType,
 				searchKeyword:searchKeyword,
 				sido:sido,
@@ -100,32 +104,14 @@ $(()=>{
 			},
 			error : (x, s, e) => {
 				console.log("ajax 요청 실패!",x,s,e);
-	    	}
+	    	},
+	    	complete: ()=>{
+	    		 $("#pageBar a").click((e)=>{
+	                    loadProductList($(e.target).siblings("input").val());
+	    	});
+		}
 		});//end of ajax
 	}//end of loadProductList();
-	
-$(function(){
-	loadProductList();
-	
-	//키워드 검색
-	$("#search").on("click", function(){
-		var searchType = $("#searchType").val();
-		var searchKeyword = $("#searchKeyword").val();
-		var productCategory = '';
-		var cPage = $("#cPage").val();
-		if(searchKeyword.trim().length==0){
-			alert("검색어를 입력해 주세요.");
-			$("#searchKeyword").focus();
-			return;
-		}
-		console.log(searchType);
-		console.log(searchKeyword);
-		console.log(productCategory);
-		console.log(cPage);
-		loadProductList(searchType, searchKeyword, productCategory, cPage);
-	});//키워드 검색 끝
-	
-});//온로드함수 끝
 
 
 function numberComma(num) {
@@ -150,7 +136,7 @@ function lastDate(date){
 
 </script>
 <h1>상품 상세보기</h1>
-<input type="hidden" name="cPage" id="cPage"/>
+
 <div class="wrapper">
   <div class="input-group">	
   <select  aria-label="First name" class="form-control" id="sido" >

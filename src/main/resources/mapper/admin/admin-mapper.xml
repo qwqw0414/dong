@@ -10,9 +10,6 @@
 		on p.product_no = pa.product_no
 		<where>
 			pa.thumbnail = 'Y'
-			<if test="productCategory!=null and productCategory!=''">
-				and p.category_id = #{productCategory}
-			</if>
 			<if test="searchKeyword!=null and searchKeyword!=''">
 				and p.${searchType} like '%${searchKeyword}%'
 			</if>
@@ -33,9 +30,6 @@
 		on p.product_no = pa.product_no
 		<where>
 			pa.thumbnail = 'Y'
-			<if test="productCategory!=null and productCategory!=''">
-				and p.category_id = #{productCategory}
-			</if>
 			<if test="searchKeyword!=null and searchKeyword!=''">
 				and p.${searchType} like '%${searchKeyword}%'
 			</if>

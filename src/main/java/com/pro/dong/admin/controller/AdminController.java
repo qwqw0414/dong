@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.pro.dong.admin.model.service.AdminService;
 import com.pro.dong.board.model.vo.BoardReport;
 import com.pro.dong.common.util.Utils;
@@ -26,7 +27,7 @@ import com.pro.dong.product.model.vo.Product;
 public class AdminController {
 
 	static Logger log = LoggerFactory.getLogger(AdminController.class);
-	
+	static Gson gson = new Gson();
 	@Autowired
 	AdminService as;
 	
@@ -48,7 +49,7 @@ public class AdminController {
 	@ResponseBody
 	public Map<String, Object> loadProductList(@RequestParam(value="sido", defaultValue="")String sido, @RequestParam(value="sigungu", defaultValue="")String sigungu, @RequestParam(value="dong", defaultValue="")String dong,
 			@RequestParam(value="searchType", defaultValue="")String searchType, @RequestParam(value="searchKeyword",defaultValue="") String searchKeyword,
-			@RequestParam(value="productCategory",defaultValue="") String productCategory,@RequestParam(value="cPage",defaultValue="1") int cPage){
+			@RequestParam(value="cPage",defaultValue="1") int cPage){
 		final int numPerPage = 10;
 		Map<String, Object> result = new HashMap<>();
 		
@@ -56,7 +57,6 @@ public class AdminController {
 		param.put("sido", sido);
 		param.put("sigungu", sigungu);
 		param.put("dong", dong);
-		param.put("productCategory", productCategory);
 		param.put("searchType", searchType);
 		param.put("searchKeyword", searchKeyword);
 		
@@ -65,12 +65,10 @@ public class AdminController {
 		//상품 조회
 		List<Product> list = as.loadProductList(cPage, numPerPage, param);
 		result.put("list", list);
-		result.put("productCategory", productCategory);
 		result.put("cPage", cPage);
 		result.put("numPerPage", numPerPage);
 		result.put("totalContents", totalContents);
-		String function = "loadProductList('"+searchType+"','"+searchKeyword+"','"+productCategory+"',";
-		String pageBar = Utils.getAjaxPageBar(totalContents, cPage, numPerPage, function);
+		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
 		result.put("pageBar", pageBar);
 		return result;
 	}
