@@ -147,8 +147,13 @@
 	select *
 	from board_comment
 	where board_no=#{boardNo}
-	
+	order by comment_no desc
 	</select>
+	
+	<delete id="deleteLevel1">
+	delete from board_comment where comment_no=#{commentNo}
+	
+	</delete>
 	
 	
 	<!-- ==========================  현규 끝 -->

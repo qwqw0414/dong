@@ -328,6 +328,30 @@ public class BoardController {
 		return gson.toJson(list)+"";
 	}
 	
+	//댓글 지우기
+	@ResponseBody
+	@RequestMapping("/deleteLevel1")
+	public String deleteLevel1(@RequestParam("commentNo") int commentNo,@RequestParam("boardNo")int BoardNo) {
+		log.info("삭제할 코멘트넘버={}",commentNo);
+		
+		BoardComment bc = new BoardComment();
+		bc.setCommentNo(commentNo);
+		
+		int result= bs.deleteLevel1(commentNo);
+		
+		log.info("지워젓나={}",result);
+		
+//		List<Map<String,String>>list = null;
+//		if (result>0) {
+//			list = bs.selectBoardCommentList(BoardNo);
+//		}
+		
+		
+		
+		
+		return result+"";
+	}
+	
 	
 	//========================== 현규 끝
 

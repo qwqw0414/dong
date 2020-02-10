@@ -71,7 +71,15 @@ public class ProductDAOImpl implements ProductDAO{
 		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
 		return sst.selectList("product.selectProduct", param, rowBounds);
 	}
+	@Override
+	public int countProduct(Map<String, String> param) {
+		return sst.selectOne("product.countProduct", param);
+	}
 	//========================== 예찬 끝
+
+
+
+
 
 
 
