@@ -200,7 +200,6 @@ public class MemberController {
 	@ResponseBody
 	public String emailAuth(Model model, 
 							HttpServletRequest request,
-							/*@RequestParam(value="random") int random, */
 							@RequestParam(value="email") String email) throws MessagingException, UnsupportedEncodingException {
 		
 		Random r = new Random();
@@ -210,8 +209,7 @@ public class MemberController {
 		String authCode = String.valueOf(dice);
 		
 		session.setAttribute("authCode", authCode);
-/*		session.setAttribute("random", random);
-*/		log.debug("email121212={}",email);
+		log.debug("email121212={}",email);
 
 		//메일 보내기
 		EmailHandler sendMail = new EmailHandler(mailSender);
@@ -227,40 +225,45 @@ public class MemberController {
 		sendMail.setTo(email);
 		sendMail.send();
 		
+		if(email == null) {
+			email = "null";
+		}
 		
-		return "redirect:/";
+		return email;
 	}
 	
 	//인증 번호 입력
 	@RequestMapping(value="/verify.do")
 	@ResponseBody
-	public String signSuccess(/*@RequestParam String random,*/
+	public String signSuccess(
 							  @RequestParam(value="authKey")String authKey,
 							  HttpSession session,
-							  /*@RequestParam(value="email") String email,*/
+							  @RequestParam(value="email") String email,
 							  HttpServletRequest request, Model model) {
-							/*@RequestParam(value="authKey")String authKey*/
 		
 		String originalKey = (String)session.getAttribute("authCode");
-		/*String originalRandom = Integer.toString((int) session.getAttribute("random"));*/
-		
-		/*if(originalKey.equals(authKey))
-			ms.signSuccess(email);
-		else {
-			throw new MemberException("오류");
-		}*/
-		return "redirect:/";
-//		model.addAttribute("email", email);
-	/*	
+		log.debug("emaillllllllllll={}",email);
+		log.debug("authKeyyyyyyyy={}", authKey);
 		String msg = "";
-		if(authKey.equals(dice)) {
-			msg = "번호 일치";
+		if(originalKey.equals(authKey)) {
+			msg ="true";
 		}
 		else {
-			msg = "번호 틀림";
+			msg = "false";
 		}
-		return "/";*/
+		
+		return msg;
 	}
+	//이메일 중복검사
+	@RequestMapping("/emailDuplicate")
+	@ResponseBody
+	public String emailDuplicate(@RequestParam(value="email") String email) {
+		log.debug("email={}",email);
+		int result = ms.emailDuplicate(email);
+		return result+"";
+		
+	}
+	
 //========================== 근호 끝
 	
 // 지은 시작 ==========================

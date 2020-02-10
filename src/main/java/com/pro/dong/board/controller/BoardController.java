@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -280,23 +281,14 @@ public class BoardController {
 	@RequestMapping("/boardComment.do")
 	public void boardComment() {}
 	
+	
+	//댓글 등록
 	@RequestMapping(value="/insertComments", produces="text/plain;charset=UTF-8")
 	@ResponseBody
-	public String insertComments(HttpSession session, @RequestParam("contents") String contents, 
-			 							@RequestParam("boardNo") int boardNo) {
-		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
-		log.info("게시판 번호{}",boardNo);
-		log.info("contents={}",contents);
-		log.info("댓글 작성자 아이디={}",memberLoggedIn.getMemberId());
+	public String insertComments(HttpSession session, BoardComment bc, @RequestParam("boardNo") int boardNo) {
 		
 		
-		BoardComment bc = new BoardComment();
-		bc.setBoardNo(boardNo);
-		bc.setMemberId(memberLoggedIn.getMemberId());
-		bc.setContents(contents);
-		bc.setCommentRef(1);
-		
-		log.info("bc={}",bc);
+		log.info("ddddddddddddddddddddddddd={}",bc);
 		
 		
 		int result = bs.insertBoardComment(bc);
@@ -331,7 +323,7 @@ public class BoardController {
 	//댓글 지우기
 	@ResponseBody
 	@RequestMapping("/deleteLevel1")
-	public String deleteLevel1(@RequestParam("commentNo") int commentNo,@RequestParam("boardNo")int BoardNo) {
+	public String deleteLevel1(@RequestParam("commentNo") int commentNo,@RequestParam("boardNo")int boardNo) {
 		log.info("삭제할 코멘트넘버={}",commentNo);
 		
 		BoardComment bc = new BoardComment();
@@ -347,10 +339,31 @@ public class BoardController {
 //		}
 		
 		
-		
-		
 		return result+"";
 	}
+	
+	//대댓글 쓰기
+	@ResponseBody
+	@RequestMapping(value="/insertLevel2", produces="text/plain;charset=UTF-8")
+	public String insertLevel2(BoardComment bc,@RequestParam("boardNo")int boardNo) {
+		log.debug("dddddd={}",bc);
+		
+		int result = bs.insertBoardComment(bc);
+		
+		List<Map<String,String>>list = null;
+		if (result>0) {
+			list = bs.selectBoardCommentList(boardNo);
+		}
+		
+		
+		log.info("result={}",result);
+		
+		return gson.toJson(list)+"";
+		
+
+	}
+	
+	
 	
 	
 	//========================== 현규 끝
