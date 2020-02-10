@@ -124,6 +124,11 @@ public class BoardServiceImpl implements BoardService {
 		return bd.selectBoardCommentList(boardNo);
 	}
 
+	@Override
+	public int deleteLevel1(int commentNo) {
+		return bd.deleteLevel1(commentNo);
+	}
+
 
 
 	//========================== 현규 끝
