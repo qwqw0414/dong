@@ -48,30 +48,6 @@ public class ProductController {
 	//==========================민호 끝
 		
 	//하진 시작 ==========================
-	@RequestMapping("/categoryView")
-	@ResponseBody
-	public  Map<String, Object> categoryView(){
-		
-		Map<String, Object> result = new HashMap<>();
-		
-		List<Category> cateboryList = ps.selectCategory();
-		log.debug("list@@@@@@@@@@@@@@@@@@@@@@@@={}",cateboryList);
-		result.put("cateboryList", cateboryList);
-		return result;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	//========================== 하진 끝

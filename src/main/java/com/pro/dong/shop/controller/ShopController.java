@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.pro.dong.member.model.vo.Member;
+import com.pro.dong.product.model.vo.Product;
 import com.pro.dong.shop.model.service.ShopService;
 import com.pro.dong.shop.model.vo.Shop;
 import com.pro.dong.shop.model.vo.ShopInquriy;
@@ -45,7 +46,23 @@ public class ShopController {
 	
 	
 	// 하진 시작 ==========================
-	
+	@RequestMapping(value="/loadMyProduct" , produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String loadMyProductList(String memberId){
+
+		List<Map<String, String>> list = null;
+		
+		try {
+			list = ss.loadMyProductList(memberId);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		log.debug("내상품list @@@@@@@@@@@@={}",list);
+		
+		return gson.toJson(list);
+	}
 	
 	//========================== 하진 끝
 	
