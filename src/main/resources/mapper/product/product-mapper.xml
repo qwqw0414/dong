@@ -94,6 +94,34 @@
 			</if>
 		</where>
 	</select>
+	
+	<select id="countProduct" resultType="_int" parameterType="map">
+		select count(*)
+		from(select p.*, 
+		    (select category_ref from product_category where category_id=p.category_id) ref,
+		    (select photo from product_attachment where product_no = p.product_no and thumbnail = 'Y') photo
+		     from product p)
+		<where>
+			(
+			<if test="sido != null and sido != ''">
+				sido=#{sido} 
+			</if>
+			<if test="sigungu != null and sigungu != ''">
+				and sigungu = #{sigungu} 
+			</if>
+			<if test="dong != null and dong != ''">
+				and dong = #{dong} 
+			</if>
+			<if test="keyword != null and keyword != ''">
+				and title like '%${keyword}%' 
+			</if>
+			) 
+			<if test="categoryId != null and categoryId != ''">
+				and (category_id = #{categoryId} or ref=#{categoryId})
+			</if>
+		</where>
+	</select>
+	
 	<resultMap type="map" id="selectProductMap">
 		<result column="product_no" property="productNo"/>
 		<result column="price" property="price"/>

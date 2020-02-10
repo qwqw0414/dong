@@ -137,7 +137,7 @@
 	
 	
 	<insert id="insertBoardComment">
-	insert into board_comment values(seq_board_comment.nextval,#{boardNo},#{memberId},#{contents},default,#{commentRef},sysdate)
+	insert into board_comment values(seq_board_comment.nextval,#{boardNo},#{memberId},#{contents},#{commentLevel},#{commentRef},sysdate)
 	</insert>
 	
 	<resultMap type="map" id="resultMap"></resultMap>
@@ -147,8 +147,13 @@
 	select *
 	from board_comment
 	where board_no=#{boardNo}
-	
+	order by comment_no desc
 	</select>
+	
+	<delete id="deleteLevel1">
+	delete from board_comment where comment_no=#{commentNo}
+	
+	</delete>
 	
 	
 	<!-- ==========================  현규 끝 -->

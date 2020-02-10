@@ -60,6 +60,8 @@ public interface BoardService {
 
 	List<Map<String, String>> selectBoardCommentList(int boardNo);
 
+	int deleteLevel1(int commentNo);
+
 
 
 	//========================== 현규 끝

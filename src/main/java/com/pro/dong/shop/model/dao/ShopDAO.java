@@ -16,7 +16,7 @@ public interface ShopDAO {
 	
 	
 	// 하진 시작 ==========================
-	
+	List<Map<String, String>> loadMyProductList(String memberId);
 	
 	
 	//========================== 하진 끝

@@ -2,7 +2,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <style>
 #main-page #productList-category .cate-title{font-family: MapoPeacefull; font-size: 1.5em;}
-.productList .card {width: 201px; border-radius: 0; height: 280px;}
+.productList .card {width: 201px; border-radius: 0; height: 280px; cursor: pointer;}
 .productList .card img{width: 200px; height: 200px; border: none;}
 #main-page .productList .product .card{float: left; margin: 10px 8px 10px 8px}
 #main-page .product {width: 1200px; display: block; margin: auto; height: 620px;}
@@ -134,6 +134,7 @@ $(()=>{
             preTitle = preTitle.substring(0,12)+"..."
 
           html += "<div class='card'>";
+          html += "<input type='hidden' class='productNo' value='"+product.productNo+"'>";
           html += "<img src='${pageContext.request.contextPath}/resources/upload/product/" + product.photo + "' class='card-img-top'>";
           html += '<div class="card-body">';
           html += '<p class="card-title">' + preTitle + '</p>';
@@ -146,6 +147,13 @@ $(()=>{
       },
       error: (x, s, e) => {
         console.log("실패", x, s, e);
+      },
+      complete: ()=>{
+        $("#main-page .card").mouseup((e)=>{
+          var productNo = $(e.target).find(".productNo").val();
+          console.log($(e.target));
+          console.log(productNo);
+        });
       }
     });
   }
