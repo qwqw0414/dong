@@ -16,6 +16,15 @@
 			<if test="searchKeyword!=null and searchKeyword!=''">
 				and p.${searchType} like '%${searchKeyword}%'
 			</if>
+			<if test="sido!=null and sido!=''">
+				and p.sido like #{sido}
+			</if>
+			<if test="sigungu!=null and sigungu!=''">
+				and p.sigungu like #{sigungu}
+			</if>
+			<if test="dong!=null and dong!=''">
+				and p.dong like #{dong}
+			</if>
 		</where>
 	</select>
 	<select id="loadProductList" parameterType="map" resultType="map">
@@ -30,7 +39,28 @@
 			<if test="searchKeyword!=null and searchKeyword!=''">
 				and p.${searchType} like '%${searchKeyword}%'
 			</if>
+			<if test="sido!=null and sido!=''">
+				and p.sido like #{sido}
+			</if>
+			<if test="sigungu!=null and sigungu!=''">
+				and p.sigungu like #{sigungu}
+			</if>
+			<if test="dong!=null and dong!=''">
+				and p.dong like #{dong}
+			</if>
 		</where>
+	</select>
+	<select id="selectAddressSido" resultType="string">
+		select sido from member
+		group by sido
+	</select>
+	<select id="selectAddressSigungu" resultType="string">
+		select sigungu from member
+		group by sigungu
+	</select>
+	<select id="selectAddressDong" resultType="string">
+		select dong from member
+		group by dong
 	</select>
 	<!-- ==========================  민호 끝 -->
 	

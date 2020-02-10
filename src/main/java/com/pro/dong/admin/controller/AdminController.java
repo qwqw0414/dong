@@ -32,16 +32,30 @@ public class AdminController {
 	
 	// 민호 시작 ==========================
 	@RequestMapping("productList.do")
-	public void productList() {
+	public ModelAndView productList(ModelAndView mav) {
 		
+		//주소 조회
+		List<String> sido = as.selectAddressSido();
+		List<String> sigungu = as.selectAddressSigungu();
+		List<String> dong = as.selectAddressDong();
+		mav.addObject("sido", sido);
+		mav.addObject("sigungu", sigungu);
+		mav.addObject("dong", dong);
+		mav.setViewName("/admin/productList");
+		return mav;
 	}
 	@RequestMapping("/loadProductList")
 	@ResponseBody
-	public Map<String, Object> loadProductList(@RequestParam(value="searchType", defaultValue="")String searchType, @RequestParam(value="searchKeyword",defaultValue="") String searchKeyword, @RequestParam(value="productCategory",defaultValue="") String productCategory,@RequestParam(value="cPage",defaultValue="1") int cPage){
+	public Map<String, Object> loadProductList(@RequestParam(value="sido", defaultValue="")String sido, @RequestParam(value="sigungu", defaultValue="")String sigungu, @RequestParam(value="dong", defaultValue="")String dong,
+			@RequestParam(value="searchType", defaultValue="")String searchType, @RequestParam(value="searchKeyword",defaultValue="") String searchKeyword,
+			@RequestParam(value="productCategory",defaultValue="") String productCategory,@RequestParam(value="cPage",defaultValue="1") int cPage){
 		final int numPerPage = 10;
 		Map<String, Object> result = new HashMap<>();
 		
 		Map<String, String> param = new HashMap<>();
+		param.put("sido", sido);
+		param.put("sigungu", sigungu);
+		param.put("dong", dong);
 		param.put("productCategory", productCategory);
 		param.put("searchType", searchType);
 		param.put("searchKeyword", searchKeyword);
