@@ -411,6 +411,18 @@ public class BoardController {
 
 	}
 	
+	//대댓글 삭제
+	@ResponseBody
+	@RequestMapping(value="/deleteLevel2", produces="text/plain;charset=UTF-8")
+	public String deleteLevel2(@RequestParam("commentNo") int commentNo) {
+		log.debug("삭제할 대댓번호={}",commentNo);
+		
+		int result = bs.deleteLevel2(commentNo);
+		
+		return gson.toJson(result)+"";
+	}
+	
+	
 	
 	
 	

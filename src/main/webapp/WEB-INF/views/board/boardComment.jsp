@@ -172,7 +172,7 @@
 				},//end of success,
 				 error : (x,s,e) =>{
 				        console.log("실패",x,s,e);
-				}
+				}//end of error
 		})//end of ajax
 	}//end of function
 	
@@ -185,6 +185,19 @@
 			url:"${pageContext.request.contextPath}/board/deleteLevel2",
 			data:{commentNo:commentNo},
 			type:"POST",
+			success:data=>{
+				console.log(data);
+				if(data=="1"){
+					alert("성공");
+			}
+			else{
+				alert("실패");
+			}
+				showCommentList(1);
+		},//end of success,
+		 error : (x,s,e) =>{
+		        console.log("실패",x,s,e);
+		}//end of error
 			
 		})//end of ajax
 		

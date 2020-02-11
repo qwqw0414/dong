@@ -68,6 +68,8 @@ public interface BoardService {
 
 	int countComment();
 
+	int deleteLevel2(int commentNo);
+
 
 
 
