@@ -199,7 +199,7 @@ $(function(){
 
         <div class="btnBox">
             <button id="likeBtn">좋아요</button>
-            <button >신고</button>
+            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">신고</button>
         </div>
        
         <!-- 댓글 -->
@@ -349,8 +349,8 @@ $(function(){
 });
 
 </script>
-
-<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">신고</button>
+<!-- 
+<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">신고</button> -->
 <input type="hidden" name="memberLoggedIn" value="<%=memberLoggedIn.getMemberId()%>" />
 
 <!-- Modal -->

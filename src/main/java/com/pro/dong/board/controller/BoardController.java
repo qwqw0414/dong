@@ -105,6 +105,16 @@ public class BoardController {
 	//==========================민호 끝
 		
 	// 하진 시작 ==========================
+		@RequestMapping(value="/loadBoardReportCategory", produces="text/plain;charset=UTF-8")
+		@ResponseBody
+		public String loadBoardReportCategory() {
+			List<Map<String, String>> list = null;
+			list = bs.loadBoardReportCategory();
+			Map<String, Object> result = new HashMap<>();
+			result.put("list", list);
+			return gson.toJson(result);
+		}
+	
 		@RequestMapping("/insertBoardReport")
 		@ResponseBody
 		public String insertBoardReport(@RequestParam("reportComment") String reportComment,
@@ -112,7 +122,7 @@ public class BoardController {
 													@RequestParam("memberId") String memberId,
 													@RequestParam("boardNo") String boardNo){
 			
-			Map<String, Object> result = new HashMap<>();
+			
 			
 			Map<String, String> param = new HashMap<>();
 			param.put("reportComment",reportComment);
