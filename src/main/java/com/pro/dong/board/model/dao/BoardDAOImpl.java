@@ -118,13 +118,19 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public List<Map<String, String>> selectBoardCommentList(int boardNo) {
-		return sst.selectList("board.selectBoardCommentList",boardNo);
+	public List<Map<String, String>> selectBoardCommentList(int boardNo, int cPage, int numPerPage) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return sst.selectList("board.selectBoardCommentList", boardNo, rowBounds);
 	}
 
 	@Override
 	public int deleteLevel1(int commentNo) {
 		return sst.delete("board.deleteLevel1",commentNo);
+	}
+
+	@Override
+	public int countComment() {
+		return sst.selectOne("board.countComment");
 	}
 
 

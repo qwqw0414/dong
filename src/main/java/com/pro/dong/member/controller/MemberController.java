@@ -207,15 +207,15 @@ public class MemberController {
 		HttpSession session = request.getSession(true);
 //		Member m = ms.emailAuth(email);
 		String authCode = String.valueOf(dice);
-		
 		session.setAttribute("authCode", authCode);
+		
 		log.debug("email121212={}",email);
 
 		//메일 보내기
 		EmailHandler sendMail = new EmailHandler(mailSender);
 		sendMail.setSubject("[홈페이지 이메일 인증]");
 		sendMail.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>")
-				.append("이메일 인증 번호:"+authCode+"입니다.")
+				.append("이메일 인증 번호: ["+authCode+"] 입니다.")
 				.toString());
 		/*sendMail.setText("<h1>메일인증</h1>" +
 						 "<a href='http://localhost:9090/dong/verify.do?email=" +email +

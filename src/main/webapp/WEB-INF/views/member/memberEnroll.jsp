@@ -86,9 +86,6 @@
         <br />
        	<input type="button" name="authKey-btn" id="authKey-btn" value="인증 확인" class="btn btn-primary mb-2" />
     </div>
-    <div id="authOK">
-    	<span id="authResult"></span>
-    </div>
     	
     <div class="enroll-btn" id="btn-1">
         <button class="btn btn-outline-primary btn-lg" id="next-page2">다음 단계로 진행<br>( 1 / 4 )</button>
@@ -129,6 +126,7 @@ $(()=>{
     var $phone = $("#memberEnroll #phone");
     var $email = $("#memberEnroll #email");
     var $validEmail = $("#memberEnroll #valid-email");
+    var $authKey = $("#memberEnroll #authKey");
     var $year = $("#memberEnroll #year");
     var $month = $("#memberEnroll #month");
     var $date = $("#memberEnroll #date");
@@ -179,10 +177,13 @@ $(()=>{
 				console.log(data);
 				if(data=="true") {
 					$validAuth.val(1); 
-					$("#authResult").text("이메일 인증 완료");
+					changeMsg("auth_ok",'t');
+					$("#authKey").attr("disabled", true);
 				}
-				else 
-					$("#authResult").text("다시 입력해주세요.");
+				else if(data=="false"){
+					changeMsg("valid_auth",'f');
+					$validAuth.val(0);
+				}
 			},
 			error : (x,s,e) =>{
 				console.log("실패", x,s,e);
@@ -550,6 +551,8 @@ $(()=>{
             case "check_auth":$msg.html("이메일 인증을 해주세요.");break;
             case "invalid_email":$msg.html("중복된 이메일입니다.");break;
             case "valid_email":$msg.html("사용 가능한 이메일입니다.");break;
+            case "valid_auth":$msg.html("인증번호가 틀렸습니다.");break;
+            case "auth_ok":$msg.html("인증완료.");break;
             case "invalid":$msg.html("다시 한번 확인해주세요.");break;
             case "step2":$msg.html("가입에 필요한 개인 정보를<br>입력해주세요.");break;
             case "check_name":$msg.html("본인 성명을 입력해주세요");break;
