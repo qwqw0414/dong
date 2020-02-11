@@ -37,12 +37,12 @@ public class AdminDAOImpl implements AdminDAO {
 		return sst.selectList("admin.selectAddressSido");
 	}
 	@Override
-	public List<String> selectAddressSigungu() {
-		return sst.selectList("admin.selectAddressSigungu");
+	public List<String> selectAddressSigungu(String sido) {
+		return sst.selectList("admin.selectAddressSigungu", sido);
 	}
 	@Override
-	public List<String> selectAddressDong() {
-		return sst.selectList("admin.selectAddressDong");
+	public List<String> selectAddressDong(String sigungu) {
+		return sst.selectList("admin.selectAddressDong", sigungu);
 	}
 	// ==========================민호 끝
 
@@ -75,6 +75,8 @@ public class AdminDAOImpl implements AdminDAO {
 		return sst.delete("admin.memberDelete",memberId);
 	}
 	// ========================== 하진 끝
+
+
 
 
 
