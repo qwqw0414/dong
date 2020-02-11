@@ -143,7 +143,7 @@ $(()=>{
     	 var $email = $("#email").val();
     	 
     	  if($validEmail.val() != 1){
-         	changeMsg("check_email",'f');
+         	changeMsg("invalid",'f');
          	changeForm($email,'f');
          	$email.focus();
          	return;
@@ -227,6 +227,7 @@ $(()=>{
 				else{
 					$validEmail.val(0);
                     changeMsg("invalid_email",'f');
+                    changeForm($email,'f');
 				}
 			},
 			error : (x,s,e) =>{
