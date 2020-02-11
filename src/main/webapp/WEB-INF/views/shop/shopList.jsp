@@ -50,7 +50,7 @@ $(()=>{
                     html += '<div class="shop">';
                     html += '<img src="'+photo+'">';
                     html += '<div class="title">';
-                    html += '<a href="#">';
+                    html += "<a href='${pageContext.request.contextPath}/shop/shopView.do?shopNo="+shop.shopNo+"'>";
                     html += shop.shopName+'</a></div>';
                     html += '<div class="date">';
                     html += shop.openDate;

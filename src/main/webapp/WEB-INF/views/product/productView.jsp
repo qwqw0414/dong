@@ -6,7 +6,9 @@
 
 <h1>상품 상세보기</h1>
 <hr>
-
+<style>
+#productView #photo img{position: absolute;}
+</style>
 <div class="card mb-3 border-light" id="productView">
     <div class="row">
 		<div class="col-4" id="photo">
@@ -37,13 +39,69 @@
                     <span>판매자 정보:${map.product.shopNo }</span> <hr><br>
                 </div>
                     
-                    <div class="something-btn">
-                        <button class="btn btn-outline-warning">찜하기</button>
-                        <button class="btn btn-outline-danger">연락하기</button>
-                        <button class="btn btn-info">구매하기</button>
-                    </div>
+                <div class="something-btn">
+                    <c:if test="${map.likeCnt eq '0'}">
+                        <button class="btn btn-outline-warning" id="btn-like">찜하기</button>
+                    </c:if>                        
+                    <c:if test="${map.likeCnt ne '0'}">
+                        <button class="btn btn-warning" id="btn-like">찜취소</button>
+                    </c:if>                        
+                    <button class="btn btn-danger">연락하기</button>
+                    <button class="btn btn-info">구매하기</button>
+                </div>
 			</div>
         </div>
     </div>
 </div>
+
+
+<script>
+$(()=>{
+// 예찬 시작 =======================================
+    var $btnLike = $("#productView #btn-like");
+
+    $btnLike.click(()=>{
+
+        $.ajax({
+            url: "${pageContext.request.contextPath}/product/productLike",
+            data: {
+                memberId: '${memberLoggedIn.memberId}',
+                productNo: '${map.product.productNo}'
+            },
+            type: "POST",
+            dataType: "json",
+            success: data =>{
+                if(data.result != 0){
+                    if(data.type == 'I'){
+                        $btnLike.removeClass("btn-outline-warning");
+                        $btnLike.addClass("btn-warning");
+                        $btnLike.text("찜취소");
+                    }
+                    else{
+                        $btnLike.removeClass("btn-warning");
+                        $btnLike.addClass("btn-outline-warning");
+                        $btnLike.text("찜하기");
+                    }
+
+
+                }else{
+                    alert("실패");
+                }
+            },
+            error: (a,b,c) =>{
+                console.log(a,b,c);
+            }
+        });
+    });
+
+// ======================================= 예찬 끝
+// 민호 시작 =======================================
+
+// ======================================= 민호 끝
+
+
+})
+
+</script>
+
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

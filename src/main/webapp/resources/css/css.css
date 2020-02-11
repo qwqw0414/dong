@@ -22,7 +22,16 @@ footer .line{border: 1px rgb(95, 95, 95) solid; width: 100%;}
 /* API */
 
 /* 민호 시작 ========================== */
-
+#follow{
+	position: absolute;
+	left: 50px;
+}
+#follow:hover{
+	cursor: pointer;
+}
+#follow #followIcon{
+	width: 20px;
+}
 /* ==========================민호 끝 */
 	
 /* 하진 시작 ========================== */
@@ -55,7 +64,177 @@ header #categoryDiv #category-list-end{border-left: rgb(255, 30, 60) 1px solid;}
 /* ========================== 예찬 끝 */
 	
 /* 주영 시작 ========================== */
+#shopView #shopView-nav {}
+#shopView #shopView-nav ul{list-style:none; margin:0; padding:0;}
+#shopView #shopView-nav li{float: left;}
+#shopView #shopView-nav ul li div{width: 183px; font-size: 1em; text-align: center; padding: 15px;}
+#shopView #shopView-nav .shop-nav-selected{border: 1px black  solid; border-bottom: 0px; font-weight: bold;}
+#shopView #shopView-nav .shop-nav-disabled{border: 1px gray solid; border-bottom: 1px black soid; background-color: rgba(238, 243, 243); color: rgb(90, 90, 90); opacity: 0.8;}
+#shopView #shopView-nav .shop-nav{cursor: pointer;}
+#shopView #shopView-nav #shop-contents{margin-top: 80px;}
+#shopView #shopInquiryText{
+	outline: none;
+	resize: none;
+}
+#shopView #shopInquiryCommentText{
+	outline: none;
+	resize: none;
+}
+#shopView #shopInquiryText::placeholder {
+	padding-top: 25px;
+	padding-left: 5px;
+}
+#shopView #shopInquiryTextDiv{
+	margin-top: 20px;
+	margin-bottom: 0px;
+}
+#shopView #shopInquiryBtn{
+	background-color: white;
+	outline: none;
+	border: 1px solid lightgray;
+	width: 70px;
+	height: 30px;
+	margin: 10px 10px;
 	
+}
+#shopView #shopInquiryBtnDiv{
+	margin-top: 0px;
+	border: 1px solid lightgray;
+	width: 740px;
+	text-align: right;
+}
+#shopView #inquiryContentCheck{
+	float: left;
+	margin-top: 15px;
+	margin-left: 10px;
+}
+#shopView #inquiryWriterTag{
+	font-weight: bold;
+}
+#shopView #inquiryImgTag{
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	margin-bottom: -60px;
+}
+#shopView #inquiryDetail{
+	margin-left: 80px;
+}
+#shopView #commentInsertDiv{
+	display: block;
+}
+#shopView #commentDeleteDiv{
+	display: block;
+}
+#shopView .commentBtn{
+	background-color: white;
+	outline: none;
+	border: 1px solid lightgray;
+	margin-left: 70px;
+}
+#shopView .commentDelBtn{
+	background-color: white;
+	outline: none;
+	border: 1px solid lightgray;
+	margin-left: 5px;
+}
+#shopView #cancleRecommentBtn{
+	position: relative;
+	top: -8px;
+}
+#shopView #shopInquiryCommentEndBtn{
+	background-color: white;
+	outline: none;
+	border: 1px solid lightgray;
+	margin-left: 5px;
+	margin-bottom: -60px;
+	position: relative;
+	top: -8px;
+}
+#shopView #inquiryCommentDiv{
+	margin-left: 35px;
+}
+#shopView .recommentDiv{
+	margin-left: 100px;
+}
+#shopView .replyIcon{
+	width: 50px;
+	height: 50px;
+	display: inline-block;
+	margin-left: -80px;
+	/* margin-bottom: -50px; */
+}
+/* .replyIconDiv{
+	display: inline-block;
+} */
+#shopView #inquiryRecommentDetail{
+	margin-left: 35px;
+  	    margin-top: -17px;
+}
+#shopView .productList .card {width: 201px; border-radius: 0; height: 280px;}
+#shopView .productList .card img{width: 200px; height: 200px; border: none;}
+#shopView #shop-contents .myProductList .myProduct .card{float: left; margin: 10px 8px 10px 8px}
+#shopView #shop-contents .myProduct {width: 1200px; display: block; margin: auto; height: 620px;}
+#shopView #shop-contents {width: 1300px;}
+#shopView #shop-contents .myProductList{width: 100%;}
+#shopView .myProductList .card-body{padding: 10px 0 0px 8px;}
+#shopView .myProductList .regDate{font-size: 0.9em; position: absolute; right: 10px; bottom: 10px;}
+
+#shopView #shopView{
+	width: 1100px;
+}
+#shopView #shopDiv{
+	display: inline-block;
+	position: relative;
+}
+#shopView #shopImg1{
+	width: 200px;
+	height: 200px;
+	display: inline-block;
+	padding: auto;
+	border-radius: 50%;
+}
+#shopView #shopInfoDiv{
+	width: 1100px;
+	height: 300px;
+	display: inline-block;
+}
+#shopView .img-thumbnail{
+	border: 2px solid lightgray !important;
+} 
+#shopView #shopDetailInfoDiv{
+	display: inline-block;
+	position: absolute;
+	width: 600px;	
+	left: 350px;
+	top: 60px;
+}
+#shopView .my-hr3 {
+    border: 0;
+    height: 3px;
+    background: #ccc;
+}
+#shopView #imgUpBtn{
+	position: absolute;
+	top: 250px;
+	left: 120px;
+}
+#shopView #up_btn{
+	position: absolute;
+	left: 240px;
+	width: 50px;
+	height: 54px;
+}
+#shopView #shopImgDiv{
+	width: 300px;
+	height: 300px;
+	text-align: center;
+	padding-top: 35px;
+	margin-bottom: 30px;
+}
+#shopView #shopNameSpan{
+	font-weight: bold;
+}
 /* ========================== 주영 끝 */
 	
 /* 현규 시작 ========================== */
