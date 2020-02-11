@@ -17,10 +17,6 @@ div#board-container input,div#board-container button{margin-bottom:15px;}
 /* 부트스트랩 : 파일라벨명 정렬*/
 div#board-container label.custom-file-label{text-align:left;}
 
-div{
-    margin: 10px;
-    padding: 0;
-}
 input{
 	border: 0px;
 }
@@ -136,7 +132,17 @@ span{
     float: right;
 }
 #likeBtn{
-	
+	color: #fff;
+    background-color: cornflowerblue;
+    padding: .25rem .5rem;
+    font-size: .875rem;
+    line-height: 1.5;
+    border-radius: .3rem;
+}
+
+#iconbox{
+    width: 15px;
+    height: 15px;
 }
 </style>
 
@@ -159,14 +165,14 @@ $(function(){
 
 </script>
 
-<div class="section">
+<div class="boardView">
     <!-- head -->
     <div class="head_inflow">
         <div id="title"><strong>${board.boardTitle}</strong></div>
         <div class="profileWriter">
-            <span>${board.memberId}</span> &nbsp;
-            <span>조회수 : ${board.readCount}</span> <br />
-            <span>${board.writeDate}일 작성</span>
+            <span><img id="iconbox" src="${pageContext.request.contextPath}/resources/images/writer.png"/>&nbsp;${board.memberId}</span> &nbsp;
+            <span><img id="iconbox" src="${pageContext.request.contextPath}/resources/images/text.png"/>&nbsp;${board.readCount}</span> <br />
+            <span><img id="iconbox" src="${pageContext.request.contextPath}/resources/images/clock.png"/>&nbsp;${board.writeDate}</span>
         </div>
 		  
 		  <!-- 작성자와 로그인한 아이디가 같을시에만 삭제,수정가능 -->
@@ -181,7 +187,6 @@ $(function(){
 
     <!-- content -->
     <div class="cont_inflow">
-
         <div class="contents">
        	<input type="hidden" id="boardNo" value="${board.boardNo}" >
         <%-- <span id="writedate">${board.writeDate}일 작성</span> --%>
@@ -198,7 +203,7 @@ $(function(){
         </div>
 
         <div class="btnBox">
-            <button id="likeBtn">좋아요</button>
+            <button type="button" id="likeBtn">추천</button>
             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">신고</button>
         </div>
        
@@ -265,7 +270,7 @@ $(function(){
  
 </script>
 
-<<<<<<< 
+
 
 <%--==================현규시작================ --%>
 <hr />
