@@ -20,11 +20,11 @@
 
 <div id="commentListView"></div>
 </div>
-
+<div id="pageBar"></div>
 
 	<script>
 	$(()=>{
-		showCommentList();
+		showCommentList(1);
 		
 		
 		//댓글등록
@@ -44,7 +44,7 @@
 				type:"POST",
 				success:data=>{
 					console.log(data);
-						showCommentList();
+// 						showCommentList(1);
 				},
 				 error : (x,s,e) =>{
 				        console.log("실패",x,s,e);
@@ -61,13 +61,15 @@
 	
 	
 	
-	function showCommentList(){
+	function showCommentList(cPage){
 	//댓글 조회
 	var boardNo=285;
 	
+	
 	$.ajax({
 		url: "${pageContext.request.contextPath}/board/selectBoardComment",
-		data:{boardNo:boardNo},
+		data:{boardNo:boardNo,
+		      cPage:cPage},
 		type:"GET",
 		dataType:"json",
 		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
@@ -75,17 +77,17 @@
 			console.log(data);
 			let html="";
 			html+="<div id='listdiv'>";
-		for(var i=0; i<data.length;i++){
+		for(var i=0; i<data.list.length;i++){
 				html+="<div class='testas'>";
-				if(data[i].COMMENT_LEVEL=="1"){
-				html+="<input type='hidden' value="+data[i].COMMENT_NO+" id='commentNo_'/>";
-				html+="<p style='margin-bottom:0px'>"+data[i].MEMBER_ID+ " : " + data[i].CONTENTS + " [ " +data[i].WRITE_DATE + "]</p>";
+				if(data.list[i].COMMENT_LEVEL=="1"){
+				html+="<input type='hidden' value="+data.list[i].COMMENT_NO+" id='commentNo_'/>";
+				html+="<p style='margin-bottom:0px'><strong>"+data.list[i].MEMBER_ID+ "</strong>  <small>["+data.list[i].WRITE_DAY+"]</small><br> " + data.list[i].CONTENTS+"</p>";
 				html+="<button id='showLevel2form' onclick='showLevel2form(this)'><img  src='https://assets.bunjang.co.kr/bunny_desktop/images/reply@2x.png' width='17' height='17'>답글</button>";
 				html+="<button id='deleteLevel1' onclick='deleteLevel1(this)'><img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='17'>삭제</button>";
 				}
 				else{
-					html+="<input type='hidden' value="+data[i].COMMENT_NO+" id='commentNo_'/>";
-					html+="<div><img class='replyIcon' style='width:50px; height:50px;' src='${pageContext.request.contextPath}/resources/images/reply.PNG'/><span style='margin-bottom:0px; padding-left:30px'>"+data[i].MEMBER_ID+ " : " + data[i].CONTENTS + " [ " +data[i].WRITE_DATE + "]</span></div>";	
+					html+="<input type='hidden' value="+data.list[i].COMMENT_NO+" id='commentNo_'/>";
+					html+="<div><img class='replyIcon' style='width:50px; height:50px;' src='${pageContext.request.contextPath}/resources/images/reply.PNG'/><span style='margin-bottom:0px; padding-left:30px'><strong>"+data.list[i].MEMBER_ID+ "</strong> : " + data.list[i].CONTENTS + " <small>[ " +data.list[i].WRITE_DAY + "]</small></span></div>";	
 					
 				}
 				html+="<div id='level2Form'>";
@@ -96,12 +98,18 @@
 				
 			};//end of forEach
 			html+="</div>";
-			$("#commentListView").html(html)
+			$("#commentListView").html(html);
+            $("#pageBar").html(data.pageBar);
 			
 		},//end of success
 		 error : (x,s,e) =>{
 		        console.log("실패",x,s,e);
-		      }
+		      },
+		      complete: ()=>{
+	                $("#pageBar a").click((e)=>{
+	                	showCommentList($(e.target).siblings("input").val());
+	                });
+	            }
 		});//end of ajax
 	}
 	
@@ -151,7 +159,8 @@
 				boardNo:boardNo,
 				contents:level2Content,
 				memberId:memberId,
-				commentRef:commentRef},
+				commentRef:commentRef,
+				},
 				type:"POST",
 				success:data=>{
 						console.log(data);
