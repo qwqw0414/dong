@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,7 @@ import com.pro.dong.common.util.Utils;
 import com.pro.dong.member.model.vo.Member;
 import com.pro.dong.product.model.service.ProductService;
 import com.pro.dong.product.model.vo.Category;
+import com.pro.dong.product.model.vo.Like;
 import com.pro.dong.product.model.vo.Product;
 import com.pro.dong.product.model.vo.ProductAttachment;
 import com.pro.dong.shop.model.vo.Shop;
@@ -187,14 +189,46 @@ public class ProductController {
 		}
 		
 		@RequestMapping("/productView.do")
-		public ModelAndView productView(ModelAndView mav, int productNo) {
+		public ModelAndView productView(ModelAndView mav, int productNo, HttpServletRequest request) {
 			
 			Map<String, Object> map = ps.selectOneProduct(productNo);
+			
+			HttpSession session = request.getSession();
+			Member member = (Member) session.getAttribute("memberLoggedIn");
+			
+			Like like = new Like();
+			like.setMemberId(member.getMemberId());
+			like.setProductNo(productNo);
+			
+			int likeCnt = ps.countLike(like);
+
+			map.put("likeCnt", likeCnt+"");
 			mav.addObject("map",map);
 			
-			log.debug(map.toString());
-			
 			return mav;
+		}
+		
+		
+		@RequestMapping(value="/productLike", produces="text/plain;charset=UTF-8")
+		@ResponseBody
+		public String productLike(Like like) {
+			
+			Map<String, String> map = new HashMap<>();
+			int likeCnt = ps.countLike(like);
+			int result;
+			
+			if(likeCnt == 0) {
+				result = ps.insertLike(like);
+				map.put("type", "I");
+			}
+			else {
+				result = ps.deleteLike(like);
+				map.put("type", "O");
+			}
+			
+			map.put("result", result+"");
+			
+			return gson.toJson(map);
 		}
 	//========================== 예찬 끝
 		

@@ -55,6 +55,10 @@ public class BoardServiceImpl implements BoardService {
 	public List<Board> selectBoardList() {
 		return bd.selectBoardList();
 	}
+	@Override
+	public List<Map<String, String>> loadBoardReportCategory() {
+		return bd.loadBoardReportCategory();
+	}
 	//========================== 하진 끝
 		
 	// 근호 시작 ==========================
@@ -123,8 +127,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<Map<String, String>> selectBoardCommentList(int boardNo) {
-		return bd.selectBoardCommentList(boardNo);
+	public List<Map<String, String>> selectBoardCommentList(int boardNo, int cPage, int numPerPage) {
+		return bd.selectBoardCommentList(boardNo, cPage, numPerPage);
 	}
 
 	@Override
@@ -132,10 +136,12 @@ public class BoardServiceImpl implements BoardService {
 		return bd.deleteLevel1(commentNo);
 	}
 
-	
 
+	@Override
+	public int countComment() {
+		return bd.countComment();
+	}
 	
-
 	
 
 

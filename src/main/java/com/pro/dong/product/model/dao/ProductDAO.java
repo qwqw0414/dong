@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.pro.dong.product.model.vo.Category;
+import com.pro.dong.product.model.vo.Like;
 import com.pro.dong.product.model.vo.Product;
 import com.pro.dong.product.model.vo.ProductAttachment;
 import com.pro.dong.shop.model.vo.Shop;
@@ -40,7 +41,18 @@ public interface ProductDAO {
 	int countProduct(Map<String, String> param);
 	Product selectOneProduct(int productNo);
 	List<ProductAttachment> selectAttachment(int productNo);
+	int countLike(Like like);
+	int insertLike(Like like);
+	int deleteLike(Like like);
 	//========================== 예찬 끝
+
+
+
+
+
+
+
+
 
 
 

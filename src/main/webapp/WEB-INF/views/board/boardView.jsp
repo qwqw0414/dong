@@ -1,10 +1,15 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.pro.dong.board.model.vo.BoardReportCategory"%>
+<%@page import="java.util.List"%>
 <%@page import="com.pro.dong.common.util.Utils"%>
 <%@page import="com.pro.dong.member.model.vo.Member"%>
 <%@page import="com.pro.dong.board.model.vo.Board"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%
+	Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
+%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <style>
 div#board-container{width:400px; margin:0 auto; text-align:center;}
@@ -259,6 +264,142 @@ $(function(){
  
  
 </script>
+
+<<<<<<< 
+
+<%--==================현규시작================ --%>
+<hr />
+
+
+
+<%--==================현규끝================ --%>
+
+<!--하진시작-->
+
+<script>
+$(function(){
+	
+	loadBoardReportCategory();
+	
+	function loadBoardReportCategory(){
+		$.ajax({
+			url:"${pageContext.request.contextPath}/board/loadBoardReportCategory",
+			contentType: "application/json; charset=utf-8",
+			type:"GET",
+			dataType: "json",
+			success: data=>{
+				console.log("성공");
+				
+				let $boardReportCategory = $("#boardReportCategory");
+				let html = "";
+				
+				data.list.forEach(category => {
+					html += "<option value='"+category.CATEGORY_ID+"'>"+category.REPORT_TYPE+"</option>";
+				});
+				$boardReportCategory.html(html);
+				
+			},
+			error:(x,s,e)=>{
+				console.log("실패",x,s,e);
+			}
+		});
+		
+	}
+	
+	$("#report-btn").click(()=>{
+		
+		var reportComment = $("#boardReportContents").val();
+		var categoryId = $("#boardReportCategory").val();
+		var memberId = $("[name=memberLoggedIn]").val();
+		var boardNo = $("[name=boardNo]").val();
+		
+		if(textArea.length==0){
+			alert("신고 내용을 입력하세요");
+			$("#boardReportContents").focus();
+			return;
+		}
+		
+		$.ajax({
+			url:"${pageContext.request.contextPath}/board/insertBoardReport",
+			dataType: "json",
+			type: "POST",
+			data: {
+				reportComment:reportComment,
+				categoryId:categoryId,
+				memberId:memberId,
+				boardNo:boardNo
+			},
+			success: data=>{
+				if(data == 1){
+					alert("게시글 신고가 정상적으로 접수되었습니다.");
+				}
+				else{
+					alert("게시글 신고 실패");
+				}
+			},
+			error:(x,s,e)=>{
+				console.log("실패",x,s,e);
+			}
+		});
+		
+	});
+	
+
+});
+
+</script>
+
+<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">신고</button>
+<input type="hidden" name="memberLoggedIn" value="<%=memberLoggedIn.getMemberId()%>" />
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+	      <!-- Modal content-->
+	      <div class="modal-content">
+	      
+	      	<!--모달헤더 시작-->
+	        <div class="modal-header">
+	          <h5 class="modal-title">게시글 신고</h5>
+	          <button type="button" class="close" data-dismiss="modal">×</button>
+	        </div>
+	      	<!--모달헤더 끝-->
+	       
+	       <!--모달바디시작-->
+	       	<div class="modal-body">
+         		<div class="container">
+	         		<div  style="text-align: center;" class="form-group">
+				    	<label style="display: inline-block;" class="input-group-text col-lg-3" for="inputGroupSelect01">신고 유형</label>
+					 	<select class="custom-select col-lg-5" id="boardReportCategory" name="boardReportCategory">
+					 	</select>
+				 	</div>
+					<div class=" col-lg-12"> 
+	  					<textarea class="form-control" id="boardReportContents" name="boardReportContents" rows="10"></textarea>
+	  				</div>
+				</div>
+	       		
+	       		<!--모달푸터시작-->
+	       		<div class="modal-footer">
+	         			<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
+	         			<button type="submit" id="report-btn" class="btn btn-danger btn-sm" >신고</button>
+	       		</div>
+	       		<!--모달푸터끝-->
+	       		
+	       	</div>
+	      	<!--모달바디끝-->
+	      </div>
+      
+    </div>
+</div>
+<!--하진 끝-->
+
+
+    
+
+
+</body>
+
 
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.pro.dong.board.model.vo.Attachment;
 import com.pro.dong.product.model.vo.Category;
+import com.pro.dong.product.model.vo.Like;
 import com.pro.dong.product.model.vo.Product;
 import com.pro.dong.product.model.vo.ProductAttachment;
 import com.pro.dong.shop.model.vo.Shop;
@@ -84,7 +85,23 @@ public class ProductDAOImpl implements ProductDAO{
 	public List<ProductAttachment> selectAttachment(int productNo) {
 		return sst.selectList("product.selectAttachment", productNo);
 	}
+	@Override
+	public int countLike(Like like) {
+		return sst.selectOne("product.countLike", like);
+	}
+	@Override
+	public int insertLike(Like like) {
+		return sst.insert("product.insertLike", like);
+	}
+	@Override
+	public int deleteLike(Like like) {
+		return sst.delete("product.deleteLike", like);
+	}
 	//========================== 예찬 끝
+
+
+
+
 
 
 
