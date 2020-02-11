@@ -251,19 +251,11 @@ $(()=>{
 							html += "삭제";
 							html += "</button>";
 						}
-						//shop의 주인 = 로그인한 아이디 or 로그인한 아이디 = 작성한 아이디
-						/* if (("${map.MEMBER_ID}" == memberId) || (memberId == data.list[i].MEMBER_ID)) {
-							html += "<button id='deleteCommentBtn' value=" + data.list[i].INQUIRY_NO + " class='commentDelBtn'>";
-							html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='17'>";
-							html += "삭제";
-							html += "</button>";
-						} */
 							html += "<div class='inquiryCommentDiv' id='inquiryCommentDiv'></div>";
 					}
 					/* 대댓글이라면 */
 					else {
 						html += "<div class='recommentDiv'>";
-						/* html += "<hr width='745px'  align='left'/>"; */
 						html += "<img class='replyIcon' src='${pageContext.request.contextPath}/resources/images/reply.PNG'/>";
 						html += "<img id='inquiryImgTag' src='${pageContext.request.contextPath}/resources/upload/shopImage/" + data.list[i].IMAGE + "'/>";
 						html += "<div id='inquiryRecommentDetail'>";
