@@ -240,18 +240,24 @@ $(()=>{
 						html += "<span>" + data.list[i].WRITE_DAY + "</span>";
 						html += "<p>" + data.list[i].INQUIRY_CONTENT + "</p>";
 						html += "</div>";
-						if (memberId == data.list[i].MEMBER_ID) {
+						//로그인한 아이디 = 문의사항을 작성한 아이디가 같다면 
+						if (("${map.MEMBER_ID}" == memberId) || (memberId == data.list[i].MEMBER_ID)) {
 							html += "<button value=" + data.list[i].INQUIRY_NO + " id='insertInquiryCommentBtn' class='commentBtn' >"
 							html += "<img  src='https://assets.bunjang.co.kr/bunny_desktop/images/reply@2x.png' width='17' height='17'>";
 							html += "댓글";
 							html += "</button>";
-						}
-						if (("${map.MEMBER_ID}" == memberId) && (memberId == data.list[i].MEMBER_ID)) {
 							html += "<button id='deleteCommentBtn' value=" + data.list[i].INQUIRY_NO + " class='commentDelBtn'>";
 							html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='17'>";
 							html += "삭제";
 							html += "</button>";
 						}
+						//shop의 주인 = 로그인한 아이디 or 로그인한 아이디 = 작성한 아이디
+						/* if (("${map.MEMBER_ID}" == memberId) || (memberId == data.list[i].MEMBER_ID)) {
+							html += "<button id='deleteCommentBtn' value=" + data.list[i].INQUIRY_NO + " class='commentDelBtn'>";
+							html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='17'>";
+							html += "삭제";
+							html += "</button>";
+						} */
 							html += "<div class='inquiryCommentDiv' id='inquiryCommentDiv'></div>";
 					}
 					/* 대댓글이라면 */
@@ -305,26 +311,29 @@ $("#shopView #shopInquiryBtn").click(insertInquiry);
 		});
 
 	}
+//////////////////////////////
+$(document).on("click", "#shopView #deleteCommentBtn", function(e){
+	var deleteCommentBtnTarget = $(e.target);
+	console.log("addgfgdgfdgdfg");
+	console.log(deleteCommentBtnTarget);
+	var deleteCommentBtn = deleteCommentBtnTarget.val();
+	console.log("asdasd");
+	console.log(deleteCommentBtn);
 
-$("#shopView #deleteCommentBtn").click(deleteComment);
-	function deleteComment(btn) {
+	$.ajax({
+		url: "${pageContext.request.contextPath}/shop/deleteShopInquriy",
+		method: "POST",
+		data: { deleteCommentBtn: deleteCommentBtn },
+		success: data => {
+			console.log(data);
+			selectInquiry();
+		},
+		error: (x, s, e) => {
+			console.log("ajax 요청 실패!");
+		}
+	});
+});
 
-		var deleteCommentBtn = $(btn).val();
-		console.log(deleteCommentBtn);
-
-		$.ajax({
-			url: "${pageContext.request.contextPath}/shop/deleteShopInquriy",
-			method: "POST",
-			data: { deleteCommentBtn: deleteCommentBtn },
-			success: data => {
-				console.log(data);
-				selectInquiry();
-			},
-			error: (x, s, e) => {
-				console.log("ajax 요청 실패!");
-			}
-		});
-	}
 $(document).on("click", "#shopView #insertInquiryCommentBtn", function(e){
 		$(e).attr("disabled", true);
 		var btnTarget = $(e.target);
@@ -341,7 +350,8 @@ $(document).on("click", "#shopView #insertInquiryCommentBtn", function(e){
 		html += "취소";
 		html += "</button>";
 		html += "</div>";
-		btnTarget.next().html(html);
+		
+		btnTarget.next().next().html(html);
 	});
 	
 $(document).on("click", "#shopView #cancelRecommentBtn", function(e){
