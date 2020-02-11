@@ -76,6 +76,11 @@ public class ShopServiceImpl implements ShopService{
 	public Map<String, String> selectOneShop(String memberId) {
 		return sd.selectOneShop(memberId);
 	}
+	
+	@Override
+	public Map<String, String> selectShopByShopNo(int shopNo) {
+		return sd.selectShopByShopNo(shopNo);
+	}
 
 	@Override
 	public int updateShopInfo(Map<String, String> param) {

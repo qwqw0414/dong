@@ -243,7 +243,7 @@ $(()=>{
 			<a style="color:black; text-decoration: none;" href="${pageContext.request.contextPath}/product/productReg.do">
 				<img id="saleImg" src="${pageContext.request.contextPath}/resources/images/sale.PNG"/> 판매하기
 			</a>
-			<a style="color:black; text-decoration: none;" href="${pageContext.request.contextPath}/shop/shopView.do"><img id="shopImg" src="${pageContext.request.contextPath}/resources/images/shop.PNG"/> 내 상점</a>
+			<a style="color:black; text-decoration: none;" href="${pageContext.request.contextPath}/shop/shopView.do?memberId=<%=memberLoggedIn != null ? memberLoggedIn.getMemberId() : ""%>"><img id="shopImg" src="${pageContext.request.contextPath}/resources/images/shop.PNG"/> 내 상점</a>
 			<a style="color:black; text-decoration: none;"href=""><img id="chatImg" src="${pageContext.request.contextPath}/resources/images/chat.PNG"/> 동네톡</a>
 		</div>
 	</div>

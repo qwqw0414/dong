@@ -144,21 +144,31 @@
 	insert into board_comment values(seq_board_comment.nextval,#{boardNo},#{memberId},#{contents},#{commentLevel},#{commentRef},sysdate)
 	</insert>
 	
-	<resultMap type="map" id="resultMap"></resultMap>
+	<resultMap type="map" id="resultMap">
+		
+	</resultMap>
 	
 	
-	<select id="selectBoardCommentList" resultType="boardComment" resultMap="resultMap">
-	select *
-	from board_comment
+	<select id="selectBoardCommentList" resultType="map">
+	
+	select b.*,to_char(write_date,'yyyy-mm-dd hh24:mi:ss') as write_day
+	from board_comment b
 	where board_no=#{boardNo}
 	start with comment_level = 1
-	connect by comment_ref = prior comment_no 
+	connect by comment_ref = prior comment_no
+	
+	
+	 
 	</select>
 	
 	<delete id="deleteLevel1">
 	delete from board_comment where comment_no=#{commentNo} or comment_ref=#{commentNo}
 	
 	</delete>
+	
+	<select id="countComment" resultType="_int">
+	select count(*) from board_comment
+		</select>
 	
 	
 	<!-- ==========================  현규 끝 -->

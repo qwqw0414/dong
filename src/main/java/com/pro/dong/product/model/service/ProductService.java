@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.pro.dong.product.model.vo.Category;
+import com.pro.dong.product.model.vo.Like;
 import com.pro.dong.product.model.vo.Product;
 import com.pro.dong.product.model.vo.ProductAttachment;
 import com.pro.dong.shop.model.vo.Shop;
@@ -39,7 +40,25 @@ public interface ProductService {
 	List<Map<String, String>> selectProduct(int cPage, int numPerPage, Map<String, String> param);
 	int countProduct(Map<String, String> param);
 	Map<String, Object> selectOneProduct(int productNo);
+	int countLike(Like like);
+	int insertLike(Like like);
+	int deleteLike(Like like);
 	//========================== 예찬 끝
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -124,14 +124,21 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<Map<String, String>> selectBoardCommentList(int boardNo) {
-		return bd.selectBoardCommentList(boardNo);
+	public List<Map<String, String>> selectBoardCommentList(int boardNo, int cPage, int numPerPage) {
+		return bd.selectBoardCommentList(boardNo, cPage, numPerPage);
 	}
 
 	@Override
 	public int deleteLevel1(int commentNo) {
 		return bd.deleteLevel1(commentNo);
 	}
+
+	@Override
+	public int countComment() {
+		return bd.countComment();
+	}
+	
+	
 
 
 

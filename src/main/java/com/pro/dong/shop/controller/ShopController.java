@@ -126,16 +126,21 @@ public class ShopController {
 	
 	// 주영 시작 ==========================
 	@RequestMapping("/shopView.do")
-	public ModelAndView myshopView(HttpServletRequest request) {
-		Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
-		String memberId = memberLoggedIn.getMemberId();
+	public ModelAndView myshopView(ModelAndView mav,
+								   @RequestParam(value="memberId", defaultValue = "") String memberId, 
+								   @RequestParam(value="shopNo", defaultValue = "0") int shopNo ) {
+		Map<String, String> map = new HashMap<>();
 		
-		ModelAndView mav = new ModelAndView();
-		
-		Map<String, String> map = ss.selectOneShop(memberId);
+		if(memberId.equals("")) {
+			map = ss.selectShopByShopNo(shopNo);
+			mav.addObject("shopNo", shopNo);
+		}
+		else if(Integer.toString(shopNo).equals("0")) {
+			map = ss.selectOneShop(memberId);
+			mav.addObject("memberId", memberId);
+		}
 		
 		mav.addObject("map", map);
-		
 		return mav;
 	}
 	
@@ -202,7 +207,8 @@ public class ShopController {
 	@ResponseBody
 	public ModelAndView shopImageUpload(ModelAndView mav,
 								@RequestParam(value = "upFile", required = false) MultipartFile upFile,
-								@RequestParam(value = "memberId", required = false) String memberId, HttpServletRequest request) {
+								@RequestParam(value = "memberId", required = false) String memberId,
+								HttpServletRequest request) {
 		
 		String saveDirectory = request.getServletContext().getRealPath("/resources/upload/shopImage");
 		
@@ -236,7 +242,7 @@ public class ShopController {
 				
 				int result = ss.updateShopImg(s);
 				
-				mav.setViewName("redirect:/shop/shopView.do");
+				mav.setViewName("redirect:/shop/shopView.do?memberId="+memberId);
 			}
 		
 		return mav;

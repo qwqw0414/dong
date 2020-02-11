@@ -4,26 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%
-	List<String> sidoList = new ArrayList<>();
-	List<String> sigunguList = new ArrayList<>();
-	List<String> dongList = new ArrayList<>();
-	sidoList = (List<String>)request.getAttribute("sido");
-	sigunguList = (List<String>)request.getAttribute("sigungu");
-	dongList = (List<String>)request.getAttribute("dong");
-	String sidoOption = "<option value=''>전체</option>";
-	String sigunguOption = "<option value=''>전체</option>";
-	String dongOption = "<option value=''>전체</option>";
-	for(String str: sidoList){
-		sidoOption += "<option value='"+str+"'>"+str+"</option>";
-	}
-	for(String str: sigunguList){
-		sigunguOption += "<option value='"+str+"'>"+str+"</option>";
-	}
-	for(String str: dongList){
-		dongOption += "<option value='"+str+"'>"+str+"</option>";
-	}
-%>
+
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <style>
 #productList-category .cate-title{font-family: MapoPeacefull; font-size: 1.5em;}
@@ -37,31 +18,11 @@
 </style>
 <script>
 $(()=>{
-	var sido = $("#sido").val();
-	var sigungu = $("#sigungu").val();
-	var dong = $("#dong").val();
-	var searchType = $("#searchType").val();
-	var searchKeyword = $("#searchKeyword").val();
 	loadProductList(1);
-	$("#sido").on("change", function(){
-		var sido = $("#sido").val();
-		console.log(sido);
-	});
-	$("#sigungu").on("change", function(){
-		var sigungu = $("#sigungu").val();
-		console.log(sigungu);
-	});
-	$("#dong").on("change", function(){
-		var dong = $("#dong").val();
-		console.log(dong);
-	});
-	$("#searchKeyword").on("change", function(){
-		var searchKeyword = $("#searchKeyword").val();
-		console.log(searchKeyword);
-	});
+	
 	$("#search").on("click", function(){
 		loadProductList(1);
-	});//키워드 검색 끝
+	});
 
 	function loadProductList(cPage){
 		var sido = $("#sido").val();
@@ -112,7 +73,80 @@ $(()=>{
 		}
 		});//end of ajax
 	}//end of loadProductList();
+	
+	$.ajax({
+		url: "${pageContext.request.contextPath}/admin/loadSidoList",
+		dataType: "json",
+		type: "GET",
+		success: data=>{
+			console.log(data);
+			let html = "<option value=''>전체</option>";
+			$.each(data, function(index, data){
+				html += "<option value='"+data+"'>"+data+"</option>";				
+			});//end of forEach
+			$("#sido").html(html);
+		},
+		error: (x,s,e)=>{
+			console.log("실패",x,s,e);
+		}
+		
+	});//end of ajax
+	
+	$("#sido").on("change", function(){
+		var sido = $("#sido").val();
+		console.log(sido);
+		loadSigunguList(sido);
+	});
+	
+function loadSigunguList(sido){
+		var sido = sido;
+	$.ajax({
+		url: "${pageContext.request.contextPath}/admin/loadSigunguList",
+		data:{sido:sido},
+		dataType: "json",
+		type: "GET",
+		success: data=>{
+			console.log(data);
+			let html = "<option value=''>전체</option>";
+			$.each(data, function(index, data){
+				html += "<option value='"+data+"'>"+data+"</option>";				
+			});//end of forEach
+			$("#sigungu").html(html);
+		},
+		error: (x,s,e)=>{
+			console.log("실패",x,s,e);
+		}
+	});//end of ajax
+}//end of loadSigunguList
 
+	$("#sigungu").on("change", function(){
+		var sigungu = $("#sigungu").val();
+		console.log(sigungu);
+		loadDongList(sigungu);
+	});
+	
+function loadDongList(sigungu){
+	var sigungu = sigungu;
+	$.ajax({
+		url: "${pageContext.request.contextPath}/admin/loadDongList",
+		data:{sigungu:sigungu},
+		dataType: "json",
+		type: "GET",
+		success: data=>{
+			console.log(data);
+			let html = "<option value=''>전체</option>";
+			$.each(data, function(index, data){
+				html += "<option value='"+data+"'>"+data+"</option>";				
+			});//end of forEach
+			$("#dong").html(html);
+		},
+		error: (x,s,e)=>{
+			console.log("실패",x,s,e);
+		}
+	});//end of ajax
+}//end of loadDongList
+
+});//end of (()=>)
 
 function numberComma(num) {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -131,7 +165,7 @@ function lastDate(date){
     return diffHour+"시간 전";
 }
 
-});
+
 
 
 </script>
@@ -140,16 +174,14 @@ function lastDate(date){
 <div class="wrapper">
   <div class="input-group">	
   <select  aria-label="First name" class="form-control" id="sido" >
-  	<%=sidoOption %>
   </select>
   <select  aria-label="First name" class="form-control" id="sigungu" >
-  	<%=sigunguOption %>
   </select>
   <select  aria-label="First name" class="form-control" id="dong" >
-  	<%=dongOption %>
   </select>
   </div>
 </div>
+
 <div class="input-group mb-3">
   <div class="input-group-prepend">
     <select class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="searchType">
