@@ -44,7 +44,7 @@
 				type:"POST",
 				success:data=>{
 					console.log(data);
-// 						showCommentList(1);
+						showCommentList(1);
 				},
 				 error : (x,s,e) =>{
 				        console.log("실패",x,s,e);
@@ -131,7 +131,7 @@
 		type:"POST",
 		success:data=>{
 			console.log(data);
-			showCommentList();
+			showCommentList(1);
 		},
 		 error : (x,s,e) =>{
 		        console.log("실패",x,s,e);
@@ -164,7 +164,7 @@
 				type:"POST",
 				success:data=>{
 						console.log(data);
-						showCommentList();
+						showCommentList(1);
 				},//end of success,
 				 error : (x,s,e) =>{
 				        console.log("실패",x,s,e);
