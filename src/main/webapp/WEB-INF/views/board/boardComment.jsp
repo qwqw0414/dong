@@ -13,6 +13,9 @@
     <button class="btn btn-outline-secondary" type="button" id="comments_insert">등록</button>
   </div>
 </div>
+		<br />
+    	<h5>comments</h5>
+    	<hr /><br />
 <div id="commentListView"></div>
 </div>
 <div id="pageBar"></div>
@@ -60,24 +63,36 @@
 				html+="<div class='testas'>";
 				if(data.list[i].COMMENT_LEVEL=="1"){
 				html+="<input type='hidden' value="+data.list[i].COMMENT_NO+" id='commentNo_'/>";
-				html+="<p style='margin-bottom:0px'><strong>"+data.list[i].MEMBER_ID+ "</strong>  <small>["+data.list[i].WRITE_DAY+"]</small><br> " + data.list[i].CONTENTS+"</p>";
+				html+="<span style='margin-bottom:0px'><strong>"+data.list[i].MEMBER_ID+ "</strong>  <small>["+data.list[i].WRITE_DAY+"]</small> " + data.list[i].CONTENTS+"</span>";
 				html+="<button id='showLevel2form' onclick='showLevel2form(this)'><img  src='https://assets.bunjang.co.kr/bunny_desktop/images/reply@2x.png' width='17' height='17'>답글</button>";
 					//내가쓴 level1댓글에만 삭제버튼 생성	
 					if($("[name=memberLoggedIn]").val()==data.list[i].MEMBER_ID){
 					html+="<button id='deleteLevel1' onclick='deleteLevel1(this)'><img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='17'>삭제</button>";
 					}
+					//ㅋㅋㅋㅋㅋㅋㅋㅋㅋ
+					else{
+						html+="<button id='fakebutton'>채우기용</button>";	
+					}
+					
 
 				}
 				
 				else{
 					html+="<input type='hidden' value="+data.list[i].COMMENT_NO+" id='commentNo_'/>";
-					html+="<div><img class='replyIcon' style='width:50px; height:50px;' src='${pageContext.request.contextPath}/resources/images/reply.PNG'/><span style='margin-bottom:0px; padding-left:30px'><strong>"+data.list[i].MEMBER_ID+ "</strong> : " + data.list[i].CONTENTS + " <small>[ " +data.list[i].WRITE_DAY + "]</small></span></div>";	
+					if($("[name=memberLoggedIn]").val()==data.list[i].MEMBER_ID){
+						html+="<div><img class='replyIcon' style='width:50px; height:50px;' src='${pageContext.request.contextPath}/resources/images/reply.PNG'/>"
+						html+="<span style='margin-bottom:0px; padding-left:30px'><strong>"+data.list[i].MEMBER_ID+ "</strong> : " + data.list[i].CONTENTS + " <small>[ " +data.list[i].WRITE_DAY + "]</small><button>x</button></span></div>";
+					}else{
+						html+="<div><img class='replyIcon' style='width:50px; height:50px;' src='${pageContext.request.contextPath}/resources/images/reply.PNG'/>"
+						html+="<span style='margin-bottom:0px; padding-left:30px'><strong>"+data.list[i].MEMBER_ID+ "</strong> : " + data.list[i].CONTENTS + " <small>[ " +data.list[i].WRITE_DAY + "]</small></span></div>";
+					}
 				}
 				html+="<div id='level2Form'>";
 				html+="<input type='text' id='level2CommentContent' placeholder='대댓글을 입력하세요.'>";
 				html+="<button onclick='insertLevel2(this)'>등록</button><button onclick='hideLevel2form(this)'>취소</button><br>";
 				html+="</div>";
 				html+="</div>";
+				
 			};//end of forEach
 			html+="</div>";
 			$("#commentListView").html(html);
@@ -138,7 +153,8 @@
 		})//end of ajax
 	}//end of function
 	//대댓글 등록창 보이기
-	function showLevel2form(e){	
+	function showLevel2form(e){
+// 		$("#level2Form").css("display","block");
 		$(e).next().next().css("display","block");
 	}
 	//대댓글 등록창 숨기기
@@ -147,6 +163,10 @@
 	}
 </script>
 	<style>
+	
+	#fakebutton{
+		visibility:hidden;
+	}
 #commentListView #level2Form {
 	display: none;
 }
