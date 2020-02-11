@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pro.dong.product.model.dao.ProductDAO;
 import com.pro.dong.product.model.vo.Category;
+import com.pro.dong.product.model.vo.Like;
 import com.pro.dong.product.model.vo.Product;
 import com.pro.dong.product.model.vo.ProductAttachment;
 import com.pro.dong.shop.model.vo.Shop;
@@ -98,7 +99,24 @@ public class ProductServiceImpl implements ProductService{
 		
 		return map;
 	}
+	@Override
+	public int countLike(Like like) {
+		return pd.countLike(like);
+	}
+	@Override
+	public int insertLike(Like like) {
+		return pd.insertLike(like);
+	}
+	@Override
+	public int deleteLike(Like like) {
+		return pd.deleteLike(like);
+	}
 	//========================== 예찬 끝
+
+
+
+
+
 
 
 

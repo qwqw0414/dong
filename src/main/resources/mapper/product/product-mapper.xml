@@ -23,6 +23,17 @@
 	<!-- ==========================  지은 끝 -->
 	
 	<!-- 예찬 시작 ========================== -->
+	<select id="countLike" parameterType="like" resultType="_int">
+		select count(*) from product_like where member_id = #{memberId} and product_no = #{productNo}
+	</select>
+	
+	<insert id="insertLike" parameterType="like">
+		insert into product_like values(seq_product_like.nextval, #{memberId}, #{productNo}, default)
+	</insert>
+	<delete id="deleteLike" parameterType="like">
+		delete from product_like where member_id = #{memberId} and product_no = #{productNo}
+	</delete>
+	
 	<select id="selectCategory1" parameterType="category" resultType="category">
 		select * from product_category
 		<where>
