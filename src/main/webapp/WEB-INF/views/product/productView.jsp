@@ -17,7 +17,7 @@
 		<div class="col-8">
 			<div>
                 <div class="product-info">
-                    <h3>${map.product.title }</h3>
+                    <h3>${map.product.title } <button id="btn-like">♥+<span id="like-num"></span></button> </h3>
                     <br>
                     <p>좋아요/조회수:${map.product.incount }/등록일:${map.product.regDate }</p>
                     <span>가격:${map.product.price }원</span>
@@ -46,4 +46,20 @@
         </div>
     </div>
 </div>
+
+
+<script>
+$(()=>{
+// 예찬 시작 =======================================
+
+// ======================================= 예찬 끝
+// 민호 시작 =======================================
+
+// ======================================= 민호 끝
+
+
+})
+
+</script>
+
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
