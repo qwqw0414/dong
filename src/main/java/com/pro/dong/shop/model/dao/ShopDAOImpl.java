@@ -122,6 +122,10 @@ public class ShopDAOImpl implements ShopDAO{
 	public int insertInquiryComment(Map<String, String> param) {
 		return sst.insert("shop.insertInquiryComment", param);
 	}
+	@Override
+	public Map<String, String> selectShopByShopNo(int shopNo) {
+		return sst.selectOne("shop.selectShopByShopNo", shopNo);
+	}
 
 
 	

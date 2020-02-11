@@ -63,6 +63,7 @@ public interface ShopDAO {
 	int selectTotalInpuiry(int shopNo);
 	
 	int insertInquiryComment(Map<String, String> param);
+	Map<String, String> selectShopByShopNo(int shopNo);
 	
 	//========================== 주영 끝
 	
