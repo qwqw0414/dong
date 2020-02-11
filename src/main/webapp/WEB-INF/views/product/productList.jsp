@@ -6,11 +6,11 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <style>
 #productList .productList img{width: 200px; height: 200px;}
-#productList .productList{position: static;}
+#productList .productList{position: static; display: inline-block; margin-left: 50px;}
 #productList .card{width: 201px; height: 300px; float: left;}
 #productList .card .card-body{padding: 5px 0 0 8px;}
 #productList .card .card-text{margin: 0;}
-#productList #pageBar{position: static;}
+#pageBar{position: static; display:block; }
 </style>
 <div id="productList" style="position: static;">
     <div class="productList">

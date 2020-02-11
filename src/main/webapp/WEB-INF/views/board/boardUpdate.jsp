@@ -17,180 +17,202 @@ for(BoardCategory bc: list){
 } */
 %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
-
 <style>
 div#board-container{width:400px; margin:0 auto; text-align:center;}
 div#board-container input,div#board-container button{margin-bottom:15px;}
 /* 부트스트랩 : 파일라벨명 정렬*/
 div#board-container label.custom-file-label{text-align:left;}
 
-    border: 5px solid white;
-}
-
-p {
-    font-size: 18px;
-    margin:10px 0 0;
-}
-
-body,
-td {
-    font-size: 18px;
-}
-/*table 속성*/
-table{text-align: left;}
-.cost{height:50px;font-size:24px;}
-caption {
+div{
+    margin: 10px;
     padding: 0;
-    font-size: 36px;
-    line-height: 44px;
-    font-weight: 900;
-    color: #000;
-    margin-bottom: 100px;
 }
-
-th {
-    width: 30%;
-    font-size: 18px;
-    line-height: 27px;
-    font-weight: bold;
+input{
+	border: 0px;
 }
+.head_inflow{
+    padding-top: 50px;
+    padding-bottom: 34px;
+    border-color: #000;
 
-th,
-td {
-    padding-left: 10px;
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    padding-top: 38px;
+    padding-bottom: 29px;
+    border-bottom: 1px solid #333333;
+    vertical-align: top;
 }
-
-.fill {
-    background-color: rgba(51, 51, 51, 0.1);
+#title{
+    font-size: 30px;
+}
+/* .profileWriter{
+    color: #999;
+} */
+span{
+	color: #999;
+}
+#writedate{
+	float: right;
+}
+.cont_inflow{
+    margin-top: 3px;
+    font-size: 15px;
+    line-height: 25px;
+    width: 670px;
+    margin-top: 35px;
+    padding-right: 35px;
+    border-right: 1px solid #f0f0f0;
+}
+#inputtitle{
+	width: 400px;
+}
+.contents{
+    border-bottom: 1px solid #f0f0f0; 
+}
+.contentsBox{
+    overflow: hidden;
+    margin-top: 17px;
+    margin-bottom: -6px;
+    line-height: 22px;
+    word-break: break-all;
+    border-color: #000;
+    display: flex;
+    position: relative;
+    width: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    vertical-align: top;
 
 }
-
-tr {
-    height: 40px;
+.img{
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin-top: 8px;
+    margin-top: 13px;
 }
-
-td {
-    width: 350px;
+.line{
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: 1px solid #dcdcdc;
 }
-
-.head {
-    border: 5px solid white;
+.btnBox{
+    position: relative;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px; 
+    border-color: #000;
+    border-bottom: 1px solid #f0f0f0;
 }
-
-body,
-td {
-    font-size: 18px;
+.commentBox{
+    overflow: hidden;
+    margin-top: 17px;
+    margin-bottom: -6px;
+    line-height: 22px;
+    word-break: break-all;
+    border-color: #000;
+    display: flex;
+    position: relative;
+    width: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: top;
 }
-
-#filebtn{
-	width: 150px;
-	height: 40px;
-	margin-top: 10px;
-    float: right;
+.sideOther{
+    position: absolute;
+    right: 0;
+    width: 263px;
+    padding: 35px 0 0 35px;
+    background-color: #fff;
 }
-
-#filebox{
-	border-radius: 10px;
-}
-
-
 #boardUpdateBtn{
 	width: 90px;
 	height: 40px;
 	margin-top: 10px;
     float: right;
 }
-#titleinput{
-	border: 1px;
+#likeBtn{
+	
 }
 </style>
 
- <script>
-/* //수정버튼
-function boardUpdateBtn(){
-	var result = confirm("수정하시겠습니까?");
-	
-	if(result){
-	location.href = "${pageContext.request.contextPath}/board/boardUpdateEnd.do?boardNo="+${board.boardNo};
-	}
-} */
+<div class="section">
+    <!-- head -->
+    <div class="head_inflow">
+        <div id="title"><strong><input type="text" class="form-control" id="inputtitle" value="${board.boardTitle}" required></strong></div>
+        <div class="profileWriter">
+            <span id="titleinput">${board.memberId}</span> &nbsp;
+            <span>조회수 : ${board.readCount}</span> <br />
+            <span>${board.writeDate}일 작성</span>
+        </div>
+		  
+        <button type="button"  id="boardUpdateBtn" class="btn btn-outline-success btn-block" >확인</button>
+    </div>
 
-</script> 
+    <!-- content -->
+    <div class="cont_inflow">
 
-<body>
-
-   <!--nav-->
-
-  <div class="container-fluid">
-    <div class="section row">
-      <div id="filebox" class="img-holder col-lg-4 col-md-4 col-12" style="border: 2px solid #28a745; margin:0 auto;">
-      </div>
-      <div class="text-holder col-lg-6 col-md-7 col-12">
-
-        <table class="product">
-          <caption style="caption-side: top;"> 
-            <button type="button"  id="boardUpdateBtn" class="btn btn-outline-success btn-block" >확인</button>
-            <b><input id="titleinput" value="${board.boardTitle}"></b>
-          </caption>
-          <tbody>
-            <tr>
-              <th scope="col">작성자</th>
-              <td><input type="text" class="form-control" name="boardWriter" value="${board.memberId}" readonly required></td>
-            </tr>
-            <tr>
-              <th scope="col">조회수</th>
-              <td><input type="text" class="form-control" name="writeDate" value="${board.readCount}" readonly required></td>
-            </tr>
-             <tr>
-               <th scope="col">카테고리</th>
-              <td>
-               <%-- <select class="custom-select" id="boardCategory" name="boardCategory">
-				   ${board.categoryId}
-			   </select> --%>
-              <select class="form-control" name="select" id="categoryId" style="width: 150px; display: inline-block;" required="required">
-               <option value="">카테고리 선택</option>
+        <div class="contents">
+       	<input type="hidden" id="boardNo" value="${board.boardNo}" >
+        <%-- <span id="writedate">${board.writeDate}일 작성</span> --%>
+            <!-- 내용 -->
+			<%-- <div id="category">카테고리</div>
+			<select class="custom-select" id="boardCategory" name="boardCategory"><!-- </select> -->
+            <select class="form-control" name="select" id="categoryId" style="width: 150px; display: inline-block;" required="required">
+               <option value="${board.categoryId}">카테고리 선택</option>
                <option value="A01"><c:if test="${board.categoryId eq 'A01'?'selected':''}"></c:if>자유</option>
                <option value="A02"><c:if test="${board.categoryId eq 'A02'?'selected':''}"></c:if>홍보</option>
-               <option value="A03"><c:if test="${board.categoryId eq 'A03'?'selected':''}"></c:if>정보</option> 
-            </select> 
-               </td>
-            </tr> 
-            <tr>
-              <th scope="col">작성일</th>
-              <td><input type="text" class="form-control" name="writeDate" value="${board.writeDate}" readonly required></td>
-			<input type="hidden" class="form-control" name="boardNo" id="boardNo" value="${board.boardNo}" readonly required>
-            </tr>
-            <!--display : none-->
-            <tr>
-              <th scope="row">내용</th>
-              <td><textarea class="form-control" name="boardContent" id="boardContent" placeholder="내용" required>${board.boardContents }</textarea></td>
-            </tr>
-            <tr>
-              <th scope="col">첨부파일</th>
-<%--               <td><input type="text" class="form-control" name="upFile" id="upFile" value="${attachmentList.renamedFileName}" readonly></td>--%>
-<%--  	<c:forEach items="${attachmentList}" var="a" varStatus="vs">
-		<button type="button" 
-				class="btn btn-outline-success btn-block"
-				onclick="fileDownload('${a.originalFileName}','${a.renamedFileName }');">
-			첨부파일${vs.count} - ${a.originalFileName }
-		</button>
-	</c:forEach>  --%>
-            </tr>
-			
+               <option value="A04"><c:if test="${board.categoryId eq 'A04'?'selected':''}"></c:if>정보</option> 
+            </select>  --%>
+            
+            <div class="contentsBox">
+                <textarea class="form-control" name="boardContent" id="boardContent" placeholder="내용" required>${board.boardContents }</textarea>
+            </div>
+    
+            <!-- 이미지 -->
+            <div class="img">
+                <img src="" alt="">
+                <span class="line"></span>
+            </div>
+        </div>
+
+        <div class="btnBox">
+            <button id="likeBtn">좋아요</button>
+            <button >신고</button>
+        </div>
        
-        </table>
-        <!--table-->
-      </div>
-	</div>
-	<br>
-	<br>
+        <!-- 댓글 -->
+        <div class="commentBox"> 댓글
+<%--==================현규시작================ --%>
+<hr />
+
+
+
+<%--==================현규끝================ --%>
+            
+        </div>
+
+    </div>
+
+    
+
+
+    <!-- sideother -->
+    <div class="sideOther"></div>
 </div>
+
 <script>
 $(()=>{
-	var $boardNo = $(".product #boardNo");
-	var $boardTitle = $(".product #titleinput");
-	var $categoryId = $(".product #categoryId");
-	var $boardContents = $(".product #boardContent");
+	var $boardNo = $(".contents #boardNo");
+	var $boardTitle = $("#title #inputtitle");
+	var $categoryId = $("#category #categoryId");
+	var $boardContents = $(".contentsBox #boardContent");
 		
 	/* 수정 에이작스 */
 		$("#boardUpdateBtn").click(function (){
@@ -230,19 +252,5 @@ $(()=>{
 
 	}); 
 </script>
-
-<%--==================현규시작================ --%>
-<hr />
-
-
-
-<%--==================현규끝================ --%>
-
-
-
-
-  
-</body>
-
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

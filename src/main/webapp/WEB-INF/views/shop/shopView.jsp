@@ -7,6 +7,73 @@
 <%
 	Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
 %>
+<style>
+
+.productList .card {width: 201px; border-radius: 0; height: 280px;}
+.productList .card img{width: 200px; height: 200px; border: none;}
+#shop-contents .myProductList .myProduct .card{float: left; margin: 10px 8px 10px 8px}
+#shop-contents .myProduct {width: 1200px; display: inline-block; margin: auto; position:static; margin-left:50px; /* height: 620px; */ }
+#shop-contents {width: 1300px;}
+#shop-contents .myProductList{width: 100%;}
+.myProductList .card-body{padding: 10px 0 0px 8px;}
+.myProductList .regDate{font-size: 0.9em; position: absolute; right: 10px; bottom: 10px;}
+
+#shopView{	
+	width: 1100px;
+}
+#shopDiv{
+	display: inline-block;
+	position: relative;
+}
+#shopImg1{
+	width: 200px;
+	height: 200px;
+	display: inline-block;
+	padding: auto;
+	border-radius: 50%;
+}
+#shopInfoDiv{
+	width: 1100px;
+	height: 300px;
+	display: inline-block;
+}
+.img-thumbnail{
+	border: 2px solid lightgray !important;
+} 
+#shopDetailInfoDiv{
+	display: inline-block;
+	position: absolute;
+	width: 600px;	
+	left: 350px;
+	top: 60px;
+}
+.my-hr3 {
+    border: 0;
+    height: 3px;
+    background: #ccc;
+}
+#imgUpBtn{
+	position: absolute;
+	top: 250px;
+	left: 120px;
+}
+#up_btn{
+	position: absolute;
+	left: 240px;
+	width: 50px;
+	height: 54px;
+}
+#shopImgDiv{
+	width: 300px;
+	height: 300px;
+	text-align: center;
+	padding-top: 35px;
+	margin-bottom: 30px;
+}
+#shopNameSpan{
+	font-weight: bold;
+}
+</style>
 
 <div id="shopView"></div>
 <input type="hidden" name="memberLoggedIn" value="<%= memberLoggedIn.getMemberId()%>"/>
@@ -103,6 +170,181 @@
 	<hr class="my-hr3"/><br />
 	
 	<!-- 넘어오면 다 내꺼 -->
+<<<<<<< HEAD
+	<style>
+	#shopView-nav {}
+	#shopView-nav ul{list-style:none; margin:0; padding:0;}
+	#shopView-nav li{float: left;}
+	#shopView-nav ul li div{width: 183px; font-size: 1em; text-align: center; padding: 15px;}
+	#shopView-nav .shop-nav-selected{border: 1px black  solid; border-bottom: 0px; font-weight: bold;}
+	#shopView-nav .shop-nav-disabled{border: 1px gray solid; border-bottom: 1px black soid; background-color: rgba(238, 243, 243); color: rgb(90, 90, 90); opacity: 0.8;}
+	#shopView-nav .shop-nav{cursor: pointer;}
+	#shopView-nav #shop-contents{margin-top: 80px;}
+	/* 주영시작 */
+	#shopInquiryText{
+		outline: none;
+		resize: none;
+	}
+	#shopInquiryCommentText{
+		outline: none;
+		resize: none;
+	}
+	#shopInquiryText::placeholder {
+		padding-top: 25px;
+		padding-left: 5px;
+	}
+	#shopInquiryTextDiv{
+		margin-top: 20px;
+		margin-bottom: 0px;
+	}
+	#shopInquiryBtn{
+		background-color: white;
+		outline: none;
+		border: 1px solid lightgray;
+		width: 70px;
+		height: 30px;
+		margin: 10px 10px;
+		
+	}
+	#shopInquiryBtnDiv{
+		margin-top: 0px;
+		border: 1px solid lightgray;
+		width: 740px;
+		text-align: right;
+	}
+	#inquiryContentCheck{
+		float: left;
+		margin-top: 15px;
+		margin-left: 10px;
+	}
+	#inquiryWriterTag{
+		font-weight: bold;
+	}
+	#inquiryImgTag{
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		margin-bottom: -60px;
+	}
+	#inquiryDetail{
+		margin-left: 80px;
+	}
+	#commentInsertDiv{
+		display: block;
+	}
+	#commentDeleteDiv{
+		display: block;
+	}
+	.commentBtn{
+		background-color: white;
+		outline: none;
+		border: 1px solid lightgray;
+		margin-left: 70px;
+	}
+	.commentDelBtn{
+		background-color: white;
+		outline: none;
+		border: 1px solid lightgray;
+		margin-left: 5px;
+	}
+	#cancleRecommentBtn{
+		position: relative;
+		top: -8px;
+	}
+	#shopInquiryCommentEndBtn{
+		background-color: white;
+		outline: none;
+		border: 1px solid lightgray;
+		margin-left: 5px;
+		margin-bottom: -60px;
+		position: relative;
+		top: -8px;
+	}
+	#inquiryCommentDiv{
+		margin-left: 35px;
+	}
+	.recommentDiv{
+		margin-left: 100px;
+	}
+	.replyIcon{
+		width: 50px;
+		height: 50px;
+		display: inline-block;
+		margin-left: -80px;
+		/* margin-bottom: -50px; */
+	}
+	/* .replyIconDiv{
+		display: inline-block;
+	} */
+	#inquiryRecommentDetail{
+		margin-left: 35px;
+   	    margin-top: -17px;
+	}
+	#page{
+		position:static;
+		display: block;
+	}
+	/* 주영 끝 */
+	</style>
+	
+	
+	
+	<script>
+	/***********하진 시작*/
+	$(()=>{
+		
+		var memberId = $("[name=memberLoggedIn]").val();
+		
+		loadMyProduct(1);
+		
+		function loadMyProduct(cPage){
+			$.ajax({
+				url:"${pageContext.request.contextPath}/shop/loadMyProduct",
+				contentType: "application/json; charset=utf-8",
+				data:{
+					memberId:memberId,
+					cPage:cPage
+				},
+				dataType: "json",
+				success:data=>{
+					console.log("성");
+					 let html = "";
+					 var $myProduct = $("myProduct");
+				        data.product.forEach(product => {
+
+				          let preTitle = product.TITLE;
+
+				          if(preTitle.length > 12) 
+				            preTitle = preTitle.substring(0,12)+"..."
+
+				          html += "<div class='card' style='width: 232px; height: 300px;'>";
+				          html += "<img src='${pageContext.request.contextPath}/resources/upload/product/" + product.PHOTO + "' class='card-img-top'>";
+				          html += '<div class="card-body">';
+				          html += '<p class="card-title">' + preTitle + '</p>';
+				          html += '<p class="card-text"><span>' + numberComma(product.PRICE) + '<small>원</small></span></p>';
+				          html += '</div></div>'
+				        });
+				        $("#myProduct").html(html);
+				        $("#pageBar").html(data.pageBar);
+				},
+				error:(x,s,e)=>{
+					console.log("실패",x,s,e);
+				},
+				complete: ()=>{
+		            $("#pageBar a").click((e)=>{
+		            	loadMyProduct($(e.target).siblings("input").val());
+		            });
+		        }
+				
+			});
+			
+		}
+		
+		
+	});
+	/*하진 끝***********/
+	</script>
+
 	
 	<div id="shopView-nav">
 		<div style="height: 20px;">
@@ -240,13 +482,12 @@ $(()=>{
 						html += "<span>" + data.list[i].WRITE_DAY + "</span>";
 						html += "<p>" + data.list[i].INQUIRY_CONTENT + "</p>";
 						html += "</div>";
-						if (memberId == data.list[i].MEMBER_ID) {
+						//로그인한 아이디 = 문의사항을 작성한 아이디가 같다면 
+						if (("${map.MEMBER_ID}" == memberId) || (memberId == data.list[i].MEMBER_ID)) {
 							html += "<button value=" + data.list[i].INQUIRY_NO + " id='insertInquiryCommentBtn' class='commentBtn' >"
 							html += "<img  src='https://assets.bunjang.co.kr/bunny_desktop/images/reply@2x.png' width='17' height='17'>";
 							html += "댓글";
 							html += "</button>";
-						}
-						if (("${map.MEMBER_ID}" == memberId) && (memberId == data.list[i].MEMBER_ID)) {
 							html += "<button id='deleteCommentBtn' value=" + data.list[i].INQUIRY_NO + " class='commentDelBtn'>";
 							html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='17'>";
 							html += "삭제";
@@ -257,7 +498,6 @@ $(()=>{
 					/* 대댓글이라면 */
 					else {
 						html += "<div class='recommentDiv'>";
-						/* html += "<hr width='745px'  align='left'/>"; */
 						html += "<img class='replyIcon' src='${pageContext.request.contextPath}/resources/images/reply.PNG'/>";
 						html += "<img id='inquiryImgTag' src='${pageContext.request.contextPath}/resources/upload/shopImage/" + data.list[i].IMAGE + "'/>";
 						html += "<div id='inquiryRecommentDetail'>";
@@ -305,26 +545,29 @@ $("#shopView #shopInquiryBtn").click(insertInquiry);
 		});
 
 	}
+//////////////////////////////
+$(document).on("click", "#shopView #deleteCommentBtn", function(e){
+	var deleteCommentBtnTarget = $(e.target);
+	console.log("addgfgdgfdgdfg");
+	console.log(deleteCommentBtnTarget);
+	var deleteCommentBtn = deleteCommentBtnTarget.val();
+	console.log("asdasd");
+	console.log(deleteCommentBtn);
 
-$("#shopView #deleteCommentBtn").click(deleteComment);
-	function deleteComment(btn) {
+	$.ajax({
+		url: "${pageContext.request.contextPath}/shop/deleteShopInquriy",
+		method: "POST",
+		data: { deleteCommentBtn: deleteCommentBtn },
+		success: data => {
+			console.log(data);
+			selectInquiry();
+		},
+		error: (x, s, e) => {
+			console.log("ajax 요청 실패!");
+		}
+	});
+});
 
-		var deleteCommentBtn = $(btn).val();
-		console.log(deleteCommentBtn);
-
-		$.ajax({
-			url: "${pageContext.request.contextPath}/shop/deleteShopInquriy",
-			method: "POST",
-			data: { deleteCommentBtn: deleteCommentBtn },
-			success: data => {
-				console.log(data);
-				selectInquiry();
-			},
-			error: (x, s, e) => {
-				console.log("ajax 요청 실패!");
-			}
-		});
-	}
 $(document).on("click", "#shopView #insertInquiryCommentBtn", function(e){
 		$(e).attr("disabled", true);
 		var btnTarget = $(e.target);
@@ -341,7 +584,8 @@ $(document).on("click", "#shopView #insertInquiryCommentBtn", function(e){
 		html += "취소";
 		html += "</button>";
 		html += "</div>";
-		btnTarget.next().html(html);
+		
+		btnTarget.next().next().html(html);
 	});
 	
 $(document).on("click", "#shopView #cancelRecommentBtn", function(e){

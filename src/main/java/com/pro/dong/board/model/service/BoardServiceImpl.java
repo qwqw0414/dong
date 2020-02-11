@@ -59,6 +59,10 @@ public class BoardServiceImpl implements BoardService {
 	public List<Map<String, String>> loadBoardReportCategory() {
 		return bd.loadBoardReportCategory();
 	}
+	@Override
+	public int insertBoardReport(Map<String, String> param) {
+		return bd.insertBoardReport(param);
+	}
 	//========================== 하진 끝
 		
 	// 근호 시작 ==========================
@@ -106,7 +110,10 @@ public class BoardServiceImpl implements BoardService {
 		return bd.boardUpdate(board);
 	}
 
-
+	@Override
+	public int insertBoardReputation(Map<String, String> map) {
+		return bd.insertBoardReputation(map);
+	}
 	//========================== 지은 끝
 		
 	// 예찬 시작 ==========================
@@ -132,6 +139,7 @@ public class BoardServiceImpl implements BoardService {
 	public int deleteLevel1(int commentNo) {
 		return bd.deleteLevel1(commentNo);
 	}
+
 
 	@Override
 	public int countComment() {
