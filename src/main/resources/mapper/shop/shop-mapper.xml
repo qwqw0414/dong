@@ -110,6 +110,17 @@
 		insert into shop_inquiry values(seq_shop_inquiry.nextval, #{shopInquiryCommentWriter}, #{shopInquiryCommentShopNo}, #{shopInquiryCommentText}, 2, default, #{inquiryRefNo})
 	</insert>
 	
+	<select id="selectMyWishList" resultType="map">
+		select p.*, l.like_no,  a.photo, l.reg_date as like_date 
+		from product_like L left join product P on l.product_no = p.product_no
+                            left join product_attachment A on p.product_no = a.product_no
+		where l.member_id = #{memberId} and  a.thumbnail='Y'
+	</select>
+	
+	<select id="selectMyWishListTotalContents" resultType="_int">
+		select count(*) from product_like where member_id = #{memberId}
+	</select>
+	
 	<!-- ==========================  주영 끝 -->
 	
 	<!-- 현규 시작 ========================== -->

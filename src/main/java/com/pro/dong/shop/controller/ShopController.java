@@ -313,10 +313,7 @@ public class ShopController {
 	@RequestMapping("/deleteShopInquriy")
 	@ResponseBody
 	public Map<String, Integer> deleteShopInquriy(@RequestParam("deleteCommentBtn") int deleteCommentBtn){
-		log.info("들어왔나요?");
-		
 		int result = ss.deleteShopInquriy(deleteCommentBtn);
-		log.info("result={}", result);
 		Map<String, Integer> map = new HashMap<>();
 		map.put("result", result);
 		return map;
@@ -347,6 +344,30 @@ public class ShopController {
 		log.info("resultInsert={}", result);
 		
 		map.put("s", s);
+		
+		return map;
+	}
+	
+	@RequestMapping("/selectMyWishList")
+	@ResponseBody
+	public Map<String, Object> selectMyWishList(@RequestParam("memberId") String memberId,
+													  @RequestParam(value="cPage",defaultValue="1") int cPage){
+		final int numPerPage = 10;
+		List<Map<String, Object>> list = new ArrayList<>();
+		
+		//페이징바 작업
+		int totalContents = ss.selectMyWishListTotalContents(memberId);
+		
+		//게시글 조회
+		list = ss.selectMyWishList(memberId);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("list", list);
+		map.put("cPage", cPage);
+		map.put("numPerPage", numPerPage);
+		map.put("totalContents", totalContents);
+		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
+		map.put("pageBar", pageBar);
 		
 		return map;
 	}

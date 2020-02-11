@@ -65,7 +65,12 @@ public interface ShopService {
 	int selectTotalInpuiry(int shopNo);
 	
 	int insertInquiryComment(Map<String, String> param);
+	
 	Map<String, String> selectShopByShopNo(int shopNo);
+	
+	List<Map<String, Object>> selectMyWishList(String memberId);
+	
+	int selectMyWishListTotalContents(String memberId);
 	
 	
 	//========================== 주영 끝

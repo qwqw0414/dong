@@ -128,14 +128,26 @@ public class ShopDAOImpl implements ShopDAO{
 	public int selectTotalInpuiry(int shopNo) {
 		return sst.selectOne("shop.selectTotalInpuiry", shopNo);
 	}
+	
 	@Override
 	public int insertInquiryComment(Map<String, String> param) {
 		return sst.insert("shop.insertInquiryComment", param);
 	}
+	
 	@Override
 	public Map<String, String> selectShopByShopNo(int shopNo) {
 		return sst.selectOne("shop.selectShopByShopNo", shopNo);
 	}
+	
+	@Override
+	public List<Map<String, Object>> selectMyWishList(String memberId) {
+		return sst.selectList("shop.selectMyWishList", memberId);
+	}
+	@Override
+	public int selectMyWishListTotalContents(String memberId) {
+		return sst.selectOne("shop.selectMyWishListTotalContents", memberId);
+	}
+	
 
 
 	
