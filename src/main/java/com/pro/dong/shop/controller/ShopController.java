@@ -126,16 +126,19 @@ public class ShopController {
 	
 	// 주영 시작 ==========================
 	@RequestMapping("/shopView.do")
-	public ModelAndView myshopView(HttpServletRequest request) {
-		Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
-		String memberId = memberLoggedIn.getMemberId();
+	public ModelAndView myshopView(ModelAndView mav,
+								   @RequestParam(value="memberId", defaultValue = "") String memberId, 
+								   @RequestParam(value="shopNo", defaultValue = "0") int shopNo ) {
+		Map<String, String> map = new HashMap<>();
 		
-		ModelAndView mav = new ModelAndView();
-		
-		Map<String, String> map = ss.selectOneShop(memberId);
+		if(memberId.equals("")) {
+			map = ss.selectShopByShopNo(shopNo);
+		}
+		else if(Integer.toString(shopNo).equals("0")) {
+			map = ss.selectOneShop(memberId);
+		}
 		
 		mav.addObject("map", map);
-		
 		return mav;
 	}
 	
