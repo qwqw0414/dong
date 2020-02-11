@@ -6,7 +6,9 @@
 
 <h1>상품 상세보기</h1>
 <hr>
-
+<style>
+#productView #photo img{position: absolute;}
+</style>
 <div class="card mb-3 border-light" id="productView">
     <div class="row">
 		<div class="col-4" id="photo">
