@@ -35,12 +35,12 @@ public class AdminServiceImpl implements AdminService {
 		return ad.selectAddressSido();
 	}
 	@Override
-	public List<String> selectAddressSigungu() {
-		return ad.selectAddressSigungu();
+	public List<String> selectAddressSigungu(String sido) {
+		return ad.selectAddressSigungu(sido);
 	}
 	@Override
-	public List<String> selectAddressDong() {
-		return ad.selectAddressDong();
+	public List<String> selectAddressDong(String sigungu) {
+		return ad.selectAddressDong(sigungu);
 	}
 	// ==========================민호 끝
 
@@ -71,6 +71,8 @@ public class AdminServiceImpl implements AdminService {
 		return ad.memberDelete(memberId);
 	}
 	// ========================== 하진 끝
+
+
 
 
 

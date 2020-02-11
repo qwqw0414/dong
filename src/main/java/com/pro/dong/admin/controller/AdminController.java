@@ -33,18 +33,28 @@ public class AdminController {
 	
 	// 민호 시작 ==========================
 	@RequestMapping("productList.do")
-	public ModelAndView productList(ModelAndView mav) {
-		
-		//주소 조회
-		List<String> sido = as.selectAddressSido();
-		List<String> sigungu = as.selectAddressSigungu();
-		List<String> dong = as.selectAddressDong();
-		mav.addObject("sido", sido);
-		mav.addObject("sigungu", sigungu);
-		mav.addObject("dong", dong);
-		mav.setViewName("/admin/productList");
-		return mav;
+	public void productList() {
+
 	}
+	@ResponseBody
+	@RequestMapping(value="/loadSidoList", produces="text/plain;charset=UTF-8")
+	public String loadSidoList(){
+		List<String> list = as.selectAddressSido();
+		return gson.toJson(list);
+	}
+	@ResponseBody
+	@RequestMapping(value="/loadSigunguList", produces="text/plain;charset=UTF-8")
+	public String loadSigunguList(@RequestParam(value="sido")String sido){
+		List<String> list = as.selectAddressSigungu(sido);
+		return gson.toJson(list);
+	}
+	@ResponseBody
+	@RequestMapping(value="/loadDongList", produces="text/plain;charset=UTF-8")
+	public String loadDongList(@RequestParam(value="sigungu")String sigungu){
+		List<String> list = as.selectAddressDong(sigungu);
+		return gson.toJson(list);
+	}
+	
 	@RequestMapping("/loadProductList")
 	@ResponseBody
 	public Map<String, Object> loadProductList(@RequestParam(value="sido", defaultValue="")String sido, @RequestParam(value="sigungu", defaultValue="")String sigungu, @RequestParam(value="dong", defaultValue="")String dong,

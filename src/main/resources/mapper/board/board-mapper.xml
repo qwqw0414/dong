@@ -156,7 +156,7 @@
 	</select>
 	
 	<delete id="deleteLevel1">
-	delete from board_comment where comment_no=#{commentNo}
+	delete from board_comment where comment_no=#{commentNo} or comment_ref=#{commentNo}
 	
 	</delete>
 	
