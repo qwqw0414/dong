@@ -6,32 +6,22 @@
 
 <h1>상품 상세보기</h1>
 <hr>
-<div id="productView">
-<div id="photo">
-<c:forEach items="${map.attachment}" var="attch">
-    <img src="${pageContext.request.contextPath}/resources/upload/product/${attch.photo}" alt="">
-</c:forEach>
-</div>
-${map }
 
-</div>
-${map.product.title}
-<div class="card mb-3 border-light" style="max-width: 100%;">
-    
-    
+<div class="card mb-3 border-light" id="productView">
     <div class="row">
-		<div class="col-4">
+		<div class="col-4" id="photo">
 		<c:forEach items="${map.attachment}" var="attch">
   		  <img src="${pageContext.request.contextPath}/resources/upload/product/${attch.photo}" alt="">
 		</c:forEach>
 		</div>
 		<div class="col-8">
 			<div>
-                <div class="goods-info">
-                    <h3>${map.product.title }</h3><br>
-                    <p class='goods-price-comment'>좋아요/조회수:${map.product.incount }/등록일:${map.product.regDate }</p>
-                    <span class='price-info before-price'>가격</span>
-                    <hr class="divide-sm">
+                <div class="product-info">
+                    <h3>${map.product.title }</h3>
+                    <br>
+                    <p>좋아요/조회수:${map.product.incount }/등록일:${map.product.regDate }</p>
+                    <span>가격:${map.product.price }원</span>
+                    <hr>
                     <dl>
                     <dt>상세정보</dt>
                     <br>
@@ -42,9 +32,9 @@ ${map.product.title}
 				    <dd>거래지역:${map.product.sido } ${map.product.sigungu } ${map.product.dong }</dd>
                 
                 </dl>
-                    <hr class="divide-sm">
+                    <hr>
                     <br />
-                    <span>판매자 정보:${map.product.shopNo }</span> <hr class="divide-sm"><br>
+                    <span>판매자 정보:${map.product.shopNo }</span> <hr><br>
                 </div>
                     
                     <div class="something-btn">
