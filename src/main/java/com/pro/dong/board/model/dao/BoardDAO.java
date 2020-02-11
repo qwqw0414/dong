@@ -60,9 +60,11 @@ public interface BoardDAO {
 	// 현규 시작 ==========================
 	int insertBoardComment(BoardComment bc);
 
-	List<Map<String, String>> selectBoardCommentList(int boardNo);
+	List<Map<String, String>> selectBoardCommentList(int boardNo, int cPage, int numPerPage);
 
 	int deleteLevel1(int commentNo);
+
+	int countComment();
 
 
 

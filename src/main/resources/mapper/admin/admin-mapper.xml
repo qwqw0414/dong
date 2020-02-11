@@ -48,13 +48,13 @@
 		select sido from member
 		group by sido
 	</select>
-	<select id="selectAddressSigungu" resultType="string">
-		select sigungu from member
-		group by sigungu
+	<select id="selectAddressSigungu" parameterType="string" resultType="string">
+		select distinct sigungu from member
+		where sido = #{sido}
 	</select>
-	<select id="selectAddressDong" resultType="string">
-		select dong from member
-		group by dong
+	<select id="selectAddressDong" parameterType="string" resultType="string">
+		select distinct dong from member
+		where sigungu = #{sigungu}
 	</select>
 	<!-- ==========================  민호 끝 -->
 	

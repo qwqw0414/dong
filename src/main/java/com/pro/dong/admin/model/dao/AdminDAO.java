@@ -13,8 +13,8 @@ public interface AdminDAO {
 	int selectProductTotalContents(Map<String, String> param);
 	List<Product> loadProductList(int cPage, int numPerPage, Map<String, String> param);
 	List<String> selectAddressSido();
-	List<String> selectAddressSigungu();
-	List<String> selectAddressDong();
+	List<String> selectAddressSigungu(String sido);
+	List<String> selectAddressDong(String sigungu);
 	// ==========================민호 끝
 
 	// 하진 시작 ==========================
@@ -26,6 +26,7 @@ public interface AdminDAO {
 	
 	int memberDelete(String memberId);
 	// ========================== 하진 끝
+	
 
 
 	// 근호 시작 ==========================
