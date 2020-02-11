@@ -122,7 +122,7 @@ public class BoardController {
 		
 		@RequestMapping("/insertBoardReport")
 		@ResponseBody
-		public Map<String, Object> insertBoardReport(@RequestParam("reportComment") String reportComment,
+		public String insertBoardReport(@RequestParam("reportComment") String reportComment,
 													@RequestParam("categoryId") String categoryId,
 													@RequestParam("memberId") String memberId,
 													@RequestParam("boardNo") String boardNo){
@@ -135,11 +135,11 @@ public class BoardController {
 			param.put("memberId",memberId);
 			param.put("boardNo",boardNo);
 			
-			/*int status = bs.insertBoardReport(param);*/
+			int status = bs.insertBoardReport(param);
 			
-			/*result.put("status", status);*/
 			
-			return result;
+			
+			return ""+status;
 		}
 	//========================== 하진 끝
 		

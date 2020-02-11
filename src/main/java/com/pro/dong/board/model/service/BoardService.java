@@ -26,6 +26,7 @@ public interface BoardService {
 	// 하진 시작 ==========================
 	List<Board> selectBoardList();
 	List<Map<String, String>> loadBoardReportCategory();
+	int insertBoardReport(Map<String, String> param);
 	//========================== 하진 끝
 		
 	// 근호 시작 ==========================
