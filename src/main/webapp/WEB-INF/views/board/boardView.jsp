@@ -265,8 +265,8 @@ $(function(){
 	
 	$("#report-btn").click(()=>{
 		
-		var textArea = $("#boardReportContents").val();
-		var boardReportCategory = $("#boardReportCategory").val();
+		var reportComment = $("#boardReportContents").val();
+		var categoryId = $("#boardReportCategory").val();
 		var memberId = $("[name=memberLoggedIn]").val();
 		var boardNo = $("[name=boardNo]").val();
 		
@@ -281,8 +281,10 @@ $(function(){
 			dataType: "json",
 			type: "POST",
 			data: {
-				textArea:textArea,
-				boardReportCategory:boardReportCategory
+				reportComment:reportComment,
+				categoryId:categoryId,
+				memberId:memberId,
+				boardNo:boardNo
 			},
 			success: data=>{
 				if(data == 1){
@@ -299,34 +301,7 @@ $(function(){
 		
 	});
 	
- 	/* function insertBoardReport(textArea,boardReportCategory){
-		var textArea = textArea;
-		var boardReportCategory = boardReportCategory;
-		
-		console.log(memberId);
-		$.ajax({
-			url:"${pageContext.request.contextPath}/board/insertBoardReport",
-			dataType: "json",
-			type: "POST",
-			data: {
-				textArea:textArea,
-				boardReportCategory:boardReportCategory
-			},
-			success: data=>{
-				if(data == 1){
-					alert("게시글 신고가 정상적으로 접수되었습니다.");
-				}
-				else{
-					alert("게시글 신고 실패");
-				}
-			},
-			error:(x,s,e)=>{
-				console.log("실패",x,s,e);
-			}
-		});
-		
-	} */
-	
+
 });
 
 </script>

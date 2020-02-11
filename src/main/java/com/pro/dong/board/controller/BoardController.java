@@ -119,6 +119,28 @@ public class BoardController {
 
 			return gson.toJson(result);
 		}
+		
+		@RequestMapping("/insertBoardReport")
+		@ResponseBody
+		public Map<String, Object> insertBoardReport(@RequestParam("reportComment") String reportComment,
+													@RequestParam("categoryId") String categoryId,
+													@RequestParam("memberId") String memberId,
+													@RequestParam("boardNo") String boardNo){
+			
+			Map<String, Object> result = new HashMap<>();
+			
+			Map<String, String> param = new HashMap<>();
+			param.put("reportComment",reportComment);
+			param.put("categoryId",categoryId);
+			param.put("memberId",memberId);
+			param.put("boardNo",boardNo);
+			
+			/*int status = bs.insertBoardReport(param);*/
+			
+			/*result.put("status", status);*/
+			
+			return result;
+		}
 	//========================== 하진 끝
 		
 	// 근호 시작 ==========================
@@ -300,42 +322,38 @@ public class BoardController {
 	@ResponseBody
 	public String insertComments(HttpSession session, BoardComment bc, @RequestParam("boardNo") int boardNo) {
 		
+		
+		log.info("ddddddddddddddddddddddddd={}",bc);
+		
+		
 		int result = bs.insertBoardComment(bc);
-		System.out.println(result);
 		
 		
 		
-		return gson.toJson(result)+"";
+		List<Map<String,String>>list = null;
+		if (result>0) {
+			list = bs.selectBoardCommentList(boardNo);
+		}
+		
+		
+		log.info("result={}",result);
+		
+		return gson.toJson(list)+"";
 	}
 	
 	
 	//댓글 불러들이기
 	@ResponseBody
 	@RequestMapping(value="/selectBoardComment", produces="text/plain;charset=UTF-8")
-	public String selectBoardCommentList(@RequestParam("boardNo") int boardNo, @RequestParam("cPage") int cPage) {
-		int numPerPage=10;
+	public String selectBoardCommentList(@RequestParam("boardNo") int boardNo) {
 		log.info("파라미터로받아온 boardNo{}",boardNo);
 		List<Map<String,String>>list = null;
 		
-		list = bs.selectBoardCommentList(boardNo,cPage,numPerPage);
+		list = bs.selectBoardCommentList(boardNo);
 		log.debug("DB에서 가져온 리스트={}",list);
 		
-		
-		
-		int totalContents = bs.countComment();
-		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
-		
-		Map<String,Object> result = new HashMap<>();
-		result.put("list", list);
-		result.put("pageBar", pageBar);
-		
-		
-		
-		return gson.toJson(result)+"";
+		return gson.toJson(list)+"";
 	}
-	
-	
-	
 	
 	//댓글 지우기
 	@ResponseBody
@@ -348,6 +366,7 @@ public class BoardController {
 		
 		int result= bs.deleteLevel1(commentNo);
 		
+		log.info("지워젓나={}",result);
 		
 //		List<Map<String,String>>list = null;
 //		if (result>0) {
@@ -355,7 +374,7 @@ public class BoardController {
 //		}
 		
 		
-		return gson.toJson(result)+"";
+		return result+"";
 	}
 	
 	//대댓글 쓰기
@@ -366,11 +385,15 @@ public class BoardController {
 		
 		int result = bs.insertBoardComment(bc);
 		
+		List<Map<String,String>>list = null;
+		if (result>0) {
+			list = bs.selectBoardCommentList(boardNo);
+		}
 		
 		
 		log.info("result={}",result);
 		
-		return gson.toJson(result)+"";
+		return gson.toJson(list)+"";
 		
 
 	}
