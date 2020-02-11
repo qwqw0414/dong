@@ -22,7 +22,16 @@ footer .line{border: 1px rgb(95, 95, 95) solid; width: 100%;}
 /* API */
 
 /* 민호 시작 ========================== */
-
+#follow{
+	position: absolute;
+	left: 50px;
+}
+#follow:hover{
+	cursor: pointer;
+}
+#follow #followIcon{
+	width: 20px;
+}
 /* ==========================민호 끝 */
 	
 /* 하진 시작 ========================== */

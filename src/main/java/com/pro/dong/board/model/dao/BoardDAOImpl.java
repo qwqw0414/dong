@@ -58,6 +58,10 @@ public class BoardDAOImpl implements BoardDAO {
 	public List<Board> selectBoardList() {
 		return sst.selectList("board.selectBoardList");
 	}
+	@Override
+	public List<Map<String, String>> loadBoardReportCategory() {
+		return sst.selectList("board.loadBoardReportCategory");
+	}
 	//========================== 하진 끝
 		
 	// 근호 시작 ==========================
@@ -101,6 +105,12 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 	
 
+	@Override
+	public int insertBoardReputation(Map<String, String> map) {
+		return sst.insert("board.insertBoardReputation", map);
+	}
+	
+	
 	//========================== 지은 끝
 		
 	// 예찬 시작 ==========================
@@ -132,6 +142,10 @@ public class BoardDAOImpl implements BoardDAO {
 	public int countComment() {
 		return sst.selectOne("board.countComment");
 	}
+
+
+
+	
 
 
 

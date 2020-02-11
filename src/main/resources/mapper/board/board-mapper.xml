@@ -73,6 +73,10 @@
 	]]>
 		
 	</select>
+	
+	<select id="loadBoardReportCategory" resultType="map">
+		select * from report_category
+	</select>
 	<!-- ==========================  하진 끝 -->
 	
 	<!-- 근호 시작 ========================== -->
@@ -122,6 +126,10 @@
 		update board set board_contents = #{boardContents}, board_title = #{boardTitle}, category_id = #{categoryId} where board_no = #{boardNo}
 	</update>
 	
+	<insert id="insertBoardReputation" parameterType="map">
+		insert into board_reputation (reputation_no,board_no,member_id,reg_date)
+		values(seq_board_reputation.nextval,#{boardNo},#{memberId},default)
+	</insert>
 	<!-- ==========================  지은 끝 -->
 	
 	<!-- 예찬 시작 ========================== -->

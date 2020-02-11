@@ -25,6 +25,7 @@ public interface BoardService {
 		
 	// 하진 시작 ==========================
 	List<Board> selectBoardList();
+	List<Map<String, String>> loadBoardReportCategory();
 	//========================== 하진 끝
 		
 	// 근호 시작 ==========================
@@ -45,6 +46,7 @@ public interface BoardService {
 
 	int boardUpdate(Board board);
 
+	int insertBoardReputation(Map<String, String> map);
 	//========================== 지은 끝
 		
 	// 예찬 시작 ==========================
@@ -62,7 +64,9 @@ public interface BoardService {
 
 	int deleteLevel1(int commentNo);
 
+
 	int countComment();
+
 
 
 
