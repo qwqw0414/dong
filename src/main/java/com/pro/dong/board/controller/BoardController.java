@@ -285,14 +285,14 @@ public class BoardController {
 	//댓글 등록
 	@RequestMapping(value="/insertComments", produces="text/plain;charset=UTF-8")
 	@ResponseBody
-	public Map<String,Object> insertComments(HttpSession session, BoardComment bc, @RequestParam("boardNo") int boardNo) {
+	public String insertComments(HttpSession session, BoardComment bc, @RequestParam("boardNo") int boardNo) {
 		
 		int result = bs.insertBoardComment(bc);
+		System.out.println(result);
 		
-		Map<String,Object> map = new HashMap<>();
-		map.put("result", result);
 		
-		return map;
+		
+		return gson.toJson(result)+"";
 	}
 	
 	
@@ -342,23 +342,22 @@ public class BoardController {
 //		}
 		
 		
-		return result+"";
+		return gson.toJson(result)+"";
 	}
 	
 	//대댓글 쓰기
 	@ResponseBody
 	@RequestMapping(value="/insertLevel2", produces="text/plain;charset=UTF-8")
-	public int insertLevel2(BoardComment bc,@RequestParam("boardNo")int boardNo) {
+	public String insertLevel2(BoardComment bc,@RequestParam("boardNo")int boardNo) {
 		log.debug("dddddd={}",bc);
 		
 		int result = bs.insertBoardComment(bc);
 		
-		List<Map<String,String>>list = null;
 		
 		
 		log.info("result={}",result);
 		
-		return result;
+		return gson.toJson(result)+"";
 		
 
 	}
