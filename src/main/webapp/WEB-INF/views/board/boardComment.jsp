@@ -62,8 +62,13 @@
 				html+="<input type='hidden' value="+data.list[i].COMMENT_NO+" id='commentNo_'/>";
 				html+="<p style='margin-bottom:0px'><strong>"+data.list[i].MEMBER_ID+ "</strong>  <small>["+data.list[i].WRITE_DAY+"]</small><br> " + data.list[i].CONTENTS+"</p>";
 				html+="<button id='showLevel2form' onclick='showLevel2form(this)'><img  src='https://assets.bunjang.co.kr/bunny_desktop/images/reply@2x.png' width='17' height='17'>답글</button>";
-				html+="<button id='deleteLevel1' onclick='deleteLevel1(this)'><img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='17'>삭제</button>";
+					//내가쓴 level1댓글에만 삭제버튼 생성	
+					if($("[name=memberLoggedIn]").val()==data.list[i].MEMBER_ID){
+					html+="<button id='deleteLevel1' onclick='deleteLevel1(this)'><img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='17'>삭제</button>";
+					}
+
 				}
+				
 				else{
 					html+="<input type='hidden' value="+data.list[i].COMMENT_NO+" id='commentNo_'/>";
 					html+="<div><img class='replyIcon' style='width:50px; height:50px;' src='${pageContext.request.contextPath}/resources/images/reply.PNG'/><span style='margin-bottom:0px; padding-left:30px'><strong>"+data.list[i].MEMBER_ID+ "</strong> : " + data.list[i].CONTENTS + " <small>[ " +data.list[i].WRITE_DAY + "]</small></span></div>";	

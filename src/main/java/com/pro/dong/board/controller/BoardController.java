@@ -105,7 +105,28 @@ public class BoardController {
 	//==========================민호 끝
 		
 	// 하진 시작 ==========================
-		
+		@RequestMapping("/insertBoardReport")
+		@ResponseBody
+		public String insertBoardReport(@RequestParam("reportComment") String reportComment,
+													@RequestParam("categoryId") String categoryId,
+													@RequestParam("memberId") String memberId,
+													@RequestParam("boardNo") String boardNo){
+			
+			Map<String, Object> result = new HashMap<>();
+			
+			Map<String, String> param = new HashMap<>();
+			param.put("reportComment",reportComment);
+			param.put("categoryId",categoryId);
+			param.put("memberId",memberId);
+			param.put("boardNo",boardNo);
+			
+			int status = bs.insertBoardReport(param);
+			
+			
+			
+			return ""+status;
+		}
+
 	//========================== 하진 끝
 		
 	// 근호 시작 ==========================
