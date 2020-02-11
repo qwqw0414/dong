@@ -178,6 +178,12 @@
 	<select id="countComment" resultType="_int">
 	select count(*) from board_comment
 		</select>
+		
+		
+	<delete id="deleteLevel2">
+	delete from board_comment where comment_no=#{commentNo}
+	</delete>	
+		
 	
 	
 	<!-- ==========================  현규 끝 -->

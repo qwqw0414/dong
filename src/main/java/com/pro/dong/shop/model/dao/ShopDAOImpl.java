@@ -24,8 +24,18 @@ public class ShopDAOImpl implements ShopDAO{
 	
 	
 	// 민호 시작 ==========================
-	
-	
+	@Override
+	public int isFollowing(Map<String, String> param) {
+		return sst.selectOne("shop.isFollowing", param);
+	}
+	@Override
+	public int shopUnfollow(Map<String, String> param) {
+		return sst.delete("shop.shopUnfollow", param);
+	}
+	@Override
+	public int shopFollow(Map<String, String> param) {
+		return sst.insert("shop.shopfollow", param);
+	}
 	
 	//========================== 민호 끝
 	

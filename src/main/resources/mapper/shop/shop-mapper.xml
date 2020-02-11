@@ -4,7 +4,18 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="shop">
 	<!-- 민호 시작 ========================== -->
-	
+	<select id="isFollowing" parameterType="map" resultType="_int">
+		select count(*) from shop_follow
+		where follow = #{follow} and follower = #{follower}
+	</select>
+	<delete id="shopUnfollow" parameterType="string">
+		delete from shop_follow
+		where follow = #{follow} and follower = #{follower}
+	</delete>
+	<insert id="shopfollow" parameterType="string">
+		insert into shop_follow
+		values (seq_follow_no.nextval, #{follow}, #{follower}, default)
+	</insert>
 	<!-- ==========================  민호 끝 -->
 	
 	<!-- 하진 시작 ========================== -->

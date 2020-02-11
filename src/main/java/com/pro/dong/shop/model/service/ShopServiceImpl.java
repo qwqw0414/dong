@@ -23,8 +23,18 @@ public class ShopServiceImpl implements ShopService{
 	
 	
 	// 민호 시작 ==========================
-	
-	
+	@Override
+	public int shopFollow(Map<String, String> param) {
+		return sd.shopFollow(param);
+	}
+	@Override
+	public int isFollowing(Map<String, String> param) {
+		return sd.isFollowing(param);
+	}
+	@Override
+	public int shopUnfollow(Map<String, String> param) {
+		return sd.shopUnfollow(param);
+	}
 	
 	//========================== 민호 끝
 	
@@ -125,6 +135,7 @@ public class ShopServiceImpl implements ShopService{
 	public int insertInquiryComment(Map<String, String> param) {
 		return sd.insertInquiryComment(param);
 	}
+
 
 
 

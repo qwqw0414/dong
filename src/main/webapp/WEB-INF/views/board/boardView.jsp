@@ -162,7 +162,7 @@ $(function(){
         <div class="profileWriter">
             <span>${board.memberId}</span> &nbsp;
             <span>조회수 : ${board.readCount}</span> <br />
-            <span>${board.writeDate}일 작성</span>
+            <span><img src="${pageContext.request.contextPath}/resources/upload/shopImage/shopping-store.png"/>${board.writeDate}</span>
         </div>
 		  
 		  <!-- 작성자와 로그인한 아이디가 같을시에만 삭제,수정가능 -->
@@ -195,7 +195,7 @@ $(function(){
 
         <div class="btnBox">
             <button id="likeBtn">추천</button>
-            <button >신고</button>
+            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">신고</button>
         </div>
        
         <!-- 댓글 -->
@@ -345,8 +345,8 @@ $(function(){
 });
 
 </script>
-
-<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">신고</button>
+<!-- 
+<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">신고</button> -->
 <input type="hidden" name="memberLoggedIn" value="<%=memberLoggedIn.getMemberId()%>" />
 
 <!-- Modal -->

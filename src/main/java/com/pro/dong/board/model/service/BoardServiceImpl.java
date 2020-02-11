@@ -145,6 +145,11 @@ public class BoardServiceImpl implements BoardService {
 	public int countComment() {
 		return bd.countComment();
 	}
+
+	@Override
+	public int deleteLevel2(int commentNo) {
+		return bd.deleteLevel2(commentNo);
+	}
 	
 	
 

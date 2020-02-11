@@ -147,6 +147,11 @@ public class BoardDAOImpl implements BoardDAO {
 		return sst.selectOne("board.countComment");
 	}
 
+	@Override
+	public int deleteLevel2(int commentNo) {
+		return sst.delete("board.deleteLevel2",commentNo);
+	}
+
 
 
 	
