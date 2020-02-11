@@ -14,6 +14,7 @@
  <div id="shopView" class="mx-center">
 	<div id="shopDiv">
 		<div id="shopImgDiv">
+			<div id="follow"><img id ="followIcon" src="${pageContext.request.contextPath}/resources/images/dislike.png"/></div>
 			<c:if test="${map.IMAGE == null}">
 				<img id="shopImg1" class="img-thumbnail" src="${pageContext.request.contextPath}/resources/upload/shopImage/shopping-store.png" alt="" />
 			</c:if>
@@ -565,6 +566,17 @@ $(()=>{
 			}
 		});
 	};
+	
+	$("#follow").on('click', function(){
+		var img = $("#followIcon");
+		img.attr("src", function(index, attr){
+			if(attr.match('${pageContext.request.contextPath}/resources/images/like.png')){
+				return attr.replace("${pageContext.request.contextPath}/resources/images/like.png", "${pageContext.request.contextPath}/resources/images/dislike.png");
+			} else {
+				return attr.replace("${pageContext.request.contextPath}/resources/images/dislike.png","${pageContext.request.contextPath}/resources/images/like.png");
+			}
+		}) 
+	});
 });
 
 
