@@ -105,21 +105,6 @@ public class BoardController {
 	//==========================민호 끝
 		
 	// 하진 시작 ==========================
-		@RequestMapping(value="/loadBoardReportCategory" , produces="text/plain;charset=UTF-8")
-		@ResponseBody
-		public String loadBoardReportCategory(){
-			
-			List<Map<String, String>> list = null;
-			
-			list = bs.loadBoardReportCategory();
-			
-			Map<String, Object> result = new HashMap<>();
-			
-			result.put("list",list);
-
-			return gson.toJson(result);
-		}
-		
 		@RequestMapping("/insertBoardReport")
 		@ResponseBody
 		public String insertBoardReport(@RequestParam("reportComment") String reportComment,
@@ -141,6 +126,7 @@ public class BoardController {
 			
 			return ""+status;
 		}
+
 	//========================== 하진 끝
 		
 	// 근호 시작 ==========================
@@ -301,6 +287,24 @@ public class BoardController {
 		return mav;
 	}
 	
+	@RequestMapping("/boardLike.do")
+	public ModelAndView insertBoardReputation (ModelAndView mav, @RequestParam("boardNo") int boardNo, HttpSession session,HttpServletRequest request){
+		
+		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
+		String memberId = memberLoggedIn.getMemberId();
+		log.debug("memberId={}",memberId);
+		log.debug("boardNo={}",boardNo);
+		Map<String,String> map = new HashMap<>();
+		map.put("memberId", memberId);
+		map.put("boardNo", boardNo+"");
+		
+		int result = bs.insertBoardReputation(map);
+		if(result>0) {
+			mav.setViewName("board/boardList.do?boardNo="+boardNo);
+		}
+		 
+		return mav;
+	}
 
 	//========================== 지은 끝
 		
@@ -322,38 +326,42 @@ public class BoardController {
 	@ResponseBody
 	public String insertComments(HttpSession session, BoardComment bc, @RequestParam("boardNo") int boardNo) {
 		
-		
-		log.info("ddddddddddddddddddddddddd={}",bc);
-		
-		
 		int result = bs.insertBoardComment(bc);
+		System.out.println(result);
 		
 		
 		
-		List<Map<String,String>>list = null;
-		if (result>0) {
-			list = bs.selectBoardCommentList(boardNo);
-		}
-		
-		
-		log.info("result={}",result);
-		
-		return gson.toJson(list)+"";
+		return gson.toJson(result)+"";
 	}
 	
 	
 	//댓글 불러들이기
 	@ResponseBody
 	@RequestMapping(value="/selectBoardComment", produces="text/plain;charset=UTF-8")
-	public String selectBoardCommentList(@RequestParam("boardNo") int boardNo) {
+	public String selectBoardCommentList(@RequestParam("boardNo") int boardNo, @RequestParam("cPage") int cPage) {
+		int numPerPage=10;
 		log.info("파라미터로받아온 boardNo{}",boardNo);
 		List<Map<String,String>>list = null;
 		
-		list = bs.selectBoardCommentList(boardNo);
+		list = bs.selectBoardCommentList(boardNo,cPage,numPerPage);
 		log.debug("DB에서 가져온 리스트={}",list);
 		
-		return gson.toJson(list)+"";
+		
+		
+		int totalContents = bs.countComment();
+		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
+		
+		Map<String,Object> result = new HashMap<>();
+		result.put("list", list);
+		result.put("pageBar", pageBar);
+		
+		
+		
+		return gson.toJson(result)+"";
 	}
+	
+	
+	
 	
 	//댓글 지우기
 	@ResponseBody
@@ -366,7 +374,6 @@ public class BoardController {
 		
 		int result= bs.deleteLevel1(commentNo);
 		
-		log.info("지워젓나={}",result);
 		
 //		List<Map<String,String>>list = null;
 //		if (result>0) {
@@ -374,7 +381,7 @@ public class BoardController {
 //		}
 		
 		
-		return result+"";
+		return gson.toJson(result)+"";
 	}
 	
 	//대댓글 쓰기
@@ -385,15 +392,11 @@ public class BoardController {
 		
 		int result = bs.insertBoardComment(bc);
 		
-		List<Map<String,String>>list = null;
-		if (result>0) {
-			list = bs.selectBoardCommentList(boardNo);
-		}
 		
 		
 		log.info("result={}",result);
 		
-		return gson.toJson(list)+"";
+		return gson.toJson(result)+"";
 		
 
 	}
