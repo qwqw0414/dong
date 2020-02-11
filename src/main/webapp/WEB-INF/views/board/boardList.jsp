@@ -141,6 +141,7 @@ function loadBoardList(searchType, searchKeyword, boardCategory, cPage){
 						<td>${list.MEMBER_ID}</td>
 						<td>${list.WRITE_DATE}</td>
 						<td>${list.READ_COUNT}</td>
+						<td>${result}</td>
 					</tr>
 				</c:forEach>
 			</table>

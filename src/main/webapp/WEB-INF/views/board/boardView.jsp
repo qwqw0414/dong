@@ -136,7 +136,7 @@ span{
     background-color: cornflowerblue;
     padding: .25rem .5rem;
     font-size: .875rem;
-    line-height: 1.5;
+    line-height: 1.4;
     border-radius: .3rem;
 }
 
@@ -161,7 +161,7 @@ $(function(){
 			location.href="${pageContext.request.contextPath}/board/boardLike.do?boardNo="+${board.boardNo};
 		}
 	});
-});
+}); 
 
 </script>
 
@@ -197,8 +197,7 @@ $(function(){
     
             <!-- 이미지 -->
             <div class="img">
-                <img src="" alt="">
-                <span class="line"></span>
+                <span class="line"><%-- <img src="${pageContext.request.contextPath}/resources/images/clock.png" /> --%></span>
             </div>
         </div>
 
@@ -264,8 +263,21 @@ $(function(){
 			 
 		});
 		
+	
+	/* 좋아요 버튼 */
+		/* $("#likeBtn").click(function(){
+			if(${memberLoggedIn.memberId == board.memberId}){
+				alert("작성자는 좋아요를 누를 수 없습니다.");
+			}else{
+				
+				$.ajax({
+					url: "${pageContext.request.contextPath}/board/boardLikeCount.do",
+				});
+			}
+			
+		}); */
 
-	}); 
+}); 
  
  
 </script>

@@ -50,6 +50,8 @@ public interface BoardDAO {
 	int boardUpdate(Board board);
 
 	int insertBoardReputation(Map<String, String> map);
+	
+	int selectBoardLike(int boardNo);
 	//========================== 지은 끝
 		
 	// 예찬 시작 ==========================
@@ -70,6 +72,8 @@ public interface BoardDAO {
 	int countComment();
 
 	int deleteLevel2(int commentNo);
+
+	
 
 
 

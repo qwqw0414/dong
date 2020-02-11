@@ -315,6 +315,17 @@ public class BoardController {
 		 
 		return mav;
 	}
+	
+	@RequestMapping("/boardLikeCount.do")
+	public ModelAndView selectBoardLike(ModelAndView mav,@RequestParam("boardNo") int boardNo) {
+		int result = bs.selectBoardLike(boardNo);
+		log.debug("boardLikeCount@result={}", result);
+		mav.addObject("result", result);
+		mav.addObject("boardNo", boardNo);
+		mav.addObject("loc", "/board/boardList.do");
+
+		return mav;
+	}
 
 	//========================== 지은 끝
 		
