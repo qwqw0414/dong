@@ -105,20 +105,7 @@ public class BoardController {
 	//==========================민호 끝
 		
 	// 하진 시작 ==========================
-		@RequestMapping(value="/loadBoardReportCategory" , produces="text/plain;charset=UTF-8")
-		@ResponseBody
-		public String loadBoardReportCategory(){
-			
-			List<Map<String, String>> list = null;
-			
-			list = bs.loadBoardReportCategory();
-			
-			Map<String, Object> result = new HashMap<>();
-			
-			result.put("list",list);
-
-			return gson.toJson(result);
-		}
+		
 	//========================== 하진 끝
 		
 	// 근호 시작 ==========================
@@ -279,6 +266,24 @@ public class BoardController {
 		return mav;
 	}
 	
+	@RequestMapping("/boardLike.do")
+	public ModelAndView insertBoardReputation (ModelAndView mav, @RequestParam("boardNo") int boardNo, HttpSession session,HttpServletRequest request){
+		
+		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
+		String memberId = memberLoggedIn.getMemberId();
+		log.debug("memberId={}",memberId);
+		log.debug("boardNo={}",boardNo);
+		Map<String,String> map = new HashMap<>();
+		map.put("memberId", memberId);
+		map.put("boardNo", boardNo+"");
+		
+		int result = bs.insertBoardReputation(map);
+		if(result>0) {
+			mav.setViewName("board/boardList.do?boardNo="+boardNo);
+		}
+		 
+		return mav;
+	}
 
 	//========================== 지은 끝
 		
