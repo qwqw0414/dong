@@ -12,13 +12,13 @@
 .productList .card {width: 201px; border-radius: 0; height: 280px;}
 .productList .card img{width: 200px; height: 200px; border: none;}
 #shop-contents .myProductList .myProduct .card{float: left; margin: 10px 8px 10px 8px}
-#shop-contents .myProduct {width: 1200px; display: block; margin: auto; height: 620px;}
+#shop-contents .myProduct {width: 1200px; display: inline-block; margin: auto; position:static; margin-left:50px; /* height: 620px; */ }
 #shop-contents {width: 1300px;}
 #shop-contents .myProductList{width: 100%;}
 .myProductList .card-body{padding: 10px 0 0px 8px;}
 .myProductList .regDate{font-size: 0.9em; position: absolute; right: 10px; bottom: 10px;}
 
-#shopView{
+#shopView{	
 	width: 1100px;
 }
 #shopDiv{
@@ -402,7 +402,10 @@ $(function(){
 		margin-left: 35px;
    	    margin-top: -17px;
 	}
-	
+	#page{
+		position:static;
+		display: block;
+	}
 	/* 주영 끝 */
 	</style>
 	
