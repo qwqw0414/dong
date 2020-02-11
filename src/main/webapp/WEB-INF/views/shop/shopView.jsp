@@ -566,9 +566,25 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 			}
 		});
 	};
-	
+	//팔로우 버튼 토글
 	$("#follow").on('click', function(){
 		var img = $("#followIcon");
+		var follower = $("[name=memberLoggedIn]").val();
+		var follow = '${map.SHOP_NO}';
+		console.log(follower);
+		console.log(follow);
+		 $.ajax({
+			url: "${pageContext.request.contextPath}/shop/shopFollow",
+			data:{follow:follow,
+				follower:follower},
+			success: data => {
+				console.log(data);
+			},
+			error: (x, s, e) => {
+				console.log("ajax 요청 실패!");
+			}
+		});//end of ajax 
+		
 		img.attr("src", function(index, attr){
 			if(attr.match('${pageContext.request.contextPath}/resources/images/like.png')){
 				return attr.replace("${pageContext.request.contextPath}/resources/images/like.png", "${pageContext.request.contextPath}/resources/images/dislike.png");
@@ -576,7 +592,7 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 				return attr.replace("${pageContext.request.contextPath}/resources/images/dislike.png","${pageContext.request.contextPath}/resources/images/like.png");
 			}
 		}) 
-	});
+	});//팔로우 하트 토글 함수 끝
 });
 
 

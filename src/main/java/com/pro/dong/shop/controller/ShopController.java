@@ -40,7 +40,29 @@ public class ShopController {
 	
 	
 	// 민호 시작 ==========================
-	
+	@RequestMapping("/shopFollow")
+	public String shopFollow(@RequestParam("follow")String follow, @RequestParam("follower")String followerMemberId) {
+		log.debug("follow",follow);
+		log.debug("followerMemberId",followerMemberId);
+		
+		Map<String, String> param = new HashMap<>();
+		Map<String, String> followerShop = new HashMap<>();
+		followerShop = ss.selectOneShop(followerMemberId);
+		String follower = followerShop.get("SHOP_NO");
+		log.debug(follower);
+		param.put("follow",follow);
+		param.put("follower",follower);
+		
+		int isFollowing = ss.isFollowing(param);
+		int result = 0;
+		if(isFollowing>0) {
+			result = ss.shopUnfollow(param);
+		} else {
+			result = ss.shopFollow(param);
+		}
+		
+		return result+"";
+	}
 	
 	
 	//========================== 민호 끝

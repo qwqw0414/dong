@@ -9,7 +9,9 @@ import com.pro.dong.shop.model.vo.ShopInquriy;
 public interface ShopService {
 
 	// 민호 시작 ==========================
-	
+	int shopFollow(Map<String, String> param);
+	int isFollowing(Map<String, String> param);
+	int shopUnfollow(Map<String, String> param);
 	
 	
 	//========================== 민호 끝

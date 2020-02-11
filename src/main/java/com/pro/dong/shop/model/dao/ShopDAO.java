@@ -9,8 +9,9 @@ import com.pro.dong.shop.model.vo.ShopInquriy;
 public interface ShopDAO {
 
 	// 민호 시작 ==========================
-	
-	
+	int shopFollow(Map<String, String> param);
+	int isFollowing(Map<String, String> param);
+	int shopUnfollow(Map<String, String> param);
 	
 	//========================== 민호 끝
 	
@@ -64,6 +65,7 @@ public interface ShopDAO {
 	
 	int insertInquiryComment(Map<String, String> param);
 	Map<String, String> selectShopByShopNo(int shopNo);
+	
 	
 	//========================== 주영 끝
 	
