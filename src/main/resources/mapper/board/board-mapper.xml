@@ -73,6 +73,10 @@
 	]]>
 		
 	</select>
+	
+	<select id="loadBoardReportCategory" resultType="map">
+		select * from report_category
+	</select>
 	<!-- ==========================  하진 끝 -->
 	
 	<!-- 근호 시작 ========================== -->

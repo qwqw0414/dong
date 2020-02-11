@@ -26,6 +26,7 @@ public interface BoardDAO {
 		
 	// 하진 시작 ==========================
 	List<Board> selectBoardList();
+	List<Map<String, String>> loadBoardReportCategory();
 	//========================== 하진 끝
 		
 	// 근호 시작 ==========================

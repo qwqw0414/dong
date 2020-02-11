@@ -55,6 +55,10 @@ public class BoardServiceImpl implements BoardService {
 	public List<Board> selectBoardList() {
 		return bd.selectBoardList();
 	}
+	@Override
+	public List<Map<String, String>> loadBoardReportCategory() {
+		return bd.loadBoardReportCategory();
+	}
 	//========================== 하진 끝
 		
 	// 근호 시작 ==========================
