@@ -30,12 +30,12 @@
 				<img id="shopIcon" src="${pageContext.request.contextPath}/resources/images/shopIcon.png" />
 				<span id="shopNameSpan">${map.SHOP_NAME}</span> &nbsp;&nbsp;&nbsp;
 <c:if test="${memberLoggedIn.memberId eq map.MEMBER_ID }">
-				<button onclick="shopNameUp();" id="shopNameBtn" type="button" class="btn btn-outline-success btn-sm">수정</button><br />
+				<button id="shopNameBtn" type="button" class="btn btn-outline-success btn-sm">수정</button><br />
 </c:if>
 			</div>
 			<div id="shopNameInputDiv">
 				<input id="shopNameInput" type="text"  value="${map.SHOP_NAME}"/>
-				<button id="shopNameUpdateBtn" onclick="shopNameUpdateEnd();" type="button" class="btn btn-outline-success btn-sm">수정</button>
+				<button id="shopNameUpdateBtn" type="button" class="btn btn-outline-success btn-sm">수정</button>
 				<span id="shopNameCheck"></span>
 			</div><hr />
 			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-open@2x.png" width="14" height="13">상점오픈일 ${map.SINCE} 일째
@@ -49,13 +49,13 @@
 				<img id="shopIcon" src="${pageContext.request.contextPath}/resources/images/shopInfoIcon.png" />
 				<span id="shopInfoDetail">${map.SHOP_INFO}</span> &nbsp;&nbsp;&nbsp;
 <c:if test="${memberLoggedIn.memberId eq map.MEMBER_ID }">
-				<button onclick="showUpdate();" id="hiddenBtn" type="button" class="btn btn-outline-success btn-sm">수정</button><br />
+				<button id="hiddenBtn" type="button" class="btn btn-outline-success btn-sm">수정</button><br />
 </c:if>
 			</div>
 			<div id="shopInfoTextDiv">
 				<textarea  name="updateInfo" id="updateInfo" cols="30" rows="2">${map.SHOP_INFO }</textarea>
 <c:if test="${memberLoggedIn.memberId eq map.MEMBER_ID }">
-				<button onclick="shopUpdateEnd();" type="button" class="btn btn-outline-success btn-sm" id="up_btn">수정</button>
+				<button type="button" class="btn btn-outline-success btn-sm" id="up_btn">수정</button>
 </c:if>
 			</div>
 		</div>
@@ -134,7 +134,7 @@
 				</div>
 				<div id="shopInquiryBtnDiv">
 					<span id="inquiryContentCheck">0/100</span>
-					<button onclick="insertInquiry();" id="shopInquiryBtn" disabled="disabled"><img src="https://assets.bunjang.co.kr/bunny_desktop/images/register@2x.png" width="15" height="16" >등록</button>
+					<button id="shopInquiryBtn" disabled="disabled"><img src="https://assets.bunjang.co.kr/bunny_desktop/images/register@2x.png" width="15" height="16" >등록</button>
 				</div>
 				<div id="shopInquiryList">
 				<!-- select해온 문의사항 리스트 -->
@@ -208,6 +208,7 @@ $(()=>{
 		inquiryContentCheck.html(content.length + '/100');
 		
 	});
+	
 	$("#shopView #shopInquiryDiv").click(selectInquiry);
 	function selectInquiry() {
 		var shopNo = ${map.SHOP_NO};
@@ -240,18 +241,18 @@ $(()=>{
 						html += "<p>" + data.list[i].INQUIRY_CONTENT + "</p>";
 						html += "</div>";
 						if (memberId == data.list[i].MEMBER_ID) {
-							html += "<button onclick='insertInquiryComment(this);' value=" + data.list[i].INQUIRY_NO + " id='insertInquiryCommentBtn' class='commentBtn' >"
+							html += "<button value=" + data.list[i].INQUIRY_NO + " id='insertInquiryCommentBtn' class='commentBtn' >"
 							html += "<img  src='https://assets.bunjang.co.kr/bunny_desktop/images/reply@2x.png' width='17' height='17'>";
 							html += "댓글";
 							html += "</button>";
 						}
 						if (("${map.MEMBER_ID}" == memberId) && (memberId == data.list[i].MEMBER_ID)) {
-							html += "<button id='deleteCommentBtn' value=" + data.list[i].INQUIRY_NO + " onclick='deleteComment(this);' class='commentDelBtn'>";
+							html += "<button id='deleteCommentBtn' value=" + data.list[i].INQUIRY_NO + " class='commentDelBtn'>";
 							html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='17'>";
 							html += "삭제";
 							html += "</button>";
-							html += "<div class='inquiryCommentDiv' id='inquiryCommentDiv'></div>";
 						}
+							html += "<div class='inquiryCommentDiv' id='inquiryCommentDiv'></div>";
 					}
 					/* 대댓글이라면 */
 					else {
@@ -276,7 +277,8 @@ $(()=>{
 			}
 		});
 	}
-
+	
+$("#shopView #shopInquiryBtn").click(insertInquiry);
 	function insertInquiry() {
 		$("#inquiryContentCheck").html("0/100");
 		var memberId = $("[name=memberLoggedIn]").val();
@@ -304,6 +306,7 @@ $(()=>{
 
 	}
 
+$("#shopView #deleteCommentBtn").click(deleteComment);
 	function deleteComment(btn) {
 
 		var deleteCommentBtn = $(btn).val();
@@ -322,42 +325,35 @@ $(()=>{
 			}
 		});
 	}
-
-	function insertInquiryComment(btn) {
-		$(btn).attr("disabled", true);
-		console.log($(btn).next());
-		/* $(btn).next().css('margin-left','80px'); */
-		console.log("댓글추가함수에들어왔다");
-		console.log($(btn).next().next());
-		/* var inquiryRefNo = $("#insertInquiryCommentBtn").val(); */
-		var inquiryRefNo = $(btn).val();
-		console.log(inquiryRefNo);
+$(document).on("click", "#shopView #insertInquiryCommentBtn", function(e){
+		$(e).attr("disabled", true);
+		var btnTarget = $(e.target);
+		var inquiryRefNo = btnTarget.val();
 		let html = "";
 		html += "<br/>";
-		/* html += "<div class='inquiryCommentDiv' id='inquiryCommentDiv'>"; */
 		html += "<textarea id='shopInquiryCommentText' cols='80' rows='1' placeholder='댓글내용을 입력하세요.'></textarea>&nbsp;&nbsp;";
-		html += "<button onclick='insertInquiryCommentEnd();' value='" + inquiryRefNo + "' id='shopInquiryCommentEndBtn'>";
+		html += "<button value='" + inquiryRefNo + "' id='shopInquiryCommentEndBtn'>";
 		html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/register@2x.png' width='15' height='14' >";
 		html += "등록";
 		html += "</button>";
-		html += "<button onclick='c(this);' id='cancleRecommentBtn' class='commentDelBtn'>";
+		html += "<button id='cancelRecommentBtn' class='commentDelBtn'>";
 		html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='14'>";
 		html += "취소";
 		html += "</button>";
 		html += "</div>";
-		$(btn).next().next().html(html);
-	}
-
-	function cancleRecommentBtn(btn) {
+		btnTarget.next().html(html);
+	});
+	
+$(document).on("click", "#shopView #cancelRecommentBtn", function(e){
 		console.log("취소버튼함수에들어왔다");
-		$(btn).parent().prev().prev().attr("disabled", false);
-		$(btn).prev().prev().parent().empty();
-		/* $("#insertInquiryCommentBtn").show(); */
+		var cancelRecommentBtn = $(e.target);
+		cancelRecommentBtn.parent().prev().prev().attr("disabled", false);
+		cancelRecommentBtn.prev().prev().parent().empty();
 		$("#deleteCommentBtn").css('margin-left', '5px');
+});
 
-	}
 
-	function insertInquiryCommentEnd() {
+$(document).on("click", "#shopView #shopInquiryCommentEndBtn", function(){
 		var inquiryRefNo = $("#shopInquiryCommentEndBtn").val();
 		console.log(inquiryRefNo);
 		var shopInquiryCommentText = $("#shopInquiryCommentText").val();
@@ -381,7 +377,7 @@ $(()=>{
 				console.log("ajax 요청 실패!");
 			}
 		});
-	}
+	});
 	var memberId = $("[name=memberLoggedIn]").val();
 
 	loadMyProduct(1);
@@ -479,6 +475,7 @@ $(()=>{
 		});
 	})
 
+$("#shopView #shopNameUpdateBtn").click(shopNameUpdateEnd);
 	function shopNameUpdateEnd() {
 		var shopName = $("#shopNameInput").val();
 		var memberId = $("[name=memberLoggedIn]").val();
@@ -511,6 +508,7 @@ $(()=>{
 		});
 	}
 
+$("#shopView #shopNameBtn").click(shopNameUp);
 	function shopNameUp() {
 		var $shopNameInputDiv = $("#shopNameInputDiv");
 		var $shopNameSpanDiv = $("#shopNameSpanDiv");
@@ -528,6 +526,7 @@ $(()=>{
 
 	});
 
+$("#shopView #hiddenBtn").click(showUpdate);
 	function showUpdate() {
 
 		var $shopInfoTextDiv = $("#shopInfoTextDiv");
@@ -537,6 +536,7 @@ $(()=>{
 		$shopInfoSpanDiv.hide();
 	};
 
+$("#shopView #up_btn").click(shopUpdateEnd);
 	function shopUpdateEnd() {
 		var memberId = $("[name=memberLoggedIn]").val();
 		var updateInfo = $("#updateInfo").val();

@@ -133,9 +133,11 @@ public class ShopController {
 		
 		if(memberId.equals("")) {
 			map = ss.selectShopByShopNo(shopNo);
+			mav.addObject("shopNo", shopNo);
 		}
 		else if(Integer.toString(shopNo).equals("0")) {
 			map = ss.selectOneShop(memberId);
+			mav.addObject("memberId", memberId);
 		}
 		
 		mav.addObject("map", map);
@@ -205,7 +207,8 @@ public class ShopController {
 	@ResponseBody
 	public ModelAndView shopImageUpload(ModelAndView mav,
 								@RequestParam(value = "upFile", required = false) MultipartFile upFile,
-								@RequestParam(value = "memberId", required = false) String memberId, HttpServletRequest request) {
+								@RequestParam(value = "memberId", required = false) String memberId,
+								HttpServletRequest request) {
 		
 		String saveDirectory = request.getServletContext().getRealPath("/resources/upload/shopImage");
 		
@@ -239,7 +242,7 @@ public class ShopController {
 				
 				int result = ss.updateShopImg(s);
 				
-				mav.setViewName("redirect:/shop/shopView.do");
+				mav.setViewName("redirect:/shop/shopView.do?memberId="+memberId);
 			}
 		
 		return mav;

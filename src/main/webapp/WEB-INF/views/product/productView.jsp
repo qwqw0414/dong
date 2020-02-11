@@ -17,7 +17,7 @@
 		<div class="col-8">
 			<div>
                 <div class="product-info">
-                    <h3>${map.product.title } <button id="btn-like">♥+<span id="like-num"></span></button> </h3>
+                    <h3>${map.product.title }</h3>
                     <br>
                     <p>좋아요/조회수:${map.product.incount }/등록일:${map.product.regDate }</p>
                     <span>가격:${map.product.price }원</span>
@@ -37,11 +37,16 @@
                     <span>판매자 정보:${map.product.shopNo }</span> <hr><br>
                 </div>
                     
-                    <div class="something-btn">
-                        <button class="btn btn-outline-warning">찜하기</button>
-                        <button class="btn btn-outline-danger">연락하기</button>
-                        <button class="btn btn-info">구매하기</button>
-                    </div>
+                <div class="something-btn">
+                    <c:if test="${map.likeCnt eq '0'}">
+                        <button class="btn btn-outline-warning" id="btn-like">찜하기</button>
+                    </c:if>                        
+                    <c:if test="${map.likeCnt ne '0'}">
+                        <button class="btn btn-warning" id="btn-like">찜취소</button>
+                    </c:if>                        
+                    <button class="btn btn-danger">연락하기</button>
+                    <button class="btn btn-info">구매하기</button>
+                </div>
 			</div>
         </div>
     </div>
@@ -51,6 +56,41 @@
 <script>
 $(()=>{
 // 예찬 시작 =======================================
+    var $btnLike = $("#productView #btn-like");
+
+    $btnLike.click(()=>{
+
+        $.ajax({
+            url: "${pageContext.request.contextPath}/product/productLike",
+            data: {
+                memberId: '${memberLoggedIn.memberId}',
+                productNo: '${map.product.productNo}'
+            },
+            type: "POST",
+            dataType: "json",
+            success: data =>{
+                if(data.result != 0){
+                    if(data.type == 'I'){
+                        $btnLike.removeClass("btn-outline-warning");
+                        $btnLike.addClass("btn-warning");
+                        $btnLike.text("찜취소");
+                    }
+                    else{
+                        $btnLike.removeClass("btn-warning");
+                        $btnLike.addClass("btn-outline-warning");
+                        $btnLike.text("찜하기");
+                    }
+
+
+                }else{
+                    alert("실패");
+                }
+            },
+            error: (a,b,c) =>{
+                console.log(a,b,c);
+            }
+        });
+    });
 
 // ======================================= 예찬 끝
 // 민호 시작 =======================================
