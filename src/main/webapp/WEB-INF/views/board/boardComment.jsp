@@ -75,11 +75,11 @@
 				html+="<div class='testas'>";
 				if(data.list[i].COMMENT_LEVEL=="1"){
 				html+="<input type='hidden' value="+data.list[i].COMMENT_NO+" id='commentNo_'/>";
-				html+="<span style='margin-bottom:0px'><strong>"+data.list[i].MEMBER_ID+ "</strong>  <small>["+data.list[i].WRITE_DAY+"]</small> " + data.list[i].CONTENTS+"</span>";
-				html+="<button id='showLevel2form' onclick='showLevel2form(this)'><img  src='https://assets.bunjang.co.kr/bunny_desktop/images/reply@2x.png' width='17' height='17'>답글</button>";
+				html+="<span style='margin-bottom:0px'><strong>"+data.list[i].MEMBER_ID+ ":</strong> "+data.list[i].CONTENTS+" <small>[" + data.list[i].WRITE_DAY+"]</small></span>";
+				html+="<button id='showLevel2form' class='alcls btn btn-outline-success btn-sm' onclick='showLevel2form(this)'><img  src='https://assets.bunjang.co.kr/bunny_desktop/images/reply@2x.png' width='17' height='17'>답글</button>";
 					//내가쓴 level1댓글에만 삭제버튼 생성	
 					if($("[name=memberLoggedIn]").val()==data.list[i].MEMBER_ID){
-					html+="<button id='deleteLevel1' onclick='deleteLevel1(this)'><img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='17'>삭제</button>";
+					html+="<button class='btn btn-outline-success btn-sm' id='deleteLevel1' onclick='deleteLevel1(this)'><img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='17'></button>";
 					}
 					//ㅋㅋㅋㅋㅋㅋㅋㅋㅋ
 					else{
@@ -96,7 +96,7 @@
 						html+="<input type='hidden' value="+data.list[i].COMMENT_NO+" id='commentNo_'/>"
 						html+="<img class='replyIcon' style='width:50px; height:50px;' src='${pageContext.request.contextPath}/resources/images/reply.PNG'/>"
 						html+="<span style='margin-bottom:0px; padding-left:30px'><strong>"+data.list[i].MEMBER_ID+ "</strong> : " + data.list[i].CONTENTS + " <small>[ " +data.list[i].WRITE_DAY + "]</small>";
-						html+="<button onclick='deleteLevel2(this);'>대댓삭제</button></span></div>";
+						html+="<button class='alcls btn btn-outline-success btn-sm' onclick='deleteLevel2(this);'><img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='10' height='10'></button></span></div>";
 					}else{
 						html+="<div><img class='replyIcon' style='width:50px; height:50px;' src='${pageContext.request.contextPath}/resources/images/reply.PNG'/>"
 						html+="<span style='margin-bottom:0px; padding-left:30px'><strong>"+data.list[i].MEMBER_ID+ "</strong> : " + data.list[i].CONTENTS + " <small>[ " +data.list[i].WRITE_DAY + "]</small></span></div>";
@@ -221,6 +221,9 @@
 	}
 </script>
 	<style>
+.alcls{ 
+ 		margin-left:30px;
+	} 
 	
 	#fakebutton{
 		visibility:hidden;
