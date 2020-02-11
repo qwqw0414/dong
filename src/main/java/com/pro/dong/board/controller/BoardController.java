@@ -267,7 +267,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/boardLike.do")
-	public Map<String,String> insertBoardReputation (ModelAndView mav, @RequestParam("boardNo") int boardNo, HttpSession session,HttpServletRequest request){
+	public ModelAndView insertBoardReputation (ModelAndView mav, @RequestParam("boardNo") int boardNo, HttpSession session,HttpServletRequest request){
 		
 		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
 		String memberId = memberLoggedIn.getMemberId();
@@ -278,8 +278,11 @@ public class BoardController {
 		map.put("boardNo", boardNo+"");
 		
 		int result = bs.insertBoardReputation(map);
+		if(result>0) {
+			mav.setViewName("board/boardList.do?boardNo="+boardNo);
+		}
 		 
-		return map;
+		return mav;
 	}
 
 	//========================== 지은 끝
