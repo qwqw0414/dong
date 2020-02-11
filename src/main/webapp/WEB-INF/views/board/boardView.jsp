@@ -101,6 +101,12 @@ $(function(){
 	});
 });
 
+$(function(){
+	$("#likeBtn").click(function(){
+		location.href="${pageContext.request.contextPath}/board/boardLike.do?boardNo="+${board.boardNo};
+	});
+});
+
 </script>
 
 <body>
@@ -115,6 +121,7 @@ $(function(){
 
         <table class="product">
           <caption style="caption-side: top;"> 
+          <button id="likeBtn">좋아요</button>
           <!-- 작성자와 로그인한 아이디가 같을시에만 삭제,수정가능 -->
           <c:if test="${board.memberId == memberLoggedIn.memberId || memberLoggedIn.isAdmin eq 'Y'}">
           <!-- 게시물 삭제는 작성자와 관리자만 가능(관리자 추가 예정) -->

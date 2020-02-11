@@ -266,6 +266,19 @@ public class BoardController {
 		return mav;
 	}
 	
+	@RequestMapping("/boardLike.do")
+	public ModelAndView boardLike (ModelAndView mav, int boardNo,Board board) {
+		int result = bs.insertBoardReputation(boardNo);
+		
+		if(result>0) {
+			log.debug("boardReputation insert성공");
+		}else {
+			log.debug("boardReputation insert실패");
+		}
+		
+		mav.addObject("loc","/board/boardList.do");
+		return mav;
+	}
 
 	//========================== 지은 끝
 		

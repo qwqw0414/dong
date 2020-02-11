@@ -45,6 +45,7 @@ public interface BoardService {
 
 	int boardUpdate(Board board);
 
+	int insertBoardReputation(int boardNo);
 	//========================== 지은 끝
 		
 	// 예찬 시작 ==========================
@@ -61,6 +62,7 @@ public interface BoardService {
 	List<Map<String, String>> selectBoardCommentList(int boardNo);
 
 	int deleteLevel1(int commentNo);
+
 
 
 

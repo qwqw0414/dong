@@ -122,6 +122,10 @@
 		update board set board_contents = #{boardContents}, board_title = #{boardTitle}, category_id = #{categoryId} where board_no = #{boardNo}
 	</update>
 	
+	<insert id="insertBoardReputation">
+		insert into board_reputation (reputation_no,board_no,member_id,reg_date)
+		values(seq_board_reputation.nextval,#{boardNo},#{memberId},#{regDate})
+	</insert>
 	<!-- ==========================  지은 끝 -->
 	
 	<!-- 예찬 시작 ========================== -->

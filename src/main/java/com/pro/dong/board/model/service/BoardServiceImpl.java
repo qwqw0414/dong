@@ -102,7 +102,10 @@ public class BoardServiceImpl implements BoardService {
 		return bd.boardUpdate(board);
 	}
 
-
+	@Override
+	public int insertBoardReputation(int boardNo) {
+		return bd.insertBoardReputation(boardNo);
+	}
 	//========================== 지은 끝
 		
 	// 예찬 시작 ==========================
@@ -128,6 +131,8 @@ public class BoardServiceImpl implements BoardService {
 	public int deleteLevel1(int commentNo) {
 		return bd.deleteLevel1(commentNo);
 	}
+
+	
 
 
 

@@ -100,7 +100,11 @@ public class BoardDAOImpl implements BoardDAO {
 		return sst.update("board.boardUpdate", board);
 	}
 	
-
+	
+	@Override
+	public int insertBoardReputation(int boardNo) {
+		return sst.insert("board.insertBoardReputation", boardNo);
+	}
 	//========================== 지은 끝
 		
 	// 예찬 시작 ==========================
@@ -126,6 +130,8 @@ public class BoardDAOImpl implements BoardDAO {
 	public int deleteLevel1(int commentNo) {
 		return sst.delete("board.deleteLevel1",commentNo);
 	}
+
+	
 
 
 
