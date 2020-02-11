@@ -62,6 +62,10 @@ public class BoardDAOImpl implements BoardDAO {
 	public List<Map<String, String>> loadBoardReportCategory() {
 		return sst.selectList("board.loadBoardReportCategory");
 	}
+	@Override
+	public int insertBoardReport(Map<String, String> param) {
+		return sst.insert("board.insertBoardReport",param);
+	}
 	//========================== 하진 끝
 		
 	// 근호 시작 ==========================

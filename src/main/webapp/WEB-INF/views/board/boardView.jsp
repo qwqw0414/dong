@@ -309,7 +309,7 @@ $(function(){
 		var memberId = $("[name=memberLoggedIn]").val();
 		var boardNo = $("[name=boardNo]").val();
 		
-		if(textArea.length==0){
+		if(reportComment.length==0){
 			alert("신고 내용을 입력하세요");
 			$("#boardReportContents").focus();
 			return;
@@ -328,6 +328,7 @@ $(function(){
 			success: data=>{
 				if(data == 1){
 					alert("게시글 신고가 정상적으로 접수되었습니다.");
+					location.href="${pageContext.request.contextPath}/board/boardView.do?boardNo="+boardNo;
 				}
 				else{
 					alert("게시글 신고 실패");
