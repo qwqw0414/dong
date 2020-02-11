@@ -162,15 +162,9 @@
 	</div>
 </div>
 	
-<script>
-/* 첨부파일 관련 */
-//파일선택 | 취소시에 파일명 노출하기
-	
-	</script>
-	<hr class="my-hr3"/><br />
+<hr class="my-hr3"/><br />
 	
 	<!-- 넘어오면 다 내꺼 -->
-<<<<<<< HEAD
 	<style>
 	#shopView-nav {}
 	#shopView-nav ul{list-style:none; margin:0; padding:0;}
@@ -204,7 +198,6 @@
 		width: 70px;
 		height: 30px;
 		margin: 10px 10px;
-		
 	}
 	#shopInquiryBtnDiv{
 		margin-top: 0px;
@@ -247,6 +240,14 @@
 		border: 1px solid lightgray;
 		margin-left: 5px;
 	}
+	.commentCancelBtn{
+		background-color: white;
+		outline: none;
+		border: 1px solid lightgray;
+		margin-left: 5px;
+		position: relative;
+    	top: -8px;
+	}
 	#cancleRecommentBtn{
 		position: relative;
 		top: -8px;
@@ -271,11 +272,7 @@
 		height: 50px;
 		display: inline-block;
 		margin-left: -80px;
-		/* margin-bottom: -50px; */
 	}
-	/* .replyIconDiv{
-		display: inline-block;
-	} */
 	#inquiryRecommentDetail{
 		margin-left: 35px;
    	    margin-top: -17px;
@@ -284,10 +281,75 @@
 		position:static;
 		display: block;
 	}
+	
+	/* 찜한 목록 style */
+	.card .card-img-top{
+		border-top-left-radius: calc(.25rem - 1px);
+   		border-top-right-radius: calc(.25rem - 1px);
+	}
+	#wishListDiv #wishItem .card {
+    	float: left;
+    	margin: 10px 8px 10px 8px;
+	}
+
+	.card {
+    	position: relative;
+    	display: -ms-flexbox;
+    	display: flex;
+    	-ms-flex-direction: column;
+    	flex-direction: column;
+   		min-width: 0;
+    	word-wrap: break-word;
+    	background-color: #fff;
+    	background-clip: border-box;
+    	border: 1px solid rgba(0,0,0,.125);
+    	border-radius: .25rem;
+	}
+	#wishListDiv .regDate {
+    	font-size: 0.9em;
+    	position: absolute;
+    	right: 10px;
+    	bottom: 10px;
+	}
+	#wishListDiv #wishItem{
+		width: 1200px;
+    	display: block;
+    	margin-left: 12px;
+    	height: 620px;
+	}
+	.wishListDiv{
+		width: 100%;
+		width:1200px;
+		margin: auto;
+	}
+	#wishListDiv .card {
+		width: 201px; 
+		border-radius: 0; 
+		height: 280px; 
+		cursor: pointer;
+	}
+	#wishListDiv .card img{
+		width: 200px; 
+		height: 200px; 
+		border: none;
+	}
+	#wishListDiv #wishItem .card{
+		float: left; 
+		margin: 10px 8px 10px 8px;
+	}
+	#wishItem {
+		width: 1200px; 
+		display: block; 
+		margin: auto; 
+		height: 620px;
+	}
+	#wishPageBar{
+		position: static; 
+		display:block;
+		margin-top: 300px; 
+	}
 	/* 주영 끝 */
 	</style>
-	
-	
 	
 	<script>
 	/***********하진 시작*/
@@ -345,13 +407,12 @@
 	/*하진 끝***********/
 	</script>
 
-	
 	<div id="shopView-nav">
 		<div style="height: 20px;">
 			<ul>
 				<li><div class="shop-nav-selected shop-nav">내 상품</div></li>
 				<li><div id="shopInquiryDiv" class="shop-nav-disabled shop-nav">상점문의</div></li>
-				<li><div class="shop-nav-disabled shop-nav">찜 목록</div></li>
+				<li><div id="myWishListDiv" class="shop-nav-disabled shop-nav">찜 목록</div></li>
 				<li><div class="shop-nav-disabled shop-nav">상점후기</div></li>
 				<li><div class="shop-nav-disabled shop-nav">팔로우</div></li>
 				<li><div class="shop-nav-disabled shop-nav">팔로워</div></li>
@@ -380,11 +441,19 @@
 				</div>
 				<div id="shopInquiryList">
 				<!-- select해온 문의사항 리스트 -->
-				</div></div>
-			<div id="nav-wishlist">
-				<h1>찜</h1>
-				
+				</div>
 			</div>
+			<div id="nav-wishlist" >
+				<h1 style="display:inline-block;">찜</h1><h1 id="zzimTag" style="display: contents; color:green;"></h1>
+				<div id="wishListDiv" >
+					<div id="wishItem">
+						<!-- 찜한 상품 list보이기 -->
+					</div>
+				</div>
+				<br />
+				<div id="wishPageBar"></div>
+			</div>
+				
 			<div id="nav-review">
 				<h1>상점 후기</h1>
 			</div>
@@ -421,8 +490,6 @@ $(()=>{
 		
 		$("#shopView-nav #shop-contents").children().hide();
 		
-		console.log($(e.target).attr("id"));
-		
 		switch ($(e.target).text()) {
 			case "내 상품": $("#shopView-nav #nav-product").show();break;
 			case "상점문의": $("#shopView-nav #nav-inquiry").show(); $("#shopInquiryTotalDiv").show();break;
@@ -431,12 +498,11 @@ $(()=>{
 			case "팔로우": $("#shopView-nav #nav-follow").show();break;
 			case "팔로워": $("#shopView-nav #nav-follower").show();break;
 		}
-	})
+	});
 	/* 주영 시작 */
 
 	$("#shopInquiryText").keyup(function() {
 		var content = $(this).val();
-		console.log("content.length="+content.length);
 		
 		if(content.length > 0){
 			$("#shopInquiryBtn").prop("disabled", false);
@@ -545,14 +611,9 @@ $("#shopView #shopInquiryBtn").click(insertInquiry);
 		});
 
 	}
-//////////////////////////////
 $(document).on("click", "#shopView #deleteCommentBtn", function(e){
 	var deleteCommentBtnTarget = $(e.target);
-	console.log("addgfgdgfdgdfg");
-	console.log(deleteCommentBtnTarget);
 	var deleteCommentBtn = deleteCommentBtnTarget.val();
-	console.log("asdasd");
-	console.log(deleteCommentBtn);
 
 	$.ajax({
 		url: "${pageContext.request.contextPath}/shop/deleteShopInquriy",
@@ -575,31 +636,40 @@ $(document).on("click", "#shopView #insertInquiryCommentBtn", function(e){
 		let html = "";
 		html += "<br/>";
 		html += "<textarea id='shopInquiryCommentText' cols='80' rows='1' placeholder='댓글내용을 입력하세요.'></textarea>&nbsp;&nbsp;";
-		html += "<button value='" + inquiryRefNo + "' id='shopInquiryCommentEndBtn'>";
+		html += "<button disabled value='" + inquiryRefNo + "' id='shopInquiryCommentEndBtn'>";
 		html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/register@2x.png' width='15' height='14' >";
 		html += "등록";
 		html += "</button>";
-		html += "<button id='cancelRecommentBtn' class='commentDelBtn'>";
+		html += "<button id='cancelRecommentBtn' class='commentCancelBtn'>";
 		html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='14'>";
 		html += "취소";
 		html += "</button>";
 		html += "</div>";
 		
 		btnTarget.next().next().html(html);
+		
+		
 	});
 	
+$(document).on("keyup", "#shopView #shopInquiryCommentText", function(){
+	var $commentLength = $(this).val();
+	if($commentLength.length > 0){
+		$(this).next().attr("disabled", false);
+	}
+	else{
+		$(this).next().attr("disabled", true);
+	}
+});
+	
 $(document).on("click", "#shopView #cancelRecommentBtn", function(e){
-		console.log("취소버튼함수에들어왔다");
 		var cancelRecommentBtn = $(e.target);
 		cancelRecommentBtn.parent().prev().prev().attr("disabled", false);
 		cancelRecommentBtn.prev().prev().parent().empty();
-		$("#deleteCommentBtn").css('margin-left', '5px');
 });
 
 
 $(document).on("click", "#shopView #shopInquiryCommentEndBtn", function(){
 		var inquiryRefNo = $("#shopInquiryCommentEndBtn").val();
-		console.log(inquiryRefNo);
 		var shopInquiryCommentText = $("#shopInquiryCommentText").val();
 		var shopInquiryCommentWriter = $("[name=memberLoggedIn]").val();
 		var shopInquiryCommentShopNo = ${ map.SHOP_NO }
@@ -622,6 +692,7 @@ $(document).on("click", "#shopView #shopInquiryCommentEndBtn", function(){
 			}
 		});
 	});
+	
 	var memberId = $("[name=memberLoggedIn]").val();
 
 	loadMyProduct(1);
@@ -723,8 +794,6 @@ $("#shopView #shopNameUpdateBtn").click(shopNameUpdateEnd);
 	function shopNameUpdateEnd() {
 		var shopName = $("#shopNameInput").val();
 		var memberId = $("[name=memberLoggedIn]").val();
-		console.log("memberId=" + memberId);
-		console.log("shopName=" + shopName);
 
 		$.ajax({
 			url: "${pageContext.request.contextPath}/shop/updateShopName",
@@ -735,7 +804,6 @@ $("#shopView #shopNameUpdateBtn").click(shopNameUpdateEnd);
 			},
 			success: data => {
 				console.log(data);
-				console.log(data.SHOP_NAME);
 
 				$("#shopNameCheck").html("");
 				$("#shopNameSpan").html(data.SHOP_NAME);
@@ -785,9 +853,6 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 		var memberId = $("[name=memberLoggedIn]").val();
 		var updateInfo = $("#updateInfo").val();
 
-		console.log("memberId=" + memberId);
-		console.log("updateInfo=" + updateInfo);
-
 		$.ajax({
 			url: "${pageContext.request.contextPath}/shop/updateShopInfo",
 			method: "POST",
@@ -810,6 +875,62 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 			}
 		});
 	};
+	
+	//찜한목록 조회
+	$(document).on("click", "#shopView #myWishListDiv", function(){
+		var memberId = $("[name=memberLoggedIn]").val();
+		var cPage = cPage;
+		console.log(cPage);
+		$.ajax({
+			url: "${pageContext.request.contextPath}/shop/selectMyWishList",
+			method: "POST",
+			data: { memberId: memberId,
+					cPage : cPage },
+			success: data => {
+				console.log(data);
+				$("#zzimTag").html(data.totalContents);
+				let html = "";
+				let $wishItem = $("#wishItem");
+				for (var i = 0; i < data.list.length; i++) {
+					html += "<div class='card'>";
+					html += "<input type='hidden' class='productNo' value='"+data.list[i].PRODUCT_NO+"'>";
+					html += "<img src='/dong/resources/upload/product/"+data.list[i].PHOTO+"' class='card-img-top'>";
+					html += "<div class='card-body'>";
+					html +=	"<p class='card-title'>"+data.list[i].TITLE+"</p>";
+					html +=	"<p class='card-text'><span>"+data.list[i].PRICE+"<small>원</small></span></p>";
+					html += "<div class='regDate'>"+lastDate(data.list[i].REG_DATE)+"</div>";
+					html += "</div></div>";
+				}
+				$wishItem.html(html);
+				$("#wishPageBar").html(data.pageBar);
+			},
+			error: (x, s, e) => {
+				console.log("ajax 요청 실패!");
+			},
+			complete: (data)=>{
+		        $("#wishItem .card").click(function(){
+		        	console.log($(this));
+		        	console.log($(this).children("input").val());
+		        	var productNo = $(this).children("input").val();
+		        	location.href = "${pageContext.request.contextPath}/product/productView.do?productNo="+productNo;
+		        });
+		      }
+		});
+	});
+	
+	function lastDate(date){
+	    var regDate = new Date(date);
+	    var now = new Date();
+
+	    var diffHour = Math.ceil((now.getTime() - regDate.getTime())/60000/60);
+
+	    if(diffHour > 23){
+	      return Math.floor(diffHour/24)+"일 전";
+	    }
+
+	    return diffHour+"시간 전";
+	  }
+	
 	//팔로우 버튼 토글
 	$("#follow").on('click', function(){
 		var img = $("#followIcon");
