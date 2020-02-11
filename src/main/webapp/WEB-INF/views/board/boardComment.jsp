@@ -37,6 +37,12 @@
 				type:"POST",
 				success:data=>{
 					console.log(data);
+						if(data=="1"){
+							alert("성공 니 댓글 맨뒤에~");
+						}
+						else{
+							alert("실패")
+						}
 						showCommentList(1);
 				},
 				 error : (x,s,e) =>{
@@ -45,6 +51,12 @@
 			});//end of ajax
 		});//end of function
 	});//end of onload
+	
+	
+	
+	
+	
+	
 	function showCommentList(cPage){
 	//댓글 조회
 	var boardNo=285;
@@ -78,10 +90,13 @@
 				}
 				
 				else{
-					html+="<input type='hidden' value="+data.list[i].COMMENT_NO+" id='commentNo_'/>";
+					
 					if($("[name=memberLoggedIn]").val()==data.list[i].MEMBER_ID){
-						html+="<div><img class='replyIcon' style='width:50px; height:50px;' src='${pageContext.request.contextPath}/resources/images/reply.PNG'/>"
-						html+="<span style='margin-bottom:0px; padding-left:30px'><strong>"+data.list[i].MEMBER_ID+ "</strong> : " + data.list[i].CONTENTS + " <small>[ " +data.list[i].WRITE_DAY + "]</small><button>x</button></span></div>";
+						html+="<div>"
+						html+="<input type='hidden' value="+data.list[i].COMMENT_NO+" id='commentNo_'/>"
+						html+="<img class='replyIcon' style='width:50px; height:50px;' src='${pageContext.request.contextPath}/resources/images/reply.PNG'/>"
+						html+="<span style='margin-bottom:0px; padding-left:30px'><strong>"+data.list[i].MEMBER_ID+ "</strong> : " + data.list[i].CONTENTS + " <small>[ " +data.list[i].WRITE_DAY + "]</small>";
+						html+="<button onclick='deleteLevel2(this);'>대댓삭제</button></span></div>";
 					}else{
 						html+="<div><img class='replyIcon' style='width:50px; height:50px;' src='${pageContext.request.contextPath}/resources/images/reply.PNG'/>"
 						html+="<span style='margin-bottom:0px; padding-left:30px'><strong>"+data.list[i].MEMBER_ID+ "</strong> : " + data.list[i].CONTENTS + " <small>[ " +data.list[i].WRITE_DAY + "]</small></span></div>";
@@ -127,6 +142,8 @@
 		}
 	});//end of ajax
 	};//end of function
+	
+	
 	//대댓글 등록
 	function insertLevel2(e){
 		var boardNo= 285;
@@ -145,6 +162,12 @@
 				type:"POST",
 				success:data=>{
 						console.log(data);
+						if(data=="1"){
+								alert("성공");
+						}
+						else{
+							alert("실패");
+						}
 						showCommentList(1);
 				},//end of success,
 				 error : (x,s,e) =>{
@@ -152,6 +175,28 @@
 				}
 		})//end of ajax
 	}//end of function
+	
+	
+	
+	//대댓삭제
+	function deleteLevel2(e){
+		var commentNo=$(e).parent().parent().children("input").val();
+		$.ajax({
+			url:"${pageContext.request.contextPath}/board/deleteLevel2",
+			data:{commentNo:commentNo},
+			type:"POST",
+			
+		})//end of ajax
+		
+	
+	}
+	
+	
+	
+	
+	
+	
+	
 	//대댓글 등록창 보이기
 	function showLevel2form(e){
 // 		$("#level2Form").css("display","block");
