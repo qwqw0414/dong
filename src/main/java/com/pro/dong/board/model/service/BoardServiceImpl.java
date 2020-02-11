@@ -103,8 +103,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int insertBoardReputation(int boardNo) {
-		return bd.insertBoardReputation(boardNo);
+	public int insertBoardReputation(Map<String, String> map) {
+		return bd.insertBoardReputation(map);
 	}
 	//========================== 지은 끝
 		
@@ -131,6 +131,10 @@ public class BoardServiceImpl implements BoardService {
 	public int deleteLevel1(int commentNo) {
 		return bd.deleteLevel1(commentNo);
 	}
+
+	
+
+	
 
 	
 
