@@ -17,10 +17,6 @@ div#board-container input,div#board-container button{margin-bottom:15px;}
 /* 부트스트랩 : 파일라벨명 정렬*/
 div#board-container label.custom-file-label{text-align:left;}
 
-div{
-    margin: 10px;
-    padding: 0;
-}
 input{
 	border: 0px;
 }
@@ -159,7 +155,7 @@ $(function(){
 
 </script>
 
-<div class="section">
+<div class="boardView">
     <!-- head -->
     <div class="head_inflow">
         <div id="title"><strong>${board.boardTitle}</strong></div>
@@ -198,7 +194,7 @@ $(function(){
         </div>
 
         <div class="btnBox">
-            <button id="likeBtn">좋아요</button>
+            <button id="likeBtn">추천</button>
             <button >신고</button>
         </div>
        
@@ -265,7 +261,7 @@ $(function(){
  
 </script>
 
-<<<<<<< 
+
 
 <%--==================현규시작================ --%>
 <hr />
