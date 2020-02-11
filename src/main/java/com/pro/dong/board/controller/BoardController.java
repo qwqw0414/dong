@@ -285,40 +285,44 @@ public class BoardController {
 	//댓글 등록
 	@RequestMapping(value="/insertComments", produces="text/plain;charset=UTF-8")
 	@ResponseBody
-	public String insertComments(HttpSession session, BoardComment bc, @RequestParam("boardNo") int boardNo) {
-		
-		
-		log.info("ddddddddddddddddddddddddd={}",bc);
-		
+	public Map<String,Object> insertComments(HttpSession session, BoardComment bc, @RequestParam("boardNo") int boardNo) {
 		
 		int result = bs.insertBoardComment(bc);
 		
+		Map<String,Object> map = new HashMap<>();
+		map.put("result", result);
 		
-		
-		List<Map<String,String>>list = null;
-		if (result>0) {
-			list = bs.selectBoardCommentList(boardNo);
-		}
-		
-		
-		log.info("result={}",result);
-		
-		return gson.toJson(list)+"";
+		return map;
 	}
 	
 	
 	//댓글 불러들이기
 	@ResponseBody
 	@RequestMapping(value="/selectBoardComment", produces="text/plain;charset=UTF-8")
-	public String selectBoardCommentList(@RequestParam("boardNo") int boardNo) {
+	public String selectBoardCommentList(@RequestParam("boardNo") int boardNo, @RequestParam("cPage") int cPage) {
+		int numPerPage=10;
 		log.info("파라미터로받아온 boardNo{}",boardNo);
 		List<Map<String,String>>list = null;
 		
-		list = bs.selectBoardCommentList(boardNo);
+		list = bs.selectBoardCommentList(boardNo,cPage,numPerPage);
 		log.debug("DB에서 가져온 리스트={}",list);
 		
-		return gson.toJson(list)+"";
+		
+		
+		int totalContents = bs.countComment();
+		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
+		
+		Map<String,Object> result = new HashMap<>();
+		result.put("list", list);
+		result.put("pageBar", pageBar);
+		
+		
+		
+		return gson.toJson(result)+"";
 	}
+	
+	
+	
 	
 	//댓글 지우기
 	@ResponseBody
@@ -331,7 +335,6 @@ public class BoardController {
 		
 		int result= bs.deleteLevel1(commentNo);
 		
-		log.info("지워젓나={}",result);
 		
 //		List<Map<String,String>>list = null;
 //		if (result>0) {
@@ -345,20 +348,17 @@ public class BoardController {
 	//대댓글 쓰기
 	@ResponseBody
 	@RequestMapping(value="/insertLevel2", produces="text/plain;charset=UTF-8")
-	public String insertLevel2(BoardComment bc,@RequestParam("boardNo")int boardNo) {
+	public int insertLevel2(BoardComment bc,@RequestParam("boardNo")int boardNo) {
 		log.debug("dddddd={}",bc);
 		
 		int result = bs.insertBoardComment(bc);
 		
 		List<Map<String,String>>list = null;
-		if (result>0) {
-			list = bs.selectBoardCommentList(boardNo);
-		}
 		
 		
 		log.info("result={}",result);
 		
-		return gson.toJson(list)+"";
+		return result;
 		
 
 	}
