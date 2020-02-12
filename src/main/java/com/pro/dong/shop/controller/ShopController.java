@@ -106,9 +106,9 @@ public class ShopController {
 		Map<String, Object> result = new HashMap<>();
 		param.put("follower", follower);
 		int totalContents = ss.selectselectFollowerListCount(follower);
-		List<Map<String,String>> followList = ss.selectFollowerList(follower,cPage,numPerPage);
+		List<Map<String,String>> followerList = ss.selectFollowerList(follower,cPage,numPerPage);
 		String followPageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
-		result.put("followList", followList);
+		result.put("followerList", followerList);
 		result.put("followPageBar", followPageBar);
 		return result;
 	}

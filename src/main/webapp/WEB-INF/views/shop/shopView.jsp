@@ -358,7 +358,7 @@
 		height: 20px;
 	}
 	
-	/* #wishPageBar{
+	 #wishPageBar{
 		position: static; 
 		display:block;
 		margin-top: 300px; 
@@ -367,7 +367,7 @@
 		position: static; 
 		display:block;
 		margin-top: 300px; 
-	}*/
+	}
 
 	/* 주영 끝 */
 	</style>
@@ -450,7 +450,7 @@
 	
 		<div id="shop-contents">
 			<div id="nav-product">
-				<h1>내 상품</h1>
+				<h1>내 상품</h1> 
 				<div class="myProductList" id="myProductList">
       				<div  id="myProduct">
       				
@@ -606,6 +606,8 @@ $(()=>{
 						html += "&nbsp;&nbsp;";
 						html += "<span>" + data.list[i].WRITE_DAY + "</span>";
 						html += "<p>" + data.list[i].INQUIRY_CONTENT + "</p>";
+						html += "<button id='deleteReCommentBtn'  class='commentDelBtn'>";
+						html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='17'>삭제</button>";
 						html += "</div>";
 						html += "</div>";
 					}
@@ -646,6 +648,24 @@ $("#shopView #shopInquiryBtn").click(insertInquiry);
 		});
 
 	}
+$(document).on("click", "#shopView #deleteCommentBtn", function(e){
+	var deleteCommentBtnTarget = $(e.target);
+	var deleteCommentBtn = deleteCommentBtnTarget.val();
+
+	$.ajax({
+		url: "${pageContext.request.contextPath}/shop/deleteShopInquriy",
+		method: "POST",
+		data: { deleteCommentBtn: deleteCommentBtn },
+		success: data => {
+			console.log(data);
+			selectInquiry();
+		},
+		error: (x, s, e) => {
+			console.log("ajax 요청 실패!");
+		}
+	});
+});
+
 $(document).on("click", "#shopView #deleteCommentBtn", function(e){
 	var deleteCommentBtnTarget = $(e.target);
 	var deleteCommentBtn = deleteCommentBtnTarget.val();
@@ -930,7 +950,7 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 						html += "<div class='card'>";
 						html += "<input type='hidden' class='productNo' value='"+data.list[i].PRODUCT_NO+"'>";
 						html += "<img src='/dong/resources/upload/product/"+data.list[i].PHOTO+"' class='card-img-top'>";
-						html += "<button id='wishCancel' value='"+data.list[i].PRODUCT_NO+"'><img id='wishImg' src='/dong/resources/images/like.png'></button>"
+						html += "<button id='wishCancel' value='"+data.list[i].PRODUCT_NO+"'><img id='wishImg' src='/dong/resources/images/x.png'></button>"
 						html += "<div class='card-body'>";
 						html +=	"<p class='card-title'>"+data.list[i].TITLE+"</p>";
 						html +=	"<p class='card-text'><span>"+data.list[i].PRICE+"<small>원</small></span></p>";
@@ -1078,14 +1098,14 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 				let html = "";
 				let $followerWrapper = $("#follower-wrapper");
 				let $followerPageBar = $("#followerPageBar");
-				for (var i = 0; i < data.followList.length; i++) {
+				for (var i = 0; i < data.followerList.length; i++) {
 					html += "<div class='card'>";
-					html += "<input type='hidden' class='productNo' value='"+data.followList[i].SHOP_NO+"'>";
-					html += "<img src='/dong/resources/upload/shopImage/"+data.followList[i].IMAGE+"' class='card-img-top'>";
-					html += "<div class='card-body'>";
-					html +=	"<p class='card-title'>"+data.followList[i].MEMBER_ID+"</p>";
-					html += "<div class='followDate'>"+data.followList[i].FOLLOW_DATE+"일째 팔로잉 중</div>";
-					html += "</div></div>";
+					html += "<input type='hidden' class='productNo' value='"+data.followerList[i].SHOP_NO+"'>";
+					html += "<img src='/dong/resources/upload/shopImage/"+data.followerList[i].IMAGE+"' class='card-img-top'>";
+					html += "<div class='card-body'><a href='${pageContext.request.contextPath}/shop/shopView.do?shopNo="+data.followerList[i].SHOP_NO+"'>";
+					html +=	"<p class='card-title'>"+data.followerList[i].MEMBER_ID+"</p><hr class='divide-sm'>";
+					html += "<div class='followDate'>"+data.followerList[i].FOLLOW_DATE+"일째 팔로잉 중</div>";
+					html += "</div></a></div>";
 				}
 				$followerWrapper.html(html);
 				$followerPageBar.html(data.followerPageBar);
@@ -1111,10 +1131,10 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 					html += "<div class='card'>";
 					html += "<input type='hidden' class='productNo' value='"+data.followList[i].SHOP_NO+"'>";
 					html += "<img src='/dong/resources/upload/shopImage/"+data.followList[i].IMAGE+"' class='card-img-top'>";
-					html += "<div class='card-body'>";
-					html +=	"<p class='card-title'>"+data.followList[i].MEMBER_ID+"</p>";
+					html += "<div class='card-body'><a href='${pageContext.request.contextPath}/shop/shopView.do?shopNo="+data.followList[i].SHOP_NO+"'>";
+					html +=	"<p class='card-title'>"+data.followList[i].MEMBER_ID+"</p><hr class='divide-sm'>";
 					html += "<div class='followDate'>"+data.followList[i].FOLLOW_DATE+"일째 팔로우 중</div>";
-					html += "</div></div>";
+					html += "</div></a></div>";
 				}
 				$followWrapper.html(html);
 				$followPageBar.html(data.followPageBar);
