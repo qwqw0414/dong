@@ -9,7 +9,7 @@
 %>
 <style>
 .myProductList{margin-left:-33px;}
-#myProduct .card {display:inline-block; width:201px; height:280px;}
+#myProduct .card {display:inline-block; width:201px; height:280px; cursor: pointer;}
 #myProduct .card img{width: 200px; height: 200px; border: none;}
 #myProduct .card{float: left; margin: 10px 8px 10px 8px}
 #myProduct {width: 1200px; display: inline-block; margin: auto; position:static; margin-left:50px; /* height: 620px; */ }
@@ -349,7 +349,14 @@
 	/* #wishPageBar{
 		position: static; 
 		display:block;
-	} */
+		margin-top: 300px; 
+	}
+	#followPageBar{
+		position: static; 
+		display:block;
+		margin-top: 300px; 
+	}*/
+
 	/* 주영 끝 */
 	</style>
 	
@@ -371,7 +378,7 @@
 				},
 				dataType: "json",
 				success:data=>{
-					console.log(data);
+					console.log(data)
 					 let html = "";
 					
 				        data.product.forEach(product => {
@@ -383,7 +390,11 @@
 
 				          html += "<div class='card'>";
 				          html += "<input type='hidden' class='productNo' value='"+product.PRODUCT_NO+"'>";
+				          html += "<img src='${pageContext.request.contextPath}/resources/upload/product/" + product.PHOTO + "' class='card-img-top'>";
 				          html += '<div class="card-body">';
+				          html += '<p class="card-title">' + preTitle + '</p>';
+				          html += '<p class="card-text"><span>' + numberComma(product.PRICE) + '<small>원</small></span></p>';
+				          html += '<div class="regDate">'+lastDate(product.REG_DATE)+'</div>';
 				          html += '</div></div>'
 				        });
 				        $("#myProduct").html(html);
@@ -420,8 +431,8 @@
 				<li><div id="shopInquiryDiv" class="shop-nav-disabled shop-nav">상점문의</div></li>
 				<li><div id="myWishListDiv" class="shop-nav-disabled shop-nav">찜 목록</div></li>
 				<li><div class="shop-nav-disabled shop-nav">상점후기</div></li>
-				<li><div class="shop-nav-disabled shop-nav">팔로우</div></li>
-				<li><div class="shop-nav-disabled shop-nav">팔로워</div></li>
+				<li><div id="viewFollow" class="shop-nav-disabled shop-nav">팔로우</div></li>
+				<li><div id="viewFollower" class="shop-nav-disabled shop-nav">팔로워</div></li>
 			</ul>
 		</div>
 	
@@ -465,9 +476,15 @@
 			</div>
 			<div id="nav-follow">
 				<h1>팔로우</h1>
+				<div id="follow-wrapper"></div>
+				<br>
+				<div id="followPageBar"></div>
 			</div>
 			<div id="nav-follower">
 				<h1>팔로워</h1>
+				<div id="follower-wrapper"></div>
+				<br>
+				<div id="followerPageBar"></div>
 			</div>
 		</div>
 	</div>
@@ -701,7 +718,7 @@ $(document).on("click", "#shopView #shopInquiryCommentEndBtn", function(){
 	
 	var memberId = $("[name=memberLoggedIn]").val();
 
-	loadMyProduct(1);
+	/* loadMyProduct(1);
 
 	function loadMyProduct(cPage) {
 		$.ajax({
@@ -744,7 +761,7 @@ $(document).on("click", "#shopView #shopInquiryCommentEndBtn", function(){
 
 		});
 
-	}
+	} */
 	$("[name=upFile]").on("change", function () {
 		//파일 입력 취소
 		if ($(this).prop("files")[0] === undefined) {
@@ -1005,6 +1022,74 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 			} 
 		}) 
 	});//팔로우 하트 토글 함수 끝
+	
+	//팔로우 하는 상점 조회
+	$("#viewFollow").on('click', function(){
+		viewFollow(1);
+	});//팔로우하는 상점 조회 끝
+	
+	//팔로우 하는 상점 조회
+	$("#viewFollower").on('click', function(){
+		viewFollower(1);
+	});//팔로우하는 상점 조회 끝
+	
+	function viewFollower(cPage){
+		var follower = '${map.SHOP_NO}';
+		$.ajax({
+			url: "${pageContext.request.contextPath}/shop/viewFollower",
+			data:{follower:follower,
+				cPage:cPage},
+			success: data => {
+				console.log(data);
+				let html = "";
+				let $followerWrapper = $("#follower-wrapper");
+				let $followerPageBar = $("#followerPageBar");
+				for (var i = 0; i < data.followList.length; i++) {
+					html += "<div class='card'>";
+					html += "<input type='hidden' class='productNo' value='"+data.followList[i].SHOP_NO+"'>";
+					html += "<img src='/dong/resources/upload/shopImage/"+data.followList[i].IMAGE+"' class='card-img-top'>";
+					html += "<div class='card-body'>";
+					html +=	"<p class='card-title'>"+data.followList[i].MEMBER_ID+"</p>";
+					html += "<div class='followDate'>"+data.followList[i].FOLLOW_DATE+"일째 팔로잉 중</div>";
+					html += "</div></div>";
+				}
+				$followerWrapper.html(html);
+				$followerPageBar.html(data.followerPageBar);
+			},
+			error: (x, s, e) => {
+				console.log("ajax 요청 실패!",x,s,e);
+			}
+		});//end of ajax
+	}//end of viewFollower
+	
+	function viewFollow(cPage){
+		var follow = '${map.SHOP_NO}';
+		$.ajax({
+			url: "${pageContext.request.contextPath}/shop/viewFollow",
+			data:{follow:follow,
+				cPage:cPage},
+			success: data => {
+				console.log(data);
+				let html = "";
+				let $followWrapper = $("#follow-wrapper");
+				let $followPageBar = $("#followPageBar");
+				for (var i = 0; i < data.followList.length; i++) {
+					html += "<div class='card'>";
+					html += "<input type='hidden' class='productNo' value='"+data.followList[i].SHOP_NO+"'>";
+					html += "<img src='/dong/resources/upload/shopImage/"+data.followList[i].IMAGE+"' class='card-img-top'>";
+					html += "<div class='card-body'>";
+					html +=	"<p class='card-title'>"+data.followList[i].MEMBER_ID+"</p>";
+					html += "<div class='followDate'>"+data.followList[i].FOLLOW_DATE+"일째 팔로우 중</div>";
+					html += "</div></div>";
+				}
+				$followWrapper.html(html);
+				$followPageBar.html(data.followPageBar);
+			},
+			error: (x, s, e) => {
+				console.log("ajax 요청 실패!",x,s,e);
+			}
+		});//end of ajax
+	}//end of viewFollow
 });
 
 
