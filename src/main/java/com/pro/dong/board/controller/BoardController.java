@@ -297,7 +297,7 @@ public class BoardController {
 		return mav;
 	}
 	
-	@RequestMapping("/boardLike.do")
+	@RequestMapping("/boardLike")
 	public ModelAndView insertBoardReputation (ModelAndView mav, @RequestParam("boardNo") int boardNo, HttpSession session,HttpServletRequest request){
 		
 		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
