@@ -56,7 +56,7 @@ function loadMemberList(searchType, searchKeyword, cPage){
 	    		html += "<td>"+data.list[i].GENDER+"</td>";
 	    		html += "<td>"+data.list[i].BIRTH+"</td>";
 	    		html += "<td>"+data.list[i].PHONE+"</td>";
-	    		html += "<td>"+data.list[i].SIDO+data.list[i].SIGUNGU+data.list[i].DONG+"</td>";
+	    		html += "<td>"+data.list[i].SIDO+' &nbsp; '+data.list[i].SIGUNGU+' &nbsp; '+data.list[i].DONG+"</td>";
 	    		html += "<td>"+data.list[i].EMAIL+"</td>";
 	    		html += "<td>"+data.list[i].ENROLL_DATE+"</td>";
 	    		html += "</tr>";

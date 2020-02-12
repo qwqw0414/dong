@@ -76,10 +76,6 @@ public class AdminDAOImpl implements AdminDAO {
 	}
 	// ========================== 하진 끝
 
-
-
-
-
 	// 근호 시작 ==========================
 
 	// ========================== 근호 끝
@@ -93,7 +89,15 @@ public class AdminDAOImpl implements AdminDAO {
 	// ========================== 예찬 끝
 
 	// 주영 시작 ==========================
-
+	@Override
+	public int selectBoardTotalContents(Map<String, String> param) {
+		return sst.selectOne("admin.selectBoardTotalContents", param);
+	}
+	@Override
+	public List<Product> loadBoardList(int cPage, int numPerPage, Map<String, String> param) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sst.selectList("admin.loadBoardList", param, rowBounds);
+	}
 	// ========================== 주영 끝
 
 	// 현규 시작 ==========================

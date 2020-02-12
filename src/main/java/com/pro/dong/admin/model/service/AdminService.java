@@ -28,10 +28,6 @@ public interface AdminService {
 	int memberDelete(String memberId);
 	// ========================== 하진 끝
 	
-	
-	
-
-
 	// 근호 시작 ==========================
 
 	// ========================== 근호 끝
@@ -45,7 +41,8 @@ public interface AdminService {
 	// ========================== 예찬 끝
 
 	// 주영 시작 ==========================
-
+	int selectBoardTotalContents(Map<String, String> param);
+	List<Product> loadBoardList(int cPage, int numPerPage, Map<String, String> param);
 	// ========================== 주영 끝
 
 	// 현규 시작 ==========================
