@@ -381,11 +381,18 @@
 		loadMyProduct(1);
 		
 		function loadMyProduct(cPage){
+			
+			var memberId = $("[name=memberLoggedIn]").val();
+			var shopMemberId = '${map.MEMBER_ID}';
+			
+			
+			
+			
 			$.ajax({
 				url:"${pageContext.request.contextPath}/shop/loadMyProduct",
 				contentType: "application/json; charset=utf-8",
 				data:{
-					memberId:memberId,
+					memberId:shopMemberId,
 					cPage:cPage
 				},
 				dataType: "json",
