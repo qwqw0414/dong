@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/css.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/animation.css" />
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>동네톡</title>
 </head>
 <body>
     <div id="chatView" class="text-center">

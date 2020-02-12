@@ -272,7 +272,7 @@ var isCateShow = false;
 		var height = 660;
 		var top = (window.screen.height / 2) - (height / 2);
 		var left = (window.screen.width / 2) - (width / 2);
-		let url = "${pageContext.request.contextPath}/chat/chatView.do";
+		let url = "${pageContext.request.contextPath}/stomp/chatList.do";
 
 		window.open(url,"chatView", "width="+width+",height="+height+", top="+top+", left="+left);
 	}
