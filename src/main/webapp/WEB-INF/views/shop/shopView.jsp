@@ -9,7 +9,7 @@
 %>
 <style>
 .myProductList{margin-left:-33px;}
-#myProduct .card {display:inline-block; width:201px; height:280px;}
+#myProduct .card {display:inline-block; width:201px; height:280px; cursor: pointer;}
 #myProduct .card img{width: 200px; height: 200px; border: none;}
 #myProduct .card{float: left; margin: 10px 8px 10px 8px}
 #myProduct {width: 1200px; display: inline-block; margin: auto; position:static; margin-left:50px; /* height: 620px; */ }
@@ -371,7 +371,7 @@
 				},
 				dataType: "json",
 				success:data=>{
-					console.log(data);
+					console.log(data)
 					 let html = "";
 					
 				        data.product.forEach(product => {
@@ -383,7 +383,11 @@
 
 				          html += "<div class='card'>";
 				          html += "<input type='hidden' class='productNo' value='"+product.PRODUCT_NO+"'>";
+				          html += "<img src='${pageContext.request.contextPath}/resources/upload/product/" + product.PHOTO + "' class='card-img-top'>";
 				          html += '<div class="card-body">';
+				          html += '<p class="card-title">' + preTitle + '</p>';
+				          html += '<p class="card-text"><span>' + numberComma(product.PRICE) + '<small>원</small></span></p>';
+				          html += '<div class="regDate">'+lastDate(product.REG_DATE)+'</div>';
 				          html += '</div></div>'
 				        });
 				        $("#myProduct").html(html);
@@ -701,7 +705,7 @@ $(document).on("click", "#shopView #shopInquiryCommentEndBtn", function(){
 	
 	var memberId = $("[name=memberLoggedIn]").val();
 
-	loadMyProduct(1);
+	/* loadMyProduct(1);
 
 	function loadMyProduct(cPage) {
 		$.ajax({
@@ -744,7 +748,7 @@ $(document).on("click", "#shopView #shopInquiryCommentEndBtn", function(){
 
 		});
 
-	}
+	} */
 	$("[name=upFile]").on("change", function () {
 		//파일 입력 취소
 		if ($(this).prop("files")[0] === undefined) {
