@@ -57,6 +57,8 @@ footer .line{border: 1px rgb(95, 95, 95) solid; width: 100%;}
 #follower-wrapper .card-body a{color:black; text-decoration:none;}
 #follower-wrapper .card-body a:hover{color:black; text-decoration:none;}
 .divide-sm{border:0; height:1px; background:#006600; width:90px;}
+
+#wishCancel{text-shadow: 2px 2px 1px white;}
 /* ==========================민호 끝 */
 	
 /* 하진 시작 ========================== */
