@@ -12,6 +12,10 @@ public interface ShopDAO {
 	int shopFollow(Map<String, String> param);
 	int isFollowing(Map<String, String> param);
 	int shopUnfollow(Map<String, String> param);
+	int selectselectFollowListCount(String follow);
+	List<Map<String, String>> selectFollowList(String follow, int cPage, int numPerPage);
+	int selectselectFollowerListCount(String follower);
+	List<Map<String, String>> selectFollowerList(String follower, int cPage, int numPerPage);
 	
 	//========================== 민호 끝
 	

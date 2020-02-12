@@ -82,6 +82,36 @@ public class ShopController {
 		resultMap.put("follower", follower);
 		return resultMap;
 	}
+	@RequestMapping("/viewFollow")
+	@ResponseBody
+	public Map<String, Object> viewFollow(@RequestParam("follow")String follow,@RequestParam(value="cPage",defaultValue="1")int cPage){
+		int numPerPage = 10;
+		
+		Map<String, String> param = new HashMap<>();
+		Map<String, Object> result = new HashMap<>();
+		param.put("follow", follow);
+		int totalContents = ss.selectselectFollowListCount(follow);
+		List<Map<String,String>> followList = ss.selectFollowList(follow,cPage,numPerPage);
+		String followPageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
+		result.put("followList", followList);
+		result.put("followPageBar", followPageBar);
+		return result;
+	}
+	@RequestMapping("/viewFollower")
+	@ResponseBody
+	public Map<String, Object> viewFollower(@RequestParam("follower")String follower, @RequestParam(value="cPage",defaultValue="1")int cPage){
+		int numPerPage = 10;
+		
+		Map<String, String> param = new HashMap<>();
+		Map<String, Object> result = new HashMap<>();
+		param.put("follower", follower);
+		int totalContents = ss.selectselectFollowerListCount(follower);
+		List<Map<String,String>> followList = ss.selectFollowerList(follower,cPage,numPerPage);
+		String followPageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
+		result.put("followList", followList);
+		result.put("followPageBar", followPageBar);
+		return result;
+	}
 	//========================== 민호 끝
 	
 	
@@ -90,11 +120,12 @@ public class ShopController {
 	@ResponseBody
 	public String loadMyProductList(String memberId, int cPage){
 		
-		int numPerPage = 40;
+		int numPerPage = 10;
 		
 		List<Map<String, String>> list = null;
 			
 		list = ss.loadMyProductList(memberId,cPage,numPerPage);
+		log.debug("상품list @@@@@@@@@@@={}",list);
 		int totalContents = ss.totalCountMyProduct(memberId);
 			
 		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
