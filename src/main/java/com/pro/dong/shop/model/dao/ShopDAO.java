@@ -77,6 +77,8 @@ public interface ShopDAO {
 	
 	int deleteWishProduct(Map<String, String> param);
 	
+	int deleteShopInquriyComment(int deleteCommentBtn);
+	
 	
 	//========================== 주영 끝
 	

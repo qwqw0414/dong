@@ -381,11 +381,18 @@
 		loadMyProduct(1);
 		
 		function loadMyProduct(cPage){
+			
+			var memberId = $("[name=memberLoggedIn]").val();
+			var shopMemberId = '${map.MEMBER_ID}';
+			
+			
+			
+			
 			$.ajax({
 				url:"${pageContext.request.contextPath}/shop/loadMyProduct",
 				contentType: "application/json; charset=utf-8",
 				data:{
-					memberId:memberId,
+					memberId:shopMemberId,
 					cPage:cPage
 				},
 				dataType: "json",
@@ -593,6 +600,7 @@ $(()=>{
 							html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='17'>";
 							html += "삭제";
 							html += "</button>";
+							html += "<input type='hidden' id='inquiryLevel' value='"+data.list[i].INQUIRY_LEVEL+"'/>";
 						}
 							html += "<div class='inquiryCommentDiv' id='inquiryCommentDiv'></div>";
 					}
@@ -606,12 +614,15 @@ $(()=>{
 						html += "&nbsp;&nbsp;";
 						html += "<span>" + data.list[i].WRITE_DAY + "</span>";
 						html += "<p>" + data.list[i].INQUIRY_CONTENT + "</p>";
-						html += "<button id='deleteReCommentBtn'  class='commentDelBtn'>";
-						html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='17'>삭제</button>";
+						if(("${map.MEMBER_ID}" == memberId) || (memberId == data.list[i].MEMBER_ID)){
+							html += "<button id='deleteCommentBtn' value='"+data.list[i].INQUIRY_NO+"' class='commentDelBtn'>";
+							html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='17'>삭제</button>";
+							html += "<input id='inquiryLevel' type='hidden' value='"+data.list[i].INQUIRY_LEVEL+"'/>";
+							}
 						html += "</div>";
 						html += "</div>";
+						}
 					}
-				}
 				$listDiv.html(html);
 
 			},
@@ -651,35 +662,19 @@ $("#shopView #shopInquiryBtn").click(insertInquiry);
 $(document).on("click", "#shopView #deleteCommentBtn", function(e){
 	var deleteCommentBtnTarget = $(e.target);
 	var deleteCommentBtn = deleteCommentBtnTarget.val();
+	var inquiryLevel = deleteCommentBtnTarget.siblings("input#inquiryLevel").val();
 
 	$.ajax({
 		url: "${pageContext.request.contextPath}/shop/deleteShopInquriy",
 		method: "POST",
-		data: { deleteCommentBtn: deleteCommentBtn },
+		data: { deleteCommentBtn: deleteCommentBtn,
+				inquiryLevel : inquiryLevel},
 		success: data => {
 			console.log(data);
 			selectInquiry();
 		},
 		error: (x, s, e) => {
-			console.log("ajax 요청 실패!");
-		}
-	});
-});
-
-$(document).on("click", "#shopView #deleteCommentBtn", function(e){
-	var deleteCommentBtnTarget = $(e.target);
-	var deleteCommentBtn = deleteCommentBtnTarget.val();
-
-	$.ajax({
-		url: "${pageContext.request.contextPath}/shop/deleteShopInquriy",
-		method: "POST",
-		data: { deleteCommentBtn: deleteCommentBtn },
-		success: data => {
-			console.log(data);
-			selectInquiry();
-		},
-		error: (x, s, e) => {
-			console.log("ajax 요청 실패!");
+			console.log("ajax 요청 실패!", x,s,e);
 		}
 	});
 });
@@ -701,10 +696,9 @@ $(document).on("click", "#shopView #insertInquiryCommentBtn", function(e){
 		html += "</button>";
 		html += "</div>";
 		
-		btnTarget.next().next().html(html);
+		btnTarget.next().next().next().html(html);
 		
-		
-	});
+});
 	
 $(document).on("keyup", "#shopView #shopInquiryCommentText", function(){
 	var $commentLength = $(this).val();
@@ -715,6 +709,7 @@ $(document).on("keyup", "#shopView #shopInquiryCommentText", function(){
 		$(this).next().attr("disabled", true);
 	}
 });
+	
 	
 $(document).on("click", "#shopView #cancelRecommentBtn", function(e){
 		var cancelRecommentBtn = $(e.target);
@@ -750,50 +745,6 @@ $(document).on("click", "#shopView #shopInquiryCommentEndBtn", function(){
 	
 	var memberId = $("[name=memberLoggedIn]").val();
 
-	/* loadMyProduct(1);
-
-	function loadMyProduct(cPage) {
-		$.ajax({
-			url: "${pageContext.request.contextPath}/shop/loadMyProduct",
-			contentType: "application/json; charset=utf-8",
-			data: {
-				memberId: memberId,
-				cPage: cPage
-			},
-			dataType: "json",
-			success: data => {
-				
-				let html = "";
-				var $myProduct = $("myProduct");
-				data.product.forEach(product => {
-
-					let preTitle = product.TITLE;
-
-					if (preTitle.length > 12)
-						preTitle = preTitle.substring(0, 12) + "..."
-
-					html += "<div class='card'>";
-					html += "<img src='${pageContext.request.contextPath}/resources/upload/product/" + product.PHOTO + "' class='card-img-top'>";
-					html += '<div class="card-body">';
-					html += '<p class="card-title">' + preTitle + '</p>';
-					html += '<p class="card-text"><span>' + numberComma(product.PRICE) + '<small>원</small></span></p>';
-					html += '</div></div>'
-				});
-				$("#myProduct").html(html);
-				$("#pageBar").html(data.pageBar);
-			},
-			error: (x, s, e) => {
-				console.log("실패", x, s, e);
-			},
-			complete: () => {
-				$("#pageBar a").click((e) => {
-					loadMyProduct($(e.target).siblings("input").val());
-				});
-			}
-
-		});
-
-	} */
 	$("[name=upFile]").on("change", function () {
 		//파일 입력 취소
 		if ($(this).prop("files")[0] === undefined) {
@@ -932,7 +883,6 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 	};
 	
 	//찜한목록 조회
-/* 	$(document).on("click", "#shopView #myWishListDiv", function(){ */
 		loadMyWishList(1);
 		function loadMyWishList(cPage){
 			var memberId = $("[name=memberLoggedIn]").val();

@@ -166,6 +166,10 @@ public class ShopServiceImpl implements ShopService{
 	public int deleteWishProduct(Map<String, String> param) {
 		return sd.deleteWishProduct(param);
 	}
+	@Override
+	public int deleteShopInquriyComment(int deleteCommentBtn) {
+		return sd.deleteShopInquriyComment(deleteCommentBtn);
+	}
 
 
 

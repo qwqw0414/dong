@@ -49,7 +49,7 @@ public interface BoardService {
 
 	int insertBoardReputation(Map<String, String> map);
 	
-	int selectBoardLike(int boardNo);
+	int selectBoardLike(Map<String, String> map);
 	//========================== 지은 끝
 		
 	// 예찬 시작 ==========================
