@@ -950,7 +950,7 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 						html += "<div class='card'>";
 						html += "<input type='hidden' class='productNo' value='"+data.list[i].PRODUCT_NO+"'>";
 						html += "<img src='/dong/resources/upload/product/"+data.list[i].PHOTO+"' class='card-img-top'>";
-						html += "<button id='wishCancel' value='"+data.list[i].PRODUCT_NO+"'><img id='wishImg' src='/dong/resources/images/x.png'></button>"
+						html += "<button id='wishCancel' class='close' value='"+data.list[i].PRODUCT_NO+"'>x</button>"
 						html += "<div class='card-body'>";
 						html +=	"<p class='card-title'>"+data.list[i].TITLE+"</p>";
 						html +=	"<p class='card-text'><span>"+data.list[i].PRICE+"<small>원</small></span></p>";
