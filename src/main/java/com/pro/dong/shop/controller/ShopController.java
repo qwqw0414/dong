@@ -339,7 +339,8 @@ public class ShopController {
 												 @RequestParam("inquiryContent") String inquiryContent,
 												 @RequestParam("shopNo") int shopNo){
 		
-		//inquiryContent.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\\n", "<br/>");
+		//XSS공격대비 &문자변환
+		inquiryContent = inquiryContent.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\\n", "<br/>");
 		
 		ShopInquriy s = new ShopInquriy();
 		s.setInquiryLevel(1);
@@ -360,10 +361,20 @@ public class ShopController {
 	
 	@RequestMapping("/deleteShopInquriy")
 	@ResponseBody
-	public Map<String, Integer> deleteShopInquriy(@RequestParam("deleteCommentBtn") int deleteCommentBtn){
-		int result = ss.deleteShopInquriy(deleteCommentBtn);
+	public Map<String, Integer> deleteShopInquriy(@RequestParam("deleteCommentBtn") int deleteCommentBtn,
+												  @RequestParam("inquiryLevel") int inquiryLevel){
 		Map<String, Integer> map = new HashMap<>();
-		map.put("result", result);
+		int result = 0;
+		
+		if(inquiryLevel == 1) {
+			result = ss.deleteShopInquriy(deleteCommentBtn);
+			map.put("result", result);
+		}
+		else if(inquiryLevel == 2){
+			result = ss.deleteShopInquriyComment(deleteCommentBtn);
+			map.put("result", result);
+		}
+		
 		return map;
 	}
 	
@@ -373,6 +384,9 @@ public class ShopController {
 												 	@RequestParam("shopInquiryCommentText") String shopInquiryCommentText,
 												 	@RequestParam("shopInquiryCommentWriter") String shopInquiryCommentWriter,
 												 	@RequestParam("shopInquiryCommentShopNo") int shopInquiryCommentShopNo){
+		
+		//XSS공격대비 &문자변환
+		shopInquiryCommentText = shopInquiryCommentText.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\\n", "<br/>");
 		
 		ShopInquriy s = new ShopInquriy();
 		s.setInquiryRef(inquiryRefNo);

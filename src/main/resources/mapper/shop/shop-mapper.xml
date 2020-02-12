@@ -145,6 +145,10 @@
 		delete from product_like where member_id = #{memberId} and product_no = #{wishProductNo}
 	</delete>
 	
+	<delete id="deleteShopInquriyComment">
+		delete from shop_inquiry where inquiry_no = #{deleteCommentBtn}
+	</delete>
+	
 	<!-- ==========================  주영 끝 -->
 	
 	<!-- 현규 시작 ========================== -->
