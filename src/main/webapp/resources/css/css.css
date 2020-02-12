@@ -32,6 +32,33 @@ footer .line{border: 1px rgb(95, 95, 95) solid; width: 100%;}
 #follow #followIcon{
 	width: 20px;
 }
+/* 팔로잉 css */
+#follow-wrapper .card {width: 201px; border-radius: 0; height: 280px;}
+#follow-wrapper .card img{padding-top:10px; margin:0 auto; width: 150px; height: 150px; border: none; border-radius: 50%}
+#follow-wrapper .card{float: left; margin: 10px 8px 10px 8px}
+#follow-wrapper .myProduct {width: 1200px; display: block; margin: auto; height: 620px;}
+#follow-wrapper {width: 1300px;}
+#follow-wrapper .myProductList{width: 100%;}
+#follow-wrapper .card-body{padding: 10px 0 0px 8px;}
+#follow-wrapper .followDate{font-size: 0.9em; right: 5px; bottom: 5px; text-align:center;}
+#follow-wrapper .card-title{text-align:center; font-weight: bold; }
+#follow-wrapper .card-body a{color:black; text-decoration:none;}
+#follow-wrapper .card-body a:hover{color:black; text-decoration:none;}
+/* 팔로워 css */
+#follower-wrapper .card {width: 201px; border-radius: 0; height: 280px;}
+#follower-wrapper .card img{padding-top:10px; margin:0 auto; width: 150px; height: 150px; border: none; border-radius: 50%}
+#follower-wrapper .card{float: left; margin: 10px 8px 10px 8px}
+#follower-wrapper .myProduct {width: 1200px; display: block; margin: auto; height: 620px;}
+#follower-wrapper {width: 1300px;}
+#follower-wrapper .myProductList{width: 100%;}
+#follower-wrapper .card-body{padding: 10px 0 0px 8px;}
+#follower-wrapper .followDate{font-size: 0.9em; right: 5px; bottom: 5px; text-align:center;}
+#follower-wrapper .card-title{text-align:center}
+#follower-wrapper .card-body a{color:black; text-decoration:none;}
+#follower-wrapper .card-body a:hover{color:black; text-decoration:none;}
+.divide-sm{border:0; height:1px; background:#006600; width:90px;}
+
+#wishCancel{text-shadow: 2px 2px 1px white;}
 /* ==========================민호 끝 */
 	
 /* 하진 시작 ========================== */
@@ -179,6 +206,7 @@ header #categoryDiv #category-list-end{border-left: rgb(255, 30, 60) 1px solid;}
 #shopView #shop-contents .myProductList{width: 100%;}
 #shopView .myProductList .card-body{padding: 10px 0 0px 8px;}
 #shopView .myProductList .regDate{font-size: 0.9em; position: absolute; right: 10px; bottom: 10px;}
+
 
 #shopView #shopView{
 	width: 1100px;

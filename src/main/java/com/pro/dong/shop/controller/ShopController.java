@@ -82,6 +82,36 @@ public class ShopController {
 		resultMap.put("follower", follower);
 		return resultMap;
 	}
+	@RequestMapping("/viewFollow")
+	@ResponseBody
+	public Map<String, Object> viewFollow(@RequestParam("follow")String follow,@RequestParam(value="cPage",defaultValue="1")int cPage){
+		int numPerPage = 10;
+		
+		Map<String, String> param = new HashMap<>();
+		Map<String, Object> result = new HashMap<>();
+		param.put("follow", follow);
+		int totalContents = ss.selectselectFollowListCount(follow);
+		List<Map<String,String>> followList = ss.selectFollowList(follow,cPage,numPerPage);
+		String followPageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
+		result.put("followList", followList);
+		result.put("followPageBar", followPageBar);
+		return result;
+	}
+	@RequestMapping("/viewFollower")
+	@ResponseBody
+	public Map<String, Object> viewFollower(@RequestParam("follower")String follower, @RequestParam(value="cPage",defaultValue="1")int cPage){
+		int numPerPage = 10;
+		
+		Map<String, String> param = new HashMap<>();
+		Map<String, Object> result = new HashMap<>();
+		param.put("follower", follower);
+		int totalContents = ss.selectselectFollowerListCount(follower);
+		List<Map<String,String>> followerList = ss.selectFollowerList(follower,cPage,numPerPage);
+		String followPageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
+		result.put("followerList", followerList);
+		result.put("followPageBar", followPageBar);
+		return result;
+	}
 	//========================== 민호 끝
 	
 	
@@ -95,6 +125,7 @@ public class ShopController {
 		List<Map<String, String>> list = null;
 			
 		list = ss.loadMyProductList(memberId,cPage,numPerPage);
+		log.debug("상품list @@@@@@@@@@@={}",list);
 		int totalContents = ss.totalCountMyProduct(memberId);
 			
 		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
@@ -308,7 +339,8 @@ public class ShopController {
 												 @RequestParam("inquiryContent") String inquiryContent,
 												 @RequestParam("shopNo") int shopNo){
 		
-		//inquiryContent.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\\n", "<br/>");
+		//XSS공격대비 &문자변환
+		inquiryContent = inquiryContent.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\\n", "<br/>");
 		
 		ShopInquriy s = new ShopInquriy();
 		s.setInquiryLevel(1);
@@ -329,10 +361,20 @@ public class ShopController {
 	
 	@RequestMapping("/deleteShopInquriy")
 	@ResponseBody
-	public Map<String, Integer> deleteShopInquriy(@RequestParam("deleteCommentBtn") int deleteCommentBtn){
-		int result = ss.deleteShopInquriy(deleteCommentBtn);
+	public Map<String, Integer> deleteShopInquriy(@RequestParam("deleteCommentBtn") int deleteCommentBtn,
+												  @RequestParam("inquiryLevel") int inquiryLevel){
 		Map<String, Integer> map = new HashMap<>();
-		map.put("result", result);
+		int result = 0;
+		
+		if(inquiryLevel == 1) {
+			result = ss.deleteShopInquriy(deleteCommentBtn);
+			map.put("result", result);
+		}
+		else if(inquiryLevel == 2){
+			result = ss.deleteShopInquriyComment(deleteCommentBtn);
+			map.put("result", result);
+		}
+		
 		return map;
 	}
 	
@@ -342,6 +384,9 @@ public class ShopController {
 												 	@RequestParam("shopInquiryCommentText") String shopInquiryCommentText,
 												 	@RequestParam("shopInquiryCommentWriter") String shopInquiryCommentWriter,
 												 	@RequestParam("shopInquiryCommentShopNo") int shopInquiryCommentShopNo){
+		
+		//XSS공격대비 &문자변환
+		shopInquiryCommentText = shopInquiryCommentText.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\\n", "<br/>");
 		
 		ShopInquriy s = new ShopInquriy();
 		s.setInquiryRef(inquiryRefNo);
@@ -381,11 +426,25 @@ public class ShopController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("list", list);
 		/*map.put("cPage", cPage);
-		map.put("numPerPage", numPerPage);
-		map.put("totalContents", totalContents);*/
+		map.put("numPerPage", numPerPage);*/
+		map.put("totalContents", totalContents);
 		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
 		map.put("pageBar", pageBar);
 		
+		return map;
+	}
+	
+	@RequestMapping("/deleteWishProduct")
+	@ResponseBody
+	public Map<String, Integer> deleteWishProduct(@RequestParam("wishProductNo") int wishProductNo,
+												  @RequestParam("memberId") String memberId){
+		Map<String, String> param = new HashMap<>();
+		param.put("wishProductNo", Integer.toString(wishProductNo));
+		param.put("memberId", memberId);
+		
+		int result = ss.deleteWishProduct(param);
+		Map<String, Integer> map = new HashMap<>();
+		map.put("result", result);
 		return map;
 	}
 

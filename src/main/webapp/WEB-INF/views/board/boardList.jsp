@@ -134,6 +134,7 @@ function loadBoardList(searchType, searchKeyword, boardCategory, cPage){
 					<th>조회</th>
 					<th>추천</th>
 				</tr>
+				<c:if test="${not empty boardList}">
 				<c:forEach items="${boardList}" var="list" varStatus="vs">
 					<tr>
 						<td>${list.BOARD_NO}</td>
@@ -144,6 +145,12 @@ function loadBoardList(searchType, searchKeyword, boardCategory, cPage){
 						<td>${result}</td>
 					</tr>
 				</c:forEach>
+				</c:if>
+				<c:if test="${empty boardList}">
+					
+						<td colspan="6" class="text-center">인기글이 없습니다.</td>
+					
+				</c:if>
 			</table>
 		</div>
 		<div class="col-md-12">

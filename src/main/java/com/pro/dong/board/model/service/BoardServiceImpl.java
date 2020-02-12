@@ -52,8 +52,8 @@ public class BoardServiceImpl implements BoardService {
 		
 	// 하진 시작 ==========================
 	@Override
-	public List<Board> selectBoardList() {
-		return bd.selectBoardList();
+	public List<Board> selectBoardList(String dong) {
+		return bd.selectBoardList(dong);
 	}
 	@Override
 	public List<Map<String, String>> loadBoardReportCategory() {

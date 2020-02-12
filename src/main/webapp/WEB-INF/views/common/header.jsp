@@ -24,6 +24,9 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/animation.css" />
 <!-- 카카오 맵 -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ea166326e5dc5657d4a2feb24b4cfe0b&libraries=services"></script>
+<!-- 우편번호 -->
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
 </head>
 <style>
 #headerImgDiv{
@@ -243,7 +246,7 @@ $(()=>{
 				<img id="saleImg" src="${pageContext.request.contextPath}/resources/images/sale.PNG"/> 판매하기
 			</a>
 			<a style="color:black; text-decoration: none;" href="${pageContext.request.contextPath}/shop/shopView.do?memberId=<%=memberLoggedIn != null ? memberLoggedIn.getMemberId() : ""%>"><img id="shopImg" src="${pageContext.request.contextPath}/resources/images/shop.PNG"/> 내 상점</a>
-			<a style="color:black; text-decoration: none;"href=""><img id="chatImg" src="${pageContext.request.contextPath}/resources/images/chat.PNG"/> 동네톡</a>
+			<a style="color:black; text-decoration: none;" id="a-chat"><img id="chatImg" src="${pageContext.request.contextPath}/resources/images/chat.PNG"/> 동네톡</a>
 		</div>
 	</div>
 
@@ -258,6 +261,20 @@ var $cateList = $("#categoryDiv .cate-list");
 var $categoryBar = $("header #categoryDiv #headerMenu");
 var $categoryDiv = $("header #categoryDiv");
 var isCateShow = false;
+
+	$("header #a-chat").click(chatOn);
+
+// 채팅
+	function chatOn(){
+		var width = 360;
+		var height = 660;
+		var top = (window.screen.height / 2) - (height / 2);
+		var left = (window.screen.width / 2) - (width / 2);
+		let url = "${pageContext.request.contextPath}/chat/chatView.do";
+
+		window.open(url,"chatView", "width="+width+",height="+height+", top="+top+", left="+left);
+	}
+
 // 카테고리 검색 창 활성화
 	$categoryDiv.mouseenter((e)=>{
 		$(e.target).find(".cate-list").show();

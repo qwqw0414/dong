@@ -24,7 +24,7 @@ public interface BoardService {
 	//==========================민호 끝
 		
 	// 하진 시작 ==========================
-	List<Board> selectBoardList();
+	List<Board> selectBoardList(String dong);
 	List<Map<String, String>> loadBoardReportCategory();
 	int insertBoardReport(Map<String, String> param);
 	//========================== 하진 끝

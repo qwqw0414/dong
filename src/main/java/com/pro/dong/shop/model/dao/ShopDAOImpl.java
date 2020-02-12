@@ -36,7 +36,24 @@ public class ShopDAOImpl implements ShopDAO{
 	public int shopFollow(Map<String, String> param) {
 		return sst.insert("shop.shopfollow", param);
 	}
-	
+	@Override
+	public int selectselectFollowListCount(String follow) {
+		return sst.selectOne("shop.selectselectFollowListCount",follow);
+	}
+	@Override
+	public List<Map<String, String>> selectFollowList(String follow, int cPage, int numPerPage) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sst.selectList("shop.selectFollowList", follow, rowBounds);
+	}
+	@Override
+	public int selectselectFollowerListCount(String follower) {
+		return sst.selectOne("shop.selectselectFollowerListCount", follower);
+	}
+	@Override
+	public List<Map<String, String>> selectFollowerList(String follower, int cPage, int numPerPage) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sst.selectList("shop.selectFollowerList",follower, rowBounds);
+	}
 	//========================== 민호 끝
 	
 	
@@ -149,8 +166,15 @@ public class ShopDAOImpl implements ShopDAO{
 		return sst.selectOne("shop.selectMyWishListTotalContents", memberId);
 	}
 	
-
-
+	@Override
+	public int deleteWishProduct(Map<String, String> param) {
+		return sst.delete("shop.deleteWishProduct", param);
+	}
+	
+	@Override
+	public int deleteShopInquriyComment(int deleteCommentBtn) {
+		return sst.delete("shop.deleteShopInquriyComment", deleteCommentBtn);
+	}
 	
 	
 	//========================== 주영 끝

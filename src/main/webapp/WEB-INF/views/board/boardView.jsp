@@ -376,6 +376,7 @@ $(function(){
 						else{
 							alert("실패")
 						}
+						$("#comments_board").val("");
 						showCommentList(1);
 				},
 				 error : (x,s,e) =>{
