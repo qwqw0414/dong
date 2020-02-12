@@ -14,6 +14,7 @@
 <head>
 <meta charset="UTF-8">
 <title>동네한바퀴</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
 <script src="${pageContext.request.contextPath }/resources/js/jquery-3.4.1.js"></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script src="${pageContext.request.contextPath }/resources/js/js.js"></script>
