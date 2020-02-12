@@ -138,8 +138,8 @@
 		values(seq_board_reputation.nextval,#{boardNo},#{memberId},default)
 	</insert>
 	
-	<select id="selectBoardLike" resultType="_int">
-		select count(*) from board_reputation where board_no = #{boardNo} 
+	<select id="selectBoardLike" resultType="_int" parameterType="map">
+		select count(*) from board_reputation where board_no = #{boardNo} and member_id = #{memberId}
 	</select>
 	<!-- ==========================  지은 끝 -->
 	

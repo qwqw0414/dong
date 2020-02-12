@@ -189,7 +189,9 @@ function loadBoardList(searchType, searchKeyword, boardCategory, cPage){
 <script>
 function fn_goWriteBoard(){
 	location.href = "${pageContext.request.contextPath}/board/writeBoard.do";
-	}
+}
+	
+	
 </script>
 </section> 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
