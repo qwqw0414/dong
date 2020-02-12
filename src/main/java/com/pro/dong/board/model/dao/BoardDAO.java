@@ -13,6 +13,7 @@ public interface BoardDAO {
 
 	// 민호 시작 ==========================
 
+
 	List<Board> loadBoardList(int cPage, int numPerPage, Map<String, String> param);
 
 	int selectBoardTotalContents(Map<String, String> param);
@@ -51,7 +52,8 @@ public interface BoardDAO {
 
 	int insertBoardReputation(Map<String, String> map);
 	
-	int selectBoardLike(int boardNo);
+	
+	
 	//========================== 지은 끝
 		
 	// 예찬 시작 ==========================
@@ -69,9 +71,11 @@ public interface BoardDAO {
 
 	int deleteLevel1(int commentNo);
 
-	int countComment();
+	int countComment(int boardNo);
 
 	int deleteLevel2(int commentNo);
+
+	int selectBoardLike(Map<String, String> map);
 
 	
 

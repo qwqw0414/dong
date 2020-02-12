@@ -116,8 +116,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public int selectBoardLike(int boardNo) {
-		return bd.selectBoardLike(boardNo);
+	public int selectBoardLike(Map<String, String> map) {
+		return bd.selectBoardLike(map);
 	}
 	//========================== 지은 끝
 		
@@ -147,14 +147,16 @@ public class BoardServiceImpl implements BoardService {
 
 
 	@Override
-	public int countComment() {
-		return bd.countComment();
+	public int countComment(int boardNo) {
+		return bd.countComment(boardNo);
 	}
 
 	@Override
 	public int deleteLevel2(int commentNo) {
 		return bd.deleteLevel2(commentNo);
 	}
+
+	
 
 	
 	

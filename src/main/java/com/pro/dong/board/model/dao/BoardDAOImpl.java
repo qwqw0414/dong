@@ -115,9 +115,10 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 	
 	@Override
-	public int selectBoardLike(int boardNo) {
-		return sst.selectOne("board.selectBoardLike", boardNo);
+	public int selectBoardLike(Map<String, String> map) {
+		return sst.selectOne("board.selectBoardLike", map);
 	}
+
 	
 	//========================== 지은 끝
 		
@@ -147,8 +148,8 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public int countComment() {
-		return sst.selectOne("board.countComment");
+	public int countComment(int boardNo) {
+		return sst.selectOne("board.countComment",boardNo);
 	}
 
 	@Override
@@ -156,6 +157,7 @@ public class BoardDAOImpl implements BoardDAO {
 		return sst.delete("board.deleteLevel2",commentNo);
 	}
 
+	
 	
 
 
