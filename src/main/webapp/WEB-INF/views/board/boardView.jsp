@@ -188,7 +188,7 @@ $(function(){
     <!-- content -->
     <div class="cont_inflow">
         <div class="contents">
-       	<input type="hidden" id="boardNo" value="${board.boardNo}" >
+       	<input type="hidden" id="boardNo" name="boardNo" value="${board.boardNo}" >
         <%-- <span id="writedate">${board.writeDate}일 작성</span> --%>
             <!-- 내용 -->
             <div class="contentsBox">
