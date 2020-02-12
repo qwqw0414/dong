@@ -234,13 +234,16 @@ $(()=>{
 					console.log(data);
 					if(data > 0){
 						console.log("성공");
+						alert("게시글 수정을 완료하였습니다.");
 						/* 경로설정 */
-/* 						location.href="${pageContext.request.contextPath}/board/boardList.do" */
+						location.href="${pageContext.request.contextPath}/board/boardView.do?boardNo="+${board.boardNo};
+						
  					}else{
 						console.log("불가불가불가");
+						alert("게시글 수정에 실패하였습니다.");
+						location.href="${pageContext.request.contextPath}/board/boardList.do";
 					}
 				},error: (x,s,e) => {
-					location.href="${pageContext.request.contextPath}/board/boardList.do";
 				}
 			});
 			}else{

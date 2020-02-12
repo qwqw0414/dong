@@ -260,14 +260,15 @@ $(function(){
 					console.log(data);
 					if(data > 0){
 						console.log("성공");
+						alert("삭제가 완료되었습니다.");
 						/* 경로설정 */
-/* 						location.href="${pageContext.request.contextPath}/board/boardList.do" */
+ 						location.href="${pageContext.request.contextPath}/board/boardList.do" 
  					}else{
 						console.log("불가불가불가");
 					}
 				},error: (x,s,e) => {
-					alert("삭제가 완료되었습니다.");
-					location.href="${pageContext.request.contextPath}/board/boardList.do";
+					alert("삭제를 실패하였습니다.");
+					//location.href="${pageContext.request.contextPath}/board/boardList.do";
 				}
 			});
 			}else{
@@ -295,7 +296,6 @@ $(function(){
 						if(data>0){
 						alert("좋아요 버튼을 눌렀습니다.");
 						console.log(data+"좋아요 ajax성공");
-						//location.href="${pageContext.request.contextPath}/board/boardLike.do?boardNo="+${board.boardNo};
 							
 						}else{
 						alert("좋아요 버튼을 누를수 없습니다..");
@@ -303,7 +303,7 @@ $(function(){
 						}
 					},error:(x,s,e) => {
 						console.log("좋아요 ajax실패");
-						//location.href="${pageContext.request.contextPath}/board/boardList.do";
+						location.href="${pageContext.request.contextPath}/board/boardList.do";
 					}
 				});
 			}
