@@ -26,8 +26,6 @@ public interface AdminDAO {
 	
 	int memberDelete(String memberId);
 	// ========================== 하진 끝
-	
-
 
 	// 근호 시작 ==========================
 
@@ -42,7 +40,8 @@ public interface AdminDAO {
 	// ========================== 예찬 끝
 
 	// 주영 시작 ==========================
-
+	int selectBoardTotalContents(Map<String, String> param);
+	List<Product> loadBoardList(int cPage, int numPerPage, Map<String, String> param);
 	// ========================== 주영 끝
 
 	// 현규 시작 ==========================

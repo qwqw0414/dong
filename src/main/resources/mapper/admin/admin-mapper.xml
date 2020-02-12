@@ -113,7 +113,45 @@
 	<!-- ==========================  예찬 끝 -->
 	
 	<!-- 주영 시작 ========================== -->
+	<select id="selectBoardTotalContents" parameterType="map" resultType="_int">
+		select count(*)
+		from board B left join member M 
+		on b.member_id = m.member_id
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+				and b.${searchType} like '%${searchKeyword}%'
+			</if>
+			<if test="sido!=null and sido!=''">
+				and m.sido like #{sido}
+			</if>
+			<if test="sigungu!=null and sigungu!=''">
+				and m.sigungu like #{sigungu}
+			</if>
+			<if test="dong!=null and dong!=''">
+				and m.dong like #{dong}
+			</if>
+		</where>
+	</select>
 	
+	<select id="loadBoardList" parameterType="map" resultType="map">
+		select *
+		from board B left join member M 
+		on b.member_id = m.member_id
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+				and m.${searchType} like '%${searchKeyword}%'
+			</if>
+			<if test="sido!=null and sido!=''">
+				and m.sido like #{sido}
+			</if>
+			<if test="sigungu!=null and sigungu!=''">
+				and m.sigungu like #{sigungu}
+			</if>
+			<if test="dong!=null and dong!=''">
+				and m.dong like #{dong}
+			</if>
+		</where>
+	</select>
 	<!-- ==========================  주영 끝 -->
 	
 	<!-- 현규 시작 ========================== -->
