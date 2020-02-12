@@ -8,11 +8,11 @@
 	Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
 %>
 <style>
-
-.productList .card {width: 201px; border-radius: 0; height: 280px;}
-.productList .card img{width: 200px; height: 200px; border: none;}
-#shop-contents .myProductList .myProduct .card{float: left; margin: 10px 8px 10px 8px}
-#shop-contents .myProduct {width: 1200px; display: inline-block; margin: auto; position:static; margin-left:50px; /* height: 620px; */ }
+.myProductList{margin-left:-33px;}
+#myProduct .card {display:inline-block; width:201px; height:280px;}
+#myProduct .card img{width: 200px; height: 200px; border: none;}
+#myProduct .card{float: left; margin: 10px 8px 10px 8px}
+#myProduct {width: 1200px; display: inline-block; margin: auto; position:static; margin-left:50px; /* height: 620px; */ }
 #shop-contents {width: 1300px;}
 #shop-contents .myProductList{width: 100%;}
 .myProductList .card-body{padding: 10px 0 0px 8px;}
@@ -379,7 +379,7 @@
 				          if(preTitle.length > 12) 
 				            preTitle = preTitle.substring(0,12)+"..."
 
-				          html += "<div class='card' style='width: 232px; height: 300px;'>";
+				          html += "<div class='card'>";
 				          html += "<img src='${pageContext.request.contextPath}/resources/upload/product/" + product.PHOTO + "' class='card-img-top'>";
 				          html += '<div class="card-body">';
 				          html += '<p class="card-title">' + preTitle + '</p>';
@@ -423,7 +423,7 @@
 			<div id="nav-product">
 				<h1>내 상품</h1>
 				<div class="myProductList" id="myProductList">
-      				<div class="myProduct" id="myProduct">
+      				<div  id="myProduct">
       				
       				</div>
       				
@@ -717,7 +717,7 @@ $(document).on("click", "#shopView #shopInquiryCommentEndBtn", function(){
 					if (preTitle.length > 12)
 						preTitle = preTitle.substring(0, 12) + "..."
 
-					html += "<div class='card' style='width: 232px; height: 300px;'>";
+					html += "<div class='card'>";
 					html += "<img src='${pageContext.request.contextPath}/resources/upload/product/" + product.PHOTO + "' class='card-img-top'>";
 					html += '<div class="card-body">';
 					html += '<p class="card-title">' + preTitle + '</p>';

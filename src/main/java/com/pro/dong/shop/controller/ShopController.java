@@ -73,7 +73,7 @@ public class ShopController {
 	@ResponseBody
 	public String loadMyProductList(String memberId, int cPage){
 		
-		int numPerPage = 40;
+		int numPerPage = 10;
 		
 		List<Map<String, String>> list = null;
 			
