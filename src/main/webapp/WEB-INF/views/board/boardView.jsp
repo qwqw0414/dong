@@ -271,12 +271,13 @@ $(function(){
 			}else{
 				
 				$.ajax({
-					url: "${pageContext.request.contextPath}/board/boardLike.do?boardNo="+${board.boardNo},
+					url: "${pageContext.request.contextPath}/board/boardLike.do",
 					data: {
 						boardNo: $boardNo.val()
 					},
 					dataType:"json",
 					type:"GET",
+					contentType: "application/json; charset=utf-8",
 					success: data => {
 						if(data>0){
 						alert("좋아요 버튼을 눌렀습니다.");
