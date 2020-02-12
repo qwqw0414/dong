@@ -371,9 +371,9 @@
 				},
 				dataType: "json",
 				success:data=>{
-					console.log("성");
+					console.log(data);
 					 let html = "";
-					 var $myProduct = $("myProduct");
+					
 				        data.product.forEach(product => {
 
 				          let preTitle = product.TITLE;
@@ -382,10 +382,8 @@
 				            preTitle = preTitle.substring(0,12)+"..."
 
 				          html += "<div class='card'>";
-				          html += "<img src='${pageContext.request.contextPath}/resources/upload/product/" + product.PHOTO + "' class='card-img-top'>";
+				          html += "<input type='hidden' class='productNo' value='"+product.PRODUCT_NO+"'>";
 				          html += '<div class="card-body">';
-				          html += '<p class="card-title">' + preTitle + '</p>';
-				          html += '<p class="card-text"><span>' + numberComma(product.PRICE) + '<small>원</small></span></p>';
 				          html += '</div></div>'
 				        });
 				        $("#myProduct").html(html);
@@ -394,11 +392,17 @@
 				error:(x,s,e)=>{
 					console.log("실패",x,s,e);
 				},
-				complete: ()=>{
-		            $("#pageBar a").click((e)=>{
+				complete: (data)=>{
+			        $("#myProduct .card").click(function(){
+			        	var productNo = $(this).children("input").val();
+			            location.href = "${pageContext.request.contextPath}/product/productView.do?productNo="+productNo;
+			        });
+			        
+			        $("#pageBar a").click((e)=>{
 		            	loadMyProduct($(e.target).siblings("input").val());
 		            });
-		        }
+			      }
+				
 				
 			});
 			
@@ -709,7 +713,7 @@ $(document).on("click", "#shopView #shopInquiryCommentEndBtn", function(){
 			},
 			dataType: "json",
 			success: data => {
-				console.log("성");
+				
 				let html = "";
 				var $myProduct = $("myProduct");
 				data.product.forEach(product => {

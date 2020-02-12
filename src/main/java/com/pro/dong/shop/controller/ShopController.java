@@ -95,6 +95,7 @@ public class ShopController {
 		List<Map<String, String>> list = null;
 			
 		list = ss.loadMyProductList(memberId,cPage,numPerPage);
+		log.debug("상품list @@@@@@@@@@@={}",list);
 		int totalContents = ss.totalCountMyProduct(memberId);
 			
 		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
