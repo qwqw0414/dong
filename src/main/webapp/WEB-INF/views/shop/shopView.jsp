@@ -317,7 +317,7 @@
     	margin-left: 12px;
     	height: 620px;
 	}
-	.wishListDiv{
+	#wishListDiv{
 		width: 100%;
 		width:1200px;
 		margin: auto;
@@ -343,11 +343,11 @@
 		margin: auto; 
 		height: 620px;
 	}
-	#wishPageBar{
+	
+	/* #wishPageBar{
 		position: static; 
 		display:block;
-		margin-top: 300px; 
-	}
+	} */
 	/* 주영 끝 */
 	</style>
 	
@@ -877,7 +877,10 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 	};
 	
 	//찜한목록 조회
-	$(document).on("click", "#shopView #myWishListDiv", function(){
+/* 	$(document).on("click", "#shopView #myWishListDiv", function(){ */
+		loadMyWishList(1);
+		
+		function loadMyWishList(cPage){
 		var memberId = $("[name=memberLoggedIn]").val();
 		var cPage = cPage;
 		console.log(cPage);
@@ -914,9 +917,13 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 		        	var productNo = $(this).children("input").val();
 		        	location.href = "${pageContext.request.contextPath}/product/productView.do?productNo="+productNo;
 		        });
+		        
+		        $("#wishPageBar a").click((e)=>{
+		        	loadMyWishList($(e.target).siblings("input").val());
+	            });
 		      }
 		});
-	});
+	}
 	
 	function lastDate(date){
 	    var regDate = new Date(date);
