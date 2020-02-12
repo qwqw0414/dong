@@ -324,7 +324,7 @@ $(function(){
 		showCommentList(1);
 		//댓글등록
 		$("#commentInsertView #comments_insert").on('click',function(){
-			var boardNo= 481;    //보드넘버 바꾸면서 테스트 하면댐
+			var boardNo = $(".contents #boardNo").val();    //보드넘버 바꾸면서 테스트 하면댐
 			var contents = $("#comments_board").val();
 			var memberId = $("[name=memberLoggedIn]").val();
 			var commentLevel=1;
@@ -359,7 +359,7 @@ $(function(){
 	
 	function showCommentList(cPage){
 	//댓글 조회
-	var boardNo=481;
+	var boardNo = $(".contents #boardNo").val();
 	$.ajax({
 		url: "${pageContext.request.contextPath}/board/selectBoardComment",
 		data:{boardNo:boardNo,
@@ -426,7 +426,7 @@ $(function(){
 	//댓글 삭제
 	function deleteLevel1(e){
 	var commentNo= $(e).prev().prev().prev().val();
-	var boardNo= 481;
+	var boardNo = $(".contents #boardNo").val();
 	console.log(commentNo);
 	$.ajax({
 		url:"${pageContext.request.contextPath}/board/deleteLevel1",
@@ -446,7 +446,7 @@ $(function(){
 	
 	//대댓글 등록
 	function insertLevel2(e){
-		var boardNo= 481;
+		var boardNo = $(".contents #boardNo").val();
 		var level2Content = $(e).prev().val();
 		var memberId = $("[name=memberLoggedIn]").val();
 		var commentLevel=2;

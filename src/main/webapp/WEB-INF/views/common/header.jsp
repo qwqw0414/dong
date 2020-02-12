@@ -151,7 +151,6 @@ $(()=>{
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/board/boardList.do">게시글</a>
-					<a class="dropdown-item" href="${pageContext.request.contextPath}/board/boardComment.do">댓글</a>
 				</div>
 			</li>
 
