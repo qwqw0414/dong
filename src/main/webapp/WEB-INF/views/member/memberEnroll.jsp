@@ -17,6 +17,9 @@
 #memberEnroll #page-4{display: none;}
 #memberEnroll #btn-4{display: none;}
 #memberEnroll #page-5{display: none;}
+#memberEnroll #page-5{display: none;}
+#memberEnroll #map{display: none;}
+#memberEnroll #centerAddr{display: none;}
 </style>
 <style>
 #memberEnroll .map_wrap {position:relative;width:100%;height:300px;}
@@ -57,6 +60,7 @@
 
     <div class="enroll-map" id="page-3">
         <button id="btn-searchAddress" class="btn btn-info btn-block">위치 검색</button>
+        <button id="btn-zipcode"  class="btn btn-info btn-block">우편번호 검색</button>
         <div class="input-group">
             <input type="text" id="sido" value="" class="form-control form-control text-center" readonly>
             <input type="text" id="sigungu" value="" class="form-control form-control text-center" readonly>
@@ -95,7 +99,7 @@
         <button class="btn btn-outline-primary btn-lg" id="next-page3">다음 단계로 진행<br>( 2 / 4 )</button>
     </div>
 
-    <div class="enroll-btn" id="btn-3">
+    <div class="enroll-btn" id="btn-3" style="margin-top:30px;">
         <button class="btn btn-outline-primary btn-lg" id="next-page4">다음 단계로 진행<br>( 3 / 4 )</button>
     </div>
 
@@ -236,6 +240,20 @@ $(()=>{
 			}
 		})
 	});   
+    	/* 우편번호 검색  */
+    	$("#btn-zipcode").click(()=>{
+    		new daum.Postcode({
+	    	    oncomplete: function(data) {
+	    	   
+	    	     document.getElementById('sido').value = data.sido;
+	             document.getElementById("sigungu").value = data.sigungu;
+	             document.getElementById("dong").value = data.bname; 
+	    	    }
+	    	}).open();
+    		$("#map").hide();
+    		$("#centerAddr").hide();
+    	});
+    	
     //------------------------------------------근호 끝
     
     //회원 가입
@@ -641,7 +659,8 @@ $(()=>{
         }else{
             alert("gps를 지원하지 않는 브라우저 입니다. 크롬을 사용하거라.")
         }
-    
+    	$("#map").show();
+    	$("centerAddr").show();
     });
 
     function kakoMap(latitude,longitude){
@@ -718,6 +737,7 @@ $(()=>{
             }    
         }
     }
+    	
 });
 
 

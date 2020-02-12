@@ -330,7 +330,7 @@
 		height: 280px; 
 		cursor: pointer;
 	}
-	#wishListDiv .card img{
+	#wishListDiv .card .card-img-top{
 		width: 200px; 
 		height: 200px; 
 		border: none;
@@ -345,11 +345,30 @@
 		margin: auto; 
 		height: 620px;
 	}
+	#wishCancel{
+		position: absolute;
+		width: 30px;
+		height: 30px;
+	}
+	#wishImg{
+		position: absolute;
+		top: 3px;
+    	left: 2px;
+		width: 20px;
+		height: 20px;
+	}
 	
-	/* #wishPageBar{
+	 #wishPageBar{
 		position: static; 
 		display:block;
-	} */
+		margin-top: 300px; 
+	}
+	#followPageBar{
+		position: static; 
+		display:block;
+		margin-top: 300px; 
+	}
+
 	/* 주영 끝 */
 	</style>
 	
@@ -424,8 +443,8 @@
 				<li><div id="shopInquiryDiv" class="shop-nav-disabled shop-nav">상점문의</div></li>
 				<li><div id="myWishListDiv" class="shop-nav-disabled shop-nav">찜 목록</div></li>
 				<li><div class="shop-nav-disabled shop-nav">상점후기</div></li>
-				<li><div class="shop-nav-disabled shop-nav">팔로우</div></li>
-				<li><div class="shop-nav-disabled shop-nav">팔로워</div></li>
+				<li><div id="viewFollow" class="shop-nav-disabled shop-nav">팔로우</div></li>
+				<li><div id="viewFollower" class="shop-nav-disabled shop-nav">팔로워</div></li>
 			</ul>
 		</div>
 	
@@ -469,9 +488,15 @@
 			</div>
 			<div id="nav-follow">
 				<h1>팔로우</h1>
+				<div id="follow-wrapper"></div>
+				<br>
+				<div id="followPageBar"></div>
 			</div>
 			<div id="nav-follower">
 				<h1>팔로워</h1>
+				<div id="follower-wrapper"></div>
+				<br>
+				<div id="followerPageBar"></div>
 			</div>
 		</div>
 	</div>
@@ -581,6 +606,8 @@ $(()=>{
 						html += "&nbsp;&nbsp;";
 						html += "<span>" + data.list[i].WRITE_DAY + "</span>";
 						html += "<p>" + data.list[i].INQUIRY_CONTENT + "</p>";
+						html += "<button id='deleteReCommentBtn'  class='commentDelBtn'>";
+						html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='17'>삭제</button>";
 						html += "</div>";
 						html += "</div>";
 					}
@@ -621,6 +648,24 @@ $("#shopView #shopInquiryBtn").click(insertInquiry);
 		});
 
 	}
+$(document).on("click", "#shopView #deleteCommentBtn", function(e){
+	var deleteCommentBtnTarget = $(e.target);
+	var deleteCommentBtn = deleteCommentBtnTarget.val();
+
+	$.ajax({
+		url: "${pageContext.request.contextPath}/shop/deleteShopInquriy",
+		method: "POST",
+		data: { deleteCommentBtn: deleteCommentBtn },
+		success: data => {
+			console.log(data);
+			selectInquiry();
+		},
+		error: (x, s, e) => {
+			console.log("ajax 요청 실패!");
+		}
+	});
+});
+
 $(document).on("click", "#shopView #deleteCommentBtn", function(e){
 	var deleteCommentBtnTarget = $(e.target);
 	var deleteCommentBtn = deleteCommentBtnTarget.val();
@@ -889,51 +934,73 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 	//찜한목록 조회
 /* 	$(document).on("click", "#shopView #myWishListDiv", function(){ */
 		loadMyWishList(1);
-		
 		function loadMyWishList(cPage){
+			var memberId = $("[name=memberLoggedIn]").val();
+			$.ajax({
+				url: "${pageContext.request.contextPath}/shop/selectMyWishList",
+				method: "POST",
+				data: { memberId: memberId,
+						cPage : cPage },
+				success: data => {
+					console.log(data);
+					$("#zzimTag").html(data.totalContents);
+					let html = "";
+					let $wishItem = $("#wishItem");
+					for (var i = 0; i < data.list.length; i++) {
+						html += "<div class='card'>";
+						html += "<input type='hidden' class='productNo' value='"+data.list[i].PRODUCT_NO+"'>";
+						html += "<img src='/dong/resources/upload/product/"+data.list[i].PHOTO+"' class='card-img-top'>";
+						html += "<button id='wishCancel' value='"+data.list[i].PRODUCT_NO+"'><img id='wishImg' src='/dong/resources/images/x.png'></button>"
+						html += "<div class='card-body'>";
+						html +=	"<p class='card-title'>"+data.list[i].TITLE+"</p>";
+						html +=	"<p class='card-text'><span>"+data.list[i].PRICE+"<small>원</small></span></p>";
+						html += "<div class='regDate'>"+lastDate(data.list[i].REG_DATE)+"</div>";
+						html += "</div></div>";
+					}
+					$wishItem.html(html);
+					$("#wishPageBar").html(data.pageBar);
+				},
+				error: (x, s, e) => {
+					console.log("ajax 요청 실패!");
+				},
+				complete: (data)=>{
+										
+		        	$("#wishItem .card-img-top").click(function(){
+		        		console.log($(this));
+		        		console.log($(this).children("input").val());
+		        		console.log("Asda");
+		        		console.log($(this).prev().val());
+		        		var productNo = $(this).prev().val();
+		        		location.href = "${pageContext.request.contextPath}/product/productView.do?productNo="+productNo;
+		        	});
+		        
+		        	$("#wishPageBar a").click((e)=>{
+		        		loadMyWishList($(e.target).siblings("input").val());
+	            	});
+		      	}
+			});
+		}
+	
+	$(document).on("click", ".card #wishCancel", function(){	
+		console.log($(this).val());
+		var wishProductNo = $(this).val();
 		var memberId = $("[name=memberLoggedIn]").val();
-		var cPage = cPage;
-		console.log(cPage);
+		console.log("찜 취소에 입장");
 		$.ajax({
-			url: "${pageContext.request.contextPath}/shop/selectMyWishList",
+			url: "${pageContext.request.contextPath}/shop/deleteWishProduct",
 			method: "POST",
-			data: { memberId: memberId,
-					cPage : cPage },
+			data: { wishProductNo: wishProductNo,
+					memberId : memberId},
 			success: data => {
 				console.log(data);
-				$("#zzimTag").html(data.totalContents);
-				let html = "";
-				let $wishItem = $("#wishItem");
-				for (var i = 0; i < data.list.length; i++) {
-					html += "<div class='card'>";
-					html += "<input type='hidden' class='productNo' value='"+data.list[i].PRODUCT_NO+"'>";
-					html += "<img src='/dong/resources/upload/product/"+data.list[i].PHOTO+"' class='card-img-top'>";
-					html += "<div class='card-body'>";
-					html +=	"<p class='card-title'>"+data.list[i].TITLE+"</p>";
-					html +=	"<p class='card-text'><span>"+data.list[i].PRICE+"<small>원</small></span></p>";
-					html += "<div class='regDate'>"+lastDate(data.list[i].REG_DATE)+"</div>";
-					html += "</div></div>";
-				}
-				$wishItem.html(html);
-				$("#wishPageBar").html(data.pageBar);
+				loadMyWishList(1);
 			},
 			error: (x, s, e) => {
 				console.log("ajax 요청 실패!");
-			},
-			complete: (data)=>{
-		        $("#wishItem .card").click(function(){
-		        	console.log($(this));
-		        	console.log($(this).children("input").val());
-		        	var productNo = $(this).children("input").val();
-		        	location.href = "${pageContext.request.contextPath}/product/productView.do?productNo="+productNo;
-		        });
-		        
-		        $("#wishPageBar a").click((e)=>{
-		        	loadMyWishList($(e.target).siblings("input").val());
-	            });
-		      }
+			}
 		});
-	}
+	});
+			
 	
 	function lastDate(date){
 	    var regDate = new Date(date);
@@ -1009,6 +1076,74 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 			} 
 		}) 
 	});//팔로우 하트 토글 함수 끝
+	
+	//팔로우 하는 상점 조회
+	$("#viewFollow").on('click', function(){
+		viewFollow(1);
+	});//팔로우하는 상점 조회 끝
+	
+	//팔로우 하는 상점 조회
+	$("#viewFollower").on('click', function(){
+		viewFollower(1);
+	});//팔로우하는 상점 조회 끝
+	
+	function viewFollower(cPage){
+		var follower = '${map.SHOP_NO}';
+		$.ajax({
+			url: "${pageContext.request.contextPath}/shop/viewFollower",
+			data:{follower:follower,
+				cPage:cPage},
+			success: data => {
+				console.log(data);
+				let html = "";
+				let $followerWrapper = $("#follower-wrapper");
+				let $followerPageBar = $("#followerPageBar");
+				for (var i = 0; i < data.followerList.length; i++) {
+					html += "<div class='card'>";
+					html += "<input type='hidden' class='productNo' value='"+data.followerList[i].SHOP_NO+"'>";
+					html += "<img src='/dong/resources/upload/shopImage/"+data.followerList[i].IMAGE+"' class='card-img-top'>";
+					html += "<div class='card-body'><a href='${pageContext.request.contextPath}/shop/shopView.do?shopNo="+data.followerList[i].SHOP_NO+"'>";
+					html +=	"<p class='card-title'>"+data.followerList[i].MEMBER_ID+"</p><hr class='divide-sm'>";
+					html += "<div class='followDate'>"+data.followerList[i].FOLLOW_DATE+"일째 팔로잉 중</div>";
+					html += "</div></a></div>";
+				}
+				$followerWrapper.html(html);
+				$followerPageBar.html(data.followerPageBar);
+			},
+			error: (x, s, e) => {
+				console.log("ajax 요청 실패!",x,s,e);
+			}
+		});//end of ajax
+	}//end of viewFollower
+	
+	function viewFollow(cPage){
+		var follow = '${map.SHOP_NO}';
+		$.ajax({
+			url: "${pageContext.request.contextPath}/shop/viewFollow",
+			data:{follow:follow,
+				cPage:cPage},
+			success: data => {
+				console.log(data);
+				let html = "";
+				let $followWrapper = $("#follow-wrapper");
+				let $followPageBar = $("#followPageBar");
+				for (var i = 0; i < data.followList.length; i++) {
+					html += "<div class='card'>";
+					html += "<input type='hidden' class='productNo' value='"+data.followList[i].SHOP_NO+"'>";
+					html += "<img src='/dong/resources/upload/shopImage/"+data.followList[i].IMAGE+"' class='card-img-top'>";
+					html += "<div class='card-body'><a href='${pageContext.request.contextPath}/shop/shopView.do?shopNo="+data.followList[i].SHOP_NO+"'>";
+					html +=	"<p class='card-title'>"+data.followList[i].MEMBER_ID+"</p><hr class='divide-sm'>";
+					html += "<div class='followDate'>"+data.followList[i].FOLLOW_DATE+"일째 팔로우 중</div>";
+					html += "</div></a></div>";
+				}
+				$followWrapper.html(html);
+				$followPageBar.html(data.followPageBar);
+			},
+			error: (x, s, e) => {
+				console.log("ajax 요청 실패!",x,s,e);
+			}
+		});//end of ajax
+	}//end of viewFollow
 });
 
 
