@@ -600,6 +600,7 @@ $(()=>{
 							html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='17'>";
 							html += "삭제";
 							html += "</button>";
+							html += "<input type='hidden' id='inquiryLevel' value='"+data.list[i].INQUIRY_LEVEL+"'/>";
 						}
 							html += "<div class='inquiryCommentDiv' id='inquiryCommentDiv'></div>";
 					}
@@ -613,12 +614,15 @@ $(()=>{
 						html += "&nbsp;&nbsp;";
 						html += "<span>" + data.list[i].WRITE_DAY + "</span>";
 						html += "<p>" + data.list[i].INQUIRY_CONTENT + "</p>";
-						html += "<button id='deleteReCommentBtn'  class='commentDelBtn'>";
-						html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='17'>삭제</button>";
+						if(("${map.MEMBER_ID}" == memberId) || (memberId == data.list[i].MEMBER_ID)){
+							html += "<button id='deleteCommentBtn' value='"+data.list[i].INQUIRY_NO+"' class='commentDelBtn'>";
+							html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='17'>삭제</button>";
+							html += "<input id='inquiryLevel' type='hidden' value='"+data.list[i].INQUIRY_LEVEL+"'/>";
+							}
 						html += "</div>";
 						html += "</div>";
+						}
 					}
-				}
 				$listDiv.html(html);
 
 			},
@@ -658,29 +662,34 @@ $("#shopView #shopInquiryBtn").click(insertInquiry);
 $(document).on("click", "#shopView #deleteCommentBtn", function(e){
 	var deleteCommentBtnTarget = $(e.target);
 	var deleteCommentBtn = deleteCommentBtnTarget.val();
+	var inquiryLevel = deleteCommentBtnTarget.siblings("input#inquiryLevel").val();
 
 	$.ajax({
 		url: "${pageContext.request.contextPath}/shop/deleteShopInquriy",
 		method: "POST",
-		data: { deleteCommentBtn: deleteCommentBtn },
+		data: { deleteCommentBtn: deleteCommentBtn,
+				inquiryLevel : inquiryLevel},
 		success: data => {
 			console.log(data);
 			selectInquiry();
 		},
 		error: (x, s, e) => {
-			console.log("ajax 요청 실패!");
+			console.log("ajax 요청 실패!", x,s,e);
 		}
 	});
 });
 
-$(document).on("click", "#shopView #deleteCommentBtn", function(e){
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/* $(document).on("click", "#shopView #deleteReCommentBtn", function(e){
 	var deleteCommentBtnTarget = $(e.target);
 	var deleteCommentBtn = deleteCommentBtnTarget.val();
+	console.log(deleteCommentBtnTarget);
+	console.log(deleteCommentBtn);
 
 	$.ajax({
-		url: "${pageContext.request.contextPath}/shop/deleteShopInquriy",
+		url: "${pageContext.request.contextPath}/shop/deleteShopInquriyComment",
 		method: "POST",
-		data: { deleteCommentBtn: deleteCommentBtn },
+		data: { deleteCommentNo: deleteCommentNo },
 		success: data => {
 			console.log(data);
 			selectInquiry();
@@ -689,7 +698,8 @@ $(document).on("click", "#shopView #deleteCommentBtn", function(e){
 			console.log("ajax 요청 실패!");
 		}
 	});
-});
+}); */
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $(document).on("click", "#shopView #insertInquiryCommentBtn", function(e){
 		$(e).attr("disabled", true);
@@ -708,7 +718,7 @@ $(document).on("click", "#shopView #insertInquiryCommentBtn", function(e){
 		html += "</button>";
 		html += "</div>";
 		
-		btnTarget.next().next().html(html);
+		btnTarget.next().next().next().html(html);
 		
 		
 	});
