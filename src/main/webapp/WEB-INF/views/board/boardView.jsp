@@ -144,6 +144,18 @@ span{
     width: 15px;
     height: 15px;
 }
+#thumbsUpBox{
+	float: right;
+    margin-right: 70px;
+}
+#thumbsUp{
+	width: 40px;
+	height: 40px;
+}
+#thumbsUpCount{
+	font-size: 42px;
+}
+
 </style>
 
 <script>
@@ -153,28 +165,22 @@ $(function(){
 	});
 });
 
-/* $(function(){
-	$("#likeBtn").click(function(){
-		if(${memberLoggedIn.memberId == board.memberId}){
-			alert("작성자는 좋아요를 누를 수 없습니다.");
-		}else{
-			location.href="${pageContext.request.contextPath}/board/boardLike.do?boardNo="+${board.boardNo};
-		}
-	});
-});  */
-
 </script>
 
 <div class="boardView">
     <!-- head -->
     <div class="head_inflow">
-        <div id="title"><strong>${board.boardTitle}</strong></div>
+        <div id="title"><strong>${board.boardTitle}</strong>
+        <div id="thumbsUpBox">
+        <span id="thumbsUpCount"><img id="thumbsUp" src="${pageContext.request.contextPath}/resources/images/thumbsup.png"/>&nbsp;<span id="likeCount" >${result}</span></span>
+        </div>
+        </div>
         <div class="profileWriter">
             <span><img id="iconbox" src="${pageContext.request.contextPath}/resources/images/writer.png"/>&nbsp;${board.memberId}</span> &nbsp;
             <span><img id="iconbox" src="${pageContext.request.contextPath}/resources/images/text.png"/>&nbsp;${board.readCount}</span> <br />
             <span><img id="iconbox" src="${pageContext.request.contextPath}/resources/images/clock.png"/>&nbsp;${board.writeDate}</span>
         </div>
-		  
+    </div>
 		  <!-- 작성자와 로그인한 아이디가 같을시에만 삭제,수정가능 -->
           <c:if test="${board.memberId == memberLoggedIn.memberId || memberLoggedIn.isAdmin eq 'Y'}">
           <!-- 게시물 삭제는 작성자와 관리자만 가능(관리자 추가 예정) -->
@@ -183,7 +189,6 @@ $(function(){
           <c:if test="${board.memberId == memberLoggedIn.memberId || memberLoggedIn.isAdmin eq 'Y'}">
             <button type="button"  id="boardUpdate" class="btn btn-outline-success btn-block" >수정</button>
           </c:if>
-    </div>
 
     <!-- content -->
     <div class="cont_inflow">
@@ -202,7 +207,12 @@ $(function(){
         </div>
 
         <div class="btnBox">
+        <c:if test="${result eq '0'}">
             <button type="button" id="likeBtn">추천</button>
+        </c:if>
+        <c:if test="${result ne '0'}">
+            <!-- <button type="button" id="likeBtn">추천</button> -->
+        </c:if>
             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">신고</button>
         </div>
         </div>
@@ -276,8 +286,33 @@ $(function(){
 			}
 			 
 		});
-		
 	
+	/* 좋아요수 count */
+  	 function likeCount(){
+		var memberId = "<%=memberLoggedIn.getMemberId()%>";
+		
+		$.ajax({
+			url: "${pageContext.request.contextPath}/board/boardLikeCount.do",
+			data: {
+				boardNo: $boardNo.val(),
+				memberId: memberId
+			},
+			dataType:"json",
+			type:"GET",
+			contentType: "application/json; charset=utf-8",
+			success: data => {
+				console.log("likeCount ajax="+data);
+				data+1;
+				$("#thumbsUpCount #likeCount").text(data);
+			},error:(x,s,e) => {
+				console.log("likeCount ajax실패");
+			}
+		}) 
+	 		 
+	 } 
+	 	
+	likeCount();
+	 	 
 	/* 좋아요 버튼 */
 		 $("#likeBtn").click(function(){
 			if(${memberLoggedIn.memberId == board.memberId}){
@@ -296,10 +331,9 @@ $(function(){
 						if(data>0){
 						alert("좋아요 버튼을 눌렀습니다.");
 						console.log(data+"좋아요 ajax성공");
-							
+						likeCount();
 						}else{
 						alert("좋아요 버튼을 누를수 없습니다..");
-							
 						}
 					},error:(x,s,e) => {
 						console.log("좋아요 ajax실패");
@@ -309,7 +343,6 @@ $(function(){
 			}
 			
 		}); 
-
 }); 
  
  

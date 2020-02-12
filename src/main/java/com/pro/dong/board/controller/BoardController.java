@@ -304,15 +304,18 @@ public class BoardController {
 		return result+"";
 	}
 	
-	@RequestMapping("/boardLikeCount.do")
-	public ModelAndView selectBoardLike(ModelAndView mav,@RequestParam("boardNo") int boardNo) {
-		int result = bs.selectBoardLike(boardNo);
+	@RequestMapping("/boardLikeCount")
+	@ResponseBody
+	public String selectBoardLike(@RequestParam("boardNo") int boardNo, @RequestParam("memberId") String memberId) {
+		Map<String,String> map = new HashMap<>();
+		map.put("memberId", memberId);
+		log.debug("boardLikeCount@memberId={}", memberId);
+		map.put("boardNo", boardNo+"");
+		
+		int result = bs.selectBoardLike(map);
 		log.debug("boardLikeCount@result={}", result);
-		mav.addObject("result", result);
-		mav.addObject("boardNo", boardNo);
-		mav.addObject("loc", "/board/boardList.do");
-
-		return mav;
+		
+		return result+"";
 	}
 
 	//========================== 지은 끝
