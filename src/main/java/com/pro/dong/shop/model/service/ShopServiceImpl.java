@@ -35,7 +35,22 @@ public class ShopServiceImpl implements ShopService{
 	public int shopUnfollow(Map<String, String> param) {
 		return sd.shopUnfollow(param);
 	}
-	
+	@Override
+	public int selectselectFollowListCount(String follow) {
+		return sd.selectselectFollowListCount(follow);
+	}
+	@Override
+	public List<Map<String, String>> selectFollowList(String follow, int cPage, int numPerPage) {
+		return sd.selectFollowList(follow,cPage,numPerPage);
+	}
+	@Override
+	public int selectselectFollowerListCount(String follower) {
+		return sd.selectselectFollowerListCount(follower);
+	}
+	@Override
+	public List<Map<String, String>> selectFollowerList(String follower, int cPage, int numPerPage) {
+		return sd.selectFollowerList(follower,cPage,numPerPage);
+	}
 	//========================== 민호 끝
 	
 	

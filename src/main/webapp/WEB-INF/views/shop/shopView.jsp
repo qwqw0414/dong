@@ -350,6 +350,11 @@
 		display:block;
 		margin-top: 300px; 
 	}
+	#followPageBar{
+		position: static; 
+		display:block;
+		margin-top: 300px; 
+	}
 	/* 주영 끝 */
 	</style>
 	
@@ -416,8 +421,8 @@
 				<li><div id="shopInquiryDiv" class="shop-nav-disabled shop-nav">상점문의</div></li>
 				<li><div id="myWishListDiv" class="shop-nav-disabled shop-nav">찜 목록</div></li>
 				<li><div class="shop-nav-disabled shop-nav">상점후기</div></li>
-				<li><div class="shop-nav-disabled shop-nav">팔로우</div></li>
-				<li><div class="shop-nav-disabled shop-nav">팔로워</div></li>
+				<li><div id="viewFollow" class="shop-nav-disabled shop-nav">팔로우</div></li>
+				<li><div id="viewFollower" class="shop-nav-disabled shop-nav">팔로워</div></li>
 			</ul>
 		</div>
 	
@@ -461,9 +466,15 @@
 			</div>
 			<div id="nav-follow">
 				<h1>팔로우</h1>
+				<div id="follow-wrapper"></div>
+				<br>
+				<div id="followPageBar"></div>
 			</div>
 			<div id="nav-follower">
 				<h1>팔로워</h1>
+				<div id="follower-wrapper"></div>
+				<br>
+				<div id="followerPageBar"></div>
 			</div>
 		</div>
 	</div>
@@ -994,6 +1005,74 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 			} 
 		}) 
 	});//팔로우 하트 토글 함수 끝
+	
+	//팔로우 하는 상점 조회
+	$("#viewFollow").on('click', function(){
+		viewFollow(1);
+	});//팔로우하는 상점 조회 끝
+	
+	//팔로우 하는 상점 조회
+	$("#viewFollower").on('click', function(){
+		viewFollower(1);
+	});//팔로우하는 상점 조회 끝
+	
+	function viewFollower(cPage){
+		var follower = '${map.SHOP_NO}';
+		$.ajax({
+			url: "${pageContext.request.contextPath}/shop/viewFollower",
+			data:{follower:follower,
+				cPage:cPage},
+			success: data => {
+				console.log(data);
+				let html = "";
+				let $followerWrapper = $("#follower-wrapper");
+				let $followerPageBar = $("#followerPageBar");
+				for (var i = 0; i < data.followList.length; i++) {
+					html += "<div class='card'>";
+					html += "<input type='hidden' class='productNo' value='"+data.followList[i].SHOP_NO+"'>";
+					html += "<img src='/dong/resources/upload/shopImage/"+data.followList[i].IMAGE+"' class='card-img-top'>";
+					html += "<div class='card-body'>";
+					html +=	"<p class='card-title'>"+data.followList[i].MEMBER_ID+"</p>";
+					html += "<div class='followDate'>"+data.followList[i].FOLLOW_DATE+"일째 팔로잉 중</div>";
+					html += "</div></div>";
+				}
+				$followerWrapper.html(html);
+				$followerPageBar.html(data.followerPageBar);
+			},
+			error: (x, s, e) => {
+				console.log("ajax 요청 실패!",x,s,e);
+			}
+		});//end of ajax
+	}//end of viewFollower
+	
+	function viewFollow(cPage){
+		var follow = '${map.SHOP_NO}';
+		$.ajax({
+			url: "${pageContext.request.contextPath}/shop/viewFollow",
+			data:{follow:follow,
+				cPage:cPage},
+			success: data => {
+				console.log(data);
+				let html = "";
+				let $followWrapper = $("#follow-wrapper");
+				let $followPageBar = $("#followPageBar");
+				for (var i = 0; i < data.followList.length; i++) {
+					html += "<div class='card'>";
+					html += "<input type='hidden' class='productNo' value='"+data.followList[i].SHOP_NO+"'>";
+					html += "<img src='/dong/resources/upload/shopImage/"+data.followList[i].IMAGE+"' class='card-img-top'>";
+					html += "<div class='card-body'>";
+					html +=	"<p class='card-title'>"+data.followList[i].MEMBER_ID+"</p>";
+					html += "<div class='followDate'>"+data.followList[i].FOLLOW_DATE+"일째 팔로우 중</div>";
+					html += "</div></div>";
+				}
+				$followWrapper.html(html);
+				$followPageBar.html(data.followPageBar);
+			},
+			error: (x, s, e) => {
+				console.log("ajax 요청 실패!",x,s,e);
+			}
+		});//end of ajax
+	}//end of viewFollow
 });
 
 
