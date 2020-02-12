@@ -90,7 +90,7 @@ public class ShopController {
 	@ResponseBody
 	public String loadMyProductList(String memberId, int cPage){
 		
-		int numPerPage = 40;
+		int numPerPage = 10;
 		
 		List<Map<String, String>> list = null;
 			
@@ -376,13 +376,13 @@ public class ShopController {
 		int totalContents = ss.selectMyWishListTotalContents(memberId);
 		
 		//게시글 조회
-		list = ss.selectMyWishList(memberId);
+		list = ss.selectMyWishList(memberId, cPage, numPerPage);
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("list", list);
-		map.put("cPage", cPage);
+		/*map.put("cPage", cPage);
 		map.put("numPerPage", numPerPage);
-		map.put("totalContents", totalContents);
+		map.put("totalContents", totalContents);*/
 		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
 		map.put("pageBar", pageBar);
 		

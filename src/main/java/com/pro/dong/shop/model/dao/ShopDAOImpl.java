@@ -140,8 +140,9 @@ public class ShopDAOImpl implements ShopDAO{
 	}
 	
 	@Override
-	public List<Map<String, Object>> selectMyWishList(String memberId) {
-		return sst.selectList("shop.selectMyWishList", memberId);
+	public List<Map<String, Object>> selectMyWishList(String memberId, int cPage, int numPerPage) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sst.selectList("shop.selectMyWishList", memberId, rowBounds);
 	}
 	@Override
 	public int selectMyWishListTotalContents(String memberId) {
