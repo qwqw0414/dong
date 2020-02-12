@@ -186,7 +186,7 @@ $(function(){
           <!-- 게시물 삭제는 작성자와 관리자만 가능(관리자 추가 예정) -->
           <button type="button"  id="boardDelete" class="btn btn-outline-success btn-block" >삭제</button>
           </c:if>
-          <c:if test="${board.memberId == memberLoggedIn.memberId || memberLoggedIn.isAdmin eq 'Y'}">
+          <c:if test="${board.memberId == memberLoggedIn.memberId}">
             <button type="button"  id="boardUpdate" class="btn btn-outline-success btn-block" >수정</button>
           </c:if>
 
@@ -207,12 +207,12 @@ $(function(){
         </div>
 
         <div class="btnBox">
-        <c:if test="${result eq '0'}">
+        <%-- <c:if test="${result eq '0'}"> --%>
             <button type="button" id="likeBtn">추천</button>
-        </c:if>
+       <%--  </c:if>
         <c:if test="${result ne '0'}">
             <!-- <button type="button" id="likeBtn">추천</button> -->
-        </c:if>
+        </c:if> --%>
             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">신고</button>
         </div>
         </div>

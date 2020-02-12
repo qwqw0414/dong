@@ -1,5 +1,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.pro.dong.board.model.vo.BoardCategory"%>
+<%@page import="com.pro.dong.member.model.vo.Member"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
@@ -16,11 +17,18 @@
     }
 </style>
 <%
+	Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
 	List<BoardCategory> list = new ArrayList<>();
 	list = (List<BoardCategory>)request.getAttribute("boardCategoryList");
+	
 	String option = "";
+	option += "<option value=''/>전체</option>";
 	for(BoardCategory bc: list){
-		option +=  "<option value=\""+bc.getCategoryId()+"\">"+bc.getCategoryName()+"</option>";
+		if("Y".equals(memberLoggedIn.getIsAdmin())){
+			option += "<option value=\""+bc.getCategoryId()+"\">"+bc.getCategoryName()+"</option>";
+		}else{
+			option += "<option value=\""+bc.getCategoryId()+"\">"+bc.getCategoryName()+"</option>";
+		}
 	}
 %>
 <script>
@@ -80,7 +88,7 @@ $(function(){
 				    <label class="input-group-text" for="inputGroupSelect01">카테고리</label>
 				 </div>
 				 <select class="custom-select" id="boardCategory" name="boardCategory">
-				   <%=option %>
+				    <%=option%> 
 				 </select>
 				</div>
                <div class="input-group mb-3" >

@@ -77,9 +77,15 @@ public class ShopServiceImpl implements ShopService{
 	
 	
 	// 지은 시작 ==========================
+	@Override
+	public int shopInCount(String memberId) {
+		return sd.shopInCount(memberId);
+	}
 	
-	
-	
+	@Override
+	public int selectOpenDate(String memberId) {
+		return sd.selectOpenDate(memberId);
+	}
 	//========================== 지은 끝
 	
 	
@@ -170,6 +176,8 @@ public class ShopServiceImpl implements ShopService{
 	public int deleteShopInquriyComment(int deleteCommentBtn) {
 		return sd.deleteShopInquriyComment(deleteCommentBtn);
 	}
+	
+	
 
 
 

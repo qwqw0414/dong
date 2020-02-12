@@ -63,7 +63,13 @@
 	<!-- ==========================  근호 끝 -->
 	
 	<!-- 지은 시작 ========================== -->
+	<update id="shopInCount" parameterType="_int">
+		update shop set read_count = read_count +1 where member_id = #{memberId}
+	</update>
 	
+	<select id="selectOpenDate" parameterType="_int" resultType="shop">
+		select floor(sysdate - open_date) from shop where member_id = #{memberId}
+	</select>
 	<!-- ==========================  지은 끝 -->
 	
 	<!-- 예찬 시작 ========================== -->

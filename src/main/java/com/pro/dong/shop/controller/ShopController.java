@@ -200,6 +200,8 @@ public class ShopController {
 								   @RequestParam(value="memberId", defaultValue = "") String memberId, 
 								   @RequestParam(value="shopNo", defaultValue = "0") int shopNo ) {
 		Map<String, String> map = new HashMap<>();
+		int readCount = ss.shopInCount(memberId);
+		int visitDate = ss.selectOpenDate(memberId);
 		
 		if(memberId.equals("")) {
 			map = ss.selectShopByShopNo(shopNo);
@@ -211,6 +213,8 @@ public class ShopController {
 		}
 		
 		mav.addObject("map", map);
+		mav.addObject("readCount",readCount);
+		mav.addObject("visitDate",visitDate);
 		return mav;
 	}
 	
