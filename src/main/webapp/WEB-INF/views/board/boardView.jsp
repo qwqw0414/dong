@@ -153,7 +153,7 @@ $(function(){
 	});
 });
 
-$(function(){
+/* $(function(){
 	$("#likeBtn").click(function(){
 		if(${memberLoggedIn.memberId == board.memberId}){
 			alert("작성자는 좋아요를 누를 수 없습니다.");
@@ -161,7 +161,7 @@ $(function(){
 			location.href="${pageContext.request.contextPath}/board/boardLike.do?boardNo="+${board.boardNo};
 		}
 	});
-}); 
+});  */
 
 </script>
 
@@ -265,17 +265,36 @@ $(function(){
 		
 	
 	/* 좋아요 버튼 */
-		/* $("#likeBtn").click(function(){
+		 $("#likeBtn").click(function(){
 			if(${memberLoggedIn.memberId == board.memberId}){
 				alert("작성자는 좋아요를 누를 수 없습니다.");
 			}else{
 				
 				$.ajax({
-					url: "${pageContext.request.contextPath}/board/boardLikeCount.do",
+					url: "${pageContext.request.contextPath}/board/boardLike.do?boardNo="+${board.boardNo},
+					data: {
+						boardNo: $boardNo.val()
+					},
+					dataType:"json",
+					type:"GET",
+					success: data => {
+						if(data>0){
+						alert("좋아요 버튼을 눌렀습니다.");
+						console.log(data+"좋아요 ajax성공");
+						//location.href="${pageContext.request.contextPath}/board/boardLike.do?boardNo="+${board.boardNo};
+							
+						}else{
+						alert("좋아요 버튼을 누를수 없습니다..");
+							
+						}
+					},error:(x,s,e) => {
+						console.log("좋아요 ajax실패");
+						//location.href="${pageContext.request.contextPath}/board/boardList.do";
+					}
 				});
 			}
 			
-		}); */
+		}); 
 
 }); 
  
