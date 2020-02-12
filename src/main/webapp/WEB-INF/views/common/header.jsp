@@ -263,8 +263,8 @@ var isCateShow = false;
 
 // 채팅
 	function chatOn(){
-		var width = 500;
-		var height = 700;
+		var width = 360;
+		var height = 660;
 		var top = (window.screen.height / 2) - (height / 2);
 		var left = (window.screen.width / 2) - (width / 2);
 		let url = "${pageContext.request.contextPath}/chat/chatView.do";
