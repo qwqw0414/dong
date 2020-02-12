@@ -1083,7 +1083,7 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 					html += "<input type='hidden' class='productNo' value='"+data.followerList[i].SHOP_NO+"'>";
 					html += "<img src='/dong/resources/upload/shopImage/"+data.followerList[i].IMAGE+"' class='card-img-top'>";
 					html += "<div class='card-body'><a href='${pageContext.request.contextPath}/shop/shopView.do?shopNo="+data.followerList[i].SHOP_NO+"'>";
-					html +=	"<p class='card-title'>"+data.followerList[i].MEMBER_ID+"</p>";
+					html +=	"<p class='card-title'>"+data.followerList[i].MEMBER_ID+"</p><hr class='divide-sm'>";
 					html += "<div class='followDate'>"+data.followerList[i].FOLLOW_DATE+"일째 팔로잉 중</div>";
 					html += "</div></a></div>";
 				}
@@ -1112,7 +1112,7 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 					html += "<input type='hidden' class='productNo' value='"+data.followList[i].SHOP_NO+"'>";
 					html += "<img src='/dong/resources/upload/shopImage/"+data.followList[i].IMAGE+"' class='card-img-top'>";
 					html += "<div class='card-body'><a href='${pageContext.request.contextPath}/shop/shopView.do?shopNo="+data.followList[i].SHOP_NO+"'>";
-					html +=	"<p class='card-title'>"+data.followList[i].MEMBER_ID+"</p>";
+					html +=	"<p class='card-title'>"+data.followList[i].MEMBER_ID+"</p><hr class='divide-sm'>";
 					html += "<div class='followDate'>"+data.followList[i].FOLLOW_DATE+"일째 팔로우 중</div>";
 					html += "</div></a></div>";
 				}
