@@ -70,7 +70,7 @@ public interface ShopService {
 	
 	Map<String, String> selectShopByShopNo(int shopNo);
 	
-	List<Map<String, Object>> selectMyWishList(String memberId);
+	List<Map<String, Object>> selectMyWishList(String memberId, int cPage, int numPerPage);
 	
 	int selectMyWishListTotalContents(String memberId);
 	

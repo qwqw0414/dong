@@ -151,8 +151,8 @@ public class ShopServiceImpl implements ShopService{
 		return sd.insertInquiryComment(param);
 	}
 	@Override
-	public List<Map<String, Object>> selectMyWishList(String memberId) {
-		return sd.selectMyWishList(memberId);
+	public List<Map<String, Object>> selectMyWishList(String memberId, int cPage, int numPerPage) {
+		return sd.selectMyWishList(memberId, cPage, numPerPage);
 	}
 	@Override
 	public int selectMyWishListTotalContents(String memberId) {

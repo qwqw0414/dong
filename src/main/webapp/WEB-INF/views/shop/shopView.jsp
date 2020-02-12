@@ -8,11 +8,11 @@
 	Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
 %>
 <style>
-
-.productList .card {width: 201px; border-radius: 0; height: 280px;}
-.productList .card img{width: 200px; height: 200px; border: none;}
-#shop-contents .myProductList .myProduct .card{float: left; margin: 10px 8px 10px 8px}
-#shop-contents .myProduct {width: 1200px; display: inline-block; margin: auto; position:static; margin-left:50px; /* height: 620px; */ }
+.myProductList{margin-left:-33px;}
+#myProduct .card {display:inline-block; width:201px; height:280px; cursor: pointer;}
+#myProduct .card img{width: 200px; height: 200px; border: none;}
+#myProduct .card{float: left; margin: 10px 8px 10px 8px}
+#myProduct {width: 1200px; display: inline-block; margin: auto; position:static; margin-left:50px; /* height: 620px; */ }
 #shop-contents {width: 1300px;}
 #shop-contents .myProductList{width: 100%;}
 .myProductList .card-body{padding: 10px 0 0px 8px;}
@@ -319,7 +319,7 @@
     	margin-left: 12px;
     	height: 620px;
 	}
-	.wishListDiv{
+	#wishListDiv{
 		width: 100%;
 		width:1200px;
 		margin: auto;
@@ -345,7 +345,8 @@
 		margin: auto; 
 		height: 620px;
 	}
-	#wishPageBar{
+	
+	/* #wishPageBar{
 		position: static; 
 		display:block;
 		margin-top: 300px; 
@@ -354,7 +355,8 @@
 		position: static; 
 		display:block;
 		margin-top: 300px; 
-	}
+	}*/
+
 	/* 주영 끝 */
 	</style>
 	
@@ -376,9 +378,9 @@
 				},
 				dataType: "json",
 				success:data=>{
-					console.log("성");
+					console.log(data)
 					 let html = "";
-					 var $myProduct = $("myProduct");
+					
 				        data.product.forEach(product => {
 
 				          let preTitle = product.TITLE;
@@ -386,11 +388,13 @@
 				          if(preTitle.length > 12) 
 				            preTitle = preTitle.substring(0,12)+"..."
 
-				          html += "<div class='card' style='width: 232px; height: 300px;'>";
+				          html += "<div class='card'>";
+				          html += "<input type='hidden' class='productNo' value='"+product.PRODUCT_NO+"'>";
 				          html += "<img src='${pageContext.request.contextPath}/resources/upload/product/" + product.PHOTO + "' class='card-img-top'>";
 				          html += '<div class="card-body">';
 				          html += '<p class="card-title">' + preTitle + '</p>';
 				          html += '<p class="card-text"><span>' + numberComma(product.PRICE) + '<small>원</small></span></p>';
+				          html += '<div class="regDate">'+lastDate(product.REG_DATE)+'</div>';
 				          html += '</div></div>'
 				        });
 				        $("#myProduct").html(html);
@@ -399,11 +403,17 @@
 				error:(x,s,e)=>{
 					console.log("실패",x,s,e);
 				},
-				complete: ()=>{
-		            $("#pageBar a").click((e)=>{
+				complete: (data)=>{
+			        $("#myProduct .card").click(function(){
+			        	var productNo = $(this).children("input").val();
+			            location.href = "${pageContext.request.contextPath}/product/productView.do?productNo="+productNo;
+			        });
+			        
+			        $("#pageBar a").click((e)=>{
 		            	loadMyProduct($(e.target).siblings("input").val());
 		            });
-		        }
+			      }
+				
 				
 			});
 			
@@ -430,7 +440,7 @@
 			<div id="nav-product">
 				<h1>내 상품</h1>
 				<div class="myProductList" id="myProductList">
-      				<div class="myProduct" id="myProduct">
+      				<div  id="myProduct">
       				
       				</div>
       				
@@ -708,7 +718,7 @@ $(document).on("click", "#shopView #shopInquiryCommentEndBtn", function(){
 	
 	var memberId = $("[name=memberLoggedIn]").val();
 
-	loadMyProduct(1);
+	/* loadMyProduct(1);
 
 	function loadMyProduct(cPage) {
 		$.ajax({
@@ -720,7 +730,7 @@ $(document).on("click", "#shopView #shopInquiryCommentEndBtn", function(){
 			},
 			dataType: "json",
 			success: data => {
-				console.log("성");
+				
 				let html = "";
 				var $myProduct = $("myProduct");
 				data.product.forEach(product => {
@@ -730,7 +740,7 @@ $(document).on("click", "#shopView #shopInquiryCommentEndBtn", function(){
 					if (preTitle.length > 12)
 						preTitle = preTitle.substring(0, 12) + "..."
 
-					html += "<div class='card' style='width: 232px; height: 300px;'>";
+					html += "<div class='card'>";
 					html += "<img src='${pageContext.request.contextPath}/resources/upload/product/" + product.PHOTO + "' class='card-img-top'>";
 					html += '<div class="card-body">';
 					html += '<p class="card-title">' + preTitle + '</p>';
@@ -751,7 +761,7 @@ $(document).on("click", "#shopView #shopInquiryCommentEndBtn", function(){
 
 		});
 
-	}
+	} */
 	$("[name=upFile]").on("change", function () {
 		//파일 입력 취소
 		if ($(this).prop("files")[0] === undefined) {
@@ -890,7 +900,10 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 	};
 	
 	//찜한목록 조회
-	$(document).on("click", "#shopView #myWishListDiv", function(){
+/* 	$(document).on("click", "#shopView #myWishListDiv", function(){ */
+		loadMyWishList(1);
+		
+		function loadMyWishList(cPage){
 		var memberId = $("[name=memberLoggedIn]").val();
 		var cPage = cPage;
 		console.log(cPage);
@@ -927,9 +940,13 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 		        	var productNo = $(this).children("input").val();
 		        	location.href = "${pageContext.request.contextPath}/product/productView.do?productNo="+productNo;
 		        });
+		        
+		        $("#wishPageBar a").click((e)=>{
+		        	loadMyWishList($(e.target).siblings("input").val());
+	            });
 		      }
 		});
-	});
+	}
 	
 	function lastDate(date){
 	    var regDate = new Date(date);

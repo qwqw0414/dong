@@ -34,6 +34,8 @@ import com.pro.dong.board.model.vo.BoardComment;
 import com.pro.dong.common.util.Utils;
 import com.pro.dong.member.model.vo.Member;
 
+import oracle.net.aso.r;
+
 
 @RequestMapping("/board")
 @Controller
@@ -234,6 +236,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/boardUpdate.do")	
+	@ResponseBody
 	public ModelAndView boardUpdate( ModelAndView mav, int boardNo) {
 		Board board = bs.selectOneBoard(boardNo);
 		
@@ -245,60 +248,46 @@ public class BoardController {
 	
 	@RequestMapping("/boardUpdateEnd")
 	@ResponseBody
-//	public String boardUpdateEnd(Board board,HttpServletRequest request) {
-//		int result = bs.boardUpdate(board);
-//		String msg = "";
-//		if(result>0) {
-//			log.debug("게시글 수정성공!");
-//			msg = "게시글 수정이 완료되었습니다.";
-//		}else {
-//			log.debug("게시글 수정실패!");
-//			msg = "게시글 수정에 실패하였습니다.";
-//		}
-//		
-//		return result+"";
-//	}
-	
-	public ModelAndView boardUpdateEnd(ModelAndView mav, Board board) {
+	public String boardUpdateEnd(Board board,HttpServletRequest request) {
 		int result = bs.boardUpdate(board);
 		log.debug("boardUpdate@board", board);
-		
+		String msg = "";
+		String loc = "/";
 		if(result>0) {
 			log.debug("게시글 수정성공!");
+			msg = "게시글 수정이 완료되었습니다.";
+			loc = "/board/boardList.do";
 		}else {
 			log.debug("게시글 수정실패!");
+			msg = "게시글 수정에 실패하였습니다.";
 		}
 		
-		mav.addObject("msg", result>0?"수정성공!":"수정실패!");
-		mav.addObject("loc", "/board/boardList.do");
-		mav.setViewName("common/msg");
-		
-		return mav;
+		return result+"";
 	}
 	
 	@RequestMapping("/boardDelete")
 	@ResponseBody
-	public ModelAndView boardDelete(ModelAndView mav, int boardNo) {
+	public String boardDelete(@RequestParam("boardNo") int boardNo) {
 		int result = bs.deleteBoard(boardNo);
 		log.debug("boardDelete@boardNo="+boardNo);
 		
-		
+		String msg = "";
+		String loc = "/";
 		if(result>0) {
 			log.debug("board삭제 성공!!!!!");
-		
+			msg = "삭제성공!";
+			loc = "/board/boardList.do";
 		}else {
 			log.debug("board삭제 실패!!!");
+			msg = "삭제실패!";
 		}
-		
-		mav.addObject("msg", result>0?"삭제성공!":"삭제실패!");
-		mav.addObject("loc", "/board/boardList.do");
-		mav.setViewName("common/msg");
 
-		return mav;
+		return result+"";
 	}
 	
 	@RequestMapping("/boardLike")
-	public ModelAndView insertBoardReputation (ModelAndView mav, @RequestParam("boardNo") int boardNo, HttpSession session,HttpServletRequest request){
+	@ResponseBody
+	public String insertBoardReputation (@RequestParam("boardNo") int boardNo, HttpSession session,HttpServletRequest request){
 		
 		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
 		String memberId = memberLoggedIn.getMemberId();
@@ -309,11 +298,10 @@ public class BoardController {
 		map.put("boardNo", boardNo+"");
 		
 		int result = bs.insertBoardReputation(map);
-		if(result>0) {
-			mav.setViewName("board/boardList.do?boardNo="+boardNo);
-		}
 		 
-		return mav;
+		log.debug(result+"");
+		
+		return result+"";
 	}
 	
 	@RequestMapping("/boardLikeCount.do")

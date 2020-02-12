@@ -68,8 +68,11 @@ public interface ShopDAO {
 	int selectTotalInpuiry(int shopNo);
 	
 	int insertInquiryComment(Map<String, String> param);
+	
 	Map<String, String> selectShopByShopNo(int shopNo);
-	List<Map<String, Object>> selectMyWishList(String memberId);
+	
+	List<Map<String, Object>> selectMyWishList(String memberId, int cPage, int numPerPage);
+	
 	int selectMyWishListTotalContents(String memberId);
 	
 	
