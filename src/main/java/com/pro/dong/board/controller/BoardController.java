@@ -34,6 +34,8 @@ import com.pro.dong.board.model.vo.BoardComment;
 import com.pro.dong.common.util.Utils;
 import com.pro.dong.member.model.vo.Member;
 
+import oracle.net.aso.r;
+
 
 @RequestMapping("/board")
 @Controller
@@ -297,8 +299,9 @@ public class BoardController {
 		return mav;
 	}
 	
-	@RequestMapping("/boardLike.do")
-	public ModelAndView insertBoardReputation (ModelAndView mav, @RequestParam("boardNo") int boardNo, HttpSession session,HttpServletRequest request){
+	@RequestMapping("/boardLike")
+	@ResponseBody
+	public String insertBoardReputation (@RequestParam("boardNo") int boardNo, HttpSession session,HttpServletRequest request){
 		
 		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
 		String memberId = memberLoggedIn.getMemberId();
@@ -309,11 +312,10 @@ public class BoardController {
 		map.put("boardNo", boardNo+"");
 		
 		int result = bs.insertBoardReputation(map);
-		if(result>0) {
-			mav.setViewName("board/boardList.do?boardNo="+boardNo);
-		}
 		 
-		return mav;
+		log.debug(result+"");
+		
+		return result+"";
 	}
 	
 	@RequestMapping("/boardLikeCount.do")

@@ -81,7 +81,9 @@
  <div id="shopView" class="mx-center">
 	<div id="shopDiv">
 		<div id="shopImgDiv">
-			<div id="follow"><img id ="followIcon" src="${pageContext.request.contextPath}/resources/images/dislike.png"/></div>
+			<div id="follow"></div>
+			<input type="hidden" name="isFollowing" id="isFollowing" value="" />
+			<input type="hidden" name="memberLoggedInShopNo" id="memberLoggedInShopNo" value="" />
 			<c:if test="${map.IMAGE == null}">
 				<img id="shopImg1" class="img-thumbnail" src="${pageContext.request.contextPath}/resources/upload/shopImage/shopping-store.png" alt="" />
 			</c:if>
@@ -317,7 +319,7 @@
     	margin-left: 12px;
     	height: 620px;
 	}
-	.wishListDiv{
+	#wishListDiv{
 		width: 100%;
 		width:1200px;
 		margin: auto;
@@ -343,11 +345,11 @@
 		margin: auto; 
 		height: 620px;
 	}
-	#wishPageBar{
+	
+	/* #wishPageBar{
 		position: static; 
 		display:block;
-		margin-top: 300px; 
-	}
+	} */
 	/* 주영 끝 */
 	</style>
 	
@@ -473,7 +475,7 @@ $(()=>{
 	var loginId = '${memberLoggedIn.memberId}';
 	var shopId = "${map.MEMBER_ID}";
 	var $shopNav = $("#shopView-nav .shop-nav");
-	
+	isFollowing();
 	$("#shopInquiryTotalDiv").hide();
 	$("#shopView-nav #shop-contents").children().hide();
 	$("#shopView-nav #nav-product").show();
@@ -877,7 +879,10 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 	};
 	
 	//찜한목록 조회
-	$(document).on("click", "#shopView #myWishListDiv", function(){
+/* 	$(document).on("click", "#shopView #myWishListDiv", function(){ */
+		loadMyWishList(1);
+		
+		function loadMyWishList(cPage){
 		var memberId = $("[name=memberLoggedIn]").val();
 		var cPage = cPage;
 		console.log(cPage);
@@ -914,9 +919,13 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 		        	var productNo = $(this).children("input").val();
 		        	location.href = "${pageContext.request.contextPath}/product/productView.do?productNo="+productNo;
 		        });
+		        
+		        $("#wishPageBar a").click((e)=>{
+		        	loadMyWishList($(e.target).siblings("input").val());
+	            });
 		      }
 		});
-	});
+	}
 	
 	function lastDate(date){
 	    var regDate = new Date(date);
@@ -930,32 +939,66 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 
 	    return diffHour+"시간 전";
 	  }
-	
+	//팔로우 여부 확인 후 img 추가 함수
+	function isFollowing(){
+		var follower = $("[name=memberLoggedIn]").val();
+		var follow = '${map.SHOP_NO}';
+		var followDiv = $("#follow");
+		var shopMemberId = '${map.MEMBER_ID}';
+		if(follower == shopMemberId){
+			console.log("자기자신입니다");
+			 return;
+		}
+		$.ajax({
+			url: "${pageContext.request.contextPath}/shop/isFollowing",
+			data:{follow:follow,
+				follower:follower},
+			type: "POST",
+			success: data => {
+					console.log(data);
+			if(data.isFollowing ==1){
+				console.log("팔로우 중");
+				followDiv.html("<img id ='followIcon' src='${pageContext.request.contextPath}/resources/images/like.png'/>");
+			}else {
+				console.log("팔로우 중이 아님");
+				followDiv.html("<img id ='followIcon' src='${pageContext.request.contextPath}/resources/images/dislike.png'/>");	
+			}
+				$("#isFollowing").val(data.isFollowing);
+				$("#memberLoggedInShopNo").val(data.follower);
+			},
+			error: (x, s, e) => {
+			console.log("ajax 요청 실패!",x,s,e);
+			}
+		});//end of ajax
+	}
 	//팔로우 버튼 토글
 	$("#follow").on('click', function(){
 		var img = $("#followIcon");
-		var follower = $("[name=memberLoggedIn]").val();
+		var follower = $("#memberLoggedInShopNo").val();
 		var follow = '${map.SHOP_NO}';
+		var isFollowing = $("#isFollowing").val();
+		console.log("isFollowing:"+isFollowing);
 		console.log(follower);
 		console.log(follow);
 		 $.ajax({
 			url: "${pageContext.request.contextPath}/shop/shopFollow",
 			data:{follow:follow,
-				follower:follower},
+				follower:follower,
+				isFollowing:isFollowing},
 			success: data => {
 				console.log(data);
 			},
 			error: (x, s, e) => {
-				console.log("ajax 요청 실패!");
+				console.log("ajax 요청 실패!",x,s,e);
 			}
 		});//end of ajax 
 		
-		img.attr("src", function(index, attr){
+		 img.attr("src", function(index, attr){
 			if(attr.match('${pageContext.request.contextPath}/resources/images/like.png')){
 				return attr.replace("${pageContext.request.contextPath}/resources/images/like.png", "${pageContext.request.contextPath}/resources/images/dislike.png");
 			} else {
 				return attr.replace("${pageContext.request.contextPath}/resources/images/dislike.png","${pageContext.request.contextPath}/resources/images/like.png");
-			}
+			} 
 		}) 
 	});//팔로우 하트 토글 함수 끝
 });

@@ -41,30 +41,47 @@ public class ShopController {
 	
 	// 민호 시작 ==========================
 	@RequestMapping("/shopFollow")
-	public String shopFollow(@RequestParam("follow")String follow, @RequestParam("follower")String followerMemberId) {
-		log.debug("follow",follow);
-		log.debug("followerMemberId",followerMemberId);
+	@ResponseBody
+	public String shopFollow(@RequestParam("follow")String follow, @RequestParam("follower")String follower, @RequestParam("isFollowing")int isFollowing) {
+		log.debug("follow={}",follow);
 		
 		Map<String, String> param = new HashMap<>();
-		Map<String, String> followerShop = new HashMap<>();
-		followerShop = ss.selectOneShop(followerMemberId);
-		String follower = followerShop.get("SHOP_NO");
-		log.debug(follower);
+		Map<String, Object> resultMap = new HashMap<>();
+		
 		param.put("follow",follow);
 		param.put("follower",follower);
-		
-		int isFollowing = ss.isFollowing(param);
+
 		int result = 0;
 		if(isFollowing>0) {
 			result = ss.shopUnfollow(param);
 		} else {
 			result = ss.shopFollow(param);
 		}
+		resultMap.put("result", result);
 		
-		return result+"";
+		return gson.toJson(resultMap);
 	}
 	
-	
+	@RequestMapping("/isFollowing")
+	@ResponseBody
+	public Map<String,Object> isFollowing(@RequestParam("follow")String follow, @RequestParam("follower")String followerMemberId) {
+		
+		Map<String, String> param = new HashMap<>();
+		Map<String, String> followerShop = new HashMap<>();
+		Map<String, Object> resultMap = new HashMap<>();
+		followerShop = ss.selectOneShop(followerMemberId);
+		log.debug("map={}",followerShop);
+		log.debug("followerShop.get('SHOP_NO')={}",followerShop.get("SHOP_NO"));
+		
+		String follower = String.valueOf(followerShop.get("SHOP_NO"));
+		log.debug("follower={}",follower);
+		param.put("follow",follow);
+		param.put("follower",follower);
+		int isFollowing = ss.isFollowing(param);
+		resultMap.put("isFollowing", isFollowing);
+		resultMap.put("follower", follower);
+		return resultMap;
+	}
 	//========================== 민호 끝
 	
 	
@@ -359,13 +376,13 @@ public class ShopController {
 		int totalContents = ss.selectMyWishListTotalContents(memberId);
 		
 		//게시글 조회
-		list = ss.selectMyWishList(memberId);
+		list = ss.selectMyWishList(memberId, cPage, numPerPage);
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("list", list);
-		map.put("cPage", cPage);
+		/*map.put("cPage", cPage);
 		map.put("numPerPage", numPerPage);
-		map.put("totalContents", totalContents);
+		map.put("totalContents", totalContents);*/
 		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
 		map.put("pageBar", pageBar);
 		
