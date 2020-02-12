@@ -72,6 +72,8 @@ public interface ShopService {
 	
 	int selectMyWishListTotalContents(String memberId);
 	
+	int deleteWishProduct(Map<String, String> param);
+	
 	
 	//========================== 주영 끝
 	

@@ -148,6 +148,10 @@ public class ShopDAOImpl implements ShopDAO{
 	public int selectMyWishListTotalContents(String memberId) {
 		return sst.selectOne("shop.selectMyWishListTotalContents", memberId);
 	}
+	@Override
+	public int deleteWishProduct(Map<String, String> param) {
+		return sst.delete("shop.deleteWishProduct", param);
+	}
 	
 
 

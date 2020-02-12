@@ -121,6 +121,10 @@
 		select count(*) from product_like where member_id = #{memberId}
 	</select>
 	
+	<delete id="deleteWishProduct">
+		delete from product_like where member_id = #{memberId} and product_no = #{wishProductNo}
+	</delete>
+	
 	<!-- ==========================  주영 끝 -->
 	
 	<!-- 현규 시작 ========================== -->

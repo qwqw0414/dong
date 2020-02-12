@@ -381,11 +381,25 @@ public class ShopController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("list", list);
 		/*map.put("cPage", cPage);
-		map.put("numPerPage", numPerPage);
-		map.put("totalContents", totalContents);*/
+		map.put("numPerPage", numPerPage);*/
+		map.put("totalContents", totalContents);
 		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
 		map.put("pageBar", pageBar);
 		
+		return map;
+	}
+	
+	@RequestMapping("/deleteWishProduct")
+	@ResponseBody
+	public Map<String, Integer> deleteWishProduct(@RequestParam("wishProductNo") int wishProductNo,
+												  @RequestParam("memberId") String memberId){
+		Map<String, String> param = new HashMap<>();
+		param.put("wishProductNo", Integer.toString(wishProductNo));
+		param.put("memberId", memberId);
+		
+		int result = ss.deleteWishProduct(param);
+		Map<String, Integer> map = new HashMap<>();
+		map.put("result", result);
 		return map;
 	}
 

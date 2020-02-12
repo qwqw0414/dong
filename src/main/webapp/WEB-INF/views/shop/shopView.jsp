@@ -330,7 +330,7 @@
 		height: 280px; 
 		cursor: pointer;
 	}
-	#wishListDiv .card img{
+	#wishListDiv .card .card-img-top{
 		width: 200px; 
 		height: 200px; 
 		border: none;
@@ -345,11 +345,19 @@
 		margin: auto; 
 		height: 620px;
 	}
+	#wishCancel{
+		position: absolute;
+		width: 30px;
+		height: 30px;
+	}
+	#wishImg{
+		position: absolute;
+		top: 3px;
+    	left: 2px;
+		width: 20px;
+		height: 20px;
+	}
 	
-	/* #wishPageBar{
-		position: static; 
-		display:block;
-	} */
 	/* 주영 끝 */
 	</style>
 	
@@ -881,51 +889,73 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 	//찜한목록 조회
 /* 	$(document).on("click", "#shopView #myWishListDiv", function(){ */
 		loadMyWishList(1);
-		
 		function loadMyWishList(cPage){
+			var memberId = $("[name=memberLoggedIn]").val();
+			$.ajax({
+				url: "${pageContext.request.contextPath}/shop/selectMyWishList",
+				method: "POST",
+				data: { memberId: memberId,
+						cPage : cPage },
+				success: data => {
+					console.log(data);
+					$("#zzimTag").html(data.totalContents);
+					let html = "";
+					let $wishItem = $("#wishItem");
+					for (var i = 0; i < data.list.length; i++) {
+						html += "<div class='card'>";
+						html += "<input type='hidden' class='productNo' value='"+data.list[i].PRODUCT_NO+"'>";
+						html += "<img src='/dong/resources/upload/product/"+data.list[i].PHOTO+"' class='card-img-top'>";
+						html += "<button id='wishCancel' value='"+data.list[i].PRODUCT_NO+"'><img id='wishImg' src='/dong/resources/images/like.png'></button>"
+						html += "<div class='card-body'>";
+						html +=	"<p class='card-title'>"+data.list[i].TITLE+"</p>";
+						html +=	"<p class='card-text'><span>"+data.list[i].PRICE+"<small>원</small></span></p>";
+						html += "<div class='regDate'>"+lastDate(data.list[i].REG_DATE)+"</div>";
+						html += "</div></div>";
+					}
+					$wishItem.html(html);
+					$("#wishPageBar").html(data.pageBar);
+				},
+				error: (x, s, e) => {
+					console.log("ajax 요청 실패!");
+				},
+				complete: (data)=>{
+										
+		        	$("#wishItem .card-img-top").click(function(){
+		        		console.log($(this));
+		        		console.log($(this).children("input").val());
+		        		console.log("Asda");
+		        		console.log($(this).prev().val());
+		        		var productNo = $(this).prev().val();
+		        		location.href = "${pageContext.request.contextPath}/product/productView.do?productNo="+productNo;
+		        	});
+		        
+		        	$("#wishPageBar a").click((e)=>{
+		        		loadMyWishList($(e.target).siblings("input").val());
+	            	});
+		      	}
+			});
+		}
+	
+	$(document).on("click", ".card #wishCancel", function(){	
+		console.log($(this).val());
+		var wishProductNo = $(this).val();
 		var memberId = $("[name=memberLoggedIn]").val();
-		var cPage = cPage;
-		console.log(cPage);
+		console.log("찜 취소에 입장");
 		$.ajax({
-			url: "${pageContext.request.contextPath}/shop/selectMyWishList",
+			url: "${pageContext.request.contextPath}/shop/deleteWishProduct",
 			method: "POST",
-			data: { memberId: memberId,
-					cPage : cPage },
+			data: { wishProductNo: wishProductNo,
+					memberId : memberId},
 			success: data => {
 				console.log(data);
-				$("#zzimTag").html(data.totalContents);
-				let html = "";
-				let $wishItem = $("#wishItem");
-				for (var i = 0; i < data.list.length; i++) {
-					html += "<div class='card'>";
-					html += "<input type='hidden' class='productNo' value='"+data.list[i].PRODUCT_NO+"'>";
-					html += "<img src='/dong/resources/upload/product/"+data.list[i].PHOTO+"' class='card-img-top'>";
-					html += "<div class='card-body'>";
-					html +=	"<p class='card-title'>"+data.list[i].TITLE+"</p>";
-					html +=	"<p class='card-text'><span>"+data.list[i].PRICE+"<small>원</small></span></p>";
-					html += "<div class='regDate'>"+lastDate(data.list[i].REG_DATE)+"</div>";
-					html += "</div></div>";
-				}
-				$wishItem.html(html);
-				$("#wishPageBar").html(data.pageBar);
+				loadMyWishList(1);
 			},
 			error: (x, s, e) => {
 				console.log("ajax 요청 실패!");
-			},
-			complete: (data)=>{
-		        $("#wishItem .card").click(function(){
-		        	console.log($(this));
-		        	console.log($(this).children("input").val());
-		        	var productNo = $(this).children("input").val();
-		        	location.href = "${pageContext.request.contextPath}/product/productView.do?productNo="+productNo;
-		        });
-		        
-		        $("#wishPageBar a").click((e)=>{
-		        	loadMyWishList($(e.target).siblings("input").val());
-	            });
-		      }
+			}
 		});
-	}
+	});
+			
 	
 	function lastDate(date){
 	    var regDate = new Date(date);
