@@ -49,10 +49,13 @@ public class BoardController {
 	
 	// 민호 시작 ==========================
 	@RequestMapping("/boardList.do")
-	public ModelAndView boardList(ModelAndView mav) {
+	public ModelAndView boardList(ModelAndView mav, HttpSession session) {
+		
+		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
+		String dong = memberLoggedIn.getDong();
 		
 		List<BoardCategory> boardCategoryList = bs.selectBoardCategory();
-		List<Board> boardList = bs.selectBoardList();//인기글 조회
+		List<Board> boardList = bs.selectBoardList(dong);//인기글 조회
 		
 		mav.addObject("boardCategoryList",boardCategoryList);
 		mav.addObject("boardList",boardList);

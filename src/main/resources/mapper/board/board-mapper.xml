@@ -68,8 +68,10 @@
 	
 	<![CDATA[
 	SELECT R.* FROM
-		(select * from board order by read_count desc) R 
-	WHERE ROWNUM < 5
+		(select * from board B left join member M on b.member_id=m.member_id
+    	 where m.dong=#{dong}
+    	 order by read_count desc) R 
+    WHERE ROWNUM < 6
 	]]>
 		
 	</select>
