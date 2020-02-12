@@ -450,7 +450,7 @@
 	
 		<div id="shop-contents">
 			<div id="nav-product">
-				<h1>내 상품</h1>
+				<h1>내 상품</h1> 
 				<div class="myProductList" id="myProductList">
       				<div  id="myProduct">
       				
