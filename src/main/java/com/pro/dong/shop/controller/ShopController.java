@@ -125,7 +125,7 @@ public class ShopController {
 		List<Map<String, String>> list = null;
 			
 		list = ss.loadMyProductList(memberId,cPage,numPerPage);
-		log.debug("상품list @@@@@@@@@@@={}",list);
+		log.debug("@@@@@@@@@@@@@@@@@={}",list);
 		int totalContents = ss.totalCountMyProduct(memberId);
 			
 		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
@@ -137,7 +137,26 @@ public class ShopController {
 		
 		return gson.toJson(result);
 	}
-	
+	@RequestMapping("/myPoductManage.do")
+	public ModelAndView myPoductManage(ModelAndView mav) {
+		mav.setViewName("/shop/myProductManage");
+		return mav;
+	}
+/*	@RequestMapping(value="/loadMyProductList" , produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String loadMyProductManage(String memberId, int cPage) {
+		
+		int numPerPage = 10;
+		
+		List<Map<String, String>> list = null;
+		
+		list = ss.loadMyProductManage(memberId, cPage, numPerPage);
+		
+		int totalContents = ss.totalCountMyProduct(memberId);
+		
+		Map<String,Object> result = new HashMap<>();
+		return gson.toJson(result);
+	}*/
 	//========================== 하진 끝
 	
 	
