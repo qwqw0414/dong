@@ -46,7 +46,6 @@ public class BoardController {
 	@Autowired
 	BoardService bs;
 	
-	
 	// 민호 시작 ==========================
 	@RequestMapping("/boardList.do")
 	public ModelAndView boardList(ModelAndView mav) {
