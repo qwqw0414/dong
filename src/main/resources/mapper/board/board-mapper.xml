@@ -182,7 +182,7 @@
 	</delete>
 	
 	<select id="countComment" resultType="_int">
-	select count(*) from board_comment
+	select count(*) from board_comment where board_no=#{boardNo}
 		</select>
 		
 		

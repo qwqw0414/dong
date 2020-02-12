@@ -359,7 +359,7 @@ public class BoardController {
 		
 		
 		
-		int totalContents = bs.countComment();
+		int totalContents = bs.countComment(boardNo);
 		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
 		
 		Map<String,Object> result = new HashMap<>();

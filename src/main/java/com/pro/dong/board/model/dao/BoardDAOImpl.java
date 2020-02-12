@@ -147,8 +147,8 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public int countComment() {
-		return sst.selectOne("board.countComment");
+	public int countComment(int boardNo) {
+		return sst.selectOne("board.countComment",boardNo);
 	}
 
 	@Override

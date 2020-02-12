@@ -147,8 +147,8 @@ public class BoardServiceImpl implements BoardService {
 
 
 	@Override
-	public int countComment() {
-		return bd.countComment();
+	public int countComment(int boardNo) {
+		return bd.countComment(boardNo);
 	}
 
 	@Override

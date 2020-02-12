@@ -69,7 +69,7 @@ public interface BoardDAO {
 
 	int deleteLevel1(int commentNo);
 
-	int countComment();
+	int countComment(int boardNo);
 
 	int deleteLevel2(int commentNo);
 
