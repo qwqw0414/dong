@@ -607,13 +607,15 @@ $(()=>{
 						html += "&nbsp;&nbsp;";
 						html += "<span>" + data.list[i].WRITE_DAY + "</span>";
 						html += "<p>" + data.list[i].INQUIRY_CONTENT + "</p>";
-						html += "<button id='deleteCommentBtn' value='"+data.list[i].INQUIRY_NO+"' class='commentDelBtn'>";
-						html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='17'>삭제</button>";
-						html += "<input id='inquiryLevel' type='hidden' value='"+data.list[i].INQUIRY_LEVEL+"'/>";
+						if(("${map.MEMBER_ID}" == memberId) || (memberId == data.list[i].MEMBER_ID)){
+							html += "<button id='deleteCommentBtn' value='"+data.list[i].INQUIRY_NO+"' class='commentDelBtn'>";
+							html += "<img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='17'>삭제</button>";
+							html += "<input id='inquiryLevel' type='hidden' value='"+data.list[i].INQUIRY_LEVEL+"'/>";
+							}
 						html += "</div>";
 						html += "</div>";
+						}
 					}
-				}
 				$listDiv.html(html);
 
 			},
@@ -654,9 +656,6 @@ $(document).on("click", "#shopView #deleteCommentBtn", function(e){
 	var deleteCommentBtnTarget = $(e.target);
 	var deleteCommentBtn = deleteCommentBtnTarget.val();
 	var inquiryLevel = deleteCommentBtnTarget.siblings("input#inquiryLevel").val();
-	console.log("다다다다다");
-	console.log(inquiryLevel);
-	console.log(deleteCommentBtn);
 
 	$.ajax({
 		url: "${pageContext.request.contextPath}/shop/deleteShopInquriy",
