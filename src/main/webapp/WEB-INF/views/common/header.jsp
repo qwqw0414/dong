@@ -24,6 +24,9 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/animation.css" />
 <!-- 카카오 맵 -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ea166326e5dc5657d4a2feb24b4cfe0b&libraries=services"></script>
+<!-- 우편번호 -->
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
 </head>
 <style>
 #headerImgDiv{
@@ -267,7 +270,7 @@ var isCateShow = false;
 	$categoryDiv.mouseleave((e)=>{
 		setTimeout(function() {
 			if(!isCateShow){
-				$(e.target).find(".cate-list").hide();
+				$(e.target).find(".cate-list").hide();ㅋ`
 				isCateShow = false;
 			}
 		},300);
