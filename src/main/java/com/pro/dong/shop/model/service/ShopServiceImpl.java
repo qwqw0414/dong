@@ -23,9 +23,34 @@ public class ShopServiceImpl implements ShopService{
 	
 	
 	// 민호 시작 ==========================
-	
-	
-	
+	@Override
+	public int shopFollow(Map<String, String> param) {
+		return sd.shopFollow(param);
+	}
+	@Override
+	public int isFollowing(Map<String, String> param) {
+		return sd.isFollowing(param);
+	}
+	@Override
+	public int shopUnfollow(Map<String, String> param) {
+		return sd.shopUnfollow(param);
+	}
+	@Override
+	public int selectselectFollowListCount(String follow) {
+		return sd.selectselectFollowListCount(follow);
+	}
+	@Override
+	public List<Map<String, String>> selectFollowList(String follow, int cPage, int numPerPage) {
+		return sd.selectFollowList(follow,cPage,numPerPage);
+	}
+	@Override
+	public int selectselectFollowerListCount(String follower) {
+		return sd.selectselectFollowerListCount(follower);
+	}
+	@Override
+	public List<Map<String, String>> selectFollowerList(String follower, int cPage, int numPerPage) {
+		return sd.selectFollowerList(follower,cPage,numPerPage);
+	}
 	//========================== 민호 끝
 	
 	
@@ -121,10 +146,27 @@ public class ShopServiceImpl implements ShopService{
 	public int selectTotalInpuiry(int shopNo) {
 		return sd.selectTotalInpuiry(shopNo);
 	}
+	
 	@Override
 	public int insertInquiryComment(Map<String, String> param) {
 		return sd.insertInquiryComment(param);
 	}
+	
+	@Override
+	public List<Map<String, Object>> selectMyWishList(String memberId, int cPage, int numPerPage) {
+		return sd.selectMyWishList(memberId, cPage, numPerPage);
+	}
+	
+	@Override
+	public int selectMyWishListTotalContents(String memberId) {
+		return sd.selectMyWishListTotalContents(memberId);
+	}
+	
+	@Override
+	public int deleteWishProduct(Map<String, String> param) {
+		return sd.deleteWishProduct(param);
+	}
+
 
 
 

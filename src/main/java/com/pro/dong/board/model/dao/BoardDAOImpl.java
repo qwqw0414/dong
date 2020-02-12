@@ -114,6 +114,10 @@ public class BoardDAOImpl implements BoardDAO {
 		return sst.insert("board.insertBoardReputation", map);
 	}
 	
+	@Override
+	public int selectBoardLike(int boardNo) {
+		return sst.selectOne("board.selectBoardLike", boardNo);
+	}
 	
 	//========================== 지은 끝
 		
@@ -146,6 +150,13 @@ public class BoardDAOImpl implements BoardDAO {
 	public int countComment() {
 		return sst.selectOne("board.countComment");
 	}
+
+	@Override
+	public int deleteLevel2(int commentNo) {
+		return sst.delete("board.deleteLevel2",commentNo);
+	}
+
+	
 
 
 

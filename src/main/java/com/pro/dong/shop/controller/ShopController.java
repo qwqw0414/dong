@@ -40,9 +40,78 @@ public class ShopController {
 	
 	
 	// 민호 시작 ==========================
+	@RequestMapping("/shopFollow")
+	@ResponseBody
+	public String shopFollow(@RequestParam("follow")String follow, @RequestParam("follower")String follower, @RequestParam("isFollowing")int isFollowing) {
+		log.debug("follow={}",follow);
+		
+		Map<String, String> param = new HashMap<>();
+		Map<String, Object> resultMap = new HashMap<>();
+		
+		param.put("follow",follow);
+		param.put("follower",follower);
+
+		int result = 0;
+		if(isFollowing>0) {
+			result = ss.shopUnfollow(param);
+		} else {
+			result = ss.shopFollow(param);
+		}
+		resultMap.put("result", result);
+		
+		return gson.toJson(resultMap);
+	}
 	
-	
-	
+	@RequestMapping("/isFollowing")
+	@ResponseBody
+	public Map<String,Object> isFollowing(@RequestParam("follow")String follow, @RequestParam("follower")String followerMemberId) {
+		
+		Map<String, String> param = new HashMap<>();
+		Map<String, String> followerShop = new HashMap<>();
+		Map<String, Object> resultMap = new HashMap<>();
+		followerShop = ss.selectOneShop(followerMemberId);
+		log.debug("map={}",followerShop);
+		log.debug("followerShop.get('SHOP_NO')={}",followerShop.get("SHOP_NO"));
+		
+		String follower = String.valueOf(followerShop.get("SHOP_NO"));
+		log.debug("follower={}",follower);
+		param.put("follow",follow);
+		param.put("follower",follower);
+		int isFollowing = ss.isFollowing(param);
+		resultMap.put("isFollowing", isFollowing);
+		resultMap.put("follower", follower);
+		return resultMap;
+	}
+	@RequestMapping("/viewFollow")
+	@ResponseBody
+	public Map<String, Object> viewFollow(@RequestParam("follow")String follow,@RequestParam(value="cPage",defaultValue="1")int cPage){
+		int numPerPage = 10;
+		
+		Map<String, String> param = new HashMap<>();
+		Map<String, Object> result = new HashMap<>();
+		param.put("follow", follow);
+		int totalContents = ss.selectselectFollowListCount(follow);
+		List<Map<String,String>> followList = ss.selectFollowList(follow,cPage,numPerPage);
+		String followPageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
+		result.put("followList", followList);
+		result.put("followPageBar", followPageBar);
+		return result;
+	}
+	@RequestMapping("/viewFollower")
+	@ResponseBody
+	public Map<String, Object> viewFollower(@RequestParam("follower")String follower, @RequestParam(value="cPage",defaultValue="1")int cPage){
+		int numPerPage = 10;
+		
+		Map<String, String> param = new HashMap<>();
+		Map<String, Object> result = new HashMap<>();
+		param.put("follower", follower);
+		int totalContents = ss.selectselectFollowerListCount(follower);
+		List<Map<String,String>> followerList = ss.selectFollowerList(follower,cPage,numPerPage);
+		String followPageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
+		result.put("followerList", followerList);
+		result.put("followPageBar", followPageBar);
+		return result;
+	}
 	//========================== 민호 끝
 	
 	
@@ -51,11 +120,12 @@ public class ShopController {
 	@ResponseBody
 	public String loadMyProductList(String memberId, int cPage){
 		
-		int numPerPage = 40;
+		int numPerPage = 10;
 		
 		List<Map<String, String>> list = null;
 			
 		list = ss.loadMyProductList(memberId,cPage,numPerPage);
+		log.debug("상품list @@@@@@@@@@@={}",list);
 		int totalContents = ss.totalCountMyProduct(memberId);
 			
 		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
@@ -291,10 +361,7 @@ public class ShopController {
 	@RequestMapping("/deleteShopInquriy")
 	@ResponseBody
 	public Map<String, Integer> deleteShopInquriy(@RequestParam("deleteCommentBtn") int deleteCommentBtn){
-		log.info("들어왔나요?");
-		
 		int result = ss.deleteShopInquriy(deleteCommentBtn);
-		log.info("result={}", result);
 		Map<String, Integer> map = new HashMap<>();
 		map.put("result", result);
 		return map;
@@ -326,6 +393,44 @@ public class ShopController {
 		
 		map.put("s", s);
 		
+		return map;
+	}
+	
+	@RequestMapping("/selectMyWishList")
+	@ResponseBody
+	public Map<String, Object> selectMyWishList(@RequestParam("memberId") String memberId,
+													  @RequestParam(value="cPage",defaultValue="1") int cPage){
+		final int numPerPage = 10;
+		List<Map<String, Object>> list = new ArrayList<>();
+		
+		//페이징바 작업
+		int totalContents = ss.selectMyWishListTotalContents(memberId);
+		
+		//게시글 조회
+		list = ss.selectMyWishList(memberId, cPage, numPerPage);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("list", list);
+		/*map.put("cPage", cPage);
+		map.put("numPerPage", numPerPage);*/
+		map.put("totalContents", totalContents);
+		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
+		map.put("pageBar", pageBar);
+		
+		return map;
+	}
+	
+	@RequestMapping("/deleteWishProduct")
+	@ResponseBody
+	public Map<String, Integer> deleteWishProduct(@RequestParam("wishProductNo") int wishProductNo,
+												  @RequestParam("memberId") String memberId){
+		Map<String, String> param = new HashMap<>();
+		param.put("wishProductNo", Integer.toString(wishProductNo));
+		param.put("memberId", memberId);
+		
+		int result = ss.deleteWishProduct(param);
+		Map<String, Integer> map = new HashMap<>();
+		map.put("result", result);
 		return map;
 	}
 

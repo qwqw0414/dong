@@ -86,6 +86,7 @@
 	<select id="selectOneMember" parameterType="map" resultType="map">
 		select * from board_report R left join board B on R.board_no=B.board_no left join report_category C on R.category_id = C.category_id
 		where B.member_id=#{memberId}
+		ORDER BY r.report_no DESC
 	</select>
 	
 	<select id="selectMemberView" resultType="member">

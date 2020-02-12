@@ -4,7 +4,38 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="shop">
 	<!-- 민호 시작 ========================== -->
-	
+	<select id="isFollowing" parameterType="map" resultType="_int">
+		select count(*) from shop_follow
+		where follow = #{follow} and follower = #{follower}
+	</select>
+	<delete id="shopUnfollow" parameterType="string">
+		delete from shop_follow
+		where follow = #{follow} and follower = #{follower}
+	</delete>
+	<insert id="shopfollow" parameterType="string">
+		insert into shop_follow
+		values (seq_follow_no.nextval, #{follow}, #{follower}, default)
+	</insert>
+	<select id="selectselectFollowListCount" parameterType="string" resultType="_int">
+		select count(*) from shop s left join shop_follow sf
+		on s.shop_no = sf.follow
+		where sf.follower = #{follow}
+	</select>
+	<select id="selectFollowList" parameterType="string" resultType="map">
+		select s.*, ceil(sysdate-sf.follow_date) as follow_date from shop s left join shop_follow sf
+		on s.shop_no = sf.follow
+		where sf.follower = #{follow}
+	</select>
+	<select id="selectselectFollowerListCount" parameterType="string" resultType="_int">
+		select count(*) from shop s left join shop_follow sf
+		on s.shop_no = sf.follower
+		where sf.follow = #{follower}
+	</select>
+	<select id="selectFollowerList" parameterType="string" resultType="map">
+		select s.*, ceil(sysdate-sf.follow_date) as follow_date from shop s left join shop_follow sf
+		on s.shop_no = sf.follower
+		where sf.follow = #{follower}
+	</select>
 	<!-- ==========================  민호 끝 -->
 	
 	<!-- 하진 시작 ========================== -->
@@ -98,6 +129,21 @@
 	<insert id="insertInquiryComment">
 		insert into shop_inquiry values(seq_shop_inquiry.nextval, #{shopInquiryCommentWriter}, #{shopInquiryCommentShopNo}, #{shopInquiryCommentText}, 2, default, #{inquiryRefNo})
 	</insert>
+	
+	<select id="selectMyWishList" resultType="map">
+		select p.*, l.like_no,  a.photo, l.reg_date as like_date 
+		from product_like L left join product P on l.product_no = p.product_no
+                            left join product_attachment A on p.product_no = a.product_no
+		where l.member_id = #{memberId} and  a.thumbnail='Y'
+	</select>
+	
+	<select id="selectMyWishListTotalContents" resultType="_int">
+		select count(*) from product_like where member_id = #{memberId}
+	</select>
+	
+	<delete id="deleteWishProduct">
+		delete from product_like where member_id = #{memberId} and product_no = #{wishProductNo}
+	</delete>
 	
 	<!-- ==========================  주영 끝 -->
 	

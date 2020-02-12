@@ -24,9 +24,36 @@ public class ShopDAOImpl implements ShopDAO{
 	
 	
 	// 민호 시작 ==========================
-	
-	
-	
+	@Override
+	public int isFollowing(Map<String, String> param) {
+		return sst.selectOne("shop.isFollowing", param);
+	}
+	@Override
+	public int shopUnfollow(Map<String, String> param) {
+		return sst.delete("shop.shopUnfollow", param);
+	}
+	@Override
+	public int shopFollow(Map<String, String> param) {
+		return sst.insert("shop.shopfollow", param);
+	}
+	@Override
+	public int selectselectFollowListCount(String follow) {
+		return sst.selectOne("shop.selectselectFollowListCount",follow);
+	}
+	@Override
+	public List<Map<String, String>> selectFollowList(String follow, int cPage, int numPerPage) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sst.selectList("shop.selectFollowList", follow, rowBounds);
+	}
+	@Override
+	public int selectselectFollowerListCount(String follower) {
+		return sst.selectOne("shop.selectselectFollowerListCount", follower);
+	}
+	@Override
+	public List<Map<String, String>> selectFollowerList(String follower, int cPage, int numPerPage) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sst.selectList("shop.selectFollowerList",follower, rowBounds);
+	}
 	//========================== 민호 끝
 	
 	
@@ -118,16 +145,30 @@ public class ShopDAOImpl implements ShopDAO{
 	public int selectTotalInpuiry(int shopNo) {
 		return sst.selectOne("shop.selectTotalInpuiry", shopNo);
 	}
+	
 	@Override
 	public int insertInquiryComment(Map<String, String> param) {
 		return sst.insert("shop.insertInquiryComment", param);
 	}
+	
 	@Override
 	public Map<String, String> selectShopByShopNo(int shopNo) {
 		return sst.selectOne("shop.selectShopByShopNo", shopNo);
 	}
-
-
+	
+	@Override
+	public List<Map<String, Object>> selectMyWishList(String memberId, int cPage, int numPerPage) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sst.selectList("shop.selectMyWishList", memberId, rowBounds);
+	}
+	@Override
+	public int selectMyWishListTotalContents(String memberId) {
+		return sst.selectOne("shop.selectMyWishListTotalContents", memberId);
+	}
+	@Override
+	public int deleteWishProduct(Map<String, String> param) {
+		return sst.delete("shop.deleteWishProduct", param);
+	}
 	
 	
 	//========================== 주영 끝
