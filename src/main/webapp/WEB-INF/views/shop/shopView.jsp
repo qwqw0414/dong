@@ -361,7 +361,6 @@
 	 #wishPageBar{
 		position: static; 
 		display:block;
-		margin-top: 300px; 
 	}
 	#followPageBar{
 		position: static; 
