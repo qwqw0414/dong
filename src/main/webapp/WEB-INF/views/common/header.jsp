@@ -267,7 +267,7 @@ var isCateShow = false;
 	$categoryDiv.mouseleave((e)=>{
 		setTimeout(function() {
 			if(!isCateShow){
-				$(e.target).find(".cate-list").hide();
+				$(e.target).find(".cate-list").hide();ㅋ`
 				isCateShow = false;
 			}
 		},300);
