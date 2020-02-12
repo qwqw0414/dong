@@ -8,11 +8,11 @@
 	Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
 %>
 <style>
-
-.productList .card {width: 201px; border-radius: 0; height: 280px;}
-.productList .card img{width: 200px; height: 200px; border: none;}
-#shop-contents .myProductList .myProduct .card{float: left; margin: 10px 8px 10px 8px}
-#shop-contents .myProduct {width: 1200px; display: inline-block; margin: auto; position:static; margin-left:50px; /* height: 620px; */ }
+.myProductList{margin-left:-33px;}
+#myProduct .card {display:inline-block; width:201px; height:280px;}
+#myProduct .card img{width: 200px; height: 200px; border: none;}
+#myProduct .card{float: left; margin: 10px 8px 10px 8px}
+#myProduct {width: 1200px; display: inline-block; margin: auto; position:static; margin-left:50px; /* height: 620px; */ }
 #shop-contents {width: 1300px;}
 #shop-contents .myProductList{width: 100%;}
 .myProductList .card-body{padding: 10px 0 0px 8px;}
@@ -81,7 +81,9 @@
  <div id="shopView" class="mx-center">
 	<div id="shopDiv">
 		<div id="shopImgDiv">
-			<div id="follow"><img id ="followIcon" src="${pageContext.request.contextPath}/resources/images/dislike.png"/></div>
+			<div id="follow"></div>
+			<input type="hidden" name="isFollowing" id="isFollowing" value="" />
+			<input type="hidden" name="memberLoggedInShopNo" id="memberLoggedInShopNo" value="" />
 			<c:if test="${map.IMAGE == null}">
 				<img id="shopImg1" class="img-thumbnail" src="${pageContext.request.contextPath}/resources/upload/shopImage/shopping-store.png" alt="" />
 			</c:if>
@@ -317,7 +319,7 @@
     	margin-left: 12px;
     	height: 620px;
 	}
-	.wishListDiv{
+	#wishListDiv{
 		width: 100%;
 		width:1200px;
 		margin: auto;
@@ -343,11 +345,11 @@
 		margin: auto; 
 		height: 620px;
 	}
-	#wishPageBar{
+	
+	/* #wishPageBar{
 		position: static; 
 		display:block;
-		margin-top: 300px; 
-	}
+	} */
 	/* 주영 끝 */
 	</style>
 	
@@ -379,7 +381,7 @@
 				          if(preTitle.length > 12) 
 				            preTitle = preTitle.substring(0,12)+"..."
 
-				          html += "<div class='card' style='width: 232px; height: 300px;'>";
+				          html += "<div class='card'>";
 				          html += "<img src='${pageContext.request.contextPath}/resources/upload/product/" + product.PHOTO + "' class='card-img-top'>";
 				          html += '<div class="card-body">';
 				          html += '<p class="card-title">' + preTitle + '</p>';
@@ -423,7 +425,7 @@
 			<div id="nav-product">
 				<h1>내 상품</h1>
 				<div class="myProductList" id="myProductList">
-      				<div class="myProduct" id="myProduct">
+      				<div  id="myProduct">
       				
       				</div>
       				
@@ -473,7 +475,7 @@ $(()=>{
 	var loginId = '${memberLoggedIn.memberId}';
 	var shopId = "${map.MEMBER_ID}";
 	var $shopNav = $("#shopView-nav .shop-nav");
-	
+	isFollowing();
 	$("#shopInquiryTotalDiv").hide();
 	$("#shopView-nav #shop-contents").children().hide();
 	$("#shopView-nav #nav-product").show();
@@ -717,7 +719,7 @@ $(document).on("click", "#shopView #shopInquiryCommentEndBtn", function(){
 					if (preTitle.length > 12)
 						preTitle = preTitle.substring(0, 12) + "..."
 
-					html += "<div class='card' style='width: 232px; height: 300px;'>";
+					html += "<div class='card'>";
 					html += "<img src='${pageContext.request.contextPath}/resources/upload/product/" + product.PHOTO + "' class='card-img-top'>";
 					html += '<div class="card-body">';
 					html += '<p class="card-title">' + preTitle + '</p>';
@@ -877,7 +879,10 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 	};
 	
 	//찜한목록 조회
-	$(document).on("click", "#shopView #myWishListDiv", function(){
+/* 	$(document).on("click", "#shopView #myWishListDiv", function(){ */
+		loadMyWishList(1);
+		
+		function loadMyWishList(cPage){
 		var memberId = $("[name=memberLoggedIn]").val();
 		var cPage = cPage;
 		console.log(cPage);
@@ -914,9 +919,13 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 		        	var productNo = $(this).children("input").val();
 		        	location.href = "${pageContext.request.contextPath}/product/productView.do?productNo="+productNo;
 		        });
+		        
+		        $("#wishPageBar a").click((e)=>{
+		        	loadMyWishList($(e.target).siblings("input").val());
+	            });
 		      }
 		});
-	});
+	}
 	
 	function lastDate(date){
 	    var regDate = new Date(date);
@@ -930,32 +939,66 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 
 	    return diffHour+"시간 전";
 	  }
-	
+	//팔로우 여부 확인 후 img 추가 함수
+	function isFollowing(){
+		var follower = $("[name=memberLoggedIn]").val();
+		var follow = '${map.SHOP_NO}';
+		var followDiv = $("#follow");
+		var shopMemberId = '${map.MEMBER_ID}';
+		if(follower == shopMemberId){
+			console.log("자기자신입니다");
+			 return;
+		}
+		$.ajax({
+			url: "${pageContext.request.contextPath}/shop/isFollowing",
+			data:{follow:follow,
+				follower:follower},
+			type: "POST",
+			success: data => {
+					console.log(data);
+			if(data.isFollowing ==1){
+				console.log("팔로우 중");
+				followDiv.html("<img id ='followIcon' src='${pageContext.request.contextPath}/resources/images/like.png'/>");
+			}else {
+				console.log("팔로우 중이 아님");
+				followDiv.html("<img id ='followIcon' src='${pageContext.request.contextPath}/resources/images/dislike.png'/>");	
+			}
+				$("#isFollowing").val(data.isFollowing);
+				$("#memberLoggedInShopNo").val(data.follower);
+			},
+			error: (x, s, e) => {
+			console.log("ajax 요청 실패!",x,s,e);
+			}
+		});//end of ajax
+	}
 	//팔로우 버튼 토글
 	$("#follow").on('click', function(){
 		var img = $("#followIcon");
-		var follower = $("[name=memberLoggedIn]").val();
+		var follower = $("#memberLoggedInShopNo").val();
 		var follow = '${map.SHOP_NO}';
+		var isFollowing = $("#isFollowing").val();
+		console.log("isFollowing:"+isFollowing);
 		console.log(follower);
 		console.log(follow);
 		 $.ajax({
 			url: "${pageContext.request.contextPath}/shop/shopFollow",
 			data:{follow:follow,
-				follower:follower},
+				follower:follower,
+				isFollowing:isFollowing},
 			success: data => {
 				console.log(data);
 			},
 			error: (x, s, e) => {
-				console.log("ajax 요청 실패!");
+				console.log("ajax 요청 실패!",x,s,e);
 			}
 		});//end of ajax 
 		
-		img.attr("src", function(index, attr){
+		 img.attr("src", function(index, attr){
 			if(attr.match('${pageContext.request.contextPath}/resources/images/like.png')){
 				return attr.replace("${pageContext.request.contextPath}/resources/images/like.png", "${pageContext.request.contextPath}/resources/images/dislike.png");
 			} else {
 				return attr.replace("${pageContext.request.contextPath}/resources/images/dislike.png","${pageContext.request.contextPath}/resources/images/like.png");
-			}
+			} 
 		}) 
 	});//팔로우 하트 토글 함수 끝
 });
