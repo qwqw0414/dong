@@ -13,6 +13,7 @@ import com.pro.dong.product.model.vo.Category;
 import com.pro.dong.product.model.vo.Like;
 import com.pro.dong.product.model.vo.Product;
 import com.pro.dong.product.model.vo.ProductAttachment;
+import com.pro.dong.product.model.vo.ProductComment;
 import com.pro.dong.shop.model.vo.Shop;
 
 @Repository
@@ -111,6 +112,16 @@ public class ProductDAOImpl implements ProductDAO{
 
 
 
+	
+
+
+
+
+
+
+
+
+
 
 
 
@@ -143,6 +154,28 @@ public class ProductDAOImpl implements ProductDAO{
 	//========================== 주영 끝
 		
 	//현규 시작 ==========================
+	@Override
+	public int insertProductComment(ProductComment pc) {
+		return sst.insert("product.insertProductComment",pc);
+	}
+
+	@Override
+	public List<Map<String, String>> selectProductCommentList(int productNo, int cPage, int numPerPage) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return sst.selectList("product.selectProductCommentList", productNo, rowBounds);
+	}
+	@Override
+	public int deleteLevel1(int commentNo) {
+		return sst.delete("product.deleteLevel1",commentNo);
+	}
+	@Override
+	public int countComment(int boardNo) {
+		return sst.selectOne("product.countComment",boardNo);
+	}
+	@Override
+	public int deleteLevel2(int commentNo) {
+		return sst.delete("product.deleteLevel2",commentNo);
+	}
 
 	//========================== 현규 끝
 }

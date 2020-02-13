@@ -23,7 +23,8 @@ public interface ShopDAO {
 	// 하진 시작 ==========================
 	List<Map<String, String>> loadMyProductList(String memberId, int cPage, int numPerPage);
 	int totalCountMyProduct(String memberId);
-	
+	int productUpdate(String productNo);
+	int productDelete(String productNo);
 	//========================== 하진 끝
 	
 	

@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.pro.dong.board.model.vo.Attachment;
 import com.pro.dong.board.model.vo.BoardCategory;
+import com.pro.dong.board.model.vo.BoardComment;
 import com.pro.dong.common.util.Utils;
 import com.pro.dong.member.model.vo.Member;
 import com.pro.dong.product.model.service.ProductService;
@@ -32,6 +33,7 @@ import com.pro.dong.product.model.vo.Category;
 import com.pro.dong.product.model.vo.Like;
 import com.pro.dong.product.model.vo.Product;
 import com.pro.dong.product.model.vo.ProductAttachment;
+import com.pro.dong.product.model.vo.ProductComment;
 import com.pro.dong.shop.model.vo.Shop;
 
 import lombok.Builder.Default;
@@ -237,6 +239,102 @@ public class ProductController {
 	//========================== 주영 끝
 		
 	//현규 시작 ==========================
+		//댓글 등록
+		@RequestMapping(value="/insertComments", produces="text/plain;charset=UTF-8")
+		@ResponseBody
+		public String insertComments(HttpSession session, ProductComment pc, @RequestParam("productNo") int productNo) {
+			
+			int result = ps.insertProductComment(pc);
+			System.out.println(result);
+			
+			
+			
+			return gson.toJson(result)+"";
+		}
+		
+		
+		//댓글 불러들이기
+		@ResponseBody
+		@RequestMapping(value="/selectProductComment", produces="text/plain;charset=UTF-8")
+		public String selectProductCommentList(@RequestParam("productNo") int productNo, @RequestParam("cPage") int cPage) {
+			int numPerPage=10;
+			log.info("파라미터로받아온 productNo{}",productNo);
+			List<Map<String,String>>list = null;
+			
+			list = ps.selectProductCommentList(productNo,cPage,numPerPage);
+			log.debug("DB에서 가져온 리스트={}",list);
+			
+			
+			
+			int totalContents = ps.countComment(productNo);
+			String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
+			
+			Map<String,Object> result = new HashMap<>();
+			result.put("list", list);
+			result.put("pageBar", pageBar);
+			
+			
+			
+			return gson.toJson(result)+"";
+		}
+		
+		
+		
+		
+		//댓글 지우기
+		@ResponseBody
+		@RequestMapping("/deleteLevel1")
+		public String deleteLevel1(@RequestParam("commentNo") int commentNo,@RequestParam("productNo")int productNo) {
+			log.info("삭제할 코멘트넘버={}",commentNo);
+			
+			ProductComment pc = new ProductComment();
+			pc.setCommentNo(commentNo);
+			
+			int result= ps.deleteLevel1(commentNo);
+			
+			
+//			List<Map<String,String>>list = null;
+//			if (result>0) {
+//				list = bs.selectBoardCommentList(productNo);
+//			}
+			
+			
+			return gson.toJson(result)+"";
+		}
+		
+		//대댓글 쓰기
+		@ResponseBody
+		@RequestMapping(value="/insertLevel2", produces="text/plain;charset=UTF-8")
+		public String insertLevel2(ProductComment pc,@RequestParam("productNo")int productNo) {
+			log.debug("dddddd={}",pc);
+			
+			int result = ps.insertProductComment(pc);
+			
+			
+			
+			log.info("result={}",result);
+			
+			return gson.toJson(result)+"";
+			
+
+		}
+		
+		//대댓글 삭제
+		@ResponseBody
+		@RequestMapping(value="/deleteLevel2", produces="text/plain;charset=UTF-8")
+		public String deleteLevel2(@RequestParam("commentNo") int commentNo) {
+			log.debug("삭제할 대댓번호={}",commentNo);
+			
+			int result = ps.deleteLevel2(commentNo);
+			
+			return gson.toJson(result)+"";
+		}
+		
+		
+		
+		
+		
+		
 
 	//========================== 현규 끝
 }

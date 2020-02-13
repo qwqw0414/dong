@@ -96,6 +96,7 @@ $(()=>{
 		var sido = $("#sido").val();
 		console.log(sido);
 		loadSigunguList(sido);
+		loadDongList('');
 	});
 	
 function loadSigunguList(sido){
