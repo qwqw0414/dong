@@ -142,21 +142,25 @@ public class ShopController {
 		mav.setViewName("/shop/myProductManage");
 		return mav;
 	}
-/*	@RequestMapping(value="/loadMyProductList" , produces="text/plain;charset=UTF-8")
+
+	@RequestMapping("/productUpdate")
 	@ResponseBody
-	public String loadMyProductManage(String memberId, int cPage) {
+	public String productUpdate(@RequestParam("productNo") String productNo) {
+		Map<String, String> param = new HashMap<>();
+		param.put("productNo",productNo);
 		
-		int numPerPage = 10;
+		int result = ss.productUpdate(productNo);
 		
-		List<Map<String, String>> list = null;
-		
-		list = ss.loadMyProductManage(memberId, cPage, numPerPage);
-		
-		int totalContents = ss.totalCountMyProduct(memberId);
-		
-		Map<String,Object> result = new HashMap<>();
-		return gson.toJson(result);
-	}*/
+		return ""+result;
+	}
+	@RequestMapping("/productDelete")
+	@ResponseBody
+	public String productDelete(@RequestParam("productNo") String productNo) {
+		Map<String, String> param = new HashMap<>();
+		param.put("productNo",productNo);
+		int result = ss.productDelete(productNo);
+		return ""+result;
+	}
 	//========================== 하진 끝
 	
 	
