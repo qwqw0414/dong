@@ -15,7 +15,6 @@ $(()=>{
 	
 	/* 스위치 버튼 함수 */
 	$("#customSwitch1").change(function(){
-		console.log($(this).prop("checked"));
 		var checked = $(this).prop("checked");
 		if(checked == false){
 			$(this).next().html("신고글보기");
@@ -29,7 +28,6 @@ $(()=>{
 	
 	$("#search").on("click", function(){
 		var checked = $("#customSwitch1").prop("checked");
-		console.log(checked);
 		if(checked == false){
 			loadBoardList(1);
 		}
@@ -46,12 +44,6 @@ $(()=>{
 		var searchType = $("#searchType").val();
 		var searchKeyword = $("#searchKeyword").val();
 		var type = type;
-		console.log(searchType);
-		console.log(searchKeyword);
-		console.log(cPage);
-		console.log(sido);
-		console.log(sigungu);
-		console.log(dong);
 		$.ajax({
 			url: "${pageContext.request.contextPath}/admin/loadBoardList",
 			type: "GET",
