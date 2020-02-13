@@ -63,7 +63,10 @@ public class ShopServiceImpl implements ShopService{
 	public int totalCountMyProduct(String memberId) {
 		return sd.totalCountMyProduct(memberId);
 	}
-
+	@Override
+	public int productUpdate(String productNo) {
+		return sd.productUpdate(productNo);
+	}
 	
 	
 	//========================== 하진 끝

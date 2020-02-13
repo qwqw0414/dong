@@ -56,6 +56,9 @@
         where M.member_id = #{memberId} 
                 and a.thumbnail='Y'
 	</select>
+	<update id="productUpdate">
+		update product set reg_date= sysdate where product_no=#{productNo}
+	</update>
 	<!-- ==========================  하진 끝 -->
 	
 	<!-- 근호 시작 ========================== -->
