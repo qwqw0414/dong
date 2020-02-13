@@ -50,11 +50,19 @@
                         <button class="btn btn-warning" id="btn-like">찜취소</button>
                     </c:if>                        
                     <button class="btn btn-danger">연락하기</button>
-                    <button class="btn btn-info">구매하기</button>
+                    <button class="btn btn-info" id="purchaseByPoint" data-toggle="modal" data-target="#purchaseModal">구매하기</button>
                 </div>
 			</div>
         </div>
     </div>
+
+</div>
+<div id="purchaseModal-wrapper">
+	<div class="modal-body" id="purchasePage">
+		<jsp:include page="/WEB-INF/views/product/pointPurchase.jsp"/>
+	</div>
+</div>
+
     <br /><br />
     
     <!-- 댓글 DIV-->
@@ -305,6 +313,7 @@
 margin-bottom:20px;
 }
 </style>
+
 
 
 

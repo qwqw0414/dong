@@ -197,14 +197,15 @@ public class ProductController {
 			
 			HttpSession session = request.getSession();
 			Member member = (Member) session.getAttribute("memberLoggedIn");
-			
+			log.info("member={}",member);
 			Like like = new Like();
 			like.setMemberId(member.getMemberId());
 			like.setProductNo(productNo);
 			
 			int likeCnt = ps.countLike(like);
-
+			
 			map.put("likeCnt", likeCnt+"");
+			map.put("memberLoggedIn", member);
 			mav.addObject("map",map);
 			
 			return mav;
