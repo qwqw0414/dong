@@ -223,7 +223,7 @@ public class AdminController {
 		return result;
 	}
 	
-	@RequestMapping("/loadReportList")
+	@RequestMapping("/loadReportBoardList")
 	@ResponseBody
 	public Map<String, Object> loadReportList(@RequestParam(value="sido", defaultValue="")String sido, @RequestParam(value="sigungu", defaultValue="")String sigungu, @RequestParam(value="dong", defaultValue="")String dong,
 			@RequestParam(value="searchType", defaultValue="")String searchType, @RequestParam(value="searchKeyword",defaultValue="") String searchKeyword,@RequestParam(value="type",defaultValue="") String type,
@@ -240,17 +240,17 @@ public class AdminController {
 		param.put("type", type);
 		
 		//페이징바 작업
-		int totalContents = as.selectBoardTotalContents(param);
+		int totalContents = as.selectReportBoardTotalContents(param);
 		log.info("reportTotalContents@@@@@@@@@@@@@@@@@={}", totalContents);
 
-		List<Product> list = as.loadBoardList(cPage, numPerPage, param);
+		List<Product> list = as.loadReportBoardList(cPage, numPerPage, param);
 		result.put("list", list);
 		result.put("cPage", cPage);
 		result.put("numPerPage", numPerPage);
 		result.put("totalContents", totalContents);
 		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
 		result.put("pageBar", pageBar);
-		log.info("list={}", list);
+		log.info("list%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%={}", list);
 		return result;
 	}
 	

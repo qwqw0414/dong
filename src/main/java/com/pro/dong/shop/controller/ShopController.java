@@ -172,7 +172,12 @@ public class ShopController {
 	
 	
 	// 지은 시작 ==========================
-	
+	/*@RequestMapping("/shopView.do")
+	public String readCount(@RequestParam("shopNo") int shopNo) {
+		int readCount = ss.shopInCount(shopNo);
+		
+		return readCount+"";
+	}*/
 	
 	
 	//========================== 지은 끝
@@ -223,8 +228,11 @@ public class ShopController {
 								   @RequestParam(value="memberId", defaultValue = "") String memberId, 
 								   @RequestParam(value="shopNo", defaultValue = "0") int shopNo ) {
 		Map<String, String> map = new HashMap<>();
+		//int visitDate = ss.selectOpenDate(memberId);
+		//map = ss.selectOpenDate(memberId);
 		
 		if(memberId.equals("")) {
+			map = ss.shopInCount(shopNo);
 			map = ss.selectShopByShopNo(shopNo);
 			mav.addObject("shopNo", shopNo);
 		}
@@ -234,6 +242,8 @@ public class ShopController {
 		}
 		
 		mav.addObject("map", map);
+		//mav.addObject("readCount",readCount);
+		//mav.addObject("visitDate",visitDate);
 		return mav;
 	}
 	
