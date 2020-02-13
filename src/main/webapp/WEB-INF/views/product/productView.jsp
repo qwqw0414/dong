@@ -50,7 +50,7 @@
                         <button class="btn btn-warning" id="btn-like">찜취소</button>
                     </c:if>                        
                     <button class="btn btn-danger">연락하기</button>
-                    <button class="btn btn-info" id="purchaseByPoint" data-toggle="modal" data-target="#purchaseModal">구매하기</button>
+                    <button class="btn btn-info"  id="purchaseByPoint" data-toggle="modal" data-target="#purchaseModal">구매하기</button>
                 </div>
 			</div>
         </div>
@@ -91,6 +91,7 @@
 	<script>
 	$(()=>{
 		showCommentList(1);
+
 		//댓글등록
 		$("#commentInsertView #comments_insert").on('click',function(){
 			var productNo = $(".pncontents #productNo").val();    //보드넘버 바꾸면서 테스트 하면댐

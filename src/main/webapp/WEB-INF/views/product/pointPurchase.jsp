@@ -74,8 +74,8 @@
 						</div>
 						<div class="form-group col-md-6" id="purchase-btn-group">
 							<br>
-							<button type="button" class="btn btn-warning" id="useAllPoints">전액사용</button>
-       						<button type="button" class="btn btn-success" id="chargePoints">충전하기</button>
+							<button type="button" class="btn btn-warning sub-btn" id="useAllPoints">전액사용</button>
+       						<button type="button" class="btn btn-secondary main-btn" id="chargePoints">충전하기</button>
 						</div>
 					</div>
 					<div class="form-row">
@@ -93,21 +93,27 @@
 				</form>
 			</div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-        <button type="button" class="btn btn-success" id="submitPay" disabled="disabled">결제하기</button>
+        <button type="button" class="btn btn-secondary sub-btn" data-dismiss="modal">취소</button>
+        <button type="button" class="btn btn-secondary" id="submitPay" disabled="disabled">결제하기</button>
       </div>
     </div>
   </div>
 </div>
 <script>
 $(()=>{
+	//modal 꺼질때 버튼 색 바꾸기
+	$('#purchaseModal').on('hidden.bs.modal', function () {
+		$("#submitPay").attr('class','btn btn-secondary');
+	});
 	
 	$("#useAllPoints").on('click',function(){
 		useAllPoints();
 	});//전액사용 함수 끝
+	
 	$("#chargePoints").on('click',function(){
 		location.href = '${pageContext.request.contextPath}/member/memberView.do';
 	});
+	
 function useAllPoints(){
 	//전액사용
 		var price = Number('${map.product.price }');
@@ -121,6 +127,7 @@ function useAllPoints(){
 			$("#purchase-memberPoint").val(memberPoint-price);
 			$("#totalFee").text(price-pointUsed);
 			$("#submitPay").prop('disabled','');
+			$("#submitPay").attr('class','btn btn-secondary main-btn');
 		}
 	
 }
