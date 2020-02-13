@@ -23,6 +23,7 @@ $(()=>{
 	
 	loadMyProductList(1);
 	
+	/*내 상품 list 뿌려주기*/
 	function loadMyProductList(cPage){
 		
 		var memberId = '${memberLoggedIn.getMemberId()}';
@@ -48,7 +49,8 @@ $(()=>{
 					html += "<tr>";
 					html +=	"<tbody>";
 					html += "<td id='img-td'><img style='width:152px; height:152px;' src='${pageContext.request.contextPath}/resources/upload/product/"+product.PHOTO+"'/></td>";
-					html += "<td><select class='custom-select'><option value='member_id' selected>판매중</option><option value='board_title'>판매완료</option></select></td>"
+					html += "<td><select class='select' class='custom-select'><option ' value='N' selected>판매중</option><option value='Y'>판매완료</option></select></td>"
+					html += "<input type='hidden' name='productNo' value='"+product.PRODUCT_NO+"'/>"
 					html += "<td>"+product.TITLE+"</td>";
 					html += "<td>"+numberComma(product.PRICE)+"원</td>";
 					html += "<td>"+product.REG_DATE+"</td>";
@@ -75,6 +77,7 @@ $(()=>{
 		});
 	}
 	
+	/*내 상품 끌어올리기*/
 	$(document).on("click","#btn-update",function(e){
 
 		var confirmflag = confirm("끌어올리기를 하시겠습니까?");
@@ -108,6 +111,7 @@ $(()=>{
 		});
 	});
 	
+	/*내 상품 삭제하기*/
 	$(document).on("click","#btn-delete",function(e){
 
 		var confirmflag = confirm("상품삭제를 하시겠습니까?");
@@ -140,6 +144,66 @@ $(()=>{
 				console.log("실패",x,s,e);
 			}
 		});
+	});
+
+	
+	/*내 상품 판매상태 변경하기*/
+	$(document).on("change",".select",function(e){
+		
+		/* var state = $(e).("#select option:selected").prop("id");
+		console.log(state); */
+		/* var state = $(e.target); */
+		/* var state = $("#select option:selected");
+		
+		var stateId = e.$("#select option:selected");
+		console.log(stateId);
+		
+		var optionId = stateId.prop("id");
+		console.log(optionId);
+		
+		
+		var saleTarget = $(e.target);
+		var productNo = saleTarget.val();
+		console.log(productNo);				 */
+		
+		
+		
+		
+		var state = $(e.target).val();
+		console.log(state);
+		
+		
+		var inputTarget = $(e.target);
+		var productNo = $("[name=productNo]").val();
+		console.log(productNo);
+		
+		/* var optionId = state.prop("id");
+		console.log(state.prop("id")); */
+		
+		
+		
+		
+		  /* $.ajax({
+			url:"${pageContext.request.contextPath}/shop/productDelete",
+			data:{
+				productNo:productNo
+			},
+			dataType:"json",
+			type:"post",
+			success: data=>{
+				
+				if(data==1){
+					alert("상품이 정상적으로 삭제되었습니다.");
+					location.reload();
+				}
+				else{
+					alert("상품삭제를 실패하였습니다.");
+				}
+			},
+			error:(x,s,e)=>{
+				console.log("실패",x,s,e);
+			}
+		}); */
 	});
 	
 });
