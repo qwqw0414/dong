@@ -379,19 +379,17 @@ $(function(){
 				dataType:"json",
 				success: data =>{
 					if(data.result != 0){
-						if(data.Type == "I"){
+						if(data.type == "I"){
 					/* likeCountByMemberId(); */
 							$btnLike.removeClass("btn-outline-warning");
 							$btnLike.addClass("btn-warning");
 							$btnLike.text("추천취소");
-							
 						}else{
 							$btnLike.removeClass("btn-warning");
 							$btnLike.addClass("btn-outline-warning");
 							$btnLike.text("추천하기");
-							likeCount(); 
 						}
-						return;
+					likeCount(); 
 					}else{
 						console.log("실패실패실패");
 					}

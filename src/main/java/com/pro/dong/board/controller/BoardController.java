@@ -220,7 +220,7 @@ public class BoardController {
 		
 	// 지은 시작 ==========================
 	@RequestMapping("/boardView.do")
-	public ModelAndView boardView(ModelAndView mav, @RequestParam("boardNo") int boardNo) {
+	public ModelAndView boardView(ModelAndView mav, @RequestParam("boardNo") int boardNo, HttpSession session) {
 		
 		Board board = bs.selectOneBoard(boardNo);
 		log.debug("boardNo="+boardNo);
@@ -228,9 +228,17 @@ public class BoardController {
 		int readCount = bs.boardInCount(boardNo);
 		log.debug("readCount="+readCount);
 		
+		String memberId = ((Member)(session.getAttribute("memberLoggedIn"))).getMemberId();
+		
+		log.debug(memberId);
+		
 		mav.addObject("board", board);
 		mav.addObject("attachmentList", attachmentList);
 		mav.addObject("memberId", board.getMemberId());
+		Map<String, String> param = new HashMap<>();
+		param.put("boardNo", boardNo+"");
+		param.put("memberId", memberId);
+		mav.addObject("likeCntOne", bs.selectBoardLikeByMemberId(param));
 		
 		return mav;
 		
@@ -339,7 +347,7 @@ public class BoardController {
 		map.put("memberId", memberId);
 		//map.put("reputationNo", reputationNo+"");
 		log.debug("boardLike@memberId={}", memberId);
-		int likeCnt = bs.selectBoardLike(map);
+		int likeCnt = bs.selectBoardLikeByMemberId(map);
 		
 		int result;
 		

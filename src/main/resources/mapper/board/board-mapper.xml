@@ -145,7 +145,7 @@
 	
 	<!-- 개인조회수 -->
 	<select id="selectBoardLikeByMemberId" resultType="_int" parameterType="map">
-		select count(*) from board_reputation where board_no = #{boardNo} and member_id = #{memberId};
+		select count(*) from board_reputation where board_no = #{boardNo} and member_id = #{memberId}
 	</select>
 	
 	<delete id="deleteBoardReputation" parameterType="map">
