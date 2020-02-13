@@ -12,7 +12,7 @@ td{
 	padding-top: 8px !important;
 }
 #btn-td{
-	padding-top: 55px !important;
+	padding-top:39px !important;
 }
 select{
     width: 110px !important;
@@ -36,7 +36,7 @@ $(()=>{
 			},
 			dataType:"json",
 			success:data=>{
-				console.log("성@@@@@@@@@@@@@@@@@");
+				
 				console.log(data);
 				
 				let $table = $("#product-tbl");
@@ -52,8 +52,9 @@ $(()=>{
 					html += "<td>"+product.TITLE+"</td>";
 					html += "<td>"+numberComma(product.PRICE)+"원</td>";
 					html += "<td>"+product.REG_DATE+"</td>";
-					html += "<td id='btn-td'><button type='button' class='btn btn-outline-primary btn-sm'>수정</button><br />";
-			      	html += "<button type='button' class='btn btn-outline-danger btn-sm' style='width: 45px;'>UP</button></td>";
+					html += "<td id='btn-td'><button type='button' class='btn btn-outline-success btn-sm' id='btn-update' value='"+product.PRODUCT_NO+"' style='width: 45px;'>UP</button><br/>";
+			      	html += "<button type='button' class='btn btn-outline-primary btn-sm'>수정</button><br/>"
+			      	html += "<button type='button' class='btn btn-outline-danger btn-sm' id='btn-delete' value='"+product.PRODUCT_NO+"'>삭제</button></td>";
 					html += "</tbody>";
 					html += "</tr>";
 					
@@ -73,6 +74,73 @@ $(()=>{
 			
 		});
 	}
+	
+	$(document).on("click","#btn-update",function(e){
+
+		var confirmflag = confirm("끌어올리기를 하시겠습니까?");
+		if(!confirmflag){
+			return;
+		}
+		
+		var btnUpdateTarget = $(e.target);
+		var productNo = btnUpdateTarget.val();
+		console.log(productNo);
+		
+		 $.ajax({
+			url:"${pageContext.request.contextPath}/shop/productUpdate",
+			data:{
+				productNo:productNo
+			},
+			dataType:"json",
+			type:"post",
+			success: data=>{
+				
+				if(data==1){
+					alert("끌어올리기 성공");
+				}
+				else{
+					alert("끌어올리기 실패");
+				}
+			},
+			error:(x,s,e)=>{
+				console.log("실패",x,s,e);
+			}
+		});
+	});
+	
+	$(document).on("click","#btn-delete",function(e){
+
+		var confirmflag = confirm("상품삭제를 하시겠습니까?");
+		if(!confirmflag){
+			return;
+		}
+		
+		var btnDeleteTarget = $(e.target);
+		var productNo = btnDeleteTarget.val();
+		console.log(productNo);
+		
+		  $.ajax({
+			url:"${pageContext.request.contextPath}/shop/productDelete",
+			data:{
+				productNo:productNo
+			},
+			dataType:"json",
+			type:"post",
+			success: data=>{
+				
+				if(data==1){
+					alert("상품이 정상적으로 삭제되었습니다.");
+					location.reload();
+				}
+				else{
+					alert("상품삭제를 실패하였습니다.");
+				}
+			},
+			error:(x,s,e)=>{
+				console.log("실패",x,s,e);
+			}
+		});
+	});
 	
 });
 </script>
