@@ -264,6 +264,76 @@ public class MemberController {
 		
 	}
 	
+	//인증 번호 입력
+	@RequestMapping(value="/emailUpdate")
+	@ResponseBody
+	public String emailUpdate(
+							  @RequestParam(value="authKey")String authKey,
+							  HttpSession session,
+							  @RequestParam(value="email") String email,
+							  HttpServletRequest request, Model model) {
+		String originalKey = (String)session.getAttribute("authCode");
+		log.debug("emaillllllllllll={}",email);
+		log.debug("authKeyyyyyyyy={}", authKey);
+		
+		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, String> param = new HashMap<>();
+		param.put("memberId", memberLoggedIn.getMemberId());
+		param.put("email", email);
+		
+		
+		log.debug("parammmmmmm+{}"+param);
+		log.debug("originalKey={}"+originalKey);
+		String msg = "";
+		int result = 0;
+		if(originalKey.equals(authKey)) {
+			/*msg ="true";*/
+			result = ms.updateMemberEmail(param);
+			/*map=ms.selectOneMember(memberLoggedIn.getMemberId());*/
+			log.debug("resulttttttttt="+result);
+		}
+		else {
+			/*msg = "false";*/
+		}
+		/*model.addAttribute("map",map);
+		model.addAttribute("result",result);
+		log.debug("model={}",model);
+		log.info("바뀐멤버객체={}",map);*/
+		
+		return result+"";
+	}
+	
+	/*@RequestMapping("/updateMemberEmail")
+	@ResponseBody
+	public Map<String, Object> updateMemberEmail(HttpSession session, @RequestParam("afterEmail") String afterEmail) {
+		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
+		
+		log.info("세션 memberId={}",memberLoggedIn.getMemberId());
+		log.info("바꿀 afterEmail={}",afterEmail);
+		
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String,String> param = new HashMap<String, String>();
+		param.put("memberId", memberLoggedIn.getMemberId());
+		param.put("afterEmail", afterEmail);
+		
+		log.info("map={}",map);
+		
+		int result = ms.updateMemberEmail(param);
+		log.info("result={}",result);
+		
+		
+		if (result>0) {
+			map=ms.selectOneMember(memberLoggedIn.getMemberId());
+		}
+		
+		log.info("바뀐멤버객체={}",map);
+		
+		
+		return map;
+	}*/
 //========================== 근호 끝
 	
 // 지은 시작 ==========================
@@ -448,35 +518,7 @@ public class MemberController {
 		return map;
 	}
 	
-	@RequestMapping("/updateMemberEmail")
-	@ResponseBody
-	public Map<String, Object> updateMemberEmail(HttpSession session, @RequestParam("afterEmail") String afterEmail) {
-		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
-		
-		log.info("세션 memberId={}",memberLoggedIn.getMemberId());
-		log.info("바꿀 afterEmail={}",afterEmail);
-		
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		Map<String,String> param = new HashMap<String, String>();
-		param.put("memberId", memberLoggedIn.getMemberId());
-		param.put("afterEmail", afterEmail);
-		
-		log.info("map={}",map);
-		
-		int result = ms.updateMemberEmail(param);
-		log.info("result={}",result);
-		
-		
-		if (result>0) {
-			map=ms.selectOneMember(memberLoggedIn.getMemberId());
-		}
-		
-		log.info("바뀐멤버객체={}",map);
-		
-		
-		return map;
-	}
+	
 	
 //========================== 현규 끝
 
