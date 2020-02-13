@@ -1,5 +1,6 @@
 package com.pro.dong.member.model.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -116,6 +117,14 @@ public class MemberServiceImpl implements MemberService{
 		return md.updateMemberEmail(param);
 	}
 	//==========================  현규 끝
+
+
+	@Override
+	public List<Map<String, String>> selectChargingDetails(String memberId) {
+		return md.selectChargingDetails(memberId);
+	}
+
+
 
 	
 

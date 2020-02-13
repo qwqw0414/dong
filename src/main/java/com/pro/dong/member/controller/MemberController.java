@@ -2,6 +2,7 @@ package com.pro.dong.member.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -477,6 +478,25 @@ public class MemberController {
 		
 		return map;
 	}
+	
+	@ResponseBody
+	@RequestMapping("/memberChargingDetails.do")
+	public String memberChargingDetails(HttpSession session) {
+		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
+		log.debug("디테일 회원 아이디={}",memberLoggedIn.getMemberId());
+		List<Map<String,String>>list = null;
+		
+		
+		list = ms.selectChargingDetails(memberLoggedIn.getMemberId());
+		log.debug("리슷흐={}",list);
+		
+		
+		return "";
+	}
+	
+	
+	
+	
 	
 //========================== 현규 끝
 

@@ -58,7 +58,7 @@
       </div>
     </div>
 </div>
-<input type="button" class="btn_val btn btn-outline-success btn-sm" value="내역보기">
+<input type="button" class="btn_val btn btn-outline-success btn-sm" value="내역보기" onclick="location.href='${pageContext.request.contextPath}/member/memberChargingDetails.do'">
 <button class="btn btn-outline-success btn-sm"onclick="test1();">포인트 충전 실험</button>
  </div>
                             <div class="mypage_btn">

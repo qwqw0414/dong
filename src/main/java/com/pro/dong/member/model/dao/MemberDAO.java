@@ -1,5 +1,6 @@
 package com.pro.dong.member.model.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import com.pro.dong.member.model.vo.Member;
@@ -48,6 +49,7 @@ public interface MemberDAO {
 	int updateMemberName(Map<String, String> param);
 	int updateMemberPhone(Map<String, String> param);
 	int updateMemberEmail(Map<String, String> param);
+	List<Map<String, String>> selectChargingDetails(String memberId);
 	
 
 	
