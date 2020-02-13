@@ -67,6 +67,7 @@ public class ProductServiceImpl implements ProductService{
 	public int insertProduct(Product product, List<ProductAttachment> attachList) {
 		
 		int result = pd.insertProduct(product);
+		result = pd.insertStatus(product);
 		String thumbnail = "Y";
 		
 		for(ProductAttachment pa : attachList) {

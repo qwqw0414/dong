@@ -44,7 +44,12 @@ public interface ProductDAO {
 	int countLike(Like like);
 	int insertLike(Like like);
 	int deleteLike(Like like);
+	int insertStatus(Product product);
 	//========================== 예찬 끝
+
+
+
+
 
 
 

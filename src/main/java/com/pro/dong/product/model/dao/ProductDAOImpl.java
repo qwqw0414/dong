@@ -97,7 +97,15 @@ public class ProductDAOImpl implements ProductDAO{
 	public int deleteLike(Like like) {
 		return sst.delete("product.deleteLike", like);
 	}
+	@Override
+	public int insertStatus(Product product) {
+		return sst.insert("product.insertStatus", product);
+	}
 	//========================== 예찬 끝
+
+
+
+
 
 
 
