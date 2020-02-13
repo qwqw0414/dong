@@ -57,8 +57,15 @@ footer .line{border: 1px rgb(95, 95, 95) solid; width: 100%;}
 #follower-wrapper .card-body a{color:black; text-decoration:none;}
 #follower-wrapper .card-body a:hover{color:black; text-decoration:none;}
 .divide-sm{border:0; height:1px; background:#006600; width:90px;}
-
+.divide-m{border:0; height:1px; background:#006600;}
 #wishCancel{text-shadow: 2px 2px 1px white;}
+
+#purchaseModal{font-family: 'MapoPeacefull';}
+#purchase-img img{width:64px;}
+.smallTitle{font-weight: bold;}
+#purchase-btn-group{margin-top:8px; padding-left:50px;}
+.sub-btn{background:#ffffe6 !important; color:black !important; border:#ffffcc;}
+.main-btn{background:#006600 !important; color:white !important;border:none;}
 /* ==========================민호 끝 */
 	
 /* 하진 시작 ========================== */
