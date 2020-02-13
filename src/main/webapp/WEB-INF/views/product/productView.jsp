@@ -77,6 +77,7 @@
 		<br />
 		<div id="commentListView"></div>
 	</div>
+	<div id="pageBar"></div>
 
 
 	<script>
