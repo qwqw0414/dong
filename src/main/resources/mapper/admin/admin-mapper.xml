@@ -176,12 +176,12 @@
 	</select>
 	
 	<select id="loadReportBoardList" parameterType="map" resultType="map">
-		select distinct(r.board_no),  b.*
-		from board B left join board_report R
-		on b.board_no = r.board_no left join member M
-		on b.member_id = m.member_id
+		select * from
+		(select a.*, (select count(*) from board_report where board_no = a.board_no) cnt from
+    		(select * from board B
+    		left join member M on b.member_id = m.member_id) a )
 		<where>
-			r.board_no is not null
+			cnt > 0
 			<if test="searchKeyword!=null and searchKeyword!=''">
 				and b.${searchType} like '%${searchKeyword}%'
 			</if>
