@@ -1,7 +1,9 @@
 package com.pro.dong.member.model.dao;
 
+import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -112,6 +114,11 @@ public class MemberDAOImpl implements MemberDAO{
 	@Override
 	public int updateMemberEmail(Map<String, String> param) {
 		return sst.update("member.updateMemberEmail",param);
+	}
+
+	@Override
+	public List<Map<String, String>> selectChargingDetails(String memberId) {
+		return sst.selectList("member.selectChargingDetails", memberId);
 	}
 	
 	
