@@ -286,7 +286,7 @@ public class BoardController {
 		return result+"";
 	}
 	
-	@RequestMapping("/boardLike")
+/*	@RequestMapping("/boardLike")
 	@ResponseBody
 	public String insertBoardReputation (@RequestParam("boardNo") int boardNo, HttpSession session,HttpServletRequest request){
 		
@@ -303,20 +303,57 @@ public class BoardController {
 		log.debug(result+"");
 		
 		return result+"";
-	}
+	}*/
 	
 	@RequestMapping("/boardLikeCount")
 	@ResponseBody
-	public String selectBoardLike(@RequestParam("boardNo") int boardNo, @RequestParam("memberId") String memberId) {
+	//전체 추천 조회수용 
+	public String selectBoardLike(@RequestParam("boardNo") int boardNo) {
 		Map<String,String> map = new HashMap<>();
-		map.put("memberId", memberId);
-		log.debug("boardLikeCount@memberId={}", memberId);
 		map.put("boardNo", boardNo+"");
 		
-		int result = bs.selectBoardLike(map);
-		log.debug("boardLikeCount@result={}", result);
+		int likeCnt = bs.selectBoardLike(map);
+		//log.debug("boardLikeCount@likeCnt={}", likeCnt);
 		
-		return result+"";
+		return likeCnt+"";
+	}
+	
+	//개인 추천 조회수용 (여부 파악용)
+	@RequestMapping("boardLikeCountByMemberId")
+	@ResponseBody
+	public String selectBoardLikeByMemberId(@RequestParam("boardNo") int boardNo, @RequestParam("memberId") String memberId) {
+		Map<String,String> map = new HashMap<>();
+		map.put("boardNo", boardNo+"");
+		map.put("memberId", memberId);
+		
+		int likeCntOne = bs.selectBoardLikeByMemberId(map);
+		
+		return likeCntOne+"";
+	}
+	
+	@RequestMapping(value="/boardLike", produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String boardLike(@RequestParam("boardNo") int boardNo, @RequestParam("memberId") String memberId) {
+		Map<String,String> map = new HashMap<>();
+		map.put("boardNo", boardNo+"");
+		map.put("memberId", memberId);
+		//map.put("reputationNo", reputationNo+"");
+		log.debug("boardLike@memberId={}", memberId);
+		int likeCnt = bs.selectBoardLike(map);
+		
+		int result;
+		
+		if(likeCnt == 0) {
+			result = bs.insertBoardReputation(map);
+			map.put("type", "I");
+		}else {
+			result = bs.deleteBoardReputation(map);
+			map.put("type", "o");
+		}
+		
+		map.put("result", result+"");
+		
+		return gson.toJson(map);
 	}
 
 	//========================== 지은 끝

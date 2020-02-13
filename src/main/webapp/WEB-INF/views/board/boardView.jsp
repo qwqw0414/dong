@@ -172,7 +172,7 @@ $(function(){
     <div class="head_inflow">
         <div id="title"><strong>${board.boardTitle}</strong>
         <div id="thumbsUpBox">
-        <span id="thumbsUpCount"><img id="thumbsUp" src="${pageContext.request.contextPath}/resources/images/thumbsup.png"/>&nbsp;<span id="likeCount" >${result}</span></span>
+        <span id="thumbsUpCount"><img id="thumbsUp" src="${pageContext.request.contextPath}/resources/images/thumbsup.png"/>&nbsp;<span id="likeCount" >${likeCnt}</span></span>
         </div>
         </div>
         <div class="profileWriter">
@@ -181,12 +181,12 @@ $(function(){
             <span><img id="iconbox" src="${pageContext.request.contextPath}/resources/images/clock.png"/>&nbsp;${board.writeDate}</span>
         </div>
     </div>
-		  <!-- 작성자와 로그인한 아이디가 같을시에만 삭제,수정가능 -->
+		  <!-- 작성자와 로그인한 아이디가 같을시에만 삭제가능 -->
           <c:if test="${board.memberId == memberLoggedIn.memberId || memberLoggedIn.isAdmin eq 'Y'}">
-          <!-- 게시물 삭제는 작성자와 관리자만 가능(관리자 추가 예정) -->
           <button type="button"  id="boardDelete" class="btn btn-outline-success btn-block" >삭제</button>
           </c:if>
-          <c:if test="${board.memberId == memberLoggedIn.memberId || memberLoggedIn.isAdmin eq 'Y'}">
+          <!-- 게시물 수정은 작성자만 가능 -->
+          <c:if test="${board.memberId == memberLoggedIn.memberId}">
             <button type="button"  id="boardUpdate" class="btn btn-outline-success btn-block" >수정</button>
           </c:if>
 
@@ -207,11 +207,11 @@ $(function(){
         </div>
 
         <div class="btnBox">
-        <c:if test="${result eq '0'}">
-            <button type="button" id="likeBtn">추천</button>
+        <c:if test="${likeCntOne eq '0'}">
+            <button type="button" class="btn btn-outline-warning"  id="likeBtn">추천하기</button>
         </c:if>
-        <c:if test="${result ne '0'}">
-            <!-- <button type="button" id="likeBtn">추천</button> -->
+        <c:if test="${likeCntOne ne '0'}">
+            <button type="button" class="btn btn-warning" id="likeBtn">추천취소</button>
         </c:if>
             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">신고</button>
         </div>
@@ -252,6 +252,8 @@ $(function(){
 <script>
  $(()=>{
 	 var $boardNo = $(".contents #boardNo");
+	 var $btnLike = $(".btnBox #likeBtn");
+	 var memberId = "<%=memberLoggedIn.getMemberId()%>";
 		
 	/* 삭제 에이작스 */
 		$("#boardDelete").click(function (){
@@ -287,15 +289,13 @@ $(function(){
 			 
 		});
 	
-	/* 좋아요수 count */
+	/* 전체 추천수 count */
   	 function likeCount(){
-		var memberId = "<%=memberLoggedIn.getMemberId()%>";
 		
 		$.ajax({
 			url: "${pageContext.request.contextPath}/board/boardLikeCount.do",
 			data: {
 				boardNo: $boardNo.val(),
-				memberId: memberId
 			},
 			dataType:"json",
 			type:"GET",
@@ -307,22 +307,43 @@ $(function(){
 			},error:(x,s,e) => {
 				console.log("likeCount ajax실패");
 			}
-		}) 
+		}); 
 	 		 
 	 } 
 	 	
 	likeCount();
+	
+	/* 개인 추천수 count */
+	function likeCountByMemberId(){
+		$.ajax({
+			url: "${pageContext.request.contextPath}/board/boardLikeCountByMemberId.do",
+			data: {
+				boardNo: $boardNo.val(),
+				memberId: memberId
+			},
+			dataType:"json",
+			type:"GET",
+			contentType: "application/json; charset=utf-8",
+			success: data => {
+				console.log("likeCountByMemberId@ajax="+data);
+			},error:(x,s,e) => {
+				console.log("likeCountByMemberId@ajax 실패");
+			}
+		});
+	}
+	 
+	likeCountByMemberId();
 	 	 
-	/* 좋아요 버튼 */
-		 $("#likeBtn").click(function(){
+	/* 추천 버튼 */
+ 		/*  $btnLike.click(function(){
 			if(${memberLoggedIn.memberId == board.memberId}){
 				alert("작성자는 좋아요를 누를 수 없습니다.");
 			}else{
-				
-				$.ajax({
+				    $.ajax({
 					url: "${pageContext.request.contextPath}/board/boardLike.do",
 					data: {
-						boardNo: $boardNo.val()
+						boardNo: $boardNo.val(),
+						memberId: memberId
 					},
 					dataType:"json",
 					type:"GET",
@@ -339,11 +360,50 @@ $(function(){
 						console.log("좋아요 ajax실패");
 						location.href="${pageContext.request.contextPath}/board/boardList.do";
 					}
-				});
+				}); 
+				
 			}
+
+		});   */
+	
+	/* 추천버튼*/
+		$btnLike.click(()=>{
 			
-		}); 
-}); 
+			$.ajax({
+				url: "${pageContext.request.contextPath}/board/boardLike",
+				data:{
+					boardNo: $boardNo.val(),
+					memberId: memberId
+				},
+				type:"POST",
+				dataType:"json",
+				success: data =>{
+					if(data.result != 0){
+						if(data.Type == "I"){
+					/* likeCountByMemberId(); */
+							$btnLike.removeClass("btn-outline-warning");
+							$btnLike.addClass("btn-warning");
+							$btnLike.text("추천취소");
+							
+						}else{
+							$btnLike.removeClass("btn-warning");
+							$btnLike.addClass("btn-outline-warning");
+							$btnLike.text("추천하기");
+							likeCount(); 
+						}
+						return;
+					}else{
+						console.log("실패실패실패");
+					}
+				},error:(x,s,e) =>{
+						console.log(x,s,e);
+				}
+		});
+	});
+});
+	
+	
+
  
  
 </script>

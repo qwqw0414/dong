@@ -138,9 +138,19 @@
 		values(seq_board_reputation.nextval,#{boardNo},#{memberId},default)
 	</insert>
 	
+	<!-- 전체추천수조회 -->
 	<select id="selectBoardLike" resultType="_int" parameterType="map">
-		select count(*) from board_reputation where board_no = #{boardNo} and member_id = #{memberId}
+		select count(*) from board_reputation where board_no = #{boardNo}
 	</select>
+	
+	<!-- 개인조회수 -->
+	<select id="selectBoardLikeByMemberId" resultType="_int" parameterType="map">
+		select count(*) from board_reputation where board_no = #{boardNo} and member_id = #{memberId};
+	</select>
+	
+	<delete id="deleteBoardReputation" parameterType="map">
+		delete from board_reputation where board_no = #{boardNo} and member_id = #{memberId} 
+	</delete>
 	<!-- ==========================  지은 끝 -->
 	
 	<!-- 예찬 시작 ========================== -->

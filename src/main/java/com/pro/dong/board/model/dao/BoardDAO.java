@@ -52,7 +52,11 @@ public interface BoardDAO {
 
 	int insertBoardReputation(Map<String, String> map);
 	
+	int deleteBoardReputation(Map<String, String> map);
 	
+	int selectBoardLike(Map<String, String> map);
+
+	int selectBoardLikeByMemberId(Map<String, String> map);
 	
 	//========================== 지은 끝
 		
@@ -75,7 +79,9 @@ public interface BoardDAO {
 
 	int deleteLevel2(int commentNo);
 
-	int selectBoardLike(Map<String, String> map);
+	
+
+	
 
 	
 
