@@ -71,7 +71,7 @@
 	<!-- ==========================  근호 끝 -->
 	
 	<!-- 지은 시작 ========================== -->
-	<update id="shopInCount" parameterType="map">
+	<update id="shopInCount" parameterType="_int">
 		update shop set incount = incount +1 where shop_no = #{shopNo}
 	</update>
 	
@@ -92,7 +92,7 @@
 	<!-- 주영 시작 ========================== -->
 	<select id="selectOneShop" resultType="map">
 		select 
-		S.member_id, s.shop_info, s.image, s.shop_name, s.shop_no, ceil(sysdate-s.open_date) as since
+		S.member_id, s.shop_info, s.image, s.shop_name, s.shop_no, ceil(sysdate-s.open_date) as since, s.incount
 		from member M left join shop S on M.member_id = S.member_id 
 		where M.member_id = #{memberId}
 	</select>

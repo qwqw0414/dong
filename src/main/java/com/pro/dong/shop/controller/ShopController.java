@@ -232,7 +232,7 @@ public class ShopController {
 		//map = ss.selectOpenDate(memberId);
 		
 		if(memberId.equals("")) {
-			map = ss.shopInCount(shopNo);
+			int readCount = ss.shopInCount(shopNo);
 			map = ss.selectShopByShopNo(shopNo);
 			mav.addObject("shopNo", shopNo);
 		}
@@ -243,7 +243,6 @@ public class ShopController {
 		
 		mav.addObject("map", map);
 		//mav.addObject("readCount",readCount);
-		//mav.addObject("visitDate",visitDate);
 		return mav;
 	}
 	
