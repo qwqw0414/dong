@@ -71,7 +71,10 @@ public class ShopDAOImpl implements ShopDAO{
 	public int productUpdate(String productNo) {
 		return sst.update("shop.productUpdate",productNo);
 	}
-	
+	@Override
+	public int productDelete(String productNo) {
+		return sst.delete("shop.productDelete",productNo);
+	}
 	//========================== 하진 끝
 	
 	

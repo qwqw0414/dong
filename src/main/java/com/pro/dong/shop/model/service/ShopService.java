@@ -23,6 +23,7 @@ public interface ShopService {
 	List<Map<String, String>> loadMyProductList(String memberId, int cPage, int numPerPage);
 	int totalCountMyProduct(String memberId);
 	int productUpdate(String productNo);
+	int productDelete(String productNo);
 	//========================== 하진 끝
 	
 	

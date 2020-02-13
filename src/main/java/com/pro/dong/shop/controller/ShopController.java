@@ -153,6 +153,14 @@ public class ShopController {
 		
 		return ""+result;
 	}
+	@RequestMapping("/productDelete")
+	@ResponseBody
+	public String productDelete(@RequestParam("productNo") String productNo) {
+		Map<String, String> param = new HashMap<>();
+		param.put("productNo",productNo);
+		int result = ss.productDelete(productNo);
+		return ""+result;
+	}
 	//========================== 하진 끝
 	
 	

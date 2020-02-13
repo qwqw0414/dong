@@ -67,6 +67,10 @@ public class ShopServiceImpl implements ShopService{
 	public int productUpdate(String productNo) {
 		return sd.productUpdate(productNo);
 	}
+	@Override
+	public int productDelete(String productNo) {
+		return sd.productDelete(productNo);
+	}
 	
 	
 	//========================== 하진 끝

@@ -54,7 +54,7 @@ $(()=>{
 					html += "<td>"+product.REG_DATE+"</td>";
 					html += "<td id='btn-td'><button type='button' class='btn btn-outline-success btn-sm' id='btn-update' value='"+product.PRODUCT_NO+"' style='width: 45px;'>UP</button><br/>";
 			      	html += "<button type='button' class='btn btn-outline-primary btn-sm'>수정</button><br/>"
-			      	html += "<button type='button' class='btn btn-outline-danger btn-sm'>삭제</button></td>";
+			      	html += "<button type='button' class='btn btn-outline-danger btn-sm' id='btn-delete' value='"+product.PRODUCT_NO+"'>삭제</button></td>";
 					html += "</tbody>";
 					html += "</tr>";
 					
@@ -106,9 +106,40 @@ $(()=>{
 				console.log("실패",x,s,e);
 			}
 		});
+	});
+	
+	$(document).on("click","#btn-delete",function(e){
+
+		var confirmflag = confirm("상품삭제를 하시겠습니까?");
+		if(!confirmflag){
+			return;
+		}
 		
+		var btnDeleteTarget = $(e.target);
+		var productNo = btnDeleteTarget.val();
+		console.log(productNo);
 		
-		
+		  $.ajax({
+			url:"${pageContext.request.contextPath}/shop/productDelete",
+			data:{
+				productNo:productNo
+			},
+			dataType:"json",
+			type:"post",
+			success: data=>{
+				
+				if(data==1){
+					alert("상품이 정상적으로 삭제되었습니다.");
+					location.reload();
+				}
+				else{
+					alert("상품삭제를 실패하였습니다.");
+				}
+			},
+			error:(x,s,e)=>{
+				console.log("실패",x,s,e);
+			}
+		});
 	});
 	
 });
