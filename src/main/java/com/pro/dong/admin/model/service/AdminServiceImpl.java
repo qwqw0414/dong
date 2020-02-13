@@ -72,12 +72,6 @@ public class AdminServiceImpl implements AdminService {
 	}
 	// ========================== 하진 끝
 
-
-
-
-
-
-
 	// 근호 시작 ==========================
 
 	// ========================== 근호 끝
@@ -91,7 +85,22 @@ public class AdminServiceImpl implements AdminService {
 	// ========================== 예찬 끝
 
 	// 주영 시작 ==========================
-
+	@Override
+	public int selectBoardTotalContents(Map<String, String> param) {
+		return ad.selectBoardTotalContents(param);
+	}
+	@Override
+	public List<Product> loadBoardList(int cPage, int numPerPage, Map<String, String> param) {
+		return ad.loadBoardList(cPage, numPerPage, param);
+	}
+	@Override
+	public int selectReportBoardTotalContents(Map<String, String> param) {
+		return ad.selectReportBoardTotalContents(param);
+	}
+	@Override
+	public List<Product> loadReportBoardList(int cPage, int numPerPage, Map<String, String> param) {
+		return ad.loadReportBoardList(cPage, numPerPage, param);
+	}
 	// ========================== 주영 끝
 
 	// 현규 시작 ==========================

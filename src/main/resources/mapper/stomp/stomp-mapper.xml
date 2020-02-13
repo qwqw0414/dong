@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="stomp">
+	<select id="findChatIdByMemberId" resultType="string">
+		SELECT chat_id FROM chat_room 
+		WHERE STATUS = 'Y'
+			AND member_id = #{memberId}
+	</select>
+	<insert id="insertChatRoom">
+		INSERT INTO chat_room (chat_id, member_id)
+		VALUES(#{chatId}, #{memberId})
+	</insert>
+	<update id="updateLastCheck">
+		UPDATE chat_room SET last_check =  #{time}
+		WHERE chat_id = #{chatId} AND member_id = #{memberId}
+	</update>
+	<insert id="insertChatLog">
+		INSERT INTO chat_log (chat_no, chat_id, member_id, MSG, TIME)
+		VALUES(SEQ_CHAT_LOG.NEXTVAL, #{chatId}, #{memberId}, #{msg}, #{time})
+	</insert>
+	<update id="deleteChatRoom">
+		UPDATE chat_room SET STATUS = 'N', end_date=SYSDATE
+		WHERE chat_id = #{chatId}
+	</update>
+	<select id="findRecentList" resultType="map">
+		select *
+		from (
+		    select chat_no,
+		           A.chat_id, 
+		           (select member_id from chat_room where A.chat_id = chat_id and member_id != 'qwqw0414') member_id, 
+		           msg, 
+		           time,
+		           count(*) over(partition by A.chat_id,A.member_id) cnt,
+		           rank() over(partition by A.chat_id order by time desc) rank 
+		    from chat_log A left join chat_room B
+		        on A.chat_id = B.chat_id and A.member_id = B.member_id
+		    where time > (select last_check from chat_room C where C.chat_id = A.chat_id and memberid = 'qwqw0414')
+		    order by time desc)A
+		where rank = 1
+		union all 
+		select *
+		from (
+		    select chat_no,
+		           A.chat_id, 
+		           (select member_id from chat_room where A.chat_id = chat_id and member_id != 'qwqw0414') member_id, 
+		           msg, 
+		           time,
+		           0 cnt,
+		           rank() over(partition by A.chat_id order by time desc) rank 
+		    from chat_log A left join chat_room B
+			        on A.chat_id = B.chat_id and A.member_id = B.member_id
+			order by time desc)A
+		where rank = 1 and time <![CDATA[ <= ]]> (select last_check from chat_room C where C.chat_id = A.chat_id and member_id = 'qwqw0414')
+	</select>
+	<select id="findChatListByChatId" resultType="msg">
+		select * 
+		from chat_log
+		where chat_id = #{chat_Id}
+		order by chat_no
+	</select>
+</mapper>

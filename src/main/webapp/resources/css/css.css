@@ -57,8 +57,19 @@ footer .line{border: 1px rgb(95, 95, 95) solid; width: 100%;}
 #follower-wrapper .card-body a{color:black; text-decoration:none;}
 #follower-wrapper .card-body a:hover{color:black; text-decoration:none;}
 .divide-sm{border:0; height:1px; background:#006600; width:90px;}
-
+.divide-m{border:0; height:1px; background:#006600;}
 #wishCancel{text-shadow: 2px 2px 1px white;}
+
+#purchaseModal{font-family: 'MapoPeacefull';}
+#purchase-img img{width:64px;}
+.smallTitle{font-weight: bold;}
+#purchase-btn-group{margin-top:8px; padding-left:50px;}
+.sub-btn{background:#996633 !important; color:white !important; border-color:#996633 !important;}
+.sub-btn-outline{background:white !important; color:#996633 !important; border-color:#996633 !important;}
+.sub-btn-outline:hover{background:#996633 !important; color:white !important; border-color:#996633 !important;}
+.main-btn{background:#006600 !important; color:white !important;border:none !important;}
+.main-btn-outline{background:white !important; color:#006600 !important;border-color:#006600 !important;}
+.main-btn-outline:hover{background:#006600 !important; color:white !important;border-color:none !important;}
 /* ==========================민호 끝 */
 	
 /* 하진 시작 ========================== */

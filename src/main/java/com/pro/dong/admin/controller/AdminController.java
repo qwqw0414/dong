@@ -187,6 +187,72 @@ public class AdminController {
 	// ========================== 예찬 끝
 	
 	// 주영 시작 ==========================
+	@RequestMapping("boardList.do")
+	public void boardList() {
+
+	}
+	
+	@RequestMapping("/loadBoardList")
+	@ResponseBody
+	public Map<String, Object> loadBoardList(@RequestParam(value="sido", defaultValue="")String sido, @RequestParam(value="sigungu", defaultValue="")String sigungu, @RequestParam(value="dong", defaultValue="")String dong,
+			@RequestParam(value="searchType", defaultValue="")String searchType, @RequestParam(value="searchKeyword",defaultValue="") String searchKeyword,@RequestParam(value="type",defaultValue="") String type,
+			@RequestParam(value="cPage",defaultValue="1") int cPage){
+		final int numPerPage = 10;
+		Map<String, Object> result = new HashMap<>();
+		
+		Map<String, String> param = new HashMap<>();
+		param.put("sido", sido);
+		param.put("sigungu", sigungu);
+		param.put("dong", dong);
+		param.put("searchType", searchType);
+		param.put("searchKeyword", searchKeyword);
+		param.put("type", type);
+		
+		//페이징바 작업
+		int totalContents = as.selectBoardTotalContents(param);
+		log.info("totalContents@@@@@@@@@@@@@@@@@={}", totalContents);
+
+		List<Product> list = as.loadBoardList(cPage, numPerPage, param);
+		result.put("list", list);
+		result.put("cPage", cPage);
+		result.put("numPerPage", numPerPage);
+		result.put("totalContents", totalContents);
+		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
+		result.put("pageBar", pageBar);
+		log.info("list={}", list);
+		return result;
+	}
+	
+	@RequestMapping("/loadReportBoardList")
+	@ResponseBody
+	public Map<String, Object> loadReportList(@RequestParam(value="sido", defaultValue="")String sido, @RequestParam(value="sigungu", defaultValue="")String sigungu, @RequestParam(value="dong", defaultValue="")String dong,
+			@RequestParam(value="searchType", defaultValue="")String searchType, @RequestParam(value="searchKeyword",defaultValue="") String searchKeyword,@RequestParam(value="type",defaultValue="") String type,
+			@RequestParam(value="cPage",defaultValue="1") int cPage){
+		final int numPerPage = 10;
+		Map<String, Object> result = new HashMap<>();
+		
+		Map<String, String> param = new HashMap<>();
+		param.put("sido", sido);
+		param.put("sigungu", sigungu);
+		param.put("dong", dong);
+		param.put("searchType", searchType);
+		param.put("searchKeyword", searchKeyword);
+		param.put("type", type);
+		
+		//페이징바 작업
+		int totalContents = as.selectReportBoardTotalContents(param);
+		log.info("reportTotalContents@@@@@@@@@@@@@@@@@={}", totalContents);
+
+		List<Product> list = as.loadReportBoardList(cPage, numPerPage, param);
+		result.put("list", list);
+		result.put("cPage", cPage);
+		result.put("numPerPage", numPerPage);
+		result.put("totalContents", totalContents);
+		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
+		result.put("pageBar", pageBar);
+		log.info("list%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%={}", list);
+		return result;
+	}
 	
 	// ========================== 주영 끝
 	

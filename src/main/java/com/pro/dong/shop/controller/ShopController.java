@@ -125,7 +125,7 @@ public class ShopController {
 		List<Map<String, String>> list = null;
 			
 		list = ss.loadMyProductList(memberId,cPage,numPerPage);
-		log.debug("상품list @@@@@@@@@@@={}",list);
+		log.debug("@@@@@@@@@@@@@@@@@={}",list);
 		int totalContents = ss.totalCountMyProduct(memberId);
 			
 		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
@@ -137,7 +137,30 @@ public class ShopController {
 		
 		return gson.toJson(result);
 	}
-	
+	@RequestMapping("/myPoductManage.do")
+	public ModelAndView myPoductManage(ModelAndView mav) {
+		mav.setViewName("/shop/myProductManage");
+		return mav;
+	}
+
+	@RequestMapping("/productUpdate")
+	@ResponseBody
+	public String productUpdate(@RequestParam("productNo") String productNo) {
+		Map<String, String> param = new HashMap<>();
+		param.put("productNo",productNo);
+		
+		int result = ss.productUpdate(productNo);
+		
+		return ""+result;
+	}
+	@RequestMapping("/productDelete")
+	@ResponseBody
+	public String productDelete(@RequestParam("productNo") String productNo) {
+		Map<String, String> param = new HashMap<>();
+		param.put("productNo",productNo);
+		int result = ss.productDelete(productNo);
+		return ""+result;
+	}
 	//========================== 하진 끝
 	
 	
@@ -149,7 +172,12 @@ public class ShopController {
 	
 	
 	// 지은 시작 ==========================
-	
+	/*@RequestMapping("/shopView.do")
+	public String readCount(@RequestParam("shopNo") int shopNo) {
+		int readCount = ss.shopInCount(shopNo);
+		
+		return readCount+"";
+	}*/
 	
 	
 	//========================== 지은 끝
@@ -200,8 +228,11 @@ public class ShopController {
 								   @RequestParam(value="memberId", defaultValue = "") String memberId, 
 								   @RequestParam(value="shopNo", defaultValue = "0") int shopNo ) {
 		Map<String, String> map = new HashMap<>();
+		//int visitDate = ss.selectOpenDate(memberId);
+		//map = ss.selectOpenDate(memberId);
 		
 		if(memberId.equals("")) {
+			int readCount = ss.shopInCount(shopNo);
 			map = ss.selectShopByShopNo(shopNo);
 			mav.addObject("shopNo", shopNo);
 		}
@@ -211,6 +242,7 @@ public class ShopController {
 		}
 		
 		mav.addObject("map", map);
+		//mav.addObject("readCount",readCount);
 		return mav;
 	}
 	

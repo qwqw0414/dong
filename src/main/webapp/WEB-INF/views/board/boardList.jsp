@@ -34,7 +34,8 @@ $(function(){
 	});
 	
 	//검색어 입력
-	$("#searchBoard").click(function(){
+	$("#searchBoard").keyup((e)=>{if(e.keyCode == 13) search();});
+	$("#searchBoard").click(function search(){
 		var cPage = $("#cPage").val();
 		var boardCategory = $("#boardCategory").val();
 		var searchType = $("#searchType").val();

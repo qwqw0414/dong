@@ -23,7 +23,8 @@ public interface ShopDAO {
 	// 하진 시작 ==========================
 	List<Map<String, String>> loadMyProductList(String memberId, int cPage, int numPerPage);
 	int totalCountMyProduct(String memberId);
-	
+	int productUpdate(String productNo);
+	int productDelete(String productNo);
 	//========================== 하진 끝
 	
 	
@@ -36,8 +37,9 @@ public interface ShopDAO {
 	
 	// 지은 시작 ==========================
 	
+	int selectOpenDate(String memberId);
 	
-	
+	int shopInCount(int shopNo);
 	//========================== 지은 끝
 	
 	
@@ -78,6 +80,10 @@ public interface ShopDAO {
 	int deleteWishProduct(Map<String, String> param);
 	
 	int deleteShopInquriyComment(int deleteCommentBtn);
+	
+	
+	
+	
 	
 	
 	//========================== 주영 끝

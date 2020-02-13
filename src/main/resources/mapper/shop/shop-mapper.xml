@@ -56,6 +56,14 @@
         where M.member_id = #{memberId} 
                 and a.thumbnail='Y'
 	</select>
+	
+	<update id="productUpdate">
+		update product set reg_date= sysdate where product_no=#{productNo}
+	</update>
+		
+	<delete id="productDelete">
+		delete FROM product where product_no = #{productNo}
+	</delete>
 	<!-- ==========================  하진 끝 -->
 	
 	<!-- 근호 시작 ========================== -->
@@ -63,7 +71,13 @@
 	<!-- ==========================  근호 끝 -->
 	
 	<!-- 지은 시작 ========================== -->
+	<update id="shopInCount" parameterType="_int">
+		update shop set incount = incount +1 where shop_no = #{shopNo}
+	</update>
 	
+	<select id="selectOpenDate" parameterType="_int" resultType="shop">
+		select floor(sysdate - open_date) from shop where member_id = #{memberId}
+	</select>
 	<!-- ==========================  지은 끝 -->
 	
 	<!-- 예찬 시작 ========================== -->
@@ -78,14 +92,14 @@
 	<!-- 주영 시작 ========================== -->
 	<select id="selectOneShop" resultType="map">
 		select 
-		S.member_id, s.shop_info, s.image, s.shop_name, s.shop_no, ceil(sysdate-s.open_date) as since
+		S.member_id, s.shop_info, s.image, s.shop_name, s.shop_no, ceil(sysdate-s.open_date) as since, s.incount
 		from member M left join shop S on M.member_id = S.member_id 
 		where M.member_id = #{memberId}
 	</select>
 	
 	<select id="selectShopByShopNo" resultType="map">
 		select 
-		S.member_id, s.shop_info, s.image, s.shop_name, s.shop_no, ceil(sysdate-s.open_date) as since
+		S.member_id, s.shop_info, s.image, s.shop_name, s.shop_no, ceil(sysdate-s.open_date) as since , s.incount
 		from member M left join shop S on M.member_id = S.member_id 
 		where S.shop_no = #{shopNo}
 	</select>
