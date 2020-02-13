@@ -10,12 +10,13 @@
   </settings>
   
   <typeAliases>
-  <typeAlias type="com.pro.dong.common.email.EmailHandler" alias="emailHandler"/>
+  	<typeAlias type="com.pro.dong.common.email.EmailHandler" alias="emailHandler"/>
 	<package name="com.pro.dong.test.model.vo"/>
 	<package name="com.pro.dong.member.model.vo"/>
 	<package name="com.pro.dong.shop.model.vo"/>
 	<package name="com.pro.dong.board.model.vo"/>
 	<package name="com.pro.dong.product.model.vo"/>
+	<package name="com.pro.dong.stomp.model.vo"/>
   </typeAliases>
   
 </configuration>
