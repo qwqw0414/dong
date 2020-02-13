@@ -142,21 +142,25 @@ public class ShopController {
 		mav.setViewName("/shop/myProductManage");
 		return mav;
 	}
-/*	@RequestMapping(value="/loadMyProductList" , produces="text/plain;charset=UTF-8")
+
+	@RequestMapping("/productUpdate")
 	@ResponseBody
-	public String loadMyProductManage(String memberId, int cPage) {
+	public String productUpdate(@RequestParam("productNo") String productNo) {
+		Map<String, String> param = new HashMap<>();
+		param.put("productNo",productNo);
 		
-		int numPerPage = 10;
+		int result = ss.productUpdate(productNo);
 		
-		List<Map<String, String>> list = null;
-		
-		list = ss.loadMyProductManage(memberId, cPage, numPerPage);
-		
-		int totalContents = ss.totalCountMyProduct(memberId);
-		
-		Map<String,Object> result = new HashMap<>();
-		return gson.toJson(result);
-	}*/
+		return ""+result;
+	}
+	@RequestMapping("/productDelete")
+	@ResponseBody
+	public String productDelete(@RequestParam("productNo") String productNo) {
+		Map<String, String> param = new HashMap<>();
+		param.put("productNo",productNo);
+		int result = ss.productDelete(productNo);
+		return ""+result;
+	}
 	//========================== 하진 끝
 	
 	
@@ -168,7 +172,12 @@ public class ShopController {
 	
 	
 	// 지은 시작 ==========================
-	
+	/*@RequestMapping("/shopView.do")
+	public String readCount(@RequestParam("shopNo") int shopNo) {
+		int readCount = ss.shopInCount(shopNo);
+		
+		return readCount+"";
+	}*/
 	
 	
 	//========================== 지은 끝
@@ -219,8 +228,11 @@ public class ShopController {
 								   @RequestParam(value="memberId", defaultValue = "") String memberId, 
 								   @RequestParam(value="shopNo", defaultValue = "0") int shopNo ) {
 		Map<String, String> map = new HashMap<>();
+		//int visitDate = ss.selectOpenDate(memberId);
+		//map = ss.selectOpenDate(memberId);
 		
 		if(memberId.equals("")) {
+			map = ss.shopInCount(shopNo);
 			map = ss.selectShopByShopNo(shopNo);
 			mav.addObject("shopNo", shopNo);
 		}
@@ -230,6 +242,8 @@ public class ShopController {
 		}
 		
 		mav.addObject("map", map);
+		//mav.addObject("readCount",readCount);
+		//mav.addObject("visitDate",visitDate);
 		return mav;
 	}
 	

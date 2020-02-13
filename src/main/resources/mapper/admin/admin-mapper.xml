@@ -134,12 +134,56 @@
 	</select>
 	
 	<select id="loadBoardList" parameterType="map" resultType="map">
-		select *
-		from board B left join member M 
-		on b.member_id = m.member_id
+		select a.*, (select count(*) from board_report where board_no = a.board_no) cnt from
+    	(select * from board B
+    	left join member M on b.member_id = m.member_id) a
 		<where>
 			<if test="searchKeyword!=null and searchKeyword!=''">
-				and m.${searchType} like '%${searchKeyword}%'
+				and a.${searchType} like '%${searchKeyword}%'
+			</if>
+			<if test="sido!=null and sido!=''">
+				and a.sido like #{sido}
+			</if>
+			<if test="sigungu!=null and sigungu!=''">
+				and a.sigungu like #{sigungu}
+			</if>
+			<if test="dong!=null and dong!=''">
+				and a.dong like #{dong}
+			</if>
+		</where>
+		order by a.board_no
+	</select>
+	
+	<select id="selectReportBoardTotalContents" parameterType="map" resultType="_int">
+		select count(distinct r.board_no) boardCount
+		from board_report R left join member M
+		on r.member_id = m.member_id
+		left join board B on r.board_no = b.board_no
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+				and b.${searchType} like '%${searchKeyword}%'
+			</if>
+			<if test="sido!=null and sido!=''">
+				and m.sido like #{sido}
+			</if>
+			<if test="sigungu!=null and sigungu!=''">
+				and m.sigungu like #{sigungu}
+			</if>
+			<if test="dong!=null and dong!=''">
+				and m.dong like #{dong}
+			</if>
+		</where>
+	</select>
+	
+	<select id="loadReportBoardList" parameterType="map" resultType="map">
+		select * from
+		(select a.*, (select count(*) from board_report where board_no = a.board_no) cnt from
+    		(select * from board B
+    		left join member M on b.member_id = m.member_id) a )
+		<where>
+			cnt > 0
+			<if test="searchKeyword!=null and searchKeyword!=''">
+				and b.${searchType} like '%${searchKeyword}%'
 			</if>
 			<if test="sido!=null and sido!=''">
 				and m.sido like #{sido}

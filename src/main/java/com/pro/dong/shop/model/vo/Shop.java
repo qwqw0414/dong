@@ -14,4 +14,5 @@ public @Data class Shop implements Serializable{
 	private String shopInfo;
 	private String image;
  	private Date openDate;
+ 	private int incount;
 }

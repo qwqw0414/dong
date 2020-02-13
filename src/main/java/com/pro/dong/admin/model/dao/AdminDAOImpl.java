@@ -69,7 +69,6 @@ public class AdminDAOImpl implements AdminDAO {
 	public Member selectMemberView(String memberId) {
 		return sst.selectOne("admin.selectMemberView",memberId);
 	}
-	
 	@Override
 	public int memberDelete(String memberId) {
 		return sst.delete("admin.memberDelete",memberId);
@@ -97,6 +96,15 @@ public class AdminDAOImpl implements AdminDAO {
 	public List<Product> loadBoardList(int cPage, int numPerPage, Map<String, String> param) {
 		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
 		return sst.selectList("admin.loadBoardList", param, rowBounds);
+	}
+	@Override
+	public int selectReportBoardTotalContents(Map<String, String> param) {
+		return sst.selectOne("admin.selectReportBoardTotalContents", param);
+	}
+	@Override
+	public List<Product> loadReportBoardList(int cPage, int numPerPage, Map<String, String> param) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sst.selectList("admin.loadReportBoardList", param, rowBounds);
 	}
 	// ========================== 주영 끝
 
