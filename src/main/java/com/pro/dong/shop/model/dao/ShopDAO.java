@@ -35,7 +35,7 @@ public interface ShopDAO {
 	
 	
 	// 지은 시작 ==========================
-	int shopInCount(String memberId);
+	Map<String, String> shopInCount(int shopNo);
 	
 	int selectOpenDate(String memberId);
 	
@@ -79,6 +79,7 @@ public interface ShopDAO {
 	int deleteWishProduct(Map<String, String> param);
 	
 	int deleteShopInquriyComment(int deleteCommentBtn);
+	
 	
 	
 	

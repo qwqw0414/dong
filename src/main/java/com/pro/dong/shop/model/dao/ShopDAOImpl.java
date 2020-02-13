@@ -81,8 +81,8 @@ public class ShopDAOImpl implements ShopDAO{
 	
 	// 지은 시작 ==========================
 	@Override
-	public int shopInCount(String memberId) {
-		return sst.update("shop.shopInCount", memberId);
+	public int shopInCount(int shopNo) {
+		return sst.update("shop.shopInCount", shopNo);
 	}
 	
 	@Override
@@ -181,6 +181,7 @@ public class ShopDAOImpl implements ShopDAO{
 	public int deleteShopInquriyComment(int deleteCommentBtn) {
 		return sst.delete("shop.deleteShopInquriyComment", deleteCommentBtn);
 	}
+	
 	
 	
 	

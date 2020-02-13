@@ -50,6 +50,10 @@ public interface BoardService {
 	int insertBoardReputation(Map<String, String> map);
 	
 	int selectBoardLike(Map<String, String> map);
+	
+	int deleteBoardReputation(Map<String, String> map);
+	
+	int selectBoardLikeByMemberId(Map<String, String> map);
 	//========================== 지은 끝
 		
 	// 예찬 시작 ==========================
@@ -71,6 +75,9 @@ public interface BoardService {
 	int countComment(int boardNo);
 
 	int deleteLevel2(int commentNo);
+
+
+	
 
 	
 

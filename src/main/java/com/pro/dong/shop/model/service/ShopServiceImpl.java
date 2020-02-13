@@ -78,8 +78,8 @@ public class ShopServiceImpl implements ShopService{
 	
 	// 지은 시작 ==========================
 	@Override
-	public int shopInCount(String memberId) {
-		return sd.shopInCount(memberId);
+	public Map<String, String> shopInCount(int shopNo) {
+		return sd.shopInCount(shopNo);
 	}
 	
 	@Override
@@ -176,6 +176,7 @@ public class ShopServiceImpl implements ShopService{
 	public int deleteShopInquriyComment(int deleteCommentBtn) {
 		return sd.deleteShopInquriyComment(deleteCommentBtn);
 	}
+	
 	
 	
 

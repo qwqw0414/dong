@@ -26,9 +26,10 @@
 	for(BoardCategory bc: list){
 		if("Y".equals(memberLoggedIn.getIsAdmin())){
 			option += "<option value=\""+bc.getCategoryId()+"\">"+bc.getCategoryName()+"</option>";
-		}else{
-			option += "<option value=\""+bc.getCategoryId()+"\">"+bc.getCategoryName()+"</option>";
 		}
+		/* else{
+			option += "<option value=\""+bc.getCategoryId()+"\">"+bc.getCategoryName()+"</option>";
+		} */
 	}
 %>
 <script>
