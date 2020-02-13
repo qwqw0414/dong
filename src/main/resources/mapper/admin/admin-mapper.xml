@@ -183,16 +183,16 @@
 		<where>
 			cnt > 0
 			<if test="searchKeyword!=null and searchKeyword!=''">
-				and b.${searchType} like '%${searchKeyword}%'
+				and a.${searchType} like '%${searchKeyword}%'
 			</if>
 			<if test="sido!=null and sido!=''">
-				and m.sido like #{sido}
+				and a.sido like #{sido}
 			</if>
 			<if test="sigungu!=null and sigungu!=''">
-				and m.sigungu like #{sigungu}
+				and a.sigungu like #{sigungu}
 			</if>
 			<if test="dong!=null and dong!=''">
-				and m.dong like #{dong}
+				and a.dong like #{dong}
 			</if>
 		</where>
 	</select>
