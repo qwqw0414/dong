@@ -7,6 +7,7 @@ import com.pro.dong.product.model.vo.Category;
 import com.pro.dong.product.model.vo.Like;
 import com.pro.dong.product.model.vo.Product;
 import com.pro.dong.product.model.vo.ProductAttachment;
+import com.pro.dong.product.model.vo.ProductComment;
 import com.pro.dong.shop.model.vo.Shop;
 
 public interface ProductDAO {
@@ -71,12 +72,37 @@ public interface ProductDAO {
 
 
 
+
+
+
+
 		
 	//주영 시작 ==========================
 		
 	//========================== 주영 끝
 		
 	//현규 시작 ==========================
+	int insertProductComment(ProductComment pc);
+	List<Map<String, String>> selectProductCommentList(int productNo, int cPage, int numPerPage);
+	int deleteLevel1(int commentNo);
+	int countComment(int boardNo);
+	int deleteLevel2(int commentNo);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	//========================== 현규 끝
 	
