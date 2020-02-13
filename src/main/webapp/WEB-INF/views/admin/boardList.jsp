@@ -10,12 +10,36 @@
 
 <script>
 $(()=>{
-
-	/* $("#search").on("click", function(){
-		loadBoardList(1);
-	}); */
 	
-	function loadBoardList(cPage, type){
+	loadBoardList(1);
+	
+	/* 스위치 버튼 함수 */
+	$("#customSwitch1").change(function(){
+		console.log($(this).prop("checked"));
+		var checked = $(this).prop("checked");
+		if(checked == false){
+			$(this).next().html("신고글보기");
+			loadBoardList(1);
+		}	
+		else if(checked == true){
+			$(this).next().html("일반글보기");
+			loadReportBoardList(1);
+		}
+	});
+	
+	$("#search").on("click", function(){
+		var checked = $("#customSwitch1").prop("checked");
+		console.log(checked);
+		if(checked == false){
+			loadBoardList(1);
+		}
+		else{
+			loadReportBoardList(1);
+		}
+		$("#searchKeyword").val('');
+	});
+	
+	function loadBoardList(cPage){
 		var sido = $("#sido").val();
 		var sigungu = $("#sigungu").val();
 		var dong = $("#dong").val();
@@ -28,7 +52,6 @@ $(()=>{
 		console.log(sido);
 		console.log(sigungu);
 		console.log(dong);
-		console.log(type);
 		$.ajax({
 			url: "${pageContext.request.contextPath}/admin/loadBoardList",
 			type: "GET",
@@ -37,19 +60,41 @@ $(()=>{
 				searchKeyword:searchKeyword,
 				sido:sido,
 				sigungu:sigungu,
-				dong:dong,
-				type:type
+				dong:dong
 				},
 			success: data=>{
 				console.log(data);
+				let $table = $("#member-list-tbl");
+		    	$table.html("");
+		    	let header = "<tr><th>No</th><th>카테고리</th><th>작성자</th><th>제목</th><th>작성일</th><th>조회수</th><th>누적신고수</th></tr>";
+		    	let	html = "";
+		    	for(var i=0; i<data.list.length;i++){
+		    		html += "<tr>";
+		    		html += "<td><a href='${pageContext.request.contextPath}/board/boardView.do?boardNo="+data.list[i].BOARD_NO+"'>"+data.list[i].BOARD_NO+"</a></td>";
+		    		html += "<td>"+data.list[i].CATEGORY_ID+"</td>";
+		    		html += "<td>"+data.list[i].MEMBER_ID+"</td>";
+		    		html += "<td>"+data.list[i].BOARD_TITLE+"</td>";
+		    		html += "<td>"+data.list[i].WRITE_DATE+"</td>";
+		    		html += "<td>"+data.list[i].READ_COUNT+"</td>";
+		    		html += "<td>"+data.list[i].CNT+"</td>";
+		    		html += "</tr>";
+		    	}
+		    	$table.append(header+html);
+				$("#pageBar").html(data.pageBar);
 			},
 			error : (x, s, e) => {
 				console.log("ajax 요청 실패!",x,s,e);
-	    	}
+	    	},
+			complete: (data)=>{
+	        
+	        	$("#pageBar a").click((e)=>{
+	        		loadBoardList($(e.target).siblings("input").val());
+            	});
+	      	}
 		});//end of ajax
 	}//end of loadBoardList();
 	
-	function loadReportList(cPage, type){
+	function loadReportBoardList(cPage){
 		var sido = $("#sido").val();
 		var sigungu = $("#sigungu").val();
 		var dong = $("#dong").val();
@@ -62,26 +107,48 @@ $(()=>{
 		console.log(sido);
 		console.log(sigungu);
 		console.log(dong);
-		console.log(type);
 		$.ajax({
-			url: "${pageContext.request.contextPath}/admin/loadReportList",
+			url: "${pageContext.request.contextPath}/admin/loadReportBoardList",
 			type: "GET",
 			data:{cPage:cPage,
 				searchType:searchType,
 				searchKeyword:searchKeyword,
 				sido:sido,
 				sigungu:sigungu,
-				dong:dong,
-				type:type
+				dong:dong
 				},
 			success: data=>{
 				console.log(data);
+				let $table = $("#member-list-tbl");
+		    	$table.html("");
+		    	let header = "<tr><th>No</th><th>카테고리</th><th>작성자</th><th>제목</th><th>작성일</th><th>조회수</th><th>누적신고수</th></tr>";
+		    	let	html = "";
+		    	for(var i=0; i<data.list.length;i++){
+		    		html += "<tr>";
+		    		html += "<td><a href='${pageContext.request.contextPath}/board/boardView.do?boardNo="+data.list[i].BOARD_NO+"'>"+data.list[i].BOARD_NO+"</a></td>";
+		    		html += "<td>"+data.list[i].CATEGORY_ID+"</td>";
+		    		html += "<td>"+data.list[i].MEMBER_ID+"</td>";
+		    		html += "<td>"+data.list[i].BOARD_TITLE+"</td>";
+		    		html += "<td>"+data.list[i].WRITE_DATE+"</td>";
+		    		html += "<td>"+data.list[i].READ_COUNT+"</td>";
+		    		html += "<td>"+data.list[i].CNT+"</td>";
+		    		html += "</tr>";
+		    	}
+		    	$table.append(header+html);
+				$("#pageBar").html(data.pageBar);
 			},
 			error : (x, s, e) => {
 				console.log("ajax 요청 실패!",x,s,e);
-	    	}
+	    	},
+			complete: (data)=>{
+	        
+	        	$("#pageBar a").click((e)=>{
+	        		loadBoardList($(e.target).siblings("input").val());
+            	});
+	      	}
 		});//end of ajax
-	}//end of loadReportList();
+	}//end of loadBoardList();
+	
 	
 	$.ajax({
 		url: "${pageContext.request.contextPath}/admin/loadSidoList",
@@ -105,6 +172,7 @@ $(()=>{
 		var sido = $("#sido").val();
 		console.log(sido);
 		loadSigunguList(sido);
+		loadDongList('');
 	});
 
 	function loadSigunguList(sido){
@@ -155,19 +223,6 @@ $(()=>{
 	});//end of ajax
 }//end of loadDongList
 
-/* 스위치 버튼 함수 */
-$("#customSwitch1").change(function(){
-	console.log($(this));
-	var checked = $(this).prop("checked");
-	if(checked == false){
-		$(this).next().html("일반글보기");
-		loadBoardList(1, '일반');
-	}	
-	else{
-		$(this).next().html("신고글보기");
-		loadReportList(1, '신고');
-	}
-});
 
 }); //end of onload
 </script>
@@ -191,14 +246,27 @@ $("#customSwitch1").change(function(){
 <div class="input-group mb-3">
   <div class="input-group-prepend">
     <select class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="searchType">
-      <option class="dropdown-item" value="title" >제목</option>
-      <option class="dropdown-item" value="boardWiter" >작성자</option>
+      <option class="dropdown-item" value="board_title" >제목</option>
+      <option class="dropdown-item" value="member_id" >작성자</option>
     </select>
   </div>
   <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="검색어를 입력해 주세요" id="searchKeyword">
   <button class="btn btn-outline-secondary" id="search">검색</button>
 </div>
 
+<div class="table-responsive">
+<br /><br />
+	<table class="table text-center" id="member-list-tbl">
+		<tr>
+		<th>No</th>
+		<th>카테고리</th>
+		<th>작성자</th>
+		<th>제목</th>
+		<th>작성일</th>
+		<th>조회수</th>
+		</tr>
+	</table>
+</div>
 
 <!-- 페이징바 Div -->
 <div id="pageBar"></div>

@@ -63,7 +63,14 @@ public class ShopServiceImpl implements ShopService{
 	public int totalCountMyProduct(String memberId) {
 		return sd.totalCountMyProduct(memberId);
 	}
-
+	@Override
+	public int productUpdate(String productNo) {
+		return sd.productUpdate(productNo);
+	}
+	@Override
+	public int productDelete(String productNo) {
+		return sd.productDelete(productNo);
+	}
 	
 	
 	//========================== 하진 끝
@@ -77,9 +84,15 @@ public class ShopServiceImpl implements ShopService{
 	
 	
 	// 지은 시작 ==========================
+	@Override
+	public Map<String, String> shopInCount(int shopNo) {
+		return sd.shopInCount(shopNo);
+	}
 	
-	
-	
+	@Override
+	public int selectOpenDate(String memberId) {
+		return sd.selectOpenDate(memberId);
+	}
 	//========================== 지은 끝
 	
 	
@@ -170,6 +183,9 @@ public class ShopServiceImpl implements ShopService{
 	public int deleteShopInquriyComment(int deleteCommentBtn) {
 		return sd.deleteShopInquriyComment(deleteCommentBtn);
 	}
+	
+	
+	
 
 
 

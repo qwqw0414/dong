@@ -23,7 +23,6 @@ public interface AdminDAO {
 	List<BoardReport> selectOneMember(int cPage, int numPerPage, Map<String, String> param);
 	int adselectBoardReportTotalContent(Map<String, String> param);
 	Member selectMemberView(String memberId);
-	
 	int memberDelete(String memberId);
 	// ========================== 하진 끝
 
@@ -42,6 +41,8 @@ public interface AdminDAO {
 	// 주영 시작 ==========================
 	int selectBoardTotalContents(Map<String, String> param);
 	List<Product> loadBoardList(int cPage, int numPerPage, Map<String, String> param);
+	int selectReportBoardTotalContents(Map<String, String> param);
+	List<Product> loadReportBoardList(int cPage, int numPerPage, Map<String, String> param);
 	// ========================== 주영 끝
 
 	// 현규 시작 ==========================

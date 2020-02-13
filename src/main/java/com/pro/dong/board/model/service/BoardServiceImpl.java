@@ -119,6 +119,16 @@ public class BoardServiceImpl implements BoardService {
 	public int selectBoardLike(Map<String, String> map) {
 		return bd.selectBoardLike(map);
 	}
+	
+	@Override
+	public int deleteBoardReputation(Map<String, String> map) {
+		return bd.deleteBoardReputation(map);
+	}
+	
+	@Override
+	public int selectBoardLikeByMemberId(Map<String, String> map) {
+		return bd.selectBoardLikeByMemberId(map);
+	}
 	//========================== 지은 끝
 		
 	// 예찬 시작 ==========================
@@ -155,6 +165,10 @@ public class BoardServiceImpl implements BoardService {
 	public int deleteLevel2(int commentNo) {
 		return bd.deleteLevel2(commentNo);
 	}
+
+	
+
+	
 
 	
 

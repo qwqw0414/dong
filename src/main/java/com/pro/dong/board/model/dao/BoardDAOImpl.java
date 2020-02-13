@@ -119,7 +119,15 @@ public class BoardDAOImpl implements BoardDAO {
 		return sst.selectOne("board.selectBoardLike", map);
 	}
 
+	@Override
+	public int deleteBoardReputation(Map<String, String> map) {
+		return sst.delete("board.deleteBoardReputation", map);
+	}
 	
+	@Override
+	public int selectBoardLikeByMemberId(Map<String, String> map) {
+		return sst.selectOne("board.selectBoardLikeByMemberId", map);
+	}
 	//========================== 지은 끝
 		
 	// 예찬 시작 ==========================
@@ -156,6 +164,10 @@ public class BoardDAOImpl implements BoardDAO {
 	public int deleteLevel2(int commentNo) {
 		return sst.delete("board.deleteLevel2",commentNo);
 	}
+
+	
+
+	
 
 	
 	

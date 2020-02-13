@@ -17,6 +17,7 @@ import com.pro.dong.product.model.vo.Category;
 import com.pro.dong.product.model.vo.Like;
 import com.pro.dong.product.model.vo.Product;
 import com.pro.dong.product.model.vo.ProductAttachment;
+import com.pro.dong.product.model.vo.ProductComment;
 import com.pro.dong.shop.model.vo.Shop;
 
 @Service
@@ -67,6 +68,7 @@ public class ProductServiceImpl implements ProductService{
 	public int insertProduct(Product product, List<ProductAttachment> attachList) {
 		
 		int result = pd.insertProduct(product);
+		result = pd.insertStatus(product);
 		String thumbnail = "Y";
 		
 		for(ProductAttachment pa : attachList) {
@@ -117,6 +119,10 @@ public class ProductServiceImpl implements ProductService{
 
 
 
+	
+
+
+
 
 
 
@@ -153,6 +159,28 @@ public class ProductServiceImpl implements ProductService{
 	//========================== 주영 끝
 		
 	//현규 시작 ==========================
+	@Override
+	public int insertProductComment(ProductComment pc) {
+		return pd.insertProductComment(pc);
+	}
+	@Override
+	public List<Map<String, String>> selectProductCommentList(int productNo, int cPage, int numPerPage) {
+		return pd.selectProductCommentList(productNo, cPage, numPerPage);
+	}
+	@Override
+	public int deleteLevel1(int commentNo) {
+		return pd.deleteLevel1(commentNo);
+	}
+	@Override
+	public int countComment(int boardNo) {
+		return pd.countComment(boardNo);
+	}
+	@Override
+	public int deleteLevel2(int commentNo) {
+		return pd.deleteLevel2(commentNo);
+	}
+
+
 
 	//========================== 현규 끝
 	
