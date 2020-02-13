@@ -1,3 +1,7 @@
+<%@page import="java.util.Map"%>
+<%@page import="com.pro.dong.product.model.vo.ProductAttachment"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 <%@page import="com.pro.dong.product.model.vo.Product"%>
 <%@page import="com.pro.dong.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -10,15 +14,52 @@
 <h1>상품 상세보기</h1>
 <hr>
 <style>
-#productView #photo img{position: absolute;}
+	.product-info{margin-left: 100px;}
+	.something-btn{margin-left: 100px;}
 </style>
+<%
+ 	Map<String,Object> map = (Map<String,Object>)request.getAttribute("map");
+	List<ProductAttachment> list = new ArrayList<>();
+	list = (List<ProductAttachment>)map.get("attachment");
+	String html = "";
+	String li = "";
+	for(int i=0;i<list.size();i++){
+		if(i==0){
+		html += "<div class='carousel-item active'><img src='"+request.getContextPath()+"/resources/upload/product/"+list.get(i).getPhoto()+"' class='d-block w-100'></div>";	
+		} else {
+		html += "<div class='carousel-item'><img src='"+request.getContextPath()+"/resources/upload/product/"+list.get(i).getPhoto()+"' class='d-block w-100'></div>";	
+		}
+	}
+	for(int i=0;i<list.size();i++){
+		if(i==0){
+			li += "<li data-target='#carouselExampleIndicators' data-slide-to='i' class='active'></li>";
+		}
+		else{
+			li += "<li data-target=''#carouselExampleIndicators' data-slide-to='i'></li>";
+		}
+	} 
+%>
+
 <div class="card mb-3 border-light" id="productView">
     <div class="row">
-		<div class="col-4" id="photo">
-		<c:forEach items="${map.attachment}" var="attch">
-  		  <img src="${pageContext.request.contextPath}/resources/upload/product/${attch.photo}" alt="">
-		</c:forEach>
-		</div>
+
+					<div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="carousel" style="width: 320px; height: 320px;">
+					<div class="carousel-inner">
+					  <ol class="carousel-indicators">
+					    <%=li %>
+					  </ol>
+					  
+					   <%=html %>
+					  </div>
+					   <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+					    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					    <span class="sr-only">Previous</span>
+					  </a>
+					  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+					    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+					    <span class="sr-only">Next</span>
+					  </a>
+			</div>
 		<div class="col-8">
 			<div>
                 <div class="product-info">
@@ -50,7 +91,7 @@
                         <button class="btn btn-warning" id="btn-like">찜취소</button>
                     </c:if>                        
                     <button class="btn btn-danger">연락하기</button>
-                    <button class="btn btn-info" id="purchaseByPoint" data-toggle="modal" data-target="#purchaseModal">구매하기</button>
+                    <button class="btn btn-info"  id="purchaseByPoint" data-toggle="modal" data-target="#purchaseModal">구매하기</button>
                 </div>
 			</div>
         </div>
@@ -91,6 +132,7 @@
 	<script>
 	$(()=>{
 		showCommentList(1);
+
 		//댓글등록
 		$("#commentInsertView #comments_insert").on('click',function(){
 			var productNo = $(".pncontents #productNo").val();    //보드넘버 바꾸면서 테스트 하면댐
@@ -327,6 +369,8 @@ margin-bottom:20px;
 
 	<script>
 $(()=>{
+	
+	
 // 예찬 시작 =======================================
     var $btnLike = $("#productView #btn-like");
 

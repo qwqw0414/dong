@@ -50,7 +50,7 @@ $(()=>{
 					html +=	"<tbody>";
 					html += "<td id='img-td'><img style='width:152px; height:152px;' src='${pageContext.request.contextPath}/resources/upload/product/"+product.PHOTO+"'/></td>";
 					html += "<td><select class='select' class='custom-select'><option ' value='N' selected>판매중</option><option value='Y'>판매완료</option></select></td>"
-					html += "<input type='hidden' name='productNo' value='"+product.PRODUCT_NO+"'/>"
+					html += "<input type='hidden' class='productNo' value='"+product.PRODUCT_NO+"'/>"
 					html += "<td>"+product.TITLE+"</td>";
 					html += "<td>"+numberComma(product.PRICE)+"원</td>";
 					html += "<td>"+product.REG_DATE+"</td>";
@@ -72,6 +72,7 @@ $(()=>{
 				$("#pageBar a").click((e)=>{
 					loadMyProductList($(e.target).siblings("input").val());
 	            });
+				saleSelect();
 			}
 			
 		});
@@ -146,9 +147,35 @@ $(()=>{
 		});
 	});
 
+	function saleSelect(){
+
+		$("#product-tbl .select").change((e)=>{
+			var $select = $(e.target); // Y판매완료 N판매중
+			console.log($select.val());
+
+			var productNo = $(e.target).parents("tr").find(".productNo").val() //productNo
+
+			$.ajax({
+				url : "",
+				data:{
+					productNo:productNo,
+					select: $select.val()
+				},
+				dataType:"json",
+				success: data=>{
+
+				},
+				error: (a,b,c)=>{
+				}
+
+			})
+
+		})
+	}
+
 	
 	/*내 상품 판매상태 변경하기*/
-	$(document).on("change",".select",function(e){
+	$(document).on("change",".sel2ect",function(e){
 		
 		/* var state = $(e).("#select option:selected").prop("id");
 		console.log(state); */

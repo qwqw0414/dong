@@ -35,10 +35,10 @@ public interface ShopService {
 	
 	
 	// 지은 시작 ==========================
-	Map<String, String> shopInCount(int shopNo);
 	
 	int selectOpenDate(String memberId);
 	
+	int shopInCount(int shopNo);
 	//========================== 지은 끝
 	
 	
@@ -79,6 +79,8 @@ public interface ShopService {
 	int deleteWishProduct(Map<String, String> param);
 	
 	int deleteShopInquriyComment(int deleteCommentBtn);
+	
+	
 	
 	
 	
