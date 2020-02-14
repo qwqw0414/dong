@@ -115,6 +115,28 @@
 	<select id="countDetails" resultType="_int">
 	select count(*) from point_status where member_id=#{memberId}
 	</select>
+	
+	
+	<select id="selectDetailsByOption" resultType="map">
+		select * from point_status
+		<where>
+			member_id=#{memberId}
+			
+			<if test="start!=null and start!='' and end!=null and end!=''">
+			and
+			reg_date between to_date(#{start}, 'yy/mm/dd') and to_date(#{end},'yy/mm/dd')	
+			</if>
+			
+			
+			<if test="option!=null and option!=''">
+			and
+			status=#{option}
+			</if>
+		
+		</where>
+		
+	</select>
+	
 		
 	
 	<!-- ==========================  현규 끝 -->

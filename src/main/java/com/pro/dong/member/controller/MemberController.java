@@ -75,7 +75,10 @@ public class MemberController {
 		log.debug("memberInfo={}",memberInfo);
 		return memberInfo;
 	}
-	
+	@RequestMapping("/orderListView.do")
+	public void orderListView() {
+		
+	}
 //==========================민호 끝
 	
 // 하진 시작 ==========================
@@ -532,12 +535,10 @@ public class MemberController {
 	@RequestMapping(value="/selectAllDetails", produces="text/plain;charset=UTF-8")
 	public String memberChargingDetails(HttpSession session, @RequestParam("cPage") int cPage) {
 		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
-		log.debug("디테일 회원 아이디={}",memberLoggedIn.getMemberId());
 		List<Map<String,String>>list = null;
 		int numPerPage=10;
 		
 		list = ms.selectAllDetails(memberLoggedIn.getMemberId(),cPage,numPerPage);
-		log.debug("리슷흐={}",list);
 		
 		int totalContents = ms.countDetails(memberLoggedIn.getMemberId());
 		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
@@ -547,9 +548,52 @@ public class MemberController {
 		result.put("pageBar", pageBar);
 		
 		
+		return gson.toJson(result)+"";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/selectByOption", produces="text/plain;charset=UTF-8")
+	public String selectByOption(HttpSession session, @RequestParam("start") String start, @RequestParam("end") String end,
+					@RequestParam("option") String option, @RequestParam("cPage") int cPage) {
+		log.info("시작날짜={}",start);
+		log.info("종료날짜={}",end);
+		log.info("옵션={}",option);
+		
+		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
+		
+		Map<String, String> param = new HashMap<>();
+		param.put("memberId",memberLoggedIn.getMemberId());
+		param.put("start", start);
+		param.put("end", end);
+		param.put("option", option);
+		
+		List<Map<String,String>>list = null;
+		int numPerPage=10;
+		
+		
+		list = ms.selectDetailsByOption(param,cPage,numPerPage);
+		
+		
+		
+		
+		
+		int totalContents = ms.countDetails(memberLoggedIn.getMemberId());
+		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
+		
+		log.debug("리스트으응으으응={}",list);
+		
+		
+		
+		Map<String,Object> result = new HashMap<>();
+		result.put("list", list);
+		result.put("pageBar", pageBar);
+		
 		
 		return gson.toJson(result)+"";
 	}
+	
+	
+	
 	
 	
 	

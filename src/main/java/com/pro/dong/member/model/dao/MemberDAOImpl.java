@@ -125,6 +125,11 @@ public class MemberDAOImpl implements MemberDAO{
 	public int countDetails(String memberId) {
 		return sst.selectOne("member.countDetails",memberId);
 	}
+	@Override
+	public List<Map<String, String>> selectDetailsByOption(Map<String, String> param, int cPage, int numPerPage) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return sst.selectList("member.selectDetailsByOption", param,rowBounds);
+	}
 	
 	
 	

@@ -55,6 +55,7 @@ public interface MemberService {
 	int updateMemberEmail(Map<String, String> param);
 	List<Map<String, String>> selectAllDetails(String memberId, int cPage, int numPerPage);
 	int countDetails(String memberId);
+	List<Map<String, String>> selectDetailsByOption(Map<String, String> param, int cPage, int numPerPage);
 	
 	
 

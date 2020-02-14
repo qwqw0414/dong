@@ -6,6 +6,7 @@ import java.util.Map;
 import com.pro.dong.board.model.vo.BoardComment;
 import com.pro.dong.product.model.vo.Category;
 import com.pro.dong.product.model.vo.Like;
+import com.pro.dong.product.model.vo.OrderList;
 import com.pro.dong.product.model.vo.Product;
 import com.pro.dong.product.model.vo.ProductAttachment;
 import com.pro.dong.product.model.vo.ProductComment;
@@ -14,16 +15,13 @@ import com.pro.dong.shop.model.vo.Shop;
 public interface ProductService {
 
 	//민호 시작 ==========================
-
+	int submitPurchase(OrderList orderList);
+	int updateMemberPoint(OrderList orderList);
 	//==========================민호 끝
 		
 	//하진 시작 ==========================
 	List<Category> selectCategory();
 
-	
-	
-	
-	
 	//========================== 하진 끝
 		
 	//근호 시작 ==========================
@@ -47,53 +45,9 @@ public interface ProductService {
 	int deleteLike(Like like);
 	//========================== 예찬 끝
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		
 	//주영 시작 ==========================
-		
+	List<Map<String, String>> loadProductReportCategory();
+	int insertProductReport(Map<String, String> param);
 	//========================== 주영 끝
 		
 	//현규 시작 ==========================
@@ -106,7 +60,6 @@ public interface ProductService {
 	int countComment(int boardNo);
 
 	int deleteLevel2(int commentNo);
-
 
 	//========================== 현규 끝
 	
