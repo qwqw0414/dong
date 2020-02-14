@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.pro.dong.product.model.vo.Category;
 import com.pro.dong.product.model.vo.Like;
+import com.pro.dong.product.model.vo.OrderList;
 import com.pro.dong.product.model.vo.Product;
 import com.pro.dong.product.model.vo.ProductAttachment;
 import com.pro.dong.product.model.vo.ProductComment;
@@ -13,7 +14,8 @@ import com.pro.dong.shop.model.vo.Shop;
 public interface ProductDAO {
 
 	//민호 시작 ==========================
-
+	int submitPurchase(OrderList orderList);
+	int updateMemberPoint(OrderList orderList);
 	//==========================민호 끝
 		
 	//하진 시작 ==========================
@@ -48,36 +50,6 @@ public interface ProductDAO {
 	int insertStatus(Product product);
 	//========================== 예찬 끝
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		
 	//주영 시작 ==========================
 		
 	//========================== 주영 끝
