@@ -117,10 +117,15 @@
                                     </div>
 
                                     <div class="after after_change3" style="display: none;">
-                                        <input type="email" id="useremail" placeholder="변경할 이메일">
+                                        <input type="email" id="useremail" name="useremail" placeholder="변경할 이메일">
                                         <button type="button" class="btn btn-outline-success btn-sm"
-                                            id="button-addon3">확인</button>
+                                            id="button-addon3">인증하기</button>
                                     </div>
+                                    <div class="email_authKey" style="display: none">
+                                    	<input type="text" name="authKey" id="authKey" placeholder="인증번호를 입력해주세요."/>
+                                    	<button type="button" class="btn btn-outline-success btn-sm" id="authCode-btn">확인</button>
+                                    </div>
+                                    <div class="emailMsg"></div>
                                 </div>
                             </div>
 
@@ -327,9 +332,58 @@ if ( rsp.success ) {
         });//end of updatephone
 
 
+		//메일보내기
+        $("#memberView #button-addon3").on('click', function () {
+            var email = $("#useremail").val();
+            console.log(email);
+
+            $.ajax({
+                url: "${pageContext.request.contextPath}/member/emailAuth.do",
+                data: { email: email },
+                type: "POST",
+                success: data => {
+					$(".after_change3").css("display","none");
+					$(".email_authKey").css("display","block");
+                },
+                error: (x, s, e) => {
+                    console.log(x, s, e);
+                }
+            });
+        });
+        
+        //메일인증확인
+        $("#memberView #authCode-btn").on('click', function(){
+        	var authKey = $("#authKey").val();
+        	var email = $("#useremail").val();
+        	
+        	$.ajax({
+        		url: "${pageContext.request.contextPath}/member/emailUpdate",
+        		data: {authKey:authKey,
+        			  email:email},
+        		type: "POST",
+        		success: data =>{
+        			console.log(data);
+        			console.log(authKey);
+        			if(data==1){
+        				/* $("#curemail").text(map.EMAIL); */
+        				$("#memberView .before_change3").css("display", "block");
+        				$(".email_authKey").css("display","none");
+        				$(".emailMsg").css("display","none");
+        			}
+        			else {
+        				$(".email_authKey").css("display","block");
+        				$(".emailMsg").text("인증번호 틀림");
+        			}
+        		},
+        		 error: (x, s, e) => {
+                     console.log(x, s, e);
+                 }
+        	});
+        });
+        
 
         //이메일
-        $("#memberView #button-addon3").on('click', function () {
+        /* $("#memberView #button-addon3").on('click', function () {
             var afterEmail = $("#useremail").val();
             console.log(afterEmail);
 
@@ -347,10 +401,12 @@ if ( rsp.success ) {
                     console.log(x, s, e);
                 }
             });
-        });//end of emailupdate
+        });//end of emailupdate */
 
+        
+        
     });//end of script
-
+ 
 
     
     

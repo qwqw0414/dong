@@ -101,7 +101,7 @@
 	</update>
 	<update id="updateMemberEmail">
 		update member 
-		set email=#{afterEmail}
+		set email=#{email}
 		where member_id=#{memberId}
 		
 	</update>
