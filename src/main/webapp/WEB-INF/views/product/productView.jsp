@@ -14,8 +14,28 @@
 <h1>상품 상세보기</h1>
 <hr>
 <style>
-	.product-info{margin-left: 100px;}
-	.something-btn{margin-left: 100px;}
+.product-info{margin-left: 100px;}
+.something-btn{margin-left: 100px;}
+#reportBtn{
+	margin-left: 670px;
+	background-color: white;
+	outline: none;
+    border: 1px solid lightgray;
+}
+#reportBtnImg{
+	border: none;
+	margin-bottom: 5px;
+}
+#productReportFileDiv{
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+#productReportContents{
+	resize: none;
+}
+#productReportCategory{
+	margin-left: 10px;
+}
 </style>
 <%
  	Map<String,Object> map = (Map<String,Object>)request.getAttribute("map");
@@ -62,6 +82,12 @@
 			</div>
 		<div class="col-8">
 			<div>
+				<div id='reportDiv'>
+					<button id='reportBtn' data-toggle="modal" data-target="#exampleModal">
+					<img id='reportBtnImg' class="img-thumbnail" src="${pageContext.request.contextPath}/resources/images/report.png"/>
+					신고하기
+					</button>
+				</div>
                 <div class="product-info">
                     <h3>${map.product.title }</h3>
                     <br>
@@ -128,6 +154,144 @@
 	</div>
 	<div id="pageBar"></div>
 
+<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 신고하기 Modal @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">상품 신고</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          	<span aria-hidden="true">&times;</span>
+       	  </button>
+      </div>
+      <div class="modal-body">
+         <div class="container">
+	         <div  style="text-align: center;" class="form-group">
+	         	<img id='reportBtnImg' class="img-thumbnail" src="${pageContext.request.contextPath}/resources/images/siren.png"/>
+			 	<label style="display: inline-block;" for="inputGroupSelect01">신고 유형</label>
+			 	<select class="custom-select col-lg-5" id="productReportCategory" name="productReportCategory">
+			 	</select>
+			 </div>
+			<div class=" col-lg-12"> 
+	  			<textarea class="form-control" id="productReportContents" name="productReportContents" rows="10"></textarea>
+	  		</div>
+	  	  <!-- 파일 선택 div -->
+	  	  <form enctype="multipart/form-data" id="reportFormData" method="post">
+		  <div class=" col-lg-12" id='productReportFileDiv'> 
+		  	<div class="custom-file">
+		     	<input type="hidden" name="memberId" value="<%=memberLoggedIn.getMemberId() %>" />
+		     	<input type="file" name="upFile" class="custom-file-input" name="productReportFile" id="productReportFile" >
+		     	<label class="custom-file-label" name="upFile" for="upFile" id="fileName">파일을 선택하세요</label>
+		  	</div>
+		  </div>
+	  	  </form>
+		  <!-- 파일 선택 div -->
+		</div>
+      	<div class="modal-footer">
+        	<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+        	<button type="button" id="report-btn" class="btn btn-primary btn btn-danger">신고</button>
+        </div>
+     </div>
+   </div>
+ </div>
+</div>
+
+<script>
+$(()=>{
+	
+	loadProductReportCategory();
+	
+// 주영시작 =======================================
+function loadProductReportCategory(){
+	$.ajax({
+		url:"${pageContext.request.contextPath}/product/loadProductReportCategory",
+		contentType: "application/json; charset=utf-8",
+		type:"GET",
+		dataType: "json",
+		success: data=>{
+			console.log("성공");
+				
+			let $productReportCategory = $("#productReportCategory");
+			let html = "";
+				
+			data.list.forEach(category => {
+				html += "<option value='"+category.CATEGORY_ID+"'>"+category.REPORT_TYPE+"</option>";
+			});
+			$productReportCategory.html(html);
+		},
+		error:(x,s,e)=>{
+			console.log("실패",x,s,e);
+		}
+	});
+		
+}
+
+$("[name=upFile]").on("change", function () {
+	//파일 입력 취소
+	if ($(this).prop("files")[0] === undefined) {
+		$(this).next(".custom-file-label").html("파일을 선택하세요.");
+	}
+	var fileName = $(this).prop('files')[0].name;
+	$(this).next(".custom-file-label").html(fileName);
+});
+
+$("#report-btn").click(()=>{
+	var $productNo = $(".pncontents #productNo").val();
+	var $reportComment = $("#productReportContents").val();
+	var $categoryId = $("#productReportCategory").val();
+	var $memberId = $("[name=memberId]").val();
+	var $file1 = $("#productReportFile");
+	
+	var $form = $("#reportFormData");
+
+    var formData = new FormData();
+    formData.append("files", $file1[0].files[0]);
+    formData.append("productNo",$productNo);
+    formData.append("reportComment",$reportComment);
+    formData.append("categoryId",$categoryId);
+    formData.append("memberId",$memberId);
+	
+	/* console.log("신고내용 찍어본다!");
+	console.log(productNo);
+	console.log(reportComment);
+	console.log(categoryId);
+	console.log(memberId);
+	console.log(fileName);
+	console.log("신고내용 찍기 끝났다!"); */
+	
+	if($reportComment.length==0){
+		alert("신고 내용을 입력하세요");
+		$("#productReportContents").focus();
+		return;
+	}
+	
+	$.ajax({
+		url:"${pageContext.request.contextPath}/product/insertProductReport",
+		dataType: "json",
+		type: "POST",
+		enctype: 'multipart/form-data',
+		data: formData,
+		contentType: false,
+		processData: false,
+		success: data=>{
+			console.log(data);
+			if(data == 1){
+				alert("게시글 신고가 정상적으로 접수되었습니다.");
+				location.href="${pageContext.request.contextPath}/product/productView.do?productNo="+$productNo;
+			}
+			else{
+				alert("게시글 신고 실패");
+			}
+		},
+		error:(x,s,e)=>{
+			console.log("실패",x,s,e);
+		}
+	});
+	
+});
+// ======================================= 주영 끝
+})
+</script>
 
 	<script>
 	$(()=>{
@@ -164,11 +328,6 @@
 		});//end of function
 	});//end of onload
 	
-	
-	
-	
-	
-	
 	function showCommentList(cPage){
 	//댓글 조회
 	var productNo = $(".pncontents #productNo").val();
@@ -197,8 +356,6 @@
 					else{
 						html+="<button id='fakebutton'>채우기용</button>";	
 					}
-					
-
 				}
 				
 				else{
@@ -255,7 +412,6 @@
 	});//end of ajax
 	};//end of function
 	
-	
 	//대댓글 등록
 	function insertLevel2(e){
 		var productNo = $(".pncontents #productNo").val();
@@ -288,8 +444,6 @@
 		})//end of ajax
 	}//end of function
 	
-	
-	
 	//대댓삭제
 	function deleteLevel2(e){
 		var commentNo=$(e).parent().parent().children("input").val();
@@ -316,12 +470,6 @@
 	
 	}
 	
-	
-	
-	
-	
-	
-	
 	//대댓글 등록창 보이기
 	function showLevel2form(e){
 // 		$("#level2Form").css("display","block");
@@ -331,20 +479,16 @@
 	function hideLevel2form(e){
 		$(e).parent().css("display","none");
 	}
-	
-
-
-
 </script>
 
 <style>
 .alcls{ 
- 		margin-left:30px;
-	} 
+ 	margin-left:30px;
+} 
 	
-	#fakebutton{
-		visibility:hidden;
-	}
+#fakebutton{
+	visibility:hidden;
+}
 #commentListView #level2Form {
 	display: none;
 }
@@ -352,25 +496,13 @@
 	width:1000px;
 }
 #listdiv .testas{
-margin-bottom:20px;
+	margin-bottom:20px;
 }
 </style>
 
-
-
-
-
-
-
-
-
-
-
-
-	<script>
+<script>
 $(()=>{
-	
-	
+
 // 예찬 시작 =======================================
     var $btnLike = $("#productView #btn-like");
 

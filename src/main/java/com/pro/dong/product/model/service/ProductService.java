@@ -22,10 +22,6 @@ public interface ProductService {
 	//하진 시작 ==========================
 	List<Category> selectCategory();
 
-	
-	
-	
-	
 	//========================== 하진 끝
 		
 	//근호 시작 ==========================
@@ -50,7 +46,8 @@ public interface ProductService {
 	//========================== 예찬 끝
 
 	//주영 시작 ==========================
-		
+	List<Map<String, String>> loadProductReportCategory();
+	int insertProductReport(Map<String, String> param);
 	//========================== 주영 끝
 		
 	//현규 시작 ==========================
@@ -63,13 +60,6 @@ public interface ProductService {
 	int countComment(int boardNo);
 
 	int deleteLevel2(int commentNo);
-
-
-
-
-
-	
-
 
 	//========================== 현규 끝
 	
