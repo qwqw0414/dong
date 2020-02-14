@@ -34,6 +34,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.pro.dong.common.email.EmailHandler;
 import com.pro.dong.common.email.TempKey;
+import com.pro.dong.common.util.Utils;
 import com.pro.dong.member.model.exception.MemberException;
 import com.pro.dong.member.model.service.MemberService;
 import com.pro.dong.member.model.vo.Member;
@@ -44,6 +45,7 @@ import com.pro.dong.member.model.vo.Member;
 public class MemberController {
 	
 	static Logger log = LoggerFactory.getLogger(MemberController.class);
+	static Gson gson = new Gson();
 	
 	@Autowired
 	MemberService ms;
@@ -521,19 +523,35 @@ public class MemberController {
 	
 	
 	
-	@ResponseBody
 	@RequestMapping("/memberChargingDetails.do")
-	public String memberChargingDetails(HttpSession session) {
+	public void memberChargingDetails() {}
+	
+	
+	
+	
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/selectAllDetails", produces="text/plain;charset=UTF-8")
+	public String memberChargingDetails(HttpSession session, @RequestParam("cPage") int cPage) {
 		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
 		log.debug("디테일 회원 아이디={}",memberLoggedIn.getMemberId());
 		List<Map<String,String>>list = null;
+		int numPerPage=10;
 		
-		
-		list = ms.selectChargingDetails(memberLoggedIn.getMemberId());
+		list = ms.selectAllDetails(memberLoggedIn.getMemberId(),cPage,numPerPage);
 		log.debug("리슷흐={}",list);
 		
+		int totalContents = ms.countDetails(memberLoggedIn.getMemberId());
+		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
 		
-		return "";
+		Map<String,Object> result = new HashMap<>();
+		result.put("list", list);
+		result.put("pageBar", pageBar);
+		
+		
+		
+		return gson.toJson(result)+"";
 	}
 	
 	
