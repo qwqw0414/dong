@@ -256,7 +256,6 @@ public class ProductController {
 			@RequestParam(value = "productNo", required = false) int productNo,
 			HttpServletRequest request) {
 		
-		log.info("fileName**********************={}", upFile);
 		int result = 0;
 
 		if(upFile != null) {
@@ -286,7 +285,6 @@ public class ProductController {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				log.info("asdasd^^^^^^^^^^^^^^^^^^^^^^@@@@@@@@@@@@@@@@@@@@@@@@@@@@@######################^^^^^^^^^^^^^^^^^^^^={}", renamedFileName);
 				Map<String, String> param = new HashMap<>();
 				param.put("fileName", renamedFileName);
 				param.put("reportComment", reportComment);
@@ -306,9 +304,7 @@ public class ProductController {
 				param.put("productNo", Integer.toString(productNo));
 				
 				result = ps.insertProductReport(param);
-				
 		}
-
 		return ""+result;
 	}
 	
