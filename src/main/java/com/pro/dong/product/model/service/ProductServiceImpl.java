@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.pro.dong.product.model.dao.ProductDAO;
 import com.pro.dong.product.model.vo.Category;
 import com.pro.dong.product.model.vo.Like;
+import com.pro.dong.product.model.vo.OrderList;
 import com.pro.dong.product.model.vo.Product;
 import com.pro.dong.product.model.vo.ProductAttachment;
 import com.pro.dong.product.model.vo.ProductComment;
@@ -29,7 +30,14 @@ public class ProductServiceImpl implements ProductService{
 	ProductDAO pd;
 	
 	//민호 시작 ==========================
-
+	@Override
+	public int submitPurchase(OrderList orderList) {
+		return pd.submitPurchase(orderList);
+	}
+	@Override
+	public int updateMemberPoint(OrderList orderList) {
+		return pd.updateMemberPoint(orderList);
+	}
 	//==========================민호 끝
 		
 	//하진 시작 ==========================

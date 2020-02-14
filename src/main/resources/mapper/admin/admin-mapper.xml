@@ -105,6 +105,28 @@
 	<!-- ==========================  근호 끝 -->
 	
 	<!-- 지은 시작 ========================== -->
+	<select id="selectMemberPoint" parameterType="map" resultType="map">
+		select M.member_id, P.point_amount, P.reg_date, M.point, P.status
+		from (member M left join point_status P on M.member_id = P.member_id) order by P.reg_date
+	</select>
+	
+	<select id="selectMemberPointTotal" parameterType="map" resultType="_int">
+		select count(*) from member M left join point_status P on M.member_id = P.member_id
+		<if test="searchKeyword != null and searchKeyword!=''">
+			and P.${searchType} like '%${searchKeyword}%'			
+		</if>
+	</select>
+	
+	<select id="selectMemberPointList" parameterType="map" resultType="map">
+		select *
+		from (member M left join point_status P on M.member_id = P.member_id) 
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+				and P.${searchType} like '%${searchKeyword}%'
+			</if>
+		</where>
+		order by P.reg_date
+	</select>
 	
 	<!-- ==========================  지은 끝 -->
 	

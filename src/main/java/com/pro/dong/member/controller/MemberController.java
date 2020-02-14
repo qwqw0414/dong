@@ -75,7 +75,10 @@ public class MemberController {
 		log.debug("memberInfo={}",memberInfo);
 		return memberInfo;
 	}
-	
+	@RequestMapping("/orderListView.do")
+	public void orderListView() {
+		
+	}
 //==========================민호 끝
 	
 // 하진 시작 ==========================

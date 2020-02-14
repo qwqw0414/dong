@@ -31,6 +31,7 @@ import com.pro.dong.member.model.vo.Member;
 import com.pro.dong.product.model.service.ProductService;
 import com.pro.dong.product.model.vo.Category;
 import com.pro.dong.product.model.vo.Like;
+import com.pro.dong.product.model.vo.OrderList;
 import com.pro.dong.product.model.vo.Product;
 import com.pro.dong.product.model.vo.ProductAttachment;
 import com.pro.dong.product.model.vo.ProductComment;
@@ -49,7 +50,18 @@ public class ProductController {
 	
 	
 	//민호 시작 ==========================
-	
+	@RequestMapping("/submitPurchase")
+	@ResponseBody
+	public String submitPurchase(OrderList orderList, Member buyer){
+		log.debug("orderList={}",orderList);
+		int result = ps.submitPurchase(orderList);
+		int pointResult = 0;
+		if(result>0) {
+			pointResult = ps.updateMemberPoint(orderList);
+		}
+		
+		return pointResult+"";
+	}
 	//==========================민호 끝
 		
 	//하진 시작 ==========================
