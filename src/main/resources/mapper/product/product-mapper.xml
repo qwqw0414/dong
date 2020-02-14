@@ -168,7 +168,20 @@
 	<!-- ==========================  예찬 끝 -->
 	
 	<!-- 주영 시작 ========================== -->
+	<select id="loadProductReportCategory" resultType="map">
+		select * from report_category
+	</select>
 	
+	<insert id="insertProductReport">
+		insert into product_report values (SEQ_PRODUCT_REPORT.nextval, #{memberId}, #{categoryId}, #{productNo}, #{reportComment}, 'N'
+		<if test="fileName != null and fileName != ''">
+			, #{fileName}
+		</if>
+		<if test="fileName == null or fileName == ''">
+			, null
+		</if>
+		)
+	</insert>
 	<!-- ==========================  주영 끝 -->
 	
 	<!-- 현규 시작 ========================== -->
@@ -199,8 +212,5 @@
 	<delete id="deleteLevel2">
 	delete from product_comment where comment_no=#{commentNo}
 	</delete>	
-	
-	
-	
 	<!-- ==========================  현규 끝 -->
 </mapper>

@@ -37,10 +37,6 @@ public class ProductServiceImpl implements ProductService{
 	public List<Category> selectCategory() {
 		return pd.selectCategory();
 	}
-
-	
-	
-	
 	
 	//========================== 하진 끝
 		
@@ -115,47 +111,16 @@ public class ProductServiceImpl implements ProductService{
 	}
 	//========================== 예찬 끝
 
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		
 	//주영 시작 ==========================
-		
+	@Override
+	public List<Map<String, String>> loadProductReportCategory() {
+		return pd.loadProductReportCategory();
+	}
+	@Override
+	public int insertProductReport(Map<String, String> param) {
+		return pd.insertProductReport(param);
+	}
+
 	//========================== 주영 끝
 		
 	//현규 시작 ==========================
@@ -179,8 +144,6 @@ public class ProductServiceImpl implements ProductService{
 	public int deleteLevel2(int commentNo) {
 		return pd.deleteLevel2(commentNo);
 	}
-
-
 
 	//========================== 현규 끝
 	

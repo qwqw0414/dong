@@ -155,6 +155,13 @@ span{
 #thumbsUpCount{
 	font-size: 42px;
 }
+#reportBtnImg{
+	border: none;
+	margin-bottom: 5px;
+}
+#boardReportCategory{
+	margin-left: 10px;
+}
 
 </style>
 
@@ -731,7 +738,8 @@ $(function(){
 	       	<div class="modal-body">
          		<div class="container">
 	         		<div  style="text-align: center;" class="form-group">
-				    	<label style="display: inline-block;" class="input-group-text col-lg-3" for="inputGroupSelect01">신고 유형</label>
+	         			<img id='reportBtnImg' class="img-thumbnail" src="${pageContext.request.contextPath}/resources/images/siren.png"/>
+				    	<label style="display: inline-block;" for="inputGroupSelect01">신고 유형</label>
 					 	<select class="custom-select col-lg-5" id="boardReportCategory" name="boardReportCategory">
 					 	</select>
 				 	</div>
