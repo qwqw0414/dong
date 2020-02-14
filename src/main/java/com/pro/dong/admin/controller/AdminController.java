@@ -184,9 +184,32 @@ public class AdminController {
 		
 	}
 	
-	@RequestMapping("memberPointListEnd")
-	public ModelAndView memberPointListEnd(ModelAndView mav) {
-		return mav;
+	@RequestMapping("/memberPointListEnd")
+	@ResponseBody
+	public Map<String, Object> memberPointListEnd(@RequestParam(value="searchType", defaultValue="")String searchType, 
+												  @RequestParam(value="searchKeyword",defaultValue="") String searchKeyword,
+												  @RequestParam(value="cPage",defaultValue="1") int cPage) {
+		
+		final int numPerPage = 10;
+		Map<String,Object> result = new HashMap<>();
+		Map<String, String> param = new HashMap<>();
+		param.put("searchType", searchType);
+		param.put("searchKeyword", searchKeyword);
+		
+		int totalPoint = as.selectMemberPointTotal(param);
+		List<Map<String,String>> list = as.selectMemberPointList(cPage, numPerPage, param);
+		String function = "loadMemberPointList('"+searchType+"','"+searchKeyword+"',";
+		String pageBar = Utils.getAjaxPageBar(totalPoint, cPage, numPerPage, function);
+		
+		result.put("list",list);
+		result.put("totalPoint", totalPoint);
+		result.put("cPage", cPage);
+		result.put("numPerPage", numPerPage);
+		result.put("pageBar", pageBar);
+		log.debug("result={}", result);
+		log.debug("list={}", list);
+		
+		return result;
 	}
 	
 	
