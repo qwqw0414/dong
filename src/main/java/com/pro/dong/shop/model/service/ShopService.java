@@ -24,6 +24,7 @@ public interface ShopService {
 	int totalCountMyProduct(String memberId);
 	int productUpdate(String productNo);
 	int productDelete(String productNo);
+	int saleStatus(Map<String, String> param);
 	//========================== 하진 끝
 	
 	

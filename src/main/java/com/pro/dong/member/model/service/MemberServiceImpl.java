@@ -120,8 +120,13 @@ public class MemberServiceImpl implements MemberService{
 
 
 	@Override
-	public List<Map<String, String>> selectChargingDetails(String memberId) {
-		return md.selectChargingDetails(memberId);
+	public List<Map<String, String>> selectAllDetails(String memberId, int cPage, int numPerPage) {
+		return md.selectAllDetails(memberId,cPage, numPerPage);
+	}
+
+	@Override
+	public int countDetails(String memberId) {
+		return md.countDetails(memberId);
 	}
 
 

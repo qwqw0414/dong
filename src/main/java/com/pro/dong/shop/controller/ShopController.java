@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.w3c.dom.ls.LSInput;
 
 import com.google.gson.Gson;
 import com.pro.dong.common.util.Utils;
@@ -159,6 +160,18 @@ public class ShopController {
 		Map<String, String> param = new HashMap<>();
 		param.put("productNo",productNo);
 		int result = ss.productDelete(productNo);
+		return ""+result;
+	}
+	@RequestMapping("/saleSelect")
+	@ResponseBody
+	public String saleStatus(@RequestParam("productNo") String productNo, @RequestParam("select") String select) {
+		
+		Map<String, String> param = new HashMap<>();
+		param.put("productNo", productNo);
+		param.put("select", select);
+		log.debug("@@@@@@@@@@@@@@@={}",param);
+		int result = ss.saleStatus(param);
+		
 		return ""+result;
 	}
 	//========================== 하진 끝

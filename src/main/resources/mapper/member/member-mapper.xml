@@ -109,6 +109,7 @@
 	
 	<select id="selectChargingDetails" resultType="map">
 		select * from point_status where member_id=#{memberId}
+		order by reg_date desc
 	</select>
 	
 	<select id="countDetails" resultType="_int">
