@@ -20,7 +20,7 @@ public interface BoardDAO {
 
 	List<BoardCategory> selectBoardCategory();
 
-	List<Board> selectBoardNotice();
+	List<Board> selectBoardNotice(Map<String, String> param);
 	
 	Member getMemberByMemberId(String memberId);
 	//==========================민호 끝
