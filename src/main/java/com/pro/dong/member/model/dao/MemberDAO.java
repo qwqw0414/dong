@@ -22,7 +22,8 @@ public interface MemberDAO {
 	// 근호 시작 ==========================
 	Member selectLoginMember(String memberId);
 	int emailDuplicate(String email);
-
+	int updateAddress(Map<String, String> param);
+	
 	//==========================  근호 끝
 	
 	// 지은 시작 ==========================
@@ -50,6 +51,7 @@ public interface MemberDAO {
 	int updateMemberPhone(Map<String, String> param);
 	int updateMemberEmail(Map<String, String> param);
 	List<Map<String, String>> selectChargingDetails(String memberId);
+	
 	
 
 	

@@ -55,6 +55,10 @@ public class MemberServiceImpl implements MemberService{
 	public int emailDuplicate(String email) {
 		return md.emailDuplicate(email);
 	}
+	@Override
+	public int updateAddress(Map<String, String> param) {
+		return md.updateAddress(param);
+	}
 	
 	//==========================  근호 끝
 	
@@ -123,6 +127,8 @@ public class MemberServiceImpl implements MemberService{
 	public List<Map<String, String>> selectChargingDetails(String memberId) {
 		return md.selectChargingDetails(memberId);
 	}
+
+	
 
 
 

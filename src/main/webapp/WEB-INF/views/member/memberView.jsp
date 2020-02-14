@@ -150,9 +150,9 @@
                     <div class="ms_content">
                         <p>내 동네 : ${member.SIDO } ${member.SIGUNGU} ${member.DONG}</p>
 
-
                         <div class="mypage_btn_more">
-                            <input type="button" value="수정 바로가기" class="btn_val btn btn-outline-success btn-sm">
+                            <!-- <input type="button" value="수정 바로가기" class="btn_val btn btn-outline-success btn-sm"> -->
+                            <button class="btn btn-outline-success btn-sm" id="updateAddress" data-toggle="modal" data-target="#addressModal">수정 바로가기</button>
                         </div>
 
                     </div>
@@ -160,13 +160,18 @@
 
             </div>
 
-
         </div>
-
 
 	<span class="byement">더이상 동네한바퀴를 이용하고 싶지 않다면 <a class="byelink"href="${pageContext.request.contextPath}/member/memberBye.do">회원탈퇴<small>▶</small> </a></span>
     </div>
 </div>
+
+	<div id="addressModel-wrapper">
+		<div class="modal-body" id="AddressPage">
+			<jsp:include page="/WEB-INF/views/member/updateAddress.jsp"/>
+		</div>
+	</div>
+	
 
 
 
@@ -331,7 +336,7 @@ if ( rsp.success ) {
             });
         });//end of updatephone
 
-
+//----------------------------------------------------근호
 		//메일보내기
         $("#memberView #button-addon3").on('click', function () {
             var email = $("#useremail").val();
@@ -363,14 +368,15 @@ if ( rsp.success ) {
         		type: "POST",
         		success: data =>{
         			console.log(data);
+        			console.log(data.email);
         			console.log(authKey);
-        			if(data==1){
-        				/* $("#curemail").text(map.EMAIL); */
+        			if(data.result == 1){
+        				$("#curemail").text(data.email);
         				$("#memberView .before_change3").css("display", "block");
         				$(".email_authKey").css("display","none");
         				$(".emailMsg").css("display","none");
         			}
-        			else {
+        			else if(data.result != 1){
         				$(".email_authKey").css("display","block");
         				$(".emailMsg").text("인증번호 틀림");
         			}
@@ -380,8 +386,11 @@ if ( rsp.success ) {
                  }
         	});
         });
-        
 
+        
+    });//end of script
+       
+//----------------------------------------------------------------근호 끝
         //이메일
         /* $("#memberView #button-addon3").on('click', function () {
             var afterEmail = $("#useremail").val();
@@ -405,7 +414,7 @@ if ( rsp.success ) {
 
         
         
-    });//end of script
+   
  
 
     
