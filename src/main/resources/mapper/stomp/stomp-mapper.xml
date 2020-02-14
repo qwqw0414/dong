@@ -27,14 +27,14 @@
 		from (
 		    select chatno,
 		           A.chatid, 
-		           (select memberid from chatroom where A.chatid = chatid and memberid != 'admin') memberid, 
+		           (select memberid from chatroom where A.chatid = chatid and memberid != 'qwqw0414') memberid, 
 		           msg, 
 		           time,
 		           count(*) over(partition by A.chatid,A.memberid) cnt,
 		           rank() over(partition by A.chatid order by time desc) rank 
 		    from chatlog A left join chatroom B
 		        on A.chatid = B.chatid and A.memberid = B.memberid
-		    where time > (select lastcheck from chatroom C where C.chatid = A.chatid and memberid = 'admin')
+		    where time > (select lastcheck from chatroom C where C.chatid = A.chatid and memberid = 'qwqw0414')
 		    order by time desc)A
 		where rank = 1
 		union all 
@@ -42,7 +42,7 @@
 		from (
 		    select chatno,
 		           A.chatid, 
-		           (select memberid from chatroom where A.chatid = chatid and memberid != 'admin') memberid, 
+		           (select memberid from chatroom where A.chatid = chatid and memberid != 'qwqw0414') memberid, 
 		           msg, 
 		           time,
 		           0 cnt,
@@ -50,7 +50,7 @@
 		    from chatlog A left join chatroom B
 			        on A.chatid = B.chatid and A.memberid = B.memberid
 			order by time desc)A
-		where rank = 1 and time <![CDATA[ <= ]]> (select lastcheck from chatroom C where C.chatid = A.chatid and memberid = 'admin')
+		where rank = 1 and time <![CDATA[ <= ]]> (select lastcheck from chatroom C where C.chatid = A.chatid and memberid = 'qwqw0414')
 	</select>
 	<select id="findChatListByChatId" resultType="msg">
 		select * 

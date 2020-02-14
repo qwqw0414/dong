@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -12,7 +14,7 @@ import com.pro.dong.stomp.model.vo.Msg;
 
 @Repository
 public class StompDaoImpl implements StompDao {
-
+	Logger log = LoggerFactory.getLogger(getClass());
 	@Autowired
 	SqlSessionTemplate sqlSession;
 
@@ -48,6 +50,7 @@ public class StompDaoImpl implements StompDao {
 
 	@Override
 	public List<Msg> findChatListByChatId(String chatId) {
+		log.debug(chatId);
 		return sqlSession.selectList("stomp.findChatListByChatId", chatId);
 	}
 
