@@ -236,7 +236,82 @@ public class ProductController {
 	//========================== 예찬 끝
 		
 	//주영 시작 ==========================
+	@RequestMapping(value="/loadProductReportCategory", produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String loadProductReportCategory() {
+		List<Map<String, String>> list = null;
+		list = ps.loadProductReportCategory();
+		Map<String, Object> result = new HashMap<>();
+		result.put("list", list);
+		return gson.toJson(result);
+	}
 		
+	@RequestMapping("/insertProductReport")
+	@ResponseBody
+	public String insertProductReport(
+			@RequestParam(value = "files", required = false) MultipartFile upFile,
+			@RequestParam(value = "reportComment", required = false) String reportComment,
+			@RequestParam(value = "categoryId", required = false) String categoryId,
+			@RequestParam(value = "memberId", required = false) String memberId,
+			@RequestParam(value = "productNo", required = false) int productNo,
+			HttpServletRequest request) {
+		
+		log.info("fileName**********************={}", upFile);
+		int result = 0;
+
+		if(upFile != null) {
+			
+			String saveDirectory = request.getServletContext().getRealPath("/resources/upload/productReportImage");
+			
+			//동적으로 directory 생성
+			File dir = new File(saveDirectory);
+			if (dir.exists() == false)
+				dir.mkdir();
+			
+			//MultipartFile객체 파일업로드 처리
+			MultipartFile f = upFile;
+			if (!f.isEmpty()) {
+				//파일명 재생성
+				String originalFileName = f.getOriginalFilename();
+				String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
+				int rndNum = (int) (Math.random() * 1000);
+				String renamedFileName = sdf.format(new Date()) + "_" + rndNum + ext;
+				
+				//서버컴퓨터에 파일저장
+				try {
+					f.transferTo(new File(saveDirectory + "/" + renamedFileName));
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				log.info("asdasd^^^^^^^^^^^^^^^^^^^^^^@@@@@@@@@@@@@@@@@@@@@@@@@@@@@######################^^^^^^^^^^^^^^^^^^^^={}", renamedFileName);
+				Map<String, String> param = new HashMap<>();
+				param.put("fileName", renamedFileName);
+				param.put("reportComment", reportComment);
+				param.put("categoryId", categoryId);
+				param.put("memberId", memberId);
+				param.put("productNo", Integer.toString(productNo));
+				
+				result = ps.insertProductReport(param);
+			}
+		} //end if
+		else {
+				
+				Map<String, String> param = new HashMap<>();
+				param.put("reportComment", reportComment);
+				param.put("categoryId", categoryId);
+				param.put("memberId", memberId);
+				param.put("productNo", Integer.toString(productNo));
+				
+				result = ps.insertProductReport(param);
+				
+		}
+
+		return ""+result;
+	}
+	
 	//========================== 주영 끝
 		
 	//현규 시작 ==========================
@@ -330,12 +405,5 @@ public class ProductController {
 			
 			return gson.toJson(result)+"";
 		}
-		
-		
-		
-		
-		
-		
-
-	//========================== 현규 끝
+//========================== 현규 끝
 }

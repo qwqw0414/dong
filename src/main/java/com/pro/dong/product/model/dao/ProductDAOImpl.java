@@ -31,10 +31,6 @@ public class ProductDAOImpl implements ProductDAO{
 	public List<Category> selectCategory() {
 		return sst.selectList("product.selectCategory");
 	}
-
-	
-	
-	
 	//========================== 하진 끝
 		
 	//근호 시작 ==========================
@@ -68,7 +64,6 @@ public class ProductDAOImpl implements ProductDAO{
 		RowBounds rowBounds = new RowBounds(0,10);
 		return sst.selectList("product.selectProductListTop10", categoryId, rowBounds);
 	}
-	
 	@Override
 	public List<Map<String, String>> selectProduct(int cPage, int numPerPage, Map<String, String> param) {
 		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
@@ -104,53 +99,15 @@ public class ProductDAOImpl implements ProductDAO{
 	}
 	//========================== 예찬 끝
 
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		
 	//주영 시작 ==========================
-		
+	@Override
+	public List<Map<String, String>> loadProductReportCategory() {
+		return sst.selectList("product.loadProductReportCategory");
+	}	
+	@Override
+	public int insertProductReport(Map<String, String> param) {
+		return sst.insert("product.insertProductReport", param);
+	}
 	//========================== 주영 끝
 		
 	//현규 시작 ==========================
@@ -176,6 +133,5 @@ public class ProductDAOImpl implements ProductDAO{
 	public int deleteLevel2(int commentNo) {
 		return sst.delete("product.deleteLevel2",commentNo);
 	}
-
 	//========================== 현규 끝
 }
