@@ -112,6 +112,14 @@ public class AdminServiceImpl implements AdminService {
 	public List<Product> loadReportBoardList(int cPage, int numPerPage, Map<String, String> param) {
 		return ad.loadReportBoardList(cPage, numPerPage, param);
 	}
+	@Override
+	public int selectProductReportTotalContents(Map<String, String> param) {
+		return ad.selectProductReportTotalContents(param);
+	}
+	@Override
+	public List<Product> loadProductReportList(int cPage, int numPerPage, Map<String, String> param) {
+		return ad.loadProductReportList(cPage, numPerPage, param);
+	}
 	// ========================== 주영 끝
 	
 	

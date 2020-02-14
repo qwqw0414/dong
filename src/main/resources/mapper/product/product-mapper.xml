@@ -188,7 +188,7 @@
 		<if test="fileName == null or fileName == ''">
 			, null
 		</if>
-		)
+		, default)
 	</insert>
 	<!-- ==========================  주영 끝 -->
 	
