@@ -196,6 +196,25 @@
 			</if>
 		</where>
 	</select>
+	
+	<select id="selectProductReportTotalContents" parameterType="map" resultType="_int">
+		select count(*) from product_report
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+				and ${searchType} like '%${searchKeyword}%'
+			</if>
+		</where>
+	</select>
+	
+	<select id="loadProductReportList" parameterType="map" resultType="map">
+		select * from product_report
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+				and a.${searchType} like '%${searchKeyword}%'
+			</if>
+		</where>
+		order by report_no
+	</select>
 	<!-- ==========================  주영 끝 -->
 	
 	<!-- 현규 시작 ========================== -->

@@ -199,7 +199,7 @@ $(()=>{
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/memberPointList.do">회원포인트관리</a>
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/productList.do">상품관리</a>
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/boardList.do">게시글관리</a>
-					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/memberPointList.do">상품신고관리</a>
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/productReportList.do">상품신고관리</a>
 
 
 				</div>

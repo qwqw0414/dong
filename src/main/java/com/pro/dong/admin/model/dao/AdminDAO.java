@@ -43,6 +43,8 @@ public interface AdminDAO {
 	List<Product> loadBoardList(int cPage, int numPerPage, Map<String, String> param);
 	int selectReportBoardTotalContents(Map<String, String> param);
 	List<Product> loadReportBoardList(int cPage, int numPerPage, Map<String, String> param);
+	int selectProductReportTotalContents(Map<String, String> param);
+	List<Product> loadProductReportList(int cPage, int numPerPage, Map<String, String> param);
 	// ========================== 주영 끝
 
 	// 현규 시작 ==========================

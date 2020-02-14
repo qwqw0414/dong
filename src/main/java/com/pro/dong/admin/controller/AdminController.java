@@ -96,8 +96,6 @@ public class AdminController {
 	public Map<String, Object> memberList(@RequestParam(value="searchType", defaultValue="")String searchType, 
 											@RequestParam(value="searchKeyword",defaultValue="") String searchKeyword,
 											@RequestParam(value="cPage",defaultValue="1") int cPage) {
-		
-		
 		// 페이징바 작업
 		final int numPerPage = 10;
 		
@@ -261,6 +259,39 @@ public class AdminController {
 		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
 		result.put("pageBar", pageBar);
 		log.info("list%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%={}", list);
+		return result;
+	}
+	//@@@@@@@@@@@@@@@@@@@@@@@@@@ 상품신고시작 @@@@@@@@@@@@@@@@@@@@@@@@@@
+	@RequestMapping("/productReportList.do")
+	public void productReportList() {
+
+	}
+	
+	@RequestMapping("/loadProductReportList")
+	@ResponseBody
+	public Map<String, Object> loadProductReportList(
+			@RequestParam(value="searchType", defaultValue="")String searchType, @RequestParam(value="searchKeyword",defaultValue="") String searchKeyword,@RequestParam(value="type",defaultValue="") String type,
+			@RequestParam(value="cPage",defaultValue="1") int cPage){
+		final int numPerPage = 10;
+		Map<String, Object> result = new HashMap<>();
+		
+		Map<String, String> param = new HashMap<>();
+		param.put("searchType", searchType);
+		param.put("searchKeyword", searchKeyword);
+		param.put("type", type);
+		
+		//페이징바 작업
+		int totalContents = as.selectProductReportTotalContents(param);
+		log.info("@@@@@@@@@@@@@@@@@@reportTotalContents@@@@@@@@@@@@@@@@@={}", totalContents);
+
+		List<Product> list = as.loadProductReportList(cPage, numPerPage, param);
+		result.put("list", list);
+		result.put("cPage", cPage);
+		result.put("numPerPage", numPerPage);
+		result.put("totalContents", totalContents);
+		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
+		result.put("pageBar", pageBar);
+		log.info("@@@@@@@@@@@@@@@@@list%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%={}", list);
 		return result;
 	}
 	
