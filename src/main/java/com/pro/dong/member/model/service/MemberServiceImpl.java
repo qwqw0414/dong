@@ -129,6 +129,11 @@ public class MemberServiceImpl implements MemberService{
 		return md.countDetails(memberId);
 	}
 
+	@Override
+	public List<Map<String, String>> selectDetailsByOption(Map<String, String> param, int cPage, int numPerPage) {
+		return md.selectDetailsByOption(param,cPage,numPerPage);
+	}
+
 
 
 	

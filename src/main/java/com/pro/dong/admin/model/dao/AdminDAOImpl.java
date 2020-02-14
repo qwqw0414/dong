@@ -80,7 +80,19 @@ public class AdminDAOImpl implements AdminDAO {
 	// ========================== 근호 끝
 
 	// 지은 시작 ==========================
-
+	@Override
+	public List<Member> selectMemberPoint(String memberId) {
+		return sst.selectList("admin.selectMemberPoint",memberId);
+	}
+	@Override
+	public int selectMemberPointTotal(Map<String, String> param) {
+		return sst.selectOne("admin.selectMemberPointTotal",param);
+	}
+	@Override
+	public List<Map<String, String>> selectMemberPointList(int cPage, int numPerPage, Map<String, String> param) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return sst.selectList("admin.selectMemberPointList", param, rowBounds);
+	}
 	// ========================== 지은 끝
 
 	// 예찬 시작 ==========================
@@ -116,6 +128,9 @@ public class AdminDAOImpl implements AdminDAO {
 		return sst.selectList("admin.loadProductReportList", param, rowBounds);
 	}
 	// ========================== 주영 끝
+	
+	
+	
 
 	// 현규 시작 ==========================
 

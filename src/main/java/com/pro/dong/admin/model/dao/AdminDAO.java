@@ -31,6 +31,9 @@ public interface AdminDAO {
 	// ========================== 근호 끝
 
 	// 지은 시작 ==========================
+	List<Member> selectMemberPoint(String memberId);
+	int selectMemberPointTotal(Map<String, String> param);
+	List<Map<String, String>> selectMemberPointList(int cPage, int numPerPage, Map<String, String> param);
 
 	// ========================== 지은 끝
 
@@ -46,6 +49,8 @@ public interface AdminDAO {
 	int selectProductReportTotalContents(Map<String, String> param);
 	List<Product> loadProductReportList(int cPage, int numPerPage, Map<String, String> param);
 	// ========================== 주영 끝
+	
+	
 
 	// 현규 시작 ==========================
 
