@@ -127,6 +127,10 @@ public class AdminDAOImpl implements AdminDAO {
 		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
 		return sst.selectList("admin.loadProductReportList", param, rowBounds);
 	}
+	@Override
+	public Map<String, String> selectOneProductReport(int boardNo) {
+		return sst.selectOne("admin.selectOneProductReport", boardNo);
+	}
 	// ========================== 주영 끝
 	
 	

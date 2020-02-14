@@ -120,6 +120,10 @@ public class AdminServiceImpl implements AdminService {
 	public List<Product> loadProductReportList(int cPage, int numPerPage, Map<String, String> param) {
 		return ad.loadProductReportList(cPage, numPerPage, param);
 	}
+	@Override
+	public Map<String, String> selectOneProductReport(int boardNo) {
+		return ad.selectOneProductReport(boardNo);
+	}
 	// ========================== 주영 끝
 	
 	

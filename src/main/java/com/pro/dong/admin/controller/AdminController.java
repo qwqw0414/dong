@@ -318,6 +318,14 @@ public class AdminController {
 		return result;
 	}
 	
+	@RequestMapping("/productReportView.do")
+	public ModelAndView productReportView(int boardNo, ModelAndView mav) {
+		Map<String, String> map = as.selectOneProductReport(boardNo);
+		mav.addObject("map", map);
+		log.info("@@@@@@@@@@@@@@@@@@@@하나의 신고글을 가져와@@@@@@@@@@@@@@@@@@={}", map);
+		return mav;
+	}
+	
 	// ========================== 주영 끝
 	
 	// 현규 시작 ==========================

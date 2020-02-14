@@ -237,7 +237,7 @@ $("[name=upFile]").on("change", function () {
 
 $("#report-btn").click(()=>{
 	var $productNo = $(".pncontents #productNo").val();
-	var $reportComment = $("#productReportContents").val();
+	var $reportContents = $("#productReportContents").val();
 	var $categoryId = $("#productReportCategory").val();
 	var $memberId = $("[name=memberId]").val();
 	var $file1 = $("#productReportFile");
@@ -247,19 +247,11 @@ $("#report-btn").click(()=>{
     var formData = new FormData();
     formData.append("files", $file1[0].files[0]);
     formData.append("productNo",$productNo);
-    formData.append("reportComment",$reportComment);
+    formData.append("reportContents",$reportContents);
     formData.append("categoryId",$categoryId);
     formData.append("memberId",$memberId);
 	
-	/* console.log("신고내용 찍어본다!");
-	console.log(productNo);
-	console.log(reportComment);
-	console.log(categoryId);
-	console.log(memberId);
-	console.log(fileName);
-	console.log("신고내용 찍기 끝났다!"); */
-	
-	if($reportComment.length==0){
+	if($reportContents.length==0){
 		alert("신고 내용을 입력하세요");
 		$("#productReportContents").focus();
 		return;

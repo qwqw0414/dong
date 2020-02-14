@@ -50,10 +50,8 @@ public interface AdminService {
 	List<Product> loadReportBoardList(int cPage, int numPerPage, Map<String, String> param);
 	int selectProductReportTotalContents(Map<String, String> param);
 	List<Product> loadProductReportList(int cPage, int numPerPage, Map<String, String> param);
+	Map<String, String> selectOneProductReport(int boardNo);
 	// ========================== 주영 끝
-	
-	
-	
 
 	// 현규 시작 ==========================
 

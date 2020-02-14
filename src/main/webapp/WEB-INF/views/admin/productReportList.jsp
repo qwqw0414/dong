@@ -51,8 +51,12 @@ $(()=>{
 		    	let header = "<tr><th>No</th><th>신고접수일</th><th>카테고리</th><th>작성자</th><th>신고내용</th><th>답변상태</th><th>첨부파일</th></tr>";
 		    	let	html = "";
 		    	for(var i=0; i<data.list.length;i++){
+		    		
+		    		if(data.list[i].REPORT_COMMENT.length > 12) 
+		    			data.list[i].REPORT_COMMENT = data.list[i].REPORT_COMMENT.substring(0,12)+"..."
+		    		
 		    		html += "<tr>";
-		    		html += "<td><a href='${pageContext.request.contextPath}/admin/boardView.do?boardNo="+data.list[i].REPORT_NO+"'>"+data.list[i].REPORT_NO+"</a></td>";
+		    		html += "<td><a href='${pageContext.request.contextPath}/admin/productReportView.do?boardNo="+data.list[i].REPORT_NO+"'>"+data.list[i].REPORT_NO+"</a></td>";
 		    		html += "<td>"+data.list[i].REPORT_DATE+"</td>";
 		    		if(data.list[i].CATEGORY_ID = 'A001'){
 		    			html += "<td>사기신고</td>";

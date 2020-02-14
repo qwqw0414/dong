@@ -181,7 +181,7 @@
 	</select>
 	
 	<insert id="insertProductReport">
-		insert into product_report values (SEQ_PRODUCT_REPORT.nextval, #{memberId}, #{categoryId}, #{productNo}, #{reportComment}, 'N'
+		insert into product_report values (SEQ_PRODUCT_REPORT.nextval, #{memberId}, #{categoryId}, #{productNo}, #{reportContents}, 'N'
 		<if test="fileName != null and fileName != ''">
 			, #{fileName}
 		</if>

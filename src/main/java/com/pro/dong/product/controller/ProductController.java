@@ -262,7 +262,7 @@ public class ProductController {
 	@ResponseBody
 	public String insertProductReport(
 			@RequestParam(value = "files", required = false) MultipartFile upFile,
-			@RequestParam(value = "reportComment", required = false) String reportComment,
+			@RequestParam(value = "reportContents", required = false) String reportContents,
 			@RequestParam(value = "categoryId", required = false) String categoryId,
 			@RequestParam(value = "memberId", required = false) String memberId,
 			@RequestParam(value = "productNo", required = false) int productNo,
@@ -299,7 +299,7 @@ public class ProductController {
 				}
 				Map<String, String> param = new HashMap<>();
 				param.put("fileName", renamedFileName);
-				param.put("reportComment", reportComment);
+				param.put("reportContents", reportContents);
 				param.put("categoryId", categoryId);
 				param.put("memberId", memberId);
 				param.put("productNo", Integer.toString(productNo));
@@ -310,7 +310,7 @@ public class ProductController {
 		else {
 				
 				Map<String, String> param = new HashMap<>();
-				param.put("reportComment", reportComment);
+				param.put("reportContents", reportContents);
 				param.put("categoryId", categoryId);
 				param.put("memberId", memberId);
 				param.put("productNo", Integer.toString(productNo));
