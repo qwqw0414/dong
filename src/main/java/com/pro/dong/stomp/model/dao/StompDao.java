@@ -8,7 +8,7 @@ import com.pro.dong.stomp.model.vo.Msg;
 
 
 
-public interface StompDao {
+public interface StompDAO {
 
 	String findChatIdByMemberId(String memberId);
 

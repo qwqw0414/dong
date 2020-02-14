@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.pro.dong.stomp.model.dao.StompDao;
+import com.pro.dong.stomp.model.dao.StompDAO;
 import com.pro.dong.stomp.model.vo.ChatRoom;
 import com.pro.dong.stomp.model.vo.Msg;
 
@@ -17,7 +17,7 @@ import com.pro.dong.stomp.model.vo.Msg;
 public class StompServiceImpl implements StompService {
 
 	@Autowired
-	StompDao stompDao;
+	StompDAO stompDao;
 
 	@Override
 	public String findChatIdByMemberId(String memberId) {
