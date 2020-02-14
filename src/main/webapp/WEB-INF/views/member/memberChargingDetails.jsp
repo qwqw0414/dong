@@ -4,32 +4,32 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
 
-<div id="chargingDetails">gd</div>
+<div id="chargingDetails"><h4>gd</h4></div>
 
 
 
 
 <script>
-// showchargingDetails(1);
+showchargingDetails(1);
 	
 	
 	
-// function showchargingDetails(){
+function showchargingDetails(cPage){
 // 	var cPage= 1;
-// 	$.ajax({
-//		url: "${pageContext.request.contextPath}/board/memberChargingDetails.do",
-// 		data:{cPage:cPage},
-// 		type:"GET",
-// 		dataType:"json",
-// 		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-// 		success:data=>{
-// 			console.log(data);
-// 		},
-// 		 error : (x,s,e) =>{
-// 		        console.log("실패",x,s,e);
-// 		      }
-// 	});//end of ajax
-// } 	
+	$.ajax({
+		url: "${pageContext.request.contextPath}/board/selectAllDetails",
+		data:{cPage:cPage},
+		type:"GET",
+		dataType:"json",
+		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		success:data=>{
+			console.log(data);
+		},
+		 error : (x,s,e) =>{
+		        console.log("실패",x,s,e);
+		      }
+	});//end of ajax
+} 	
 	
 	
 	
