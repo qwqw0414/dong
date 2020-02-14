@@ -26,6 +26,8 @@ public interface ShopDAO {
 	int productUpdate(String productNo);
 	int productDelete(String productNo);
 	int saleStatus(Map<String, String> param);
+	int totalProductContents(Map<String, String> param);
+	List<Map<String, String>> loadMyProductManage(int cPage, int numPerPage, Map<String, String> param);
 	//========================== 하진 끝
 	
 	
