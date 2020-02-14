@@ -122,16 +122,16 @@
 		<where>
 			member_id=#{memberId}
 			
-			<if test="start!=null and start!='' and end!=null and end!=''">
-			and
-			reg_date between to_date(#{start}, 'yy/mm/dd') and to_date(#{end},'yy/mm/dd')	
-			</if>
-			
-			
 			<if test="option!=null and option!=''">
 			and
 			status=#{option}
 			</if>
+
+			<if test="start!=null and start!='' and end!=null and end!=''">
+			and
+			to_date(reg_date,'yy/mm/dd') between to_date(#{start}, 'yyyymmdd') and to_date(#{end},'yyyymmdd')	
+			</if>
+			
 		
 		</where>
 		
