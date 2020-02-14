@@ -11,7 +11,7 @@ import com.pro.dong.stomp.model.vo.ChatRoom;
 import com.pro.dong.stomp.model.vo.Msg;
 
 @Repository
-public class StompDaoImpl implements StompDao {
+public class StompDAOImpl implements StompDao {
 
 	@Autowired
 	SqlSessionTemplate sqlSession;
