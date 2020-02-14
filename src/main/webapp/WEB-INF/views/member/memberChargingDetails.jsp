@@ -54,7 +54,12 @@ function showchargingDetails(cPage){
 		},//end of success
 		 error : (x,s,e) =>{
 		        console.log("실패",x,s,e);
-		      }//end of error
+		      },//end of error
+		      complete: ()=>{
+	                $("#pageBar a").click((e)=>{
+	                	showchargingDetails($(e.target).siblings("input").val());
+	                });
+	            }//end of complete
 	});//end of ajax
 };//end of function 	
 	
