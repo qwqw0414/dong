@@ -1,5 +1,6 @@
 package com.pro.dong.stomp.controller;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -11,11 +12,15 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
@@ -25,27 +30,27 @@ import com.pro.dong.stomp.model.vo.ChatRoom;
 import com.pro.dong.stomp.model.vo.Msg;
 
 @Controller
-@RequestMapping("/stomp")
 public class StompController {
-
+	
 	static Logger log = LoggerFactory.getLogger(StompController.class);
 	
-	@Autowired
-	StompService ss;
-	
-	@RequestMapping("/chatList.do")
-	public void chatList(Model model, HttpSession session, 
-						 @SessionAttribute(value="memberLoggedIn", required=false)Member memberLoggedIn,
-						 @RequestAttribute("memberId")String sendMemberId) {
+    @Autowired
+	StompService stompService;
+    
+	@GetMapping("/ws/stomp.do")
+	public void websocket(Model model, 
+						  HttpSession session, 
+						  @SessionAttribute(value="memberLoggedIn", required=false) Member memberLoggedIn){
 		
-		String memberId = Optional.ofNullable(memberLoggedIn).map(Member::getMemberId).orElse(session.getId());
-		log.debug(memberId);
-
+		//비회원일 경우, httpSessionId값을 memberId로 사용한다.
+		String memberId = Optional.ofNullable(memberLoggedIn)
+								  .map(Member::getMemberId)
+								  .orElse(session.getId());//HttpSession의 JSESSIONID값을 저장
 		String chatId = null;
 		
 		//chatId조회
 		//1.memberId로 등록한 chatroom존재여부 검사. 있는 경우 chatId 리턴.
-		chatId = ss.findChatIdByMemberId(memberId);
+		chatId = stompService.findChatIdByMemberId(memberId);
 		
 		//2.로그인을 하지 않았거나, 로그인을 해도 최초접속인 경우 chatId를 발급하고 db에 저장한다.
 		if(chatId == null){
@@ -54,11 +59,11 @@ public class StompController {
 			List<ChatRoom> list = new ArrayList<>();
 			list.add(new ChatRoom(chatId, "qwqw0414", 0, "Y", null, null));
 			list.add(new ChatRoom(chatId, memberId, 0, "Y", null, null));
-			ss.insertChatRoom(list);
+			stompService.insertChatRoom(list);
 		}
 		//chatId가 존재하는 경우, 채팅내역 조회
 		else{
-			List<Msg> chatList = ss.findChatListByChatId(chatId);
+			List<Msg> chatList = stompService.findChatListByChatId(chatId);
 			model.addAttribute("chatList", chatList);
 		}
 		
@@ -68,12 +73,19 @@ public class StompController {
 		model.addAttribute("chatId", chatId);
 	}
 	
-	
+	/**
+	 * 인자로 전달될 길이의 임의의 문자열을 생성하는 메소드
+	 * 영대소문자/숫자의 혼합.
+	 * 
+	 * @param len
+	 * @return
+	 */
 	private String getRandomChatId(int len){
 		Random rnd = new Random();
 		StringBuffer buf =new StringBuffer();
 		buf.append("chat_");
 		for(int i=0;i<len;i++){
+			//임의의 참거짓에 따라 참=>영대소문자, 거짓=> 숫자
 		    if(rnd.nextBoolean()){
 		    	boolean isCap = rnd.nextBoolean();
 		        buf.append((char)((int)(rnd.nextInt(26))+(isCap?65:97)));
@@ -83,32 +95,64 @@ public class StompController {
 		    }
 		}
 		return buf.toString();
+
 	}
 	
-	@GetMapping("/{chatId}/adminChat.do")
-	public String adminChat(@PathVariable("chatId") String chatId, Model model){
+	/**
+	 * - @MessageMapping 을 통해 메세지를 받고,
+	 * - @SendTo 를 통해 메세지 전달. 작성된 주소를 구독하고 있는 client에게 메세지 전송
+	 * 
+	 * @param fromMessage
+	 * @return
+	 */
+	@MessageMapping("/hello")
+	@SendTo("/hello")
+	public Msg stomp(Msg fromMessage,
+					 @Header("simpSessionId") String sessionId,//WesocketSessionId값을 가져옴.
+					 SimpMessageHeaderAccessor headerAccessor//HttpSessionHandshakeInterceptor빈을 통해 httpSession의 속성에 접근 가능함.
+					 ){
+		log.info("fromMessage={}",fromMessage);
+		log.info("@Header sessionId={}",sessionId);
 		
-		List<Msg> chatList = ss.findChatListByChatId(chatId);
-		model.addAttribute("chatList", chatList);
+		//httpSession속성 가져오기 테스트: 필요에 따라 httpSession속성을 사용할 수 있다. 
+		String sessionIdFromHeaderAccessor = headerAccessor.getSessionId();//@Header sessionId와 동일
+		Map<String,Object> httpSessionAttr = headerAccessor.getSessionAttributes();
+		Member member = (Member)httpSessionAttr.get("memberLoggedIn");
+		String httpSessionId = (String)httpSessionAttr.get("HTTP.SESSION.ID");//비회원인 경우 memberId로 사용함.
+		log.info("sessionIdFromHeaderAccessor={}",sessionIdFromHeaderAccessor);
+		log.info("httpSessionAttr={}",httpSessionAttr);
+		log.info("httpSessionId={}",httpSessionId);
+		log.info("memberLoggedIn={}",member);
 		
-		log.info("chatList={}",chatList);
-		return "ws/adminChat";
+		return fromMessage; 
 	}
 	
-	@GetMapping("/ws/admin.do")
-	public void admin(Model model, 
-					  HttpSession session, 
-					  @SessionAttribute(value="memberLoggedIn", required=false) Member memberLoggedIn){
-		String memberId = Optional.ofNullable(memberLoggedIn).map(Member::getMemberId)
-															 .orElseThrow(IllegalStateException::new);
-		String chatId = null;
+	@MessageMapping("/chat/{chatId}")
+	@SendTo(value={"/chat/{chatId}", "/chat/admin"})
+	public Msg sendEcho(Msg fromMessage, 
+						@DestinationVariable String chatId, 
+						@Header("simpSessionId") String sessionId){
+		log.info("fromMessage={}",fromMessage);
+		log.info("chatId={}",chatId);
+		log.info("sessionId={}",sessionId);
 		
-		if(!"qwqw0414".equals(memberId)) throw new IllegalStateException("로그인 후 이용하세요.");
+		stompService.insertChatLog(fromMessage);
+
+		return fromMessage; 
+	}
+	/**
+	 * 읽음 여부 확인을 위해 최종 focus된 시각정보를 수집한다.
+	 * 
+	 * @param fromMessage
+	 * @return
+	 */
+	@MessageMapping("/lastCheck")
+	@SendTo(value={"/chat/admin"})
+	public Msg lastCheck(@RequestBody Msg fromMessage){
+		log.info("fromMessage={}",fromMessage);
 		
-		List<Map<String, String>> recentList = ss.findRecentList();
-		log.info("recentList={}",recentList);
+		stompService.updateLastCheck(fromMessage);
 		
-		model.addAttribute("recentList", recentList);
-		
+		return fromMessage; 
 	}
 }

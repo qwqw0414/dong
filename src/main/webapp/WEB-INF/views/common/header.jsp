@@ -191,18 +191,30 @@ $(()=>{
 					관리자
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-
-					
-
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/memberList.do">회원관리</a>
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/productList.do">상품관리</a>
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/boardList.do">게시글관리</a>
-
-
 				</div>
 			</li>
 
+			<!-- 웹소켓 -->
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false">
+					웹소켓
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+				  <!-- 관리자가 아닌 경우 -->
+			      <c:if test="${memberLoggedIn==null || \"qwqw0414\" ne memberLoggedIn.memberId}">
+			      <a class="nav-link" href="${pageContext.request.contextPath}/ws/stomp.do">관리자와 채팅하기</a>
+				  </c:if>
+				  <!-- 관리자인 경우 -->
+				  <c:if test="${\"qwqw0414\" eq memberLoggedIn.memberId}">
+			      <a class="nav-link" href="${pageContext.request.contextPath}/ws/admin.do">관리자용 stomp.js</a>
+				  </c:if>
+				</div>
+			</li>
+			
 		</ul>
 	</div>
 </nav>
@@ -273,7 +285,14 @@ var isCateShow = false;
 		var height = 660;
 		var top = (window.screen.height / 2) - (height / 2);
 		var left = (window.screen.width / 2) - (width / 2);
-		let url = "${pageContext.request.contextPath}/stomp/chatList.do";
+		var memberId = '${memberLoggedIn.memberId}';
+		let url = "";
+
+		if(memberId == "qwqw0414"){
+			url = "${pageContext.request.contextPath}/ws/admin.do";
+		}else{
+			url = "${pageContext.request.contextPath}/ws/stomp.do";
+		}
 
 		window.open(url,"chatView", "width="+width+",height="+height+", top="+top+", left="+left);
 	}
