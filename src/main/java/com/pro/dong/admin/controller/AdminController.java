@@ -206,8 +206,8 @@ public class AdminController {
 		result.put("cPage", cPage);
 		result.put("numPerPage", numPerPage);
 		result.put("pageBar", pageBar);
-		log.debug("result={}", result);
-		log.debug("list={}", list);
+		//log.debug("result={}", result);
+		//log.debug("list={}", list);
 		
 		return result;
 	}
