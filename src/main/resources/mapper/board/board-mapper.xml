@@ -56,7 +56,20 @@
 		select * from board_category
 	</select>
 	<select id="selectBoardNotice" resultType="map">
-		select * from board where category_id = 'A03'
+		select b.*, m.sido, m.sigungu, m.dong from board b left join member m
+		on b.member_id = m.member_id
+		<where>
+			b.category_id = 'A03'
+			<if test="sido!=null and sido!=''">
+				 and m.sido = #{sido}
+			</if>
+			<if test="sigungu!=null and sigungu!=''">
+				and m.sigungu = #{sigungu}
+			</if>
+			<if test="dong!=null and dong!=''">
+				and m.dong = #{dong}
+			</if>
+		</where>
 	</select>
 	<select id="getMemberByMemberId" resultType="member">
 		select * from member where member_id = #{memberId}

@@ -77,7 +77,18 @@ public class AdminServiceImpl implements AdminService {
 	// ========================== 근호 끝
 
 	// 지은 시작 ==========================
-
+	@Override
+	public List<Member> selectMemberPoint(String memberId) {
+		return ad.selectMemberPoint(memberId);
+	}
+	@Override
+	public int selectMemberPointTotal(Map<String, String> param) {
+		return ad.selectMemberPointTotal(param);
+	}
+	@Override
+	public List<Map<String, String>> selectMemberPointList(int cPage, int numPerPage, Map<String, String> param) {
+		return ad.selectMemberPointList(cPage,numPerPage,param);
+	}
 	// ========================== 지은 끝
 
 	// 예찬 시작 ==========================
@@ -102,6 +113,10 @@ public class AdminServiceImpl implements AdminService {
 		return ad.loadReportBoardList(cPage, numPerPage, param);
 	}
 	// ========================== 주영 끝
+	
+	
+	
+	
 
 	// 현규 시작 ==========================
 

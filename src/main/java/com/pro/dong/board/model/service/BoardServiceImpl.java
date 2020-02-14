@@ -39,8 +39,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public List<Board> selectBoardNotice() {
-		return bd.selectBoardNotice();
+	public List<Board> selectBoardNotice(Map<String, String> param) {
+		return bd.selectBoardNotice(param);
 	}
 
 	@Override

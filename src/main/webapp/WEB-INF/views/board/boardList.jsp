@@ -19,23 +19,86 @@
 %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <script>
-$(function(){
-	loadBoardList();
+$(()=>{
 	
-	//카테고리로 정렬
-	$("#boardCategory").change(function(){
-		$("#searchKeyword").val('');
-		var cPage = $("#cPage").val();
+	loadBoardList(1);
+	
+	function loadBoardList(cPage){
+		if(<%=memberLoggedIn==null%>){
+			var memberId = "";		
+		} else {
+			var memberId = "<%=memberLoggedIn.getMemberId()%>";	
+		}
 		var boardCategory = $("#boardCategory").val();
-		console.log(boardCategory);
-		var searchType = '';
-		var searchKeyword = '';
-		loadBoardList(searchType,searchKeyword, boardCategory,cPage);
-	});
+		var searchType = $("#searchType").val();
+		var searchKeyword = $("#searchKeyword").val();
+		console.log("boardCategory"+boardCategory);
+		console.log("searchType"+searchType);
+		console.log("searchKeyword"+searchKeyword);
+		console.log("cPage"+cPage);
+		$.ajax({
+			url: "${pageContext.request.contextPath}/board/loadBoardList",
+			type: "GET",
+			data: {memberId:memberId,
+				cPage:cPage,
+				boardCategory:boardCategory,
+				searchType:searchType,
+				searchKeyword:searchKeyword},
+			success: data=>{
+				
+				let header = "<tr><th>글번호</th><th colspan='2'>제목</th><th>글쓴이</th><th>작성일</th><th>조회</th></tr>";
+		    	let $table = $("#tbl-board");
+		    	$table.html("");
+		    	//공지사항
+				let	html = "";
+		    	for(var i=0; i<data.noticeList.length;i++){
+		    		html += "<tr>";
+		    		html += "<td><span class='badge badge-pill badge-danger'>공지</span></td>";
+		    		html += "<td colspan='2'><a href='${pageContext.request.contextPath}/board/boardView.do?boardNo="+data.noticeList[i].BOARD_NO+"'>"+data.noticeList[i].BOARD_TITLE+"</a></td>";
+		    		html += "<td>"+data.noticeList[i].MEMBER_ID+"</td>";
+		    		html += "<td>"+data.noticeList[i].WRITE_DATE+"</td>";
+		    		html += "<td>"+data.noticeList[i].READ_COUNT+"</td>";
+		    		html += "</tr>";
+		    	}
+				//일반 게시글
+		    	for(var i=0; i<data.list.length;i++){
+		    		html += "<tr>";
+		    		html += "<td>"+data.list[i].BOARD_NO+"</td>";
+		    		html += "<td colspan='2'><a href='${pageContext.request.contextPath}/board/boardView.do?boardNo="+data.list[i].BOARD_NO+"'>"+data.list[i].BOARD_TITLE+"</a></td>";
+		    		html += "<td>"+data.list[i].MEMBER_ID+"</td>";
+		    		html += "<td>"+data.list[i].WRITE_DATE+"</td>";
+		    		html += "<td>"+data.list[i].READ_COUNT+"</td>";
+		    		html += "</tr>";
+		    	}
+		    	$table.append(header+html);
+		    	$("#totalContents").text("총 "+data.totalContents+"건의 게시글이 있습니다");
+				$("#pageBar").html(data.pageBar);
+
+				
+		    	},
+		    	error : (x, s, e) => {
+					console.log("ajax 요청 실패!",x,s,e);
+		    	},
+		    	complete: ()=>{
+	                $("#pageBar a").click((e)=>{
+	                	loadBoardList($(e.target).siblings("input").val());
+	                });
+	            }
+		});//end of ajax
+		
+	}//end of loadBoardList
 	
-	//검색어 입력
-	$("#searchBoard").keyup((e)=>{if(e.keyCode == 13) search();});
-	$("#searchBoard").click(function search(){
+		//카테고리로 정렬
+		$("#boardCategory").change(function(){
+			$("#searchKeyword").val('');
+			loadBoardList(1);
+		});
+		//검색어 입력
+		$("#searchKeyword").keyup((e)=>{if(e.keyCode == 13) search();});
+		$("#searchBoard").click(function search(){
+			search();
+		});
+	function search(){
 		var cPage = $("#cPage").val();
 		var boardCategory = $("#boardCategory").val();
 		var searchType = $("#searchType").val();
@@ -45,76 +108,11 @@ $(function(){
 			$("#searchKeyword").focus();
 			return;
 		} else {
-			loadBoardList(searchType, searchKeyword, boardCategory,cPage);
+			loadBoardList(1);
 		}
-		
-	});
-	
-	
+	}//end of search
+
 });
-function loadBoardList(searchType, searchKeyword, boardCategory, cPage){
-	if(<%=memberLoggedIn==null%>){
-		var memberId = "";		
-	} else {
-		var memberId = "<%=memberLoggedIn.getMemberId()%>";	
-	}
-	var cPage = cPage;
-	var boardCategory = boardCategory;
-	var searchType = searchType;
-	var searchKeyword = searchKeyword;
-	console.log("boardCategory"+boardCategory);
-	console.log("searchType"+searchType);
-	console.log("searchKeyword"+searchKeyword);
-	console.log("cPage"+cPage);
-	$("#cPage").val(cPage);
-	$.ajax({
-		url: "${pageContext.request.contextPath}/board/loadBoardList",
-		type: "GET",
-		data: {memberId:memberId,
-			cPage:cPage,
-			boardCategory:boardCategory,
-			searchType:searchType,
-			searchKeyword:searchKeyword},
-		success: data=>{
-			
-			let header = "<tr><th>글번호</th><th colspan='2'>제목</th><th>글쓴이</th><th>작성일</th><th>조회</th></tr>";
-	    	let $table = $("#tbl-board");
-	    	$table.html("");
-	    	//공지사항
-			let	html = "";
-	    	for(var i=0; i<data.noticeList.length;i++){
-	    		html += "<tr>";
-	    		html += "<td><span class='badge badge-pill badge-danger'>공지</span></td>";
-	    		html += "<td colspan='2'><a href='${pageContext.request.contextPath}/board/boardView.do?boardNo="+data.noticeList[i].BOARD_NO+"'>"+data.noticeList[i].BOARD_TITLE+"</a></td>";
-	    		html += "<td>"+data.noticeList[i].MEMBER_ID+"</td>";
-	    		html += "<td>"+data.noticeList[i].WRITE_DATE+"</td>";
-	    		html += "<td>"+data.noticeList[i].READ_COUNT+"</td>";
-	    		html += "</tr>";
-	    	}
-			//일반 게시글
-	    	for(var i=0; i<data.list.length;i++){
-	    		html += "<tr>";
-	    		html += "<td>"+data.list[i].BOARD_NO+"</td>";
-	    		html += "<td colspan='2'><a href='${pageContext.request.contextPath}/board/boardView.do?boardNo="+data.list[i].BOARD_NO+"'>"+data.list[i].BOARD_TITLE+"</a></td>";
-	    		html += "<td>"+data.list[i].MEMBER_ID+"</td>";
-	    		html += "<td>"+data.list[i].WRITE_DATE+"</td>";
-	    		html += "<td>"+data.list[i].READ_COUNT+"</td>";
-	    		html += "</tr>";
-	    	}
-	    	$table.append(header+html);
-	    	$("#totalContents").text("총 "+data.totalContents+"건의 게시글이 있습니다");
-			$("#pageBar").html(data.pageBar);
-
-			
-	    	},
-	    	error : (x, s, e) => {
-				console.log("ajax 요청 실패!",x,s,e);
-	    	}
-	});//end of ajax
-	
-
-	
-}
 </script>
  <h1>커뮤니티 게시판</h1>
  <script>
@@ -186,7 +184,6 @@ function loadBoardList(searchType, searchKeyword, boardCategory, cPage){
 	<div id="pageBar">
 	
 	</div>
-	<input type="hidden" name="cPage" id="cPage"/>
 <script>
 function fn_goWriteBoard(){
 	location.href = "${pageContext.request.contextPath}/board/writeBoard.do";

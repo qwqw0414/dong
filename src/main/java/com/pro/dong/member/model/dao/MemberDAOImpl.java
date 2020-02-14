@@ -117,8 +117,18 @@ public class MemberDAOImpl implements MemberDAO{
 	}
 
 	@Override
-	public List<Map<String, String>> selectChargingDetails(String memberId) {
-		return sst.selectList("member.selectChargingDetails", memberId);
+	public List<Map<String, String>> selectAllDetails(String memberId, int cPage, int numPerPage) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return sst.selectList("member.selectChargingDetails", memberId,rowBounds);
+	}
+	@Override
+	public int countDetails(String memberId) {
+		return sst.selectOne("member.countDetails",memberId);
+	}
+	@Override
+	public List<Map<String, String>> selectDetailsByOption(Map<String, String> param, int cPage, int numPerPage) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return sst.selectList("member.selectDetailsByOption", param,rowBounds);
 	}
 	
 	
