@@ -528,9 +528,6 @@ public class MemberController {
 	
 	
 	
-	
-	
-	
 	@ResponseBody
 	@RequestMapping(value="/selectAllDetails", produces="text/plain;charset=UTF-8")
 	public String memberChargingDetails(HttpSession session, @RequestParam("cPage") int cPage) {
