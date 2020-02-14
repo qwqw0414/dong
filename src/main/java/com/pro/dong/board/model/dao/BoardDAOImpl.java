@@ -42,8 +42,8 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public List<Board> selectBoardNotice() {
-		return sst.selectList("board.selectBoardNotice");
+	public List<Board> selectBoardNotice(Map<String, String> param) {
+		return sst.selectList("board.selectBoardNotice",param);
 	}
 	
 	@Override

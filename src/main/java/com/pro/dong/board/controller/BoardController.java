@@ -73,8 +73,6 @@ public class BoardController {
 //		Address addr = bs.getAddrByMemberId(memberId);
 		// 게시판 카테고리 조회
 		List<BoardCategory> boardCategoryList = bs.selectBoardCategory();
-		// 공지글 조회
-		List<Board> noticeList = bs.selectBoardNotice();
 		// 파라미터 생성
 		Map<String, String> param = new HashMap<>();
 		String sido = member.getSido();
@@ -88,6 +86,8 @@ public class BoardController {
 		param.put("searchKeyword", searchKeyword);
 		// 페이징바 작업
 		int totalContents = bs.selectBoardTotalContents(param);
+		// 공지글 조회
+		List<Board> noticeList = bs.selectBoardNotice(param);
 		// 게시글 조회
 		List<Board> list = bs.loadBoardList(cPage, numPerPage, param);
 		// 넘겨줄map에 담기
@@ -100,8 +100,7 @@ public class BoardController {
 		result.put("cPage", cPage);
 		result.put("numPerPage", numPerPage);
 		result.put("totalContents", totalContents);
-		String function = "loadBoardList('"+searchType+"','"+searchKeyword+"','"+boardCategory+"',";
-		String pageBar = Utils.getAjaxPageBar(totalContents, cPage, numPerPage, function);
+		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
 		result.put("pageBar", pageBar);
 		return result;
 	}
