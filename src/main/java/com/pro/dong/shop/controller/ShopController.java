@@ -126,13 +126,39 @@ public class ShopController {
 		List<Map<String, String>> list = null;
 			
 		list = ss.loadMyProductList(memberId,cPage,numPerPage);
-		log.debug("@@@@@@@@@@@@@@@@@={}",list);
 		int totalContents = ss.totalCountMyProduct(memberId);
 			
 		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
 			
 		Map<String,Object> result = new HashMap<>();
 			
+		result.put("product", list);
+		result.put("pageBar", pageBar);
+		
+		return gson.toJson(result);
+	}
+	@RequestMapping(value="/loadMyProductManage" , produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String loadMyProductManage(@RequestParam(value="searchKeyword",defaultValue="") String searchKeyword,
+			@RequestParam(value="saleCategory",defaultValue="") String saleCategory, 
+			@RequestParam(value="cPage", defaultValue="1") int cPage,
+			@RequestParam(value="memberId") String memberId){
+		
+		int numPerPage = 10;
+		
+		Map<String, String> param = new HashMap<>();
+		param.put("memberId", memberId);
+		param.put("saleCategory", saleCategory);
+		param.put("searchKeyword", searchKeyword);
+	
+		int totalContents = ss.totalProductContents(param);
+
+		List<Map<String, String>> list = ss.loadMyProductManage(cPage,numPerPage,param);
+		
+		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);	
+
+		Map<String,Object> result = new HashMap<>();
+		
 		result.put("product", list);
 		result.put("pageBar", pageBar);
 		
@@ -169,7 +195,6 @@ public class ShopController {
 		Map<String, String> param = new HashMap<>();
 		param.put("productNo", productNo);
 		param.put("select", select);
-		log.debug("@@@@@@@@@@@@@@@={}",param);
 		int result = ss.saleStatus(param);
 		
 		return ""+result;

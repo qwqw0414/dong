@@ -22,6 +22,9 @@ public interface ShopService {
 	// 하진 시작 ==========================
 	List<Map<String, String>> loadMyProductList(String memberId, int cPage, int numPerPage);
 	int totalCountMyProduct(String memberId);
+
+	int totalProductContents(Map<String, String> param);
+	List<Map<String, String>> loadMyProductManage(int cPage, int numPerPage, Map<String, String> param);
 	int productUpdate(String productNo);
 	int productDelete(String productNo);
 	int saleStatus(Map<String, String> param);

@@ -75,6 +75,14 @@ public class ShopServiceImpl implements ShopService{
 	public int saleStatus(Map<String, String> param) {
 		return sd.saleStatus(param);
 	}
+	@Override
+	public int totalProductContents(Map<String, String> param) {
+		return sd.totalProductContents(param);
+	}
+	@Override
+	public List<Map<String, String>> loadMyProductManage(int cPage, int numPerPage, Map<String, String> param) {
+		return sd.loadMyProductManage(cPage,numPerPage,param);
+	}
 	//========================== 하진 끝
 	
 	
