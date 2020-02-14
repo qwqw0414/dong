@@ -24,17 +24,14 @@
                         <h4>내 상점</h4><br>
                         <div class="ms_content">
                             <div class="row">
-                                <div class="col-sm-4"> <img
-                                        src="https://static.nid.naver.com/images/web/user/default.png" width="80"
-                                        height="80" alt="" dispaly="block"></div>
+                                <div class="col-sm-4"><img id="shopImg1" class="img-thumbnail" src="${pageContext.request.contextPath}/resources/upload/shopImage/${member.IMAGE}" alt="" /></div>
                                 <div class="col-sm-8">
                                     <label for="">${member.MEMBER_ID }</label>님의 상점
                                     <br>
                                     상점이름 : ${member.SHOP_NAME} <br />
-                                    개설날짜 : ${member.OPEN_DATE} </div>
+                                    개설날짜 : ${member.OPEN_DATE} 
+                                <input type="button" class="btn_val btn btn-outline-success btn-sm" value="내상점 가기" style="margin-left:200px;"  onclick="location.href='${pageContext.request.contextPath}/shop/shopView.do?memberId=<%=memberLoggedIn != null ? memberLoggedIn.getMemberId() : ""%>'">
                             </div>
-                            <div class="mypage_btn_more">
-                                <input type="button" class="btn_val btn btn-outline-success btn-sm" value="내상점 가기"  onclick="location.href='${pageContext.request.contextPath}/shop/shopView.do'">
                             </div>
                         </div>
 

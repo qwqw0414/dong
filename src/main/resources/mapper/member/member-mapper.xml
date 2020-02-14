@@ -32,7 +32,8 @@
 	
 	<!-- 근호 시작 ========================== -->
 	<select id="selectLoginMember" resultType="member">
-		select * from member 
+		select * from member
+		 
 		where member_id = #{memberId}
 	</select>
 	<select id="emailDuplicate" resultType="_int">
