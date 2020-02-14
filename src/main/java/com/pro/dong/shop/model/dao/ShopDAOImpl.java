@@ -75,6 +75,10 @@ public class ShopDAOImpl implements ShopDAO{
 	public int productDelete(String productNo) {
 		return sst.delete("shop.productDelete",productNo);
 	}
+	@Override
+	public int saleStatus(Map<String, String> param) {
+		return sst.update("shop.saleStatus",param);
+	}
 	//========================== 하진 끝
 	
 	
