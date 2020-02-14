@@ -179,6 +179,16 @@ public class AdminController {
 	// ========================== 근호 끝
 	
 	// 지은 시작 ==========================
+	@RequestMapping("/memberPointList.do")
+	public void memberPointList() {
+		
+	}
+	
+	@RequestMapping("memberPointListEnd")
+	public ModelAndView memberPointListEnd(ModelAndView mav) {
+		return mav;
+	}
+	
 	
 	// ========================== 지은 끝
 	
