@@ -578,7 +578,7 @@ public class MemberController {
 		
 		
 		
-		int totalContents = ms.countDetails(memberLoggedIn.getMemberId());
+		int totalContents = ms.countDetailsByOption(param);
 		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
 		
 		log.debug("리스트으응으으응={}",list);
