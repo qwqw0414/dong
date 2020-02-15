@@ -56,7 +56,7 @@ function showchargingDetails(cPage){
 			console.log(data);
 			let html="";
 			html+="<div id='detailList'>";
-			html+="<table class='table table-striped'>";
+			html+="<table class='table table-hover'>";
 			html+="<thead>";
 			html+="<tr>";
 			html+="<th scope='col'>#No.</th>";
@@ -134,7 +134,7 @@ function selectByOption(cPage){
 			console.log(data);
 			let html="";
 			html+="<div id='detailList'>";
-			html+="<table class='table table-striped'>";
+			html+="<table class='table table-hover'>";
 			html+="<thead>";
 			html+="<tr>";
 			html+="<th scope='col'>#No.</th>";
