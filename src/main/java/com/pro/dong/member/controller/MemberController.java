@@ -564,8 +564,8 @@ public class MemberController {
 		Map<String, String> param = new HashMap<>();
 		param.put("memberId",memberLoggedIn.getMemberId());
 		param.put("start", start);
-//		param.put("end", end+"235959");
-		param.put("end", end);
+		param.put("end", end+"235959");
+//		param.put("end", end);
 		param.put("option", option);
 		
 		List<Map<String,String>>list = null;
@@ -578,7 +578,7 @@ public class MemberController {
 		
 		
 		
-		int totalContents = ms.countDetails(memberLoggedIn.getMemberId());
+		int totalContents = ms.countDetailsByOption(param);
 		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
 		
 		log.debug("리스트으응으으응={}",list);

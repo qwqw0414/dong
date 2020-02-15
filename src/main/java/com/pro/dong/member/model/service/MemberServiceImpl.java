@@ -134,6 +134,11 @@ public class MemberServiceImpl implements MemberService{
 		return md.selectDetailsByOption(param,cPage,numPerPage);
 	}
 
+	@Override
+	public int countDetailsByOption(Map<String, String> param) {
+		return md.countDetailsByOption(param);
+	}
+
 
 
 	

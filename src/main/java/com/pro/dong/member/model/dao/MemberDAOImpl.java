@@ -130,6 +130,10 @@ public class MemberDAOImpl implements MemberDAO{
 		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage,numPerPage);
 		return sst.selectList("member.selectDetailsByOption", param,rowBounds);
 	}
+	@Override
+	public int countDetailsByOption(Map<String, String> param) {
+		return sst.selectOne("member.countDetailsByOption",param);
+	}
 	
 	
 	
