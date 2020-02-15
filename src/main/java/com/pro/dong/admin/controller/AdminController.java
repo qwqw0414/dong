@@ -239,6 +239,10 @@ public class AdminController {
 		param.put("searchKeyword", searchKeyword);
 		param.put("type", type);
 		
+		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@sido={}", sido);
+		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@sigungu={}", sigungu);
+		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@dong={}", dong);
+		
 		//페이징바 작업
 		int totalContents = as.selectBoardTotalContents(param);
 		log.info("totalContents@@@@@@@@@@@@@@@@@={}", totalContents);
