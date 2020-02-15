@@ -564,8 +564,8 @@ public class MemberController {
 		Map<String, String> param = new HashMap<>();
 		param.put("memberId",memberLoggedIn.getMemberId());
 		param.put("start", start);
-//		param.put("end", end+"235959");
-		param.put("end", end);
+		param.put("end", end+"235959");
+//		param.put("end", end);
 		param.put("option", option);
 		
 		List<Map<String,String>>list = null;

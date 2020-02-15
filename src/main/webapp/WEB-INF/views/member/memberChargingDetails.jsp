@@ -132,10 +132,47 @@ function selectByOption(cPage){
 		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 		success:data=>{
 			console.log(data);
+			let html="";
+			html+="<div id='detailList'>";
+			html+="<table class='table table-striped'>";
+			html+="<thead>";
+			html+="<tr>";
+			html+="<th scope='col'>#No.</th>";
+			html+="<th scope='col'>날짜</th>";
+			html+="<th scope='col'>금액</th>";
+			html+="<th scope='col'>충전/사용</th>";
+			html+="</tr>";
+			html+="</thead>";
+			html+="<tbody>";
+
+			for(var i=0; i<data.list.length; i++){
+				html+="<th scope='row'>"+(i+1+((cPage-1)*10))+"</th>";				
+				html+="<td>"+data.list[i].REG_DATE+"</td>";
+				html+="<td>"+data.list[i].POINT_AMOUNT+"원</td>";
+				if(data.list[i].STATUS=='I'){
+				html+="<td>충전</td>";
+				}
+				else{
+					html+="<td>사용</td>";
+				}
+			html+="</tbody>";
+			}//end of for
+			
+			html+="</table>";
+			html+="</div>";
+			
+			$("#chargingDetails").html(html);
+			$("#charging_ #pageBar").html(data.pageBar);
+			
 		},//end of success
 		 error : (x,s,e) =>{
 		        console.log("실패",x,s,e);
-		      }//end of error
+		      },//end of error
+		      complete: ()=>{
+	                $("#pageBar a").click((e)=>{
+	                	showchargingDetails($(e.target).siblings("input").val());
+	                });
+	            }//end of complete
 	});//end of ajax
 	
 	

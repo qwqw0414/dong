@@ -130,7 +130,7 @@
 
 			<if test="start!=null and start!='' and end!=null and end!=''">
 			and
-			to_date(reg_date,'yy/mm/dd') between to_date(#{start}, 'yyyymmdd') and to_date(#{end},'yyyymmdd')	
+			reg_date between to_date(#{start}, 'yyyymmdd') and to_date(#{end},'yyyymmddhh24miss')	
 			</if>
 			
 		
