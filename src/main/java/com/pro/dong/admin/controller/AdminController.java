@@ -182,6 +182,11 @@ public class AdminController {
 		
 	}
 	
+	@RequestMapping("/memberOrderList.do")
+	public void memberOrderList() {
+		
+	}
+	
 	@RequestMapping("/memberPointListEnd")
 	@ResponseBody
 	public Map<String, Object> memberPointListEnd(@RequestParam(value="searchType", defaultValue="")String searchType, 
@@ -206,6 +211,14 @@ public class AdminController {
 		result.put("pageBar", pageBar);
 		//log.debug("result={}", result);
 		//log.debug("list={}", list);
+		
+		return result;
+	}
+	
+	@RequestMapping("/memberOrderListEnd")
+	@ResponseBody
+	public Map<String,Object> memberOrderListEnd(){
+		Map<String, Object> result = new HashMap<>();
 		
 		return result;
 	}
