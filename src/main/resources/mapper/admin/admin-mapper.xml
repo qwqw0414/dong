@@ -128,6 +128,23 @@
 		order by P.reg_date
 	</select>
 	
+	<select id="selectMemberOrderTotal" parameterType="map" resultType="_int">
+	select count(*) from order_list O left join product P on O.dong = P.dong
+	<if test="searchKeyword != null and searchKeyword!=''">
+		and O.${searchType} like '%${searchKeyword}%'
+	</if>
+	</select>
+	
+	<select id="selectMemberOrderList" parameterType="map" resultType="map">
+	select * from (order_list O left join product P on O.dong = P.dong)
+	<where>
+		<if test="searchKeyword!=null and searchKeyword!=''">
+			and O.${searchType} like '%${searchKeyword}%'
+		</if>
+	</where>
+	order by O.order_date
+	</select>
+	
 	<!-- ==========================  지은 끝 -->
 	
 	<!-- 예찬 시작 ========================== -->
