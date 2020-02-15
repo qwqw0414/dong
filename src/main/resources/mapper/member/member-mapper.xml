@@ -33,12 +33,15 @@
 	<!-- 근호 시작 ========================== -->
 	<select id="selectLoginMember" resultType="member">
 		select * from member
-		 
 		where member_id = #{memberId}
 	</select>
 	<select id="emailDuplicate" resultType="_int">
 		select count(*) from member where email = #{email}
 	</select>
+	<update id="updateAddress">
+		update member set sido=#{sido}, sigungu=#{sigungu}, dong=#{dong}
+		where member_id = #{memberId} 
+	</update>
 	<!-- ==========================  근호 끝 -->
 	
 	<!-- 지은 시작 ========================== -->
