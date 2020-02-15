@@ -208,13 +208,13 @@
 				and a.${searchType} like '%${searchKeyword}%'
 			</if>
 			<if test="sido!=null and sido!=''">
-				and a.sido like #{sido}
+				and sido like #{sido}
 			</if>
 			<if test="sigungu!=null and sigungu!=''">
-				and a.sigungu like #{sigungu}
+				and sigungu like #{sigungu}
 			</if>
 			<if test="dong!=null and dong!=''">
-				and a.dong like #{dong}
+				and dong like #{dong}
 			</if>
 		</where>
 	</select>

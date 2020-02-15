@@ -52,8 +52,8 @@ $(()=>{
 		    	let	html = "";
 		    	for(var i=0; i<data.list.length;i++){
 		    		
-		    		if(data.list[i].REPORT_COMMENT.length > 12) 
-		    			data.list[i].REPORT_COMMENT = data.list[i].REPORT_COMMENT.substring(0,12)+"..."
+		    		if(data.list[i].REPORT_CONTENTS.length > 12) 
+		    			data.list[i].REPORT_CONTENTS = data.list[i].REPORT_CONTENTS.substring(0,12)+"..."
 		    		
 		    		html += "<tr>";
 		    		html += "<td><a href='${pageContext.request.contextPath}/admin/productReportView.do?boardNo="+data.list[i].REPORT_NO+"'>"+data.list[i].REPORT_NO+"</a></td>";
@@ -68,7 +68,7 @@ $(()=>{
 		    			html += "<td>언어폭력</td>";
 		    		}
 		    		html += "<td>"+data.list[i].MEMBER_ID+"</td>";
-		    		html += "<td>"+data.list[i].REPORT_COMMENT+"</td>";
+		    		html += "<td>"+data.list[i].REPORT_CONTENTS+"</td>";
 		    		if(data.list[i].STATUS == 'N'){
 		    			html += "<td>답변대기</td>";
 		    		}
