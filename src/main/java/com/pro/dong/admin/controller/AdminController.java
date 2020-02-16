@@ -210,6 +210,34 @@ public class AdminController {
 		return result;
 	}
 	
+	@RequestMapping("/memberOrderList.do")
+	public void memberOrderList() {
+		
+	}
+	
+	@RequestMapping("/memberOrderListEnd")
+	@ResponseBody
+	public Map<String,Object> memberOrderListEnd(@RequestParam(value="searchType", defaultValue="")String searchType,@RequestParam(value="searchKeyword", defaultValue="")String searchKeyword, @RequestParam(value="cPage",defaultValue="1")int cPage){
+		final int numPerPage = 10;
+		Map<String, Object> result = new HashMap<>();
+		Map<String, String> param = new HashMap<>();
+		param.put("searchType", searchType);
+		param.put("searchKeyword", searchKeyword);
+		
+		int totalOrder = as.selectMemberOrderTotal(param);
+		List<Map<String,String>> list = as.selectMemberOrderList(cPage,numPerPage,param);
+		String function = "loadMemberOrderList('"+searchType+"','"+searchKeyword+"',";
+		String pageBar = Utils.getAjaxPageBar(totalOrder, cPage, numPerPage, function);
+		
+		result.put("list", list);
+		result.put("totalOrder", totalOrder);
+		result.put("cPage", cPage);
+		result.put("numPerPage", numPerPage);
+		result.put("pageBar", pageBar);
+		
+		return result;
+	}
+	
 	
 	// ========================== 지은 끝
 	

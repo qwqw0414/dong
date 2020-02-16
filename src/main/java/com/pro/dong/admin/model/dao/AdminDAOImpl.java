@@ -93,6 +93,16 @@ public class AdminDAOImpl implements AdminDAO {
 		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage,numPerPage);
 		return sst.selectList("admin.selectMemberPointList", param, rowBounds);
 	}
+	@Override
+	public int selectMemberOrderTotal(Map<String, String> param) {
+		return sst.selectOne("admin.selectMemberOrderTotal", param);
+	}
+	@Override
+	public List<Map<String, String>> selectMemberOrderList(int cPage, int numPerPage, Map<String, String> param) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return sst.selectList("admin.selectMemberOrderList", param,rowBounds);
+	}
+	
 	// ========================== 지은 끝
 
 	// 예찬 시작 ==========================

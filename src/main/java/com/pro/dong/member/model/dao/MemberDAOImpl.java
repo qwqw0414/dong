@@ -54,6 +54,10 @@ public class MemberDAOImpl implements MemberDAO{
 	public int emailDuplicate(String email) {
 		return sst.selectOne("member.emailDuplicate", email);
 	}
+	@Override
+	public int updateAddress(Map<String, String> param) {
+		return sst.update("member.updateAddress", param);
+	}
 	
 	//==========================  근호 끝
 	

@@ -6,6 +6,11 @@
 		WHERE STATUS = 'Y'
 			AND MEMBERID = #{memberId}
 	</select>
+	<select id="findChatIdByMemberId2" resultType="string" parameterType="map">
+		select chatid from (
+		    select * from chatroom where memberid = #{memberId}) join (
+		    select * from chatroom where memberid = #{sendId}) using(chatid)
+	</select>
 	<insert id="insertChatRoom">
 		INSERT INTO CHATROOM (CHATID, MEMBERID)
 		VALUES(#{chatId}, #{memberId})
@@ -58,4 +63,17 @@
 		where chatid = #{chatId}
 		order by chatno
 	</select>
+	<select id="findChatId" resultType="string" parameterType="string">
+		select chatid from chatroom where memberid = #{memberId}
+	</select>
+	<select id="findMemberId" resultType="string" parameterType="map">
+		select memberid from chatroom where chatid=#{chatId} and memberid != #{memberId}
+	</select>
+	<select id="findMsg" resultType="string" parameterType="map">
+		select * from (select msg from chatlog where chatid = #{chatId} order by time desc) where rownum = 1
+	</select>
+	<select id="countNoRead" resultType="_int" parameterType="map">
+		select count(*) from chatlog where chatid = #{chatId} and time > (select lastcheck from chatroom where chatid = #{chatId} and memberid = #{memberId} ) and memberid != #{memberId}
+	</select>
+	
 </mapper>

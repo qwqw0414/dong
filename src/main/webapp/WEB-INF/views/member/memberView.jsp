@@ -114,9 +114,11 @@
                                     </div>
 
                                     <div class="after after_change3" style="display: none;">
+                                    	<input type="hidden" id="valid-email" value="0">
                                         <input type="email" id="useremail" name="useremail" placeholder="변경할 이메일">
                                         <button type="button" class="btn btn-outline-success btn-sm"
                                             id="button-addon3">인증하기</button>
+                                            
                                     </div>
                                     <div class="email_authKey" style="display: none">
                                     	<input type="text" name="authKey" id="authKey" placeholder="인증번호를 입력해주세요."/>
@@ -125,6 +127,9 @@
                                     <div class="emailMsg"></div>
                                 </div>
                             </div>
+
+
+
 
 
 
@@ -145,11 +150,11 @@
                 <div id="mypage_location" class="mypage_con shadow p-3 mb-5 bg-white rounded">
                     <h4>우리 동네</h4><br>
                     <div class="ms_content">
-                        <p>내 동네 : ${member.SIDO } ${member.SIGUNGU} ${member.DONG}</p>
+                        <p id="cureEmail">내 동네 : ${member.SIDO } ${member.SIGUNGU} ${member.DONG}</p>
 
-
-                        <div class="mypage_btn_more">
-                            <input type="button" value="수정 바로가기" class="btn_val btn btn-outline-success btn-sm">
+						<div class="mypage_btn_more">
+                            <!-- <input type="button" value="수정 바로가기" class="btn_val btn btn-outline-success btn-sm"> -->
+                            <button class="btn btn-outline-success btn-sm" id="updateAddress" data-toggle="modal" data-target="#addressModal">수정 바로가기</button>
                         </div>
 
                     </div>
@@ -165,6 +170,11 @@
     </div>
 </div>
 
+	<div id="addressModel-wrapper">
+		<div class="modal-body" id="AddressPage">
+			<jsp:include page="/WEB-INF/views/member/updateAddress.jsp"/>
+		</div>
+	</div>
 
 
 <script>
@@ -329,23 +339,46 @@ if ( rsp.success ) {
         });//end of updatephone
 
 
+      //----------------------------------------------------근호
 		//메일보내기
         $("#memberView #button-addon3").on('click', function () {
+        	var $validEmail = $("#valid-email");
             var email = $("#useremail").val();
             console.log(email);
-
-            $.ajax({
-                url: "${pageContext.request.contextPath}/member/emailAuth.do",
-                data: { email: email },
-                type: "POST",
-                success: data => {
-					$(".after_change3").css("display","none");
-					$(".email_authKey").css("display","block");
-                },
-                error: (x, s, e) => {
-                    console.log(x, s, e);
-                }
-            });
+            
+            /* 이메일 중복검사 */
+    		 $.ajax({
+    			url: "${pageContext.request.contextPath}/member/emailDuplicate",
+    			data:{email: email},
+    			dataType: "json",
+    			success: data =>{
+    				console.log(data);
+    				if(data == 0){
+    					$validEmail.val(1); 
+    					alert("인증번호를 보냈습니다.");
+    					
+    					$.ajax({
+    		                url: "${pageContext.request.contextPath}/member/emailAuth.do",
+    		                data: { email: email },
+    		                type: "POST",
+    		                success: data => {
+    							$(".after_change3").css("display","none");
+    							$(".email_authKey").css("display","block");
+    		                },
+    		                error: (x, s, e) => {
+    		                    console.log(x, s, e);
+    		                }
+    		            }); 
+    				}
+    				else{
+    					$validEmail.val(0);
+    					$(".emailMsg").text("중복된 이메일").css("color","red");
+    				}
+    			},
+    			error : (x,s,e) =>{
+    				console.log("실패",x,s,e);
+    			}
+    		}) 
         });
         
         //메일인증확인
@@ -360,16 +393,17 @@ if ( rsp.success ) {
         		type: "POST",
         		success: data =>{
         			console.log(data);
+        			console.log(data.email);
         			console.log(authKey);
-        			if(data==1){
-        				/* $("#curemail").text(map.EMAIL); */
+        			if(data.result == 1){
+        				$("#curemail").text(data.email);
         				$("#memberView .before_change3").css("display", "block");
         				$(".email_authKey").css("display","none");
         				$(".emailMsg").css("display","none");
         			}
-        			else {
+        			else if(data.result != 1){
         				$(".email_authKey").css("display","block");
-        				$(".emailMsg").text("인증번호 틀림");
+        				$(".emailMsg").text("인증번호 틀림").css("color","red");
         			}
         		},
         		 error: (x, s, e) => {
@@ -377,39 +411,10 @@ if ( rsp.success ) {
                  }
         	});
         });
-        
-
-        //이메일
-        /* $("#memberView #button-addon3").on('click', function () {
-            var afterEmail = $("#useremail").val();
-            console.log(afterEmail);
-
-            $.ajax({
-                url: "${pageContext.request.contextPath}/member/updateMemberEmail",
-                data: { afterEmail: afterEmail },
-                type: "POST",
-                success: data => {
-                    console.log(data);
-                    $("#curemail").text(data.EMAIL)
-                    $("#memberView .before_change3").css("display", "block");
-                    $("#memberView .after_change3").css("display", "none")
-                },
-                error: (x, s, e) => {
-                    console.log(x, s, e);
-                }
-            });
-        });//end of emailupdate */
-
-        
-        
-    });//end of script
- 
-
-    
-    
-    
-    
-
+   
+       
+//----------------------------------------------------------------근호 끝
+   });//end of script      
 
 
 </script>
@@ -452,7 +457,16 @@ if ( rsp.success ) {
         width: 280px;
         height: 30px;
     }
-
+	
+	#memberView .before_change3 {
+		padding-top: 5px !important;
+		padding-bottom: 5px !important ;
+	}
+	
+	#memberView .after_change3 {
+		padding-top: 5px !important;
+		padding-bottom: 5px !important ;
+	}
 
 
 

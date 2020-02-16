@@ -1,8 +1,12 @@
 package com.pro.dong.stomp.model.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,11 +15,11 @@ import com.pro.dong.stomp.model.dao.StompDAO;
 import com.pro.dong.stomp.model.vo.ChatRoom;
 import com.pro.dong.stomp.model.vo.Msg;
 
-
 @Service
 @Transactional(rollbackFor=Exception.class)
 public class StompServiceImpl implements StompService {
 
+	Logger log = LoggerFactory.getLogger(getClass());
 	@Autowired
 	StompDAO stompDao;
 
@@ -58,6 +62,42 @@ public class StompServiceImpl implements StompService {
 	@Override
 	public List<Msg> findChatListByChatId(String chatId) {
 		return stompDao.findChatListByChatId(chatId);
+	}
+
+	@Override
+	public String findChatIdByMemberId2(Map<String, String> param) {
+		return stompDao.findChatIdByMemberId2(param);
+	}
+
+	@Override
+	public List<Map<String, String>> findRecentList2(String memberId) {
+		
+		List<Map<String, String>> list = new ArrayList<>();
+		Map<String, String> param = new HashMap<>();
+		List<String> chatId = stompDao.findChatId(memberId);
+		
+		param.put("memberId", memberId);
+		
+		if(chatId != null) {
+			for(String i : chatId) {
+				Map<String, String> map = new HashMap<>();
+				
+				param.put("chatId", i);
+				
+				map.put("CHATID", i);
+				map.put("MEMBERID", stompDao.findMemberId(param));
+				map.put("MSG", stompDao.findMsg(param));
+				map.put("CNT", stompDao.countNoRead(param)+"");
+				
+				log.debug(map.toString());
+				param.remove("chatId");
+				
+				list.add(map);
+			}
+			
+		}
+		
+		return list;
 	}
 
 	

@@ -266,14 +266,15 @@ public class MemberController {
 	public String emailDuplicate(@RequestParam(value="email") String email) {
 		log.debug("email={}",email);
 		int result = ms.emailDuplicate(email);
+		log.debug("result={}",result);
 		return result+"";
 		
 	}
 	
-	//인증 번호 입력
+	//인증 번호 입력/이메일 수정
 	@RequestMapping(value="/emailUpdate")
 	@ResponseBody
-	public String emailUpdate(
+	public Map<String, String> emailUpdate(
 							  @RequestParam(value="authKey")String authKey,
 							  HttpSession session,
 							  @RequestParam(value="email") String email,
@@ -292,54 +293,55 @@ public class MemberController {
 		
 		log.debug("parammmmmmm+{}"+param);
 		log.debug("originalKey={}"+originalKey);
-		String msg = "";
+		Map<String, String> m = new HashMap<>();
+		
 		int result = 0;
 		if(originalKey.equals(authKey)) {
-			/*msg ="true";*/
 			result = ms.updateMemberEmail(param);
-			/*map=ms.selectOneMember(memberLoggedIn.getMemberId());*/
-			log.debug("resulttttttttt="+result);
+			if(result > 0) {
+				map=ms.selectOneMember(memberLoggedIn.getMemberId());
+				log.debug("resulttttttttt="+result);
+			}
 		}
 		else {
-			/*msg = "false";*/
 		}
-		/*model.addAttribute("map",map);
-		model.addAttribute("result",result);
-		log.debug("model={}",model);
-		log.info("바뀐멤버객체={}",map);*/
+		log.debug("map={}",map);
+		String newEmail = (String) map.get("EMAIL");
+		m.put("email", newEmail);
+		m.put("result", result+"");
 		
-		return result+"";
+		log.debug("newEmail+{}",newEmail);	
+		
+		return m;
 	}
-	
-	/*@RequestMapping("/updateMemberEmail")
-	@ResponseBody
-	public Map<String, Object> updateMemberEmail(HttpSession session, @RequestParam("afterEmail") String afterEmail) {
-		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
-		
-		log.info("세션 memberId={}",memberLoggedIn.getMemberId());
-		log.info("바꿀 afterEmail={}",afterEmail);
-		
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		Map<String,String> param = new HashMap<String, String>();
-		param.put("memberId", memberLoggedIn.getMemberId());
-		param.put("afterEmail", afterEmail);
-		
-		log.info("map={}",map);
-		
-		int result = ms.updateMemberEmail(param);
-		log.info("result={}",result);
-		
-		
-		if (result>0) {
-			map=ms.selectOneMember(memberLoggedIn.getMemberId());
+	//주소수정
+		@RequestMapping("/updateAddress")
+		@ResponseBody
+		public Map<String, Object> updateAddress(@RequestParam(value="sido") String sido,
+												 @RequestParam(value="sigungu") String sigungu,
+												 @RequestParam(value="dong") String dong,
+												 HttpSession session){
+			
+			Member memberLoggedIn = (Member) session.getAttribute("memberLoggedIn");
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			Map<String,String> param = new HashMap<String, String>();
+			param.put("memberId", memberLoggedIn.getMemberId());
+			param.put("sido", sido);
+			param.put("sigungu", sigungu);
+			param.put("dong", dong);
+			
+			log.debug("param={}",param);
+			int result = ms.updateAddress(param);
+			log.debug("resultttt={}",result);
+
+			if(result > 0) {
+				map = ms.selectOneMember(memberLoggedIn.getMemberId());
+			}
+			log.debug("mappppp={}",map);
+			
+			return map;
 		}
-		
-		log.info("바뀐멤버객체={}",map);
-		
-		
-		return map;
-	}*/
 //========================== 근호 끝
 	
 // 지은 시작 ==========================

@@ -25,4 +25,8 @@ public interface StompService {
 
 	List<Msg> findChatListByChatId(String chatId);
 
+	String findChatIdByMemberId2(Map<String, String> param);
+
+	List<Map<String, String>> findRecentList2(String memberId);
+
 }

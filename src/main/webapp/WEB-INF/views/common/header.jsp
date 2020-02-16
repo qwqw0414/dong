@@ -198,6 +198,7 @@ $(()=>{
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/memberList.do">회원관리</a>
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/memberPointList.do">회원포인트관리</a>
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/memberOrderList.do">회원거래내역관리</a>
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/productList.do">상품관리</a>
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/boardList.do">게시글관리</a>
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/productReportList.do">상품신고관리</a>
@@ -211,14 +212,7 @@ $(()=>{
 					웹소켓
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-				  <!-- 관리자가 아닌 경우 -->
-			      <c:if test="${memberLoggedIn==null || \"qwqw0414\" ne memberLoggedIn.memberId}">
-			      <a class="nav-link" href="${pageContext.request.contextPath}/ws/stomp.do">관리자와 채팅하기</a>
-				  </c:if>
-				  <!-- 관리자인 경우 -->
-				  <c:if test="${\"qwqw0414\" eq memberLoggedIn.memberId}">
-			      <a class="nav-link" href="${pageContext.request.contextPath}/ws/admin.do">관리자용 stomp.js</a>
-				  </c:if>
+			      <a class="nav-link" id="b-chat">qwqw0414채팅</a>
 				</div>
 			</li>
 			
@@ -284,10 +278,11 @@ var $categoryBar = $("header #categoryDiv #headerMenu");
 var $categoryDiv = $("header #categoryDiv");
 var isCateShow = false;
 
-	$("header #a-chat").click(chatOn);
+	$("header #b-chat").click(chatView);
+	$("header #a-chat").click(chatList);
 
 // 채팅
-	function chatOn(){
+	function chatView(){
 		var width = 360;
 		var height = 660;
 		var top = (window.screen.height / 2) - (height / 2);
@@ -295,11 +290,20 @@ var isCateShow = false;
 		var memberId = '${memberLoggedIn.memberId}';
 		let url = "";
 
-		if(memberId == "qwqw0414"){
-			url = "${pageContext.request.contextPath}/ws/admin.do";
-		}else{
-			url = "${pageContext.request.contextPath}/ws/stomp.do";
-		}
+		url = "${pageContext.request.contextPath}/ws/stomp.do?memberId="+'qwqw0414';
+
+		window.open(url,"chatView", "width="+width+",height="+height+", top="+top+", left="+left);
+	}
+
+	function chatList(){
+		var width = 360;
+		var height = 660;
+		var top = (window.screen.height / 2) - (height / 2);
+		var left = (window.screen.width / 2) - (width / 2);
+		var memberId = '${memberLoggedIn.memberId}';
+		let url = "";
+
+		url = "${pageContext.request.contextPath}/ws/admin.do";
 
 		window.open(url,"chatView", "width="+width+",height="+height+", top="+top+", left="+left);
 	}

@@ -51,4 +51,34 @@ public class StompDAOImpl implements StompDAO {
 		return sqlSession.selectList("stomp.findChatListByChatId", chatId);
 	}
 
+	@Override
+	public String findChatIdByMemberId2(Map<String, String> param) {
+		return sqlSession.selectOne("stomp.findChatIdByMemberId2", param);
+	}
+
+	@Override
+	public List<Map<String, String>> findRecentList2(String memberId) {
+		return sqlSession.selectList("stomp.findRecentList2", memberId);
+	}
+
+	@Override
+	public List<String> findChatId(String memberId) {
+		return sqlSession.selectList("stomp.findChatId", memberId);
+	}
+
+	@Override
+	public String findMemberId(Map<String, String> param) {
+		return sqlSession.selectOne("stomp.findMemberId", param);
+	}
+
+	@Override
+	public String findMsg(Map<String, String> param) {
+		return sqlSession.selectOne("stomp.findMsg", param);
+	}
+
+	@Override
+	public int countNoRead(Map<String, String> param) {
+		return sqlSession.selectOne("stomp.countNoRead", param);
+	}
+
 }
