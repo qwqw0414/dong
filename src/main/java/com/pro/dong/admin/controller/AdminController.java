@@ -267,13 +267,8 @@ public class AdminController {
 		param.put("searchKeyword", searchKeyword);
 		param.put("type", type);
 		
-		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@sido={}", sido);
-		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@sigungu={}", sigungu);
-		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@dong={}", dong);
-		
 		//페이징바 작업
 		int totalContents = as.selectBoardTotalContents(param);
-		log.info("totalContents@@@@@@@@@@@@@@@@@={}", totalContents);
 
 		List<Product> list = as.loadBoardList(cPage, numPerPage, param);
 		result.put("list", list);
@@ -304,7 +299,6 @@ public class AdminController {
 		
 		//페이징바 작업
 		int totalContents = as.selectReportBoardTotalContents(param);
-		log.info("reportTotalContents@@@@@@@@@@@@@@@@@={}", totalContents);
 
 		List<Product> list = as.loadReportBoardList(cPage, numPerPage, param);
 		result.put("list", list);
@@ -313,7 +307,6 @@ public class AdminController {
 		result.put("totalContents", totalContents);
 		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
 		result.put("pageBar", pageBar);
-		log.info("list%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%={}", list);
 		return result;
 	}
 	//@@@@@@@@@@@@@@@@@@@@@@@@@@ 상품신고시작 @@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -337,7 +330,6 @@ public class AdminController {
 		
 		//페이징바 작업
 		int totalContents = as.selectProductReportTotalContents(param);
-		log.info("@@@@@@@@@@@@@@@@@@reportTotalContents@@@@@@@@@@@@@@@@@={}", totalContents);
 
 		List<Product> list = as.loadProductReportList(cPage, numPerPage, param);
 		result.put("list", list);
@@ -346,7 +338,6 @@ public class AdminController {
 		result.put("totalContents", totalContents);
 		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
 		result.put("pageBar", pageBar);
-		log.info("@@@@@@@@@@@@@@@@@list%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%={}", list);
 		return result;
 	}
 	
@@ -354,7 +345,6 @@ public class AdminController {
 	public ModelAndView productReportView(int boardNo, ModelAndView mav) {
 		Map<String, String> map = as.selectOneProductReport(boardNo);
 		mav.addObject("map", map);
-		log.info("@@@@@@@@@@@@@@@@@@@@하나의 신고글을 가져와@@@@@@@@@@@@@@@@@@={}", map);
 		return mav;
 	}
 	

@@ -240,8 +240,11 @@
 	<select id="selectProductReportTotalContents" parameterType="map" resultType="_int">
 		select count(*) from product_report
 		<where>
-			<if test="searchKeyword!=null and searchKeyword!=''">
+			<if test="searchKeyword!=null and searchKeyword!=''  and searchType == 'member_id'">
 				and ${searchType} like '%${searchKeyword}%'
+			</if>
+			<if test="searchKeyword!=null and searchKeyword!='' and searchType != 'member_id'">
+				and ${searchType} = #{searchKeyword}
 			</if>
 		</where>
 	</select>
@@ -249,8 +252,11 @@
 	<select id="loadProductReportList" parameterType="map" resultType="map">
 		select * from product_report
 		<where>
-			<if test="searchKeyword!=null and searchKeyword!=''">
-				and a.${searchType} like '%${searchKeyword}%'
+			<if test="searchKeyword!=null and searchKeyword!='' and searchType == 'member_id'">
+				and ${searchType} like '%${searchKeyword}%'
+			</if>
+			<if test="searchKeyword!=null and searchKeyword!='' and searchType != 'member_id'">
+				and ${searchType} = #{searchKeyword}
 			</if>
 		</where>
 		order by report_no

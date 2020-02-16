@@ -10,25 +10,24 @@
 
 <h1 style='display: inline-block;'>상품 신고 관리</h1>
 
-<div class="wrapper">
-  <div class="input-group">	
-  <select  aria-label="First name" class="form-control" id="sido" >
-  </select>
-  <select  aria-label="First name" class="form-control" id="sigungu" >
-  </select>
-  <select  aria-label="First name" class="form-control" id="dong" >
-  </select>
-  </div>
-</div>
-
 <div class="input-group mb-3">
   <div class="input-group-prepend">
     <select class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="searchType">
-      <option class="dropdown-item" value="title" >상품명</option>
-      <option class="dropdown-item" value="product_no" >상점번호</option>
+      <option class="dropdown-item" value="member_id" >신고자ID</option>
+      <option class="dropdown-item" value="status" >처리여부</option>
+      <option class="dropdown-item" value="category_id" >카테고리</option>
     </select>
   </div>
   <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="검색어를 입력해 주세요" id="searchKeyword">
+  <div id="statusRadioBtnDiv">
+  	<input type="radio" name="statusRadio" value="N" checked="checked">대기
+  	<input type="radio" name="statusRadio" value="Y">완료
+  </div>
+  <div id="categoryRadioBtnDiv">
+  	<input type="radio" name="categoryRadio" value="A001" checked="checked">사기신고
+  	<input type="radio" name="categoryRadio" value="A002">부적절한 게시글
+  	<input type="radio" name="categoryRadio" value="A003">언어폭력
+  </div>
   <button class="btn btn-outline-secondary" id="search">검색</button>
 </div>
 
@@ -55,86 +54,63 @@
 <script>
 $(()=>{
 	
-	$.ajax({
-		url: "${pageContext.request.contextPath}/admin/loadSidoList",
-		dataType: "json",
-		type: "GET",
-		success: data=>{
-			console.log(data);
-			let html = "<option value=''>전체</option>";
-			$.each(data, function(index, data){
-				html += "<option value='"+data+"'>"+data+"</option>";				
-			});//end of forEach
-			$("#sido").html(html);
-		},
-		error: (x,s,e)=>{
-			console.log("실패",x,s,e);
-		}
-		
-	});//end of ajax
-	
-	$("#sido").on("change", function(){
-		var sido = $("#sido").val();
-		console.log(sido);
-		loadSigunguList(sido);
-		loadDongList('');
-	});
-	
-function loadSigunguList(sido){
-		var sido = sido;
-	$.ajax({
-		url: "${pageContext.request.contextPath}/admin/loadSigunguList",
-		data:{sido:sido},
-		dataType: "json",
-		type: "GET",
-		success: data=>{
-			console.log(data);
-			let html = "<option value=''>전체</option>";
-			$.each(data, function(index, data){
-				html += "<option value='"+data+"'>"+data+"</option>";				
-			});//end of forEach
-			$("#sigungu").html(html);
-		},
-		error: (x,s,e)=>{
-			console.log("실패",x,s,e);
-		}
-	});//end of ajax
-}//end of loadSigunguList
-
-	$("#sigungu").on("change", function(){
-		var sigungu = $("#sigungu").val();
-		console.log(sigungu);
-		loadDongList(sigungu);
-	});
-	
-function loadDongList(sigungu){
-	var sigungu = sigungu;
-	$.ajax({
-		url: "${pageContext.request.contextPath}/admin/loadDongList",
-		data:{sigungu:sigungu},
-		dataType: "json",
-		type: "GET",
-		success: data=>{
-			console.log(data);
-			let html = "<option value=''>전체</option>";
-			$.each(data, function(index, data){
-				html += "<option value='"+data+"'>"+data+"</option>";				
-			});//end of forEach
-			$("#dong").html(html);
-		},
-		error: (x,s,e)=>{
-			console.log("실패",x,s,e);
-		}
-	});//end of ajax
-}//end of loadDongList
-	
-	
 	loadProductReportList(1);
 	
-	function loadProductReportList(cPage){
+	/* 검색버튼 누른 후  함수 호출*/
+	$("#search").on("click", function(){
+		var searchType = $("#searchType option:selected").val();
+		console.log("searchType=");
+		console.log(searchType);
 		
-		var searchType = $("#searchType").val();
-		var searchKeyword = $("#searchKeyword").val();
+		if(searchType == 'status'){
+			var searchKeyword = $('input[name="statusRadio"]:checked').val();
+			console.log("searchKeyword=");
+			console.log(searchKeyword);
+			loadProductReportList(1, searchType, searchKeyword);
+		}
+		else if(searchType == 'category_id'){
+			var searchKeyword = $('input[name="categoryRadio"]:checked').val();
+			console.log("searchKeyword=");
+			console.log(searchKeyword);
+			loadProductReportList(1, searchType, searchKeyword);
+		}
+		else{
+			var searchKeyword = $("#searchKeyword").val();
+			console.log("searchKeyword=");
+			console.log(searchKeyword);
+			loadProductReportList(1, searchType, searchKeyword);
+			
+		}
+	});
+	
+	/* 검색타입에 따른 Div처리 */
+	$("#statusRadioBtnDiv").hide();
+	$("#categoryRadioBtnDiv").hide();
+	
+	$("#searchType").change(function(){
+		var $searchType = $("#searchType option:selected").val();
+		
+		if($searchType == 'status'){
+			$("#searchKeyword").hide();
+			$("#categoryRadioBtnDiv").hide();
+			$("#statusRadioBtnDiv").show();
+		}
+		else if($searchType == 'category_id'){
+			$("#searchKeyword").hide();
+			$("#statusRadioBtnDiv").hide();
+			$("#categoryRadioBtnDiv").show();
+		}
+		else {
+			$("#statusRadioBtnDiv").hide();
+			$("#categoryRadioBtnDiv").hide();
+			$("#searchKeyword").show();
+		}
+	});
+	
+	function loadProductReportList(cPage, searchType, searchKeyword){
+		
+		var searchType = searchType;
+		var searchKeyword = searchKeyword;
 		var type = type;
 		$.ajax({
 			url: "${pageContext.request.contextPath}/admin/loadProductReportList",
@@ -157,13 +133,13 @@ function loadDongList(sigungu){
 		    		html += "<tr>";
 		    		html += "<td><a href='${pageContext.request.contextPath}/admin/productReportView.do?boardNo="+data.list[i].REPORT_NO+"'>"+data.list[i].REPORT_NO+"</a></td>";
 		    		html += "<td>"+data.list[i].REPORT_DATE+"</td>";
-		    		if(data.list[i].CATEGORY_ID = 'A001'){
+		    		if(data.list[i].CATEGORY_ID == 'A001'){
 		    			html += "<td>사기신고</td>";
 		    		}
-		    		else if(data.list[i].CATEGORY_ID = 'A002'){
+		    		else if(data.list[i].CATEGORY_ID == 'A002'){
 		    			html += "<td>부적절한 게시글</td>";
 		    		}
-		    		else if(data.list[i].CATEGORY_ID = 'A003'){
+		    		else if(data.list[i].CATEGORY_ID == 'A003'){
 		    			html += "<td>언어폭력</td>";
 		    		}
 		    		html += "<td>"+data.list[i].MEMBER_ID+"</td>";
@@ -191,7 +167,7 @@ function loadDongList(sigungu){
 			complete: (data)=>{
 	        
 	        	$("#pageBar a").click((e)=>{
-	        		loadProductReportList($(e.target).siblings("input").val());
+	        		loadProductReportList($(e.target).siblings("input").val(), searchType, searchKeyword);
             	});
 	      	}
 		});//end of ajax
