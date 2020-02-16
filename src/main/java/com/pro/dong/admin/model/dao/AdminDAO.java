@@ -49,6 +49,7 @@ public interface AdminDAO {
 	int selectProductReportTotalContents(Map<String, String> param);
 	List<Product> loadProductReportList(int cPage, int numPerPage, Map<String, String> param);
 	Map<String, String> selectOneProductReport(int boardNo);
+	int updateReportStatus(int reportNo);
 	// ========================== 주영 끝
 	
 	

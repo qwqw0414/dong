@@ -180,7 +180,7 @@
 		select count(distinct r.board_no) boardCount
 		from board_report R left join member M
 		on r.member_id = m.member_id
-		left join board B on r.board_no = b.board_no
+		left join board_report B on r.board_no = b.board_no
 		<where>
 			<if test="searchKeyword!=null and searchKeyword!=''">
 				and b.${searchType} like '%${searchKeyword}%'
@@ -199,9 +199,10 @@
 	
 	<select id="loadReportBoardList" parameterType="map" resultType="map">
 		select * from
-		(select a.*, (select count(*) from board_report where board_no = a.board_no) cnt from
-    		(select * from board B
-    		left join member M on b.member_id = m.member_id) a )
+      	(select a.*, (select count(*) from board_report where board_no = a.board_no) cnt from
+          (select * from board B
+           left join member M on b.member_id = m.member_id) a )
+
 		<where>
 			cnt > 0
 			<if test="searchKeyword!=null and searchKeyword!=''">
@@ -241,6 +242,10 @@
 	<select id="selectOneProductReport" parameterType="_int" resultType="map">
 		select * from product_report where report_no = #{boardNo}
 	</select>
+	
+	<update id="updateReportStatus" parameterType="_int">
+		update product_report set status = 'Y' where report_no = #{reportNo}
+	</update>
 	<!-- ==========================  주영 끝 -->
 	
 	<!-- 현규 시작 ========================== -->

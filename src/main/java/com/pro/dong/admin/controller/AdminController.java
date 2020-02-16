@@ -330,6 +330,15 @@ public class AdminController {
 		return mav;
 	}
 	
+	@RequestMapping("/updateReportStatus")
+	@ResponseBody
+	public String updateReportStatus(int reportNo) {
+		
+		int result = as.updateReportStatus(reportNo);
+		return result+"";
+	}
+	
+	
 	// ========================== 주영 끝
 	
 	// 현규 시작 ==========================

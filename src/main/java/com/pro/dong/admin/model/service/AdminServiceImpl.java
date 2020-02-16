@@ -124,6 +124,10 @@ public class AdminServiceImpl implements AdminService {
 	public Map<String, String> selectOneProductReport(int boardNo) {
 		return ad.selectOneProductReport(boardNo);
 	}
+	@Override
+	public int updateReportStatus(int reportNo) {
+		return ad.updateReportStatus(reportNo);
+	}
 	// ========================== 주영 끝
 	
 	

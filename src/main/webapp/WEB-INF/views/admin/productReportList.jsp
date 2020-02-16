@@ -9,6 +9,29 @@
 </jsp:include>
 
 <h1 style='display: inline-block;'>상품 신고 관리</h1>
+
+<div class="wrapper">
+  <div class="input-group">	
+  <select  aria-label="First name" class="form-control" id="sido" >
+  </select>
+  <select  aria-label="First name" class="form-control" id="sigungu" >
+  </select>
+  <select  aria-label="First name" class="form-control" id="dong" >
+  </select>
+  </div>
+</div>
+
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <select class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="searchType">
+      <option class="dropdown-item" value="title" >상품명</option>
+      <option class="dropdown-item" value="product_no" >상점번호</option>
+    </select>
+  </div>
+  <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="검색어를 입력해 주세요" id="searchKeyword">
+  <button class="btn btn-outline-secondary" id="search">검색</button>
+</div>
+
 <div class="table-responsive">
 <br /><br />
 	<table class="table text-center" id="productReport-list-tbl">
@@ -24,11 +47,87 @@
 	</table>
 </div>
 
+
+
 <!-- 페이징바 Div -->
 <div id="pageBar"></div>
 
 <script>
 $(()=>{
+	
+	$.ajax({
+		url: "${pageContext.request.contextPath}/admin/loadSidoList",
+		dataType: "json",
+		type: "GET",
+		success: data=>{
+			console.log(data);
+			let html = "<option value=''>전체</option>";
+			$.each(data, function(index, data){
+				html += "<option value='"+data+"'>"+data+"</option>";				
+			});//end of forEach
+			$("#sido").html(html);
+		},
+		error: (x,s,e)=>{
+			console.log("실패",x,s,e);
+		}
+		
+	});//end of ajax
+	
+	$("#sido").on("change", function(){
+		var sido = $("#sido").val();
+		console.log(sido);
+		loadSigunguList(sido);
+		loadDongList('');
+	});
+	
+function loadSigunguList(sido){
+		var sido = sido;
+	$.ajax({
+		url: "${pageContext.request.contextPath}/admin/loadSigunguList",
+		data:{sido:sido},
+		dataType: "json",
+		type: "GET",
+		success: data=>{
+			console.log(data);
+			let html = "<option value=''>전체</option>";
+			$.each(data, function(index, data){
+				html += "<option value='"+data+"'>"+data+"</option>";				
+			});//end of forEach
+			$("#sigungu").html(html);
+		},
+		error: (x,s,e)=>{
+			console.log("실패",x,s,e);
+		}
+	});//end of ajax
+}//end of loadSigunguList
+
+	$("#sigungu").on("change", function(){
+		var sigungu = $("#sigungu").val();
+		console.log(sigungu);
+		loadDongList(sigungu);
+	});
+	
+function loadDongList(sigungu){
+	var sigungu = sigungu;
+	$.ajax({
+		url: "${pageContext.request.contextPath}/admin/loadDongList",
+		data:{sigungu:sigungu},
+		dataType: "json",
+		type: "GET",
+		success: data=>{
+			console.log(data);
+			let html = "<option value=''>전체</option>";
+			$.each(data, function(index, data){
+				html += "<option value='"+data+"'>"+data+"</option>";				
+			});//end of forEach
+			$("#dong").html(html);
+		},
+		error: (x,s,e)=>{
+			console.log("실패",x,s,e);
+		}
+	});//end of ajax
+}//end of loadDongList
+	
 	
 	loadProductReportList(1);
 	
@@ -48,7 +147,7 @@ $(()=>{
 				console.log(data);
 				let $table = $("#productReport-list-tbl");
 		    	$table.html("");
-		    	let header = "<tr><th>No</th><th>신고접수일</th><th>카테고리</th><th>작성자</th><th>신고내용</th><th>답변상태</th><th>첨부파일</th></tr>";
+		    	let header = "<tr><th>No</th><th>신고접수일</th><th>카테고리</th><th>작성자</th><th>신고내용</th><th>처리상태</th><th>첨부파일</th></tr>";
 		    	let	html = "";
 		    	for(var i=0; i<data.list.length;i++){
 		    		
@@ -70,10 +169,10 @@ $(()=>{
 		    		html += "<td>"+data.list[i].MEMBER_ID+"</td>";
 		    		html += "<td>"+data.list[i].REPORT_CONTENTS+"</td>";
 		    		if(data.list[i].STATUS == 'N'){
-		    			html += "<td>답변대기</td>";
+		    			html += "<td>대기</td>";
 		    		}
 		    		else{
-		    			html += "<td>답변완료</td>";
+		    			html += "<td>완료</td>";
 		    		}
 		    		if(data.list[i].REPORT_IMAGE == null) {
 		    			html += "<td>X</td>";

@@ -19,20 +19,13 @@
 	height: 250px;
 	margin-bottom: 10px;
 }
-#reportReply{
-	resize: none;
-}
-#reportReplyBtn{
-	width: 62px;
-    height: 78px;
-    position: absolute;
-    margin-left: 10px;
-    background-color: white;
-	outline: none;
-	border: 1px solid darkgray;
-}
 #reportContentDiv{
 	height: 170px;
+}
+#statusBtn{
+	outline: none;
+	border: 1px solid black;
+	background: white;
 }
 </style>
 
@@ -45,12 +38,22 @@
 		<strong>접수일자</strong> : ${map.REPORT_DATE}
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<strong>작성자</strong> : ${map.MEMBER_ID}
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<c:if test="${map.STATUS eq 'N' }">
+			<button id='statusBtn'>처리대기</button>
+		</c:if>
+		<c:if test="${map.STATUS eq 'Y' }">
+			<button id='statusBtn' disabled>처리완료</button>
+		</c:if>
 	</span>
 	<hr />
 	<div id="reportContentDiv">
 		<strong>신고 내용 : </strong><br />
 		<div style='width: 900px; margin-left: 30px;'>
-			<p style='margin-left: 100px; margin-top: 30px;'>${map.REPORT_COMMENT}</p>
+			<p style='margin-left: 100px; margin-top: 30px;'>${map.REPORT_CONTENTS}</p>
 		</div>
 	</div>
 	<hr />
@@ -64,12 +67,28 @@
 		</c:if>
 	</div>
 	<hr />
-	
-	<textarea name="reportReply" id="reportReply" cols="140" rows="3"></textarea>
-	<button id="reportReplyBtn">답변 등록</button>
-	
-	
-	
 </div>
+
+<script>
+$("#statusBtn").click(updateReportStatus);
+function updateReportStatus() {
+	var reportNo = ${map.REPORT_NO};
+	$.ajax({
+		url: "${pageContext.request.contextPath}/admin/updateReportStatus",
+		method: "POST",
+		data : {reportNo : reportNo},
+		success: data => {
+			console.log(data);
+			if(data == 1){
+				$("#statusBtn").text("처리완료");
+				$("#statusBtn").attr("disabled", true);
+			}
+		},
+		error: (x, s, e) => {
+			console.log("ajax 요청 실패!");
+		}
+	});
+}
+</script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

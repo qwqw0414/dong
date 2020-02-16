@@ -131,6 +131,10 @@ public class AdminDAOImpl implements AdminDAO {
 	public Map<String, String> selectOneProductReport(int boardNo) {
 		return sst.selectOne("admin.selectOneProductReport", boardNo);
 	}
+	@Override
+	public int updateReportStatus(int reportNo) {
+		return sst.update("admin.updateReportStatus", reportNo);
+	}
 	// ========================== 주영 끝
 	
 	
