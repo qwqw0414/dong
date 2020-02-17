@@ -455,7 +455,7 @@
 	
 		<div id="shop-contents">
 			<div id="nav-product">
-				<h1>내 상품</h1> ${map}
+				<h1>내 상품</h1>
 				<div class="myProductList" id="myProductList">
       				<div  id="myProduct">
       				</div>
@@ -816,6 +816,7 @@ $("#shopView #shopNameUpdateBtn").click(shopNameUpdateEnd);
 
 				$shopNameSpanDiv.show();
 				$shopNameInputDiv.hide();
+				location.reload();
 			},
 			error: (x, s, e) => {
 				console.log("ajax 요청 실패!");
@@ -872,6 +873,7 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 
 				var $shopInfoSpanDiv = $("#shopInfoSpanDiv");
 				$shopInfoSpanDiv.show();
+				location.reload();
 			},
 			error: (x, s, e) => {
 				console.log("ajax 요청 실패!");
