@@ -55,6 +55,7 @@ public interface MemberDAO {
 	List<Map<String, String>> selectDetailsByOption(Map<String, String> param, int cPage, int numPerPage);
 	int countDetailsByOption(Map<String, String> param);
 	
+	
 
 	
 	

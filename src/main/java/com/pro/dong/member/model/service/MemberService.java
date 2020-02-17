@@ -24,7 +24,7 @@ public interface MemberService {
 	Member selectLoginMember(String memberId);
 	int emailDuplicate(String email);
 	int updateAddress(Map<String, String> param);
-	
+
 	//==========================  근호 끝
 	
 	// 지은 시작 ==========================
@@ -58,6 +58,7 @@ public interface MemberService {
 	int countDetails(String memberId);
 	List<Map<String, String>> selectDetailsByOption(Map<String, String> param, int cPage, int numPerPage);
 	int countDetailsByOption(Map<String, String> param);
+	
 	
 	
 	
