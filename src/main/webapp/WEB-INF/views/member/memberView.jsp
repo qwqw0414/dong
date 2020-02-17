@@ -162,9 +162,7 @@
 
             </div>
 
-
         </div>
-
 
 	<span class="byement">더이상 동네한바퀴를 이용하고 싶지 않다면 <a class="byelink"href="${pageContext.request.contextPath}/member/memberBye.do">회원탈퇴<small>▶</small> </a></span>
     </div>
@@ -338,8 +336,7 @@ if ( rsp.success ) {
             });
         });//end of updatephone
 
-
-      //----------------------------------------------------근호
+//----------------------------------------------------근호
 		//메일보내기
         $("#memberView #button-addon3").on('click', function () {
         	var $validEmail = $("#valid-email");
@@ -411,8 +408,6 @@ if ( rsp.success ) {
                  }
         	});
         });
-   
-       
 //----------------------------------------------------------------근호 끝
    });//end of script      
 

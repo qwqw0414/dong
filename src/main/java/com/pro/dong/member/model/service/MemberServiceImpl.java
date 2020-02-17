@@ -143,6 +143,8 @@ public class MemberServiceImpl implements MemberService{
 		return md.countDetailsByOption(param);
 	}
 
+	
+
 
 
 	

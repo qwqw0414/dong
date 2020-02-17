@@ -80,7 +80,7 @@
     	        and st.is_sale=#{saleCategory}
              </if>
              <if test="searchKeyword!=null and searchKeyword!=''">
-	            and p.title like '%$searchKeyword}%'
+	            and p.title like '%${searchKeyword}%'
              </if>
         </where>
 	</select>
