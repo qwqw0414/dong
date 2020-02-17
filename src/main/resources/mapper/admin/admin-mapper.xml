@@ -112,9 +112,11 @@
 	
 	<select id="selectMemberPointTotal" parameterType="map" resultType="_int">
 		select count(*) from member M left join point_status P on M.member_id = P.member_id
-		<if test="searchKeyword != null and searchKeyword!=''">
-			and P.${searchType} like '%${searchKeyword}%'			
-		</if>
+		<where>
+			<if test="searchKeyword != null and searchKeyword!=''">
+				and P.${searchType} like '%${searchKeyword}%'			
+			</if>
+		</where>
 	</select>
 	
 	<select id="selectMemberPointList" parameterType="map" resultType="map">

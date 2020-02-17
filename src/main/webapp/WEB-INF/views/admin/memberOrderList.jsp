@@ -13,14 +13,16 @@ $(function () {
 		var cPage = $("#cPage").val();
 		var searchType = $("#searchType").val();
 		var searchKeyword = $("#searchKeyword").val();
+		var start = $("#startDate").val();
+		var end = $("#endDate").val();
 		
-		if(searchKeyword.length == 0){
+	/* 	if(searchKeyword.length == 0){
 			alert("검색어를 입력하세요.");
 			$("#searchKeyword").focus();
 			return;
 		}else{
-			loadMemberOrderList(searchType,searchKeyword,cPage);
-		}
+		} */
+			loadMemberOrderList(searchType,searchKeyword,cPage,start,end);
 	});
 	
 	$("#memberOrderAll").click(function (){
@@ -32,6 +34,8 @@ function loadMemberOrderList(searchType, searchKeyword, cPage){
 	var cPage = cPage;
 	var searchType = searchType;
 	var searchKeyword = searchKeyword;
+	var start = start;
+	var end = end;
 	
 	$("#cPage").val(cPage);
 	
@@ -41,7 +45,9 @@ function loadMemberOrderList(searchType, searchKeyword, cPage){
 		data: {
 			cPage: cPage,
 			searchType: searchType,
-			searchKeyword: searchKeyword
+			searchKeyword: searchKeyword,
+			start: start,
+			end: end
 		}, success: data => {
 			console.log("memberOrderList@ajax 진행!");
 			let header = "<tr><th>주문번호</th><th>회원아이디</th><th>주문내역</th><th>주소(동)</th><th>상품가격</th><th>주문날짜</th></tr>";
@@ -159,7 +165,13 @@ function loadMemberOrderList(searchType, searchKeyword, cPage){
   <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="검색어를 입력해 주세요" id="searchKeyword">
    <button class="btn btn-outline-secondary" id="searchMemberOrder">검색</button>
    <button class="btn btn-outline-secondary" id="memberOrderAll">전체</button>
-
+		<div class="col col-lg-2">
+			<input type="text" class='form-control' id="startDate" placeholder='시작날짜선택' readonly>
+		</div>
+		<span>~</span>
+		<div class="col-md-auto">
+			<input type="text" class='form-control' id="endDate" placeholder='종료날짜선택' readonly>
+		</div>
 </div>
 
 <div class="table-responsive">
@@ -173,6 +185,49 @@ function loadMemberOrderList(searchType, searchKeyword, cPage){
 </div>
 <input type="hidden" name="cPage" id="cPage"/>
 
+
+<!-- 달력 스크립트 -->
+<script type="text/javascript">
+  $(document).ready(function () {
+          $.datepicker.setDefaults($.datepicker.regional['ko']); 
+          $( "#startDate" ).datepicker({
+               changeMonth: true, 
+               changeYear: true,
+               nextText: '다음 달',
+               prevText: '이전 달', 
+               dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+               dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'], 
+               monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+               monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+               dateFormat: "yymmdd",
+               maxDate: 0,                       // 선택할수있는 최소날짜, ( 0 : 오늘 이후 날짜 선택 불가)
+               onClose: function( selectedDate ) {    
+                    //시작일(startDate) datepicker가 닫힐때
+                    //종료일(endDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
+                   $("#endDate").datepicker( "option", "minDate", selectedDate );
+               }    
+
+          });
+          $( "#endDate" ).datepicker({
+               changeMonth: true, 
+               changeYear: true,
+               nextText: '다음 달',
+               prevText: '이전 달', 
+               dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+               dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'], 
+               monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+               monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+               dateFormat: "yymmdd",
+               maxDate: 0,                       // 선택할수있는 최대날짜, ( 0 : 오늘 이후 날짜 선택 불가)
+               onClose: function( selectedDate ) {    
+                   // 종료일(endDate) datepicker가 닫힐때
+                   // 시작일(startDate)의 선택할수있는 최대 날짜(maxDate)를 선택한 시작일로 지정
+                   $("#startDate").datepicker( "option", "maxDate", selectedDate );
+               }    
+
+          });    
+  });
+</script>
 
 
 
