@@ -106,8 +106,8 @@
 	
 	<!-- 지은 시작 ========================== -->
 	<select id="selectMemberPoint" parameterType="map" resultType="map">
-		select M.member_id, P.point_amount, P.reg_date, M.point, P.status
-		from (member M left join point_status P on M.member_id = P.member_id) order by P.reg_date
+		select M.member_id, P.point_amount, P.DATE, M.point, P.status
+		from (member M left join point_status P on M.member_id = P.member_id) order by P.DATE
 	</select>
 	
 	<select id="selectMemberPointTotal" parameterType="map" resultType="_int">
@@ -122,7 +122,7 @@
 		from (select * from member left join point_status using(member_id)) A
 		<where>
 			<if test="searchKeyword!=null and searchKeyword!=''">
-				and P.${searchType} like '%${searchKeyword}%'
+				and A.${searchType} like '%${searchKeyword}%'
 			</if>
 		</where>
 	</select>

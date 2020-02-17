@@ -1,5 +1,8 @@
 <%@page import="com.pro.dong.common.util.Utils"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
 <script>
@@ -64,28 +67,26 @@ function loadMemberPointList(searchType,searchKeyword, cPage){
 
 <h1>회원포인트 관리</h1>
 
-	<div class="col-md-6 ">
-	    <div class="input-group">
-		  <label for="searchKeyword" class="sr-only">검색</label>
-		  <select class="custom-select" id="searchType" required>
-	     	<option value="member_id">아이디</option>
-	     	<option value="reg_date">충전날짜</option>
-	     	<option value="status">입/출내역</option>
-	      </select>
-	      
-	      <!-- <div id="search-status">
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+     <select class="custom-select" id="searchType" required>
+	     <option value="member_id">아이디</option>
+	    <option value="reg_date">충전날짜</option>
+	    <option value="status">입/출내역</option>
+	 </select>
+	     <!--  <div id="search-status">
 	      	<input type="hidden" name="searchType" value="status"/>
-	      	<input type="radio" name="searchKeyword" value="I" checked/> 입급내역
-	      	<input type="radio" name="searchKeyword" value="O"/> 출금내역
+	      	<input type="radio"  id="inputRadio" name="searchKeyword" value="I" checked/> 입급내역
+	      	<input type="radio" id="outputRadio" name="searchKeyword" value="O"/> 출금내역
 	      </div> -->
-	      
-		  <input style="margin-left: 20px;" type="text" size="30" id="searchKeyword" placeholder="검색어를 입력하세요">
-		  <div class="input-group-append">
-	      <button style="margin-left: 20px;" class="btn btn-primary btn-sm" id="searchMemberPoint">검색하기</button> 
-	      <button style="margin-left: 30px;" class="btn btn-primary btn-sm" id="memberPointAll">전체보기</button>
-          </div>
-	    </div>
-    </div>
+  </div>
+  <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="검색어를 입력해 주세요" id="searchKeyword">
+   <button class="btn btn-outline-secondary" id="searchMemberPoint">검색</button>
+   <button class="btn btn-outline-secondary" id="memberPointAll">전체</button>
+
+</div>
+
+
 
 <div class="table-responsive">
 <br /><br />
