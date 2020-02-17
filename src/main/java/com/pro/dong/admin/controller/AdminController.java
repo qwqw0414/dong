@@ -217,10 +217,16 @@ public class AdminController {
 	
 	@RequestMapping("/memberOrderListEnd")
 	@ResponseBody
-	public Map<String,Object> memberOrderListEnd(@RequestParam(value="searchType", defaultValue="")String searchType,@RequestParam(value="searchKeyword", defaultValue="")String searchKeyword, @RequestParam(value="cPage",defaultValue="1")int cPage){
+	public Map<String,Object> memberOrderListEnd(@RequestParam(value="sido", defaultValue="")String sido, @RequestParam(value="sigungu", defaultValue="")String sigungu, @RequestParam(value="dong", defaultValue="")String dong,
+			@RequestParam(value="searchType", defaultValue="")String searchType, @RequestParam(value="searchKeyword",defaultValue="") String searchKeyword,@RequestParam(value="type",defaultValue="") String type,
+			@RequestParam(value="cPage",defaultValue="1") int cPage){
 		final int numPerPage = 10;
 		Map<String, Object> result = new HashMap<>();
 		Map<String, String> param = new HashMap<>();
+		param.put("sido", sido);
+		param.put("sigungu", sigungu);
+		param.put("dong", dong);
+		param.put("type", type);
 		param.put("searchType", searchType);
 		param.put("searchKeyword", searchKeyword);
 		

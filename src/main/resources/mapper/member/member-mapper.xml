@@ -15,7 +15,18 @@
 		insert into point_status 
 		values(seq_point_status.nextval, #{memberId}, #{pointAmount}, 'I', default)
 	</insert>
-
+	<select id="orderListTotalContents" resultType="_int">
+		select count(*) from order_list where member_id = #{memberId}
+	</select>
+	<select id="loadOrderList" resultType="map">
+		select o.*, p.title,p.shop_no, pa.photo from 
+		order_list o left join product p
+		on o.product_no = p.product_no
+		left join product_attachment pa
+		on o.product_no = pa.product_no
+		where pa.thumbnail = 'Y'
+		and o.member_id = #{memberId}
+	</select>
 	<!-- ==========================  민호 끝 -->
 	
 	<!-- 하진 시작 ========================== -->
