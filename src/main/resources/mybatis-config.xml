@@ -9,6 +9,7 @@
   	<setting name="jdbcTypeForNull" value="NULL"/>
   </settings>
   
+  
   <typeAliases>
   	<typeAlias type="com.pro.dong.common.email.EmailHandler" alias="emailHandler"/>
 	<package name="com.pro.dong.test.model.vo"/>
