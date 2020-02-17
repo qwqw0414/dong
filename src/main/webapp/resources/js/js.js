@@ -44,3 +44,16 @@ if(diffHour > 23){
 
 return diffHour+"시간 전";
 }
+
+function life(date){
+	var preDate = new Date(date);
+
+	var year = preDate.getFullYear();
+	var month = preDate.getMonth()+1;
+	var date = preDate.getDate();
+
+	if(month < 10) month = "0"+month;
+	if(date < 10) date = "0"+date;
+
+	return year+"/"+month+"/"+date;
+}
