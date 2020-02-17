@@ -139,10 +139,10 @@ public class ShopController {
 	}
 	@RequestMapping(value="/loadMyProductManage" , produces="text/plain;charset=UTF-8")
 	@ResponseBody
-	public String loadMyProductManage(@RequestParam(value="searchKeyword",defaultValue="") String searchKeyword,
-			@RequestParam(value="saleCategory",defaultValue="") String saleCategory, 
-			@RequestParam(value="cPage", defaultValue="1") int cPage,
-			@RequestParam(value="memberId") String memberId){
+	public String loadMyProductManage(String searchKeyword,
+			String saleCategory, 
+			int cPage,
+			String memberId){
 		
 		int numPerPage = 10;
 		
@@ -154,7 +154,7 @@ public class ShopController {
 		int totalContents = ss.totalProductContents(param);
 
 		List<Map<String, String>> list = ss.loadMyProductManage(cPage,numPerPage,param);
-		
+		log.debug("@@@@@@@@@@@@@={}",list);
 		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);	
 
 		Map<String,Object> result = new HashMap<>();

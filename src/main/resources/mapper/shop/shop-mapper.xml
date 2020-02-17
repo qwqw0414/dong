@@ -80,7 +80,7 @@
     	        and st.is_sale=#{saleCategory}
              </if>
              <if test="searchKeyword!=null and searchKeyword!=''">
-	            and p.title like '%$searchKeyword}%'
+	            and p.title like '%${searchKeyword}%'
              </if>
         </where>
 	</select>
@@ -100,6 +100,7 @@
 	            and p.title like '%${searchKeyword}%'
              </if>
 		</where>
+		order by p.reg_date desc
 	</select>
 	<!-- ==========================  하진 끝 -->
 	
@@ -127,16 +128,19 @@
 	<!-- ==========================  예찬 끝 -->
 	
 	<!-- 주영 시작 ========================== -->
+	<resultMap type="map" id="shopMap">
+		<result column="since" property="since"/>
+	</resultMap>
 	<select id="selectOneShop" resultType="map">
 		select 
-		S.member_id, s.shop_info, s.image, s.shop_name, s.shop_no, ceil(sysdate-s.open_date) as since, s.incount
+		S.member_id, s.shop_info, s.image, s.shop_name, s.shop_no, to_char(ceil(sysdate-s.open_date)) as since, s.incount
 		from member M left join shop S on M.member_id = S.member_id 
 		where M.member_id = #{memberId}
 	</select>
 	
 	<select id="selectShopByShopNo" resultType="map">
 		select 
-		S.member_id, s.shop_info, s.image, s.shop_name, s.shop_no, ceil(sysdate-s.open_date) as since , s.incount
+		S.member_id, s.shop_info, s.image, s.shop_name, s.shop_no, to_char(ceil(sysdate-s.open_date)) as since , s.incount
 		from member M left join shop S on M.member_id = S.member_id 
 		where S.shop_no = #{shopNo}
 	</select>
