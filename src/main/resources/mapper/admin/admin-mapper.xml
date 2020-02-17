@@ -118,14 +118,13 @@
 	</select>
 	
 	<select id="selectMemberPointList" parameterType="map" resultType="map">
-		select *
-		from (member M left join point_status P on M.member_id = P.member_id) 
+		select A.*, to_char(A.reg_date,'yyyy-mm-dd') "DATE" 
+		from (select * from member left join point_status using(member_id)) A
 		<where>
 			<if test="searchKeyword!=null and searchKeyword!=''">
 				and P.${searchType} like '%${searchKeyword}%'
 			</if>
 		</where>
-		order by P.reg_date
 	</select>
 	
 	<select id="selectMemberOrderTotal" parameterType="map" resultType="_int">
@@ -136,13 +135,14 @@
 	</select>
 	
 	<select id="selectMemberOrderList" parameterType="map" resultType="map">
-	select * from (order_list O left join product P on O.dong = P.dong)
+	select A. *, to_char(A.reg_date,'yyyy-mm-dd') "DATE" 
+	from (select * from order_list O left join product P on O.dong = P.dong) A
 	<where>
 		<if test="searchKeyword!=null and searchKeyword!=''">
 			and O.${searchType} like '%${searchKeyword}%'
 		</if>
 	</where>
-	order by O.order_date
+	order by order_no
 	</select>
 	
 	<!-- ==========================  지은 끝 -->
