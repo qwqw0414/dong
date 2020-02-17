@@ -55,8 +55,8 @@ stompClient.connect({}, function(frame) {
 		console.log("receive from /chat/admin :", message);
 		//새로운 메세지가 있을때 목록 갱신을 위해서 reload함.
 		location.reload();
-		//let messsageBody = JSON.parse(message.body);
-		//$("#data").append(messsageBody.memberId+":"+messsageBody.msg+ "<br/>");
+		let messsageBody = JSON.parse(message.body);
+		$("#data").append(messsageBody.memberId+":"+messsageBody.msg+ "<br/>");
 	});
 
 });
