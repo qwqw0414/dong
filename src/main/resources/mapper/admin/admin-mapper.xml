@@ -142,6 +142,7 @@
 			and O.${searchType} like '%${searchKeyword}%'
 		</if>
 	</where>
+	order by order_no
 	</select>
 	
 	<!-- ==========================  지은 끝 -->
