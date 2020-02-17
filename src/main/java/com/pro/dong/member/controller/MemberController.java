@@ -38,6 +38,7 @@ import com.pro.dong.common.util.Utils;
 import com.pro.dong.member.model.exception.MemberException;
 import com.pro.dong.member.model.service.MemberService;
 import com.pro.dong.member.model.vo.Member;
+import com.pro.dong.product.model.vo.OrderList;
 
 @SessionAttributes(value= {"memberLoggedIn"})
 @Controller
@@ -78,6 +79,24 @@ public class MemberController {
 	@RequestMapping("/orderListView.do")
 	public void orderListView() {
 		
+	}
+	@RequestMapping("/loadOrderList")
+	@ResponseBody
+	public Map<String, Object> loadOrderList(HttpSession session,@RequestParam(value="cPage", defaultValue="") int cPage){
+		Member memberLoggedIn = (Member) session.getAttribute("memberLoggedIn");
+		String memberId = memberLoggedIn.getMemberId();
+		Map<String, String> param = new HashMap<>();
+		Map<String, Object> result = new HashMap<>();
+		param.put("memberId", memberId);
+		int numPerPage = 10;
+		
+		int totalContents = ms.orderListTotalContents(param);
+		
+		List<OrderList> orderList = ms.loadOrderList(param,cPage,numPerPage);
+		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
+		result.put("orderList", orderList);
+		result.put("pageBar", pageBar);
+		return result;
 	}
 //==========================민호 끝
 	
