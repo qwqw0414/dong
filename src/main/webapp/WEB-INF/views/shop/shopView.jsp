@@ -75,8 +75,10 @@
 }
 </style>
 
+
 <div id="shopView"></div>
 <input type="hidden" name="memberLoggedIn" value="<%= memberLoggedIn.getMemberId()%>"/>
+
 
  <div id="shopView" class="mx-center">
 	<div id="shopDiv">
@@ -384,9 +386,6 @@
 			var memberId = $("[name=memberLoggedIn]").val();
 			var shopMemberId = '${map.MEMBER_ID}';
 			
-			
-			
-			
 			$.ajax({
 				url:"${pageContext.request.contextPath}/shop/loadMyProduct",
 				contentType: "application/json; charset=utf-8",
@@ -456,10 +455,9 @@
 	
 		<div id="shop-contents">
 			<div id="nav-product">
-				<h1>내 상품</h1> 
+				<h1>내 상품</h1> ${map}
 				<div class="myProductList" id="myProductList">
       				<div  id="myProduct">
-      				
       				</div>
       				
     			</div>
