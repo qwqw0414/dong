@@ -19,11 +19,14 @@
 		select count(*) from order_list where member_id = #{memberId}
 	</select>
 	<select id="loadOrderList" resultType="map">
-		select o.*, p.title,p.shop_no, pa.photo from 
+		select o.*, p.title, V.shop_name, pa.photo from 
 		order_list o left join product p
 		on o.product_no = p.product_no
 		left join product_attachment pa
 		on o.product_no = pa.product_no
+        left join (select * from product p left join shop s
+        on p.shop_no = s.shop_no) V
+        on o.product_no = v.product_no
 		where pa.thumbnail = 'Y'
 		and o.member_id = #{memberId}
 	</select>

@@ -156,24 +156,24 @@ $(()=>{
 			<br /><br /><br />
 		</div>
 	</div>
-
-	<div class="col-md-3 mb-3">
-	      <label for="boardCategory">카테고리</label>
-	      <select class="custom-select" id="boardCategory" required>
+<div class="col-md-6 ">
+	    <div class="input-group">
+		  <label for="boardCategory" class="sr-only">카테고리</label>
+		  <select class="custom-select" id="boardCategory" required>
 	     	<%=option %>
 	      </select>
-	    <div class="input-group mb-3">
-		  <label for="searchKeyword" class="sr-only">검색</label>
+	      <label for="searchKeyword" class="sr-only">검색</label>
 		  <select class="custom-select" id="searchType" required>
 	     	<option value="member_id" selected>아이디</option>
 	     	<option value="board_title">글제목</option>
 	      </select>
-		  <input type="text" size="30" id="searchKeyword" placeholder="검색어를 입력하세요">
+		  <input style="margin-left: 20px;" type="text" size="30" id="searchKeyword" placeholder="검색어를 입력하세요">
 		  <div class="input-group-append">
-	      <button class="btn btn-primary mb-2" id="searchBoard">검색하기</button>
+	      <button style="margin-left: 20px;" class="btn btn-primary btn-sm" id="searchBoard">검색하기</button> 
           </div>
 	    </div>
     </div>
+
 	<p id="totalContents"></p>
 	<input type="button" value="글쓰기" id="btn-add" class="btn btn-outline-success" onclick="fn_goWriteBoard();"/>
 	
