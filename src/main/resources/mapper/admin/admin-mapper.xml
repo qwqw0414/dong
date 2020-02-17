@@ -106,43 +106,65 @@
 	
 	<!-- 지은 시작 ========================== -->
 	<select id="selectMemberPoint" parameterType="map" resultType="map">
-		select M.member_id, P.point_amount, P.reg_date, M.point, P.status
-		from (member M left join point_status P on M.member_id = P.member_id) order by P.reg_date
+		select M.member_id, P.point_amount, P.DATE, M.point, P.status
+		from (member M left join point_status P on M.member_id = P.member_id) order by P.DATE
 	</select>
 	
 	<select id="selectMemberPointTotal" parameterType="map" resultType="_int">
 		select count(*) from member M left join point_status P on M.member_id = P.member_id
-		<if test="searchKeyword != null and searchKeyword!=''">
-			and P.${searchType} like '%${searchKeyword}%'			
-		</if>
+		<where>
+			<if test="searchKeyword != null and searchKeyword!=''">
+				and P.${searchType} like '%${searchKeyword}%'			
+			</if>
+		</where>
 	</select>
 	
 	<select id="selectMemberPointList" parameterType="map" resultType="map">
-		select *
-		from (member M left join point_status P on M.member_id = P.member_id) 
+		select A.*, to_char(A.reg_date,'yyyy-mm-dd') "DATE" 
+		from (select * from member left join point_status using(member_id)) A
 		<where>
 			<if test="searchKeyword!=null and searchKeyword!=''">
-				and P.${searchType} like '%${searchKeyword}%'
+				and A.${searchType} like '%${searchKeyword}%'
 			</if>
 		</where>
-		order by P.reg_date
 	</select>
 	
 	<select id="selectMemberOrderTotal" parameterType="map" resultType="_int">
 	select count(*) from order_list O left join product P on O.dong = P.dong
-	<if test="searchKeyword != null and searchKeyword!=''">
-		and O.${searchType} like '%${searchKeyword}%'
-	</if>
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+				and O.${searchType} like '%${searchKeyword}%'
+			</if>
+			<if test="sido!=null and sido!=''">
+				and O.sido like #{sido}
+			</if>
+			<if test="sigungu!=null and sigungu!=''">
+				and O.sigungu like #{sigungu}
+			</if>
+			<if test="dong!=null and dong!=''">
+				and O.dong like #{dong}
+			</if>
+		</where>
 	</select>
 	
 	<select id="selectMemberOrderList" parameterType="map" resultType="map">
-	select * from (order_list O left join product P on O.dong = P.dong)
-	<where>
-		<if test="searchKeyword!=null and searchKeyword!=''">
-			and O.${searchType} like '%${searchKeyword}%'
-		</if>
-	</where>
-	order by O.order_date
+	select A. *, to_char(A.reg_date,'yyyy-mm-dd') "DATE" 
+	from (select * from order_list O left join product P on O.dong = P.dong) A
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+				and A.${searchType} like '%${searchKeyword}%'
+			</if>
+			<if test="sido!=null and sido!=''">
+				and A.sido like #{sido}
+			</if>
+			<if test="sigungu!=null and sigungu!=''">
+				and A.sigungu like #{sigungu}
+			</if>
+			<if test="dong!=null and dong!=''">
+				and A.dong like #{dong}
+			</if>
+		</where>
+	order by order_no
 	</select>
 	
 	<!-- ==========================  지은 끝 -->

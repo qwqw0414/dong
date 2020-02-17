@@ -80,11 +80,11 @@ $(()=>{
 		type: "GET",
 		success: data=>{
 			console.log(data);
-			let html = "<option value=''>전체</option>";
+			let html = "";
 			$.each(data, function(index, data){
 				html += "<option value='"+data+"'>"+data+"</option>";				
 			});//end of forEach
-			$("#sido").html(html);
+			$("#sido").append(html);
 		},
 		error: (x,s,e)=>{
 			console.log("실패",x,s,e);
@@ -108,11 +108,11 @@ function loadSigunguList(sido){
 		type: "GET",
 		success: data=>{
 			console.log(data);
-			let html = "<option value=''>전체</option>";
+			let html = "";
 			$.each(data, function(index, data){
 				html += "<option value='"+data+"'>"+data+"</option>";				
 			});//end of forEach
-			$("#sigungu").html(html);
+			$("#sigungu").append(html);
 		},
 		error: (x,s,e)=>{
 			console.log("실패",x,s,e);
@@ -135,11 +135,11 @@ function loadDongList(sigungu){
 		type: "GET",
 		success: data=>{
 			console.log(data);
-			let html = "<option value=''>전체</option>";
+			let html = "";
 			$.each(data, function(index, data){
 				html += "<option value='"+data+"'>"+data+"</option>";				
 			});//end of forEach
-			$("#dong").html(html);
+			$("#dong").append(html);
 		},
 		error: (x,s,e)=>{
 			console.log("실패",x,s,e);
@@ -175,10 +175,13 @@ function lastDate(date){
 <div class="wrapper">
   <div class="input-group">	
   <select  aria-label="First name" class="form-control" id="sido" >
+  	<option value=''>전체</option>
   </select>
   <select  aria-label="First name" class="form-control" id="sigungu" >
+  	<option value=''>전체</option>
   </select>
   <select  aria-label="First name" class="form-control" id="dong" >
+  	<option value=''>전체</option>
   </select>
   </div>
 </div>

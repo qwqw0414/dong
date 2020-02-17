@@ -58,6 +58,7 @@ footer .line{border: 1px rgb(95, 95, 95) solid; width: 100%;}
 #follower-wrapper .card-body a:hover{color:black; text-decoration:none;}
 .divide-sm{border:0; height:1px; background:#006600; width:90px;}
 .divide-m{border:0; height:1px; background:#006600;}
+.divide-sub{border:0; height:1px; background:#996633; width:100%;}
 #wishCancel{text-shadow: 2px 2px 1px white;}
 
 #purchaseModal{font-family: 'MapoPeacefull';}
@@ -70,6 +71,11 @@ footer .line{border: 1px rgb(95, 95, 95) solid; width: 100%;}
 .main-btn{background:#006600 !important; color:white !important;border:none !important;}
 .main-btn-outline{background:white !important; color:#006600 !important;border-color:#006600 !important;}
 .main-btn-outline:hover{background:#006600 !important; color:white !important;border-color:none !important;}
+
+#orderList-wrapper{width:100%;}
+#orderList-wrapper img{width:64px; height:64px;}
+#orderList-wrapper .orderListTitle{font-wight:bold;}
+#orderList-wrapper .orderListContent{text-align:center;}
 /* ==========================민호 끝 */
 	
 /* 하진 시작 ========================== */

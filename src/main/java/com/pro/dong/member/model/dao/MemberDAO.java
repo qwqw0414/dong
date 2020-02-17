@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.pro.dong.member.model.vo.Member;
+import com.pro.dong.product.model.vo.OrderList;
 
 public interface MemberDAO {
 
@@ -11,6 +12,9 @@ public interface MemberDAO {
 	// 민호 시작 ==========================
 	Map<String, String> selectMemberPoints(Member memberLoggedIn);
 	int updatePoint(Map<String, String> map);
+	List<OrderList> loadOrderList(Map<String, String> param, int cPage, int numPerPage);
+	int orderListTotalContents(Map<String, String> param);
+	int updateReceive(int orderNo);
 	//==========================  민호 끝
 	
 	// 하진 시작 ==========================
@@ -54,6 +58,7 @@ public interface MemberDAO {
 	int countDetails(String memberId);
 	List<Map<String, String>> selectDetailsByOption(Map<String, String> param, int cPage, int numPerPage);
 	int countDetailsByOption(Map<String, String> param);
+	
 	
 
 	

@@ -75,8 +75,10 @@
 }
 </style>
 
+
 <div id="shopView"></div>
 <input type="hidden" name="memberLoggedIn" value="<%= memberLoggedIn.getMemberId()%>"/>
+
 
  <div id="shopView" class="mx-center">
 	<div id="shopDiv">
@@ -113,6 +115,9 @@
 			&nbsp;&nbsp;&nbsp;
 			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-sell@2x.png" width="14" height="13">상품판매 0회
 			&nbsp;&nbsp;&nbsp;
+			<img src="${pageContext.request.contextPath }/resources/images/exchange.png" width="14" height="13"><a href="${pageContext.request.contextPath }/member/orderListView.do">내 거래내역</a>
+			&nbsp;&nbsp;&nbsp;
+			
 			<!-- <img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-dell@2x.png" width="14" height="13">택배발송 2회<hr /> -->
 			<div id="shopInfoSpanDiv">
 				<img id="shopIcon" src="${pageContext.request.contextPath}/resources/images/shopInfoIcon.png" />
@@ -384,9 +389,6 @@
 			var memberId = $("[name=memberLoggedIn]").val();
 			var shopMemberId = '${map.MEMBER_ID}';
 			
-			
-			
-			
 			$.ajax({
 				url:"${pageContext.request.contextPath}/shop/loadMyProduct",
 				contentType: "application/json; charset=utf-8",
@@ -456,10 +458,9 @@
 	
 		<div id="shop-contents">
 			<div id="nav-product">
-				<h1>내 상품</h1> 
+				<h1>내 상품</h1>
 				<div class="myProductList" id="myProductList">
       				<div  id="myProduct">
-      				
       				</div>
       				
     			</div>
@@ -811,13 +812,14 @@ $("#shopView #shopNameUpdateBtn").click(shopNameUpdateEnd);
 				console.log(data);
 
 				$("#shopNameCheck").html("");
-				$("#shopNameSpan").html(data.SHOP_NAME);
+				$("#shopNameSpan").html(data.resultShop.SHOP_NAME);
 
 				var $shopNameSpanDiv = $("#shopNameSpanDiv");
 				var $shopNameInputDiv = $("#shopNameInputDiv");
 
 				$shopNameSpanDiv.show();
 				$shopNameInputDiv.hide();
+				/* location.reload(); */
 			},
 			error: (x, s, e) => {
 				console.log("ajax 요청 실패!");
@@ -870,10 +872,11 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 				var $shopInfoTextDiv = $("#shopInfoTextDiv");
 				$shopInfoTextDiv.hide();
 
-				$('#shopInfoDetail').html(data.SHOP_INFO);
+				$('#shopInfoDetail').html(data.resultShop.SHOP_INFO);
 
 				var $shopInfoSpanDiv = $("#shopInfoSpanDiv");
 				$shopInfoSpanDiv.show();
+				/* location.reload(); */
 			},
 			error: (x, s, e) => {
 				console.log("ajax 요청 실패!");

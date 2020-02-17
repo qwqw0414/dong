@@ -16,7 +16,6 @@
       </div>
       <div class="modal-body">
 				<form>
-				${map }
 				<span class="smallTitle">구매자 정보</span>
 				<hr class="divide-m" />
 					<div class="form-row">

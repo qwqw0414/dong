@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.pro.dong.member.model.vo.Member;
+import com.pro.dong.product.model.vo.OrderList;
 
 public interface MemberService {
 
@@ -11,7 +12,9 @@ public interface MemberService {
 	
 	int updatePoint(Map<String, String> map);
 	Map<String, String> selectMemberPoints(Member memberLoggedIn);
-	
+	List<OrderList> loadOrderList(Map<String, String> param, int cPage, int numPerPage);
+	int orderListTotalContents(Map<String, String> param);
+	int updateReceive(int orderNo);
 	//==========================  민호 끝
 	
 	// 하진 시작 ==========================
@@ -24,7 +27,7 @@ public interface MemberService {
 	Member selectLoginMember(String memberId);
 	int emailDuplicate(String email);
 	int updateAddress(Map<String, String> param);
-	
+
 	//==========================  근호 끝
 	
 	// 지은 시작 ==========================
@@ -58,6 +61,7 @@ public interface MemberService {
 	int countDetails(String memberId);
 	List<Map<String, String>> selectDetailsByOption(Map<String, String> param, int cPage, int numPerPage);
 	int countDetailsByOption(Map<String, String> param);
+	
 	
 	
 	

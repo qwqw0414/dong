@@ -6,7 +6,79 @@
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <h1>거래 내역 페이지</h1>
+<hr class="divide-m" />
+<div class="mx-auto">
+<table id="orderList-wrapper" class="mx-auto" ></table>
+</div>
 
-
-
+<div id="pageBar"></div>
+<script>
+$(()=>{
+	loadOrderList(1);
+	
+	function loadOrderList(cPage){
+		$.ajax({
+			url: "${pageContext.request.contextPath}/member/loadOrderList",
+			data:{cPage: cPage},
+			type: "GET",
+			success: data=>{
+				console.log(data);
+				let html = "<tr class='orderListTitle'><th>주문번호</th><th>상품정보</th><th>상품금액</th><th>판매자</th><th>배송상태</th><th>인수확인</th><th>거래상태<th></tr>";
+				for(var i=0; i<data.orderList.length;i++){
+					html += "<tr><td name='orderNo'>"+data.orderList[i].ORDER_NO+"</td>";
+					html += "<td><img src='${pageContext.request.contextPath}/resources/upload/product/"+data.orderList[i].PHOTO+"' class='mr-3'>"+data.orderList[i].TITLE+"</td>";
+					html += "<td>"+data.orderList[i].PRICE+"</td>";
+					html += "<td>"+data.orderList[i].SHOP_NAME+"</td>";
+					if(data.orderList[i].CHECK_SEND==="N"){
+						html += "<td>배송 준비중</td>";	
+					} else {
+						html += "<td>배송완료</td>";	
+					}
+					if(data.orderList[i].CHECK_RECEIVE==="N"){
+					html += "<td><button class='btn btn-primary main-btn' name='updateReceive'>인수확인</button></td>";	
+					}else {		
+					html += "<td><button class='btn btn-primary sub-btn' disabled>인수완료</button></td>";	
+					}
+					if(data.orderList[i].CHECK_SEND==="Y"&&data.orderList[i].CHECK_RECEIVE==="Y"){
+						html += "<td>거래종료</td></tr>";
+					} else {
+						html += "<td>거래 진행중</td></tr>";
+					}
+				}
+				console.log(html);
+				$("#orderList-wrapper").html(html);
+				$("#pageBar").html(data.pageBar);
+			},
+			error : (x, s, e) => {
+				console.log("ajax 요청 실패!",x,s,e);
+	    	},
+	    	complete: ()=>{
+                $("#pageBar a").click((e)=>{
+                	loadOrderList($(e.target).siblings("input").val());
+                });
+            }
+		});//end of ajax
+	}//end of loadOrderList
+	function updateReceive(this_){
+		var orderListNo = $(this_).parent("td").siblings("[name=orderId]").text();
+		console.log(orderListNo);
+	}
+	$(document).on("click", "#orderList-wrapper [name=updateReceive]", function(e){
+		var btnReceive = $(e.target);
+		var orderNo = btnReceive.parent("td").siblings("[name=orderNo]").text();
+		console.log(orderNo);
+		$.ajax({
+			url: "${pageContext.request.contextPath}/member/updateReceive",
+			data:{orderNo:orderNo},
+			success: data=>{
+				console.log(data);
+				loadOrderList(1);
+			},
+			error : (x, s, e) => {
+				console.log("ajax 요청 실패!",x,s,e);
+	    	}
+		});//end of ajax
+	});
+});//end of onload
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

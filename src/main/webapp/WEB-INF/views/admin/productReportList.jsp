@@ -132,7 +132,7 @@ $(()=>{
 		    		
 		    		html += "<tr>";
 		    		html += "<td><a href='${pageContext.request.contextPath}/admin/productReportView.do?boardNo="+data.list[i].REPORT_NO+"'>"+data.list[i].REPORT_NO+"</a></td>";
-		    		html += "<td>"+data.list[i].REPORT_DATE+"</td>";
+		    		html += "<td>"+life(data.list[i].REPORT_DATE)+"</td>";
 		    		if(data.list[i].CATEGORY_ID == 'A001'){
 		    			html += "<td>사기신고</td>";
 		    		}
@@ -173,6 +173,19 @@ $(()=>{
 		});//end of ajax
 	}//end of loadProductReportList();
 		
+	function life(date){
+		var preDate = new Date(date);
+
+		var year = preDate.getFullYear();
+		var month = preDate.getMonth()+1;
+		var date = preDate.getDate();
+
+		if(month < 10) month = "0"+month;
+		if(date < 10) date = "0"+date;
+
+		return year+"/"+month+"/"+date;
+	}
+	
 });
 </script>
 

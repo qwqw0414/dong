@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -184,13 +186,15 @@ public class AdminController {
 	
 	@RequestMapping("/memberPointListEnd")
 	@ResponseBody
-	public Map<String, Object> memberPointListEnd(@RequestParam(value="searchType", defaultValue="")String searchType, 
+	public Map<String, Object> memberPointListEnd(HttpSession session, @RequestParam("start") String start, @RequestParam("end") String end,@RequestParam(value="searchType", defaultValue="")String searchType, 
 												  @RequestParam(value="searchKeyword",defaultValue="") String searchKeyword,
 												  @RequestParam(value="cPage",defaultValue="1") int cPage) {
 		
 		final int numPerPage = 10;
 		Map<String,Object> result = new HashMap<>();
 		Map<String, String> param = new HashMap<>();
+		param.put("start", start);
+		param.put("end", end+"235959");
 		param.put("searchType", searchType);
 		param.put("searchKeyword", searchKeyword);
 		
@@ -217,10 +221,18 @@ public class AdminController {
 	
 	@RequestMapping("/memberOrderListEnd")
 	@ResponseBody
-	public Map<String,Object> memberOrderListEnd(@RequestParam(value="searchType", defaultValue="")String searchType,@RequestParam(value="searchKeyword", defaultValue="")String searchKeyword, @RequestParam(value="cPage",defaultValue="1")int cPage){
+	public Map<String,Object> memberOrderListEnd(HttpSession session, @RequestParam("start") String start, @RequestParam("end") String end,@RequestParam(value="sido", defaultValue="")String sido, @RequestParam(value="sigungu", defaultValue="")String sigungu, @RequestParam(value="dong", defaultValue="")String dong,
+			@RequestParam(value="searchType", defaultValue="")String searchType, @RequestParam(value="searchKeyword",defaultValue="") String searchKeyword,@RequestParam(value="type",defaultValue="") String type,
+			@RequestParam(value="cPage",defaultValue="1") int cPage){
 		final int numPerPage = 10;
 		Map<String, Object> result = new HashMap<>();
 		Map<String, String> param = new HashMap<>();
+		param.put("start", start);
+		param.put("end", end+"235959");
+		param.put("sido", sido);
+		param.put("sigungu", sigungu);
+		param.put("dong", dong);
+		param.put("type", type);
 		param.put("searchType", searchType);
 		param.put("searchKeyword", searchKeyword);
 		

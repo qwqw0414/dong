@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.pro.dong.member.model.vo.Member;
+import com.pro.dong.product.model.vo.OrderList;
 
 @Repository
 public class MemberDAOImpl implements MemberDAO{
@@ -30,6 +31,19 @@ public class MemberDAOImpl implements MemberDAO{
 	public int updatePoint(Map<String, String> map) {
 		log.debug("map={}",map);
 		return sst.insert("member.updatePoint", map);
+	}
+	@Override
+	public int orderListTotalContents(Map<String, String> param) {
+		return sst.selectOne("member.orderListTotalContents", param);
+	}
+	@Override
+	public List<OrderList> loadOrderList(Map<String, String> param, int cPage, int numPerPage) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return sst.selectList("member.loadOrderList", param, rowBounds);
+	}
+	@Override
+	public int updateReceive(int orderNo) {
+		return sst.update("member.updateReceive", orderNo);
 	}
 	//==========================  민호 끝
 	
@@ -138,6 +152,7 @@ public class MemberDAOImpl implements MemberDAO{
 	public int countDetailsByOption(Map<String, String> param) {
 		return sst.selectOne("member.countDetailsByOption",param);
 	}
+	
 	
 	
 	

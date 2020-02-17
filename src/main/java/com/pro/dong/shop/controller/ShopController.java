@@ -139,10 +139,10 @@ public class ShopController {
 	}
 	@RequestMapping(value="/loadMyProductManage" , produces="text/plain;charset=UTF-8")
 	@ResponseBody
-	public String loadMyProductManage(@RequestParam(value="searchKeyword",defaultValue="") String searchKeyword,
-			@RequestParam(value="saleCategory",defaultValue="") String saleCategory, 
-			@RequestParam(value="cPage", defaultValue="1") int cPage,
-			@RequestParam(value="memberId") String memberId){
+	public String loadMyProductManage(String searchKeyword,
+			String saleCategory, 
+			int cPage,
+			String memberId){
 		
 		int numPerPage = 10;
 		
@@ -154,7 +154,7 @@ public class ShopController {
 		int totalContents = ss.totalProductContents(param);
 
 		List<Map<String, String>> list = ss.loadMyProductManage(cPage,numPerPage,param);
-		
+		log.debug("@@@@@@@@@@@@@={}",list);
 		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);	
 
 		Map<String,Object> result = new HashMap<>();
@@ -286,7 +286,7 @@ public class ShopController {
 	
 	@RequestMapping("/updateShopInfo")
 	@ResponseBody
-	public Map<String, String> shopInfoUpdate(@RequestParam("memberId") String memberId,
+	public Map<String, Object> shopInfoUpdate(@RequestParam("memberId") String memberId,
 							     @RequestParam("updateInfo") String shopInfo) {
 		Map<String, String> param = new HashMap<>();
 		param.put("memberId", memberId);
@@ -296,8 +296,10 @@ public class ShopController {
 		int result = ss.updateShopInfo(param);
 
 		Map<String, String> resultShop = ss.selectOneShop(memberId);
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap.put("resultShop", resultShop);
 		
-		return resultShop;
+		return resultMap;
 	}
 	
 	@RequestMapping("/shopNameCheck")
@@ -328,7 +330,7 @@ public class ShopController {
 	
 	@RequestMapping("/updateShopName")
 	@ResponseBody
-	public Map<String, String> shopNameUpdate(@RequestParam("memberId") String memberId,
+	public Map<String, Object> shopNameUpdate(@RequestParam("memberId") String memberId,
 							     			  @RequestParam("shopName") String shopName) {
 		Map<String, String> param = new HashMap<>();
 		param.put("memberId", memberId);
@@ -337,9 +339,13 @@ public class ShopController {
 		int result = ss.updateShopName(param);
 		Map<String, String> resultShop = new HashMap<>();
 		
-		resultShop = ss.selectOneShop(memberId);	
+		resultShop = ss.selectOneShop(memberId);
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap.put("resultShop", resultShop);
 		
-		return resultShop;
+		Gson gson = new Gson();
+		
+		return resultMap;
 	}
 	
 	

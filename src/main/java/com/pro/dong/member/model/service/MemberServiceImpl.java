@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.pro.dong.member.model.dao.MemberDAO;
 import com.pro.dong.member.model.vo.Member;
+import com.pro.dong.product.model.vo.OrderList;
 
 @Service
 public class MemberServiceImpl implements MemberService{
@@ -31,7 +32,18 @@ public class MemberServiceImpl implements MemberService{
 	public int updatePoint(Map<String, String>map) {
 		return md.updatePoint(map);
 	}
-
+	@Override
+	public List<OrderList> loadOrderList(Map<String, String>param,int cPage, int numPerPage) {
+		return md.loadOrderList(param,cPage,numPerPage);
+	}
+	@Override
+	public int orderListTotalContents(Map<String, String> param) {
+		return md.orderListTotalContents(param);
+	}
+	@Override
+	public int updateReceive(int orderNo) {
+		return md.updateReceive(orderNo);
+	}
 	//==========================  민호 끝
 	
 	// 하진 시작 ==========================
@@ -142,6 +154,8 @@ public class MemberServiceImpl implements MemberService{
 	public int countDetailsByOption(Map<String, String> param) {
 		return md.countDetailsByOption(param);
 	}
+
+	
 
 
 
