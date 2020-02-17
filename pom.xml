@@ -252,16 +252,15 @@
 	    </dependency>
 		
 	    <!-- #12. jsonView -->
-	    <dependency>
+		<dependency>
 	        <groupId>net.sf.json-lib</groupId>
 	        <artifactId>json-lib-ext-spring</artifactId>
 	        <version>1.0.2</version>
 	    </dependency>
-	    
 	    <!-- #13. @Responsebody : java -> json -->
 	    <!-- spring 5.x.x -->
 	    <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
-	    <dependency>
+		<dependency>
 	        <groupId>com.fasterxml.jackson.core</groupId>
 	        <artifactId>jackson-databind</artifactId>
 	        <version>2.9.5</version>

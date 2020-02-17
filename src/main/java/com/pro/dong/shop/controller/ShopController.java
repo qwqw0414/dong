@@ -286,7 +286,7 @@ public class ShopController {
 	
 	@RequestMapping("/updateShopInfo")
 	@ResponseBody
-	public Map<String, String> shopInfoUpdate(@RequestParam("memberId") String memberId,
+	public Map<String, Object> shopInfoUpdate(@RequestParam("memberId") String memberId,
 							     @RequestParam("updateInfo") String shopInfo) {
 		Map<String, String> param = new HashMap<>();
 		param.put("memberId", memberId);
@@ -296,8 +296,10 @@ public class ShopController {
 		int result = ss.updateShopInfo(param);
 
 		Map<String, String> resultShop = ss.selectOneShop(memberId);
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap.put("resultShop", resultShop);
 		
-		return resultShop;
+		return resultMap;
 	}
 	
 	@RequestMapping("/shopNameCheck")
