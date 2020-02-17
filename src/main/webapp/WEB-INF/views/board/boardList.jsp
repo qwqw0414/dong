@@ -58,7 +58,7 @@ $(()=>{
 		    		html += "<td><span class='badge badge-pill badge-danger'>공지</span></td>";
 		    		html += "<td colspan='2'><a href='${pageContext.request.contextPath}/board/boardView.do?boardNo="+data.noticeList[i].BOARD_NO+"'>"+data.noticeList[i].BOARD_TITLE+"</a></td>";
 		    		html += "<td>"+data.noticeList[i].MEMBER_ID+"</td>";
-		    		html += "<td>"+data.noticeList[i].WRITE_DATE+"</td>";
+		    		html += "<td>"+life(data.noticeList[i].WRITE_DATE)+"</td>";
 		    		html += "<td>"+data.noticeList[i].READ_COUNT+"</td>";
 		    		html += "</tr>";
 		    	}
@@ -68,7 +68,7 @@ $(()=>{
 		    		html += "<td>"+data.list[i].BOARD_NO+"</td>";
 		    		html += "<td colspan='2'><a href='${pageContext.request.contextPath}/board/boardView.do?boardNo="+data.list[i].BOARD_NO+"'>"+data.list[i].BOARD_TITLE+"</a></td>";
 		    		html += "<td>"+data.list[i].MEMBER_ID+"</td>";
-		    		html += "<td>"+data.list[i].WRITE_DATE+"</td>";
+		    		html += "<td>"+life(data.list[i].WRITE_DATE)+"</td>";
 		    		html += "<td>"+data.list[i].READ_COUNT+"</td>";
 		    		html += "</tr>";
 		    	}
@@ -113,7 +113,18 @@ $(()=>{
 			loadBoardList(1);
 		}
 	}//end of search
+	function life(date){
+		var preDate = new Date(date);
 
+		var year = preDate.getFullYear();
+		var month = preDate.getMonth()+1;
+		var date = preDate.getDate();
+
+		if(month < 10) month = "0"+month;
+		if(date < 10) date = "0"+date;
+
+		return year+"/"+month+"/"+date;
+	}
 });
 </script>
  <h1>커뮤니티 게시판</h1>
@@ -126,7 +137,7 @@ $(()=>{
 		<div class="col-md-12">
 		<br /><br />
 		<h4>인기글</h4>
-			<table id="po-board" class="table table-striped table-hover">
+			<table id="po-board" class="table table-hover">
 				<tr>
 					<th>글번호</th>
 					<th>제목</th>
@@ -179,7 +190,7 @@ $(()=>{
 	<p id="totalContents"></p>
 	<input type="button" value="글쓰기" id="btn-add" class="btn btn-outline-success" onclick="fn_goWriteBoard();"/>
 	
-	<table id="tbl-board" class="table table-striped table-hover">
+	<table id="tbl-board" class="table table-hover">
 		
 	</table>
 	<!-- pageBar 출력 -->

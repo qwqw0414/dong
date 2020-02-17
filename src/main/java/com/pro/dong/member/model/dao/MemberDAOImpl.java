@@ -41,6 +41,10 @@ public class MemberDAOImpl implements MemberDAO{
 		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage,numPerPage);
 		return sst.selectList("member.loadOrderList", param, rowBounds);
 	}
+	@Override
+	public int updateReceive(int orderNo) {
+		return sst.update("member.updateReceive", orderNo);
+	}
 	//==========================  민호 끝
 	
 	// 하진 시작 ==========================

@@ -14,6 +14,7 @@ public interface MemberDAO {
 	int updatePoint(Map<String, String> map);
 	List<OrderList> loadOrderList(Map<String, String> param, int cPage, int numPerPage);
 	int orderListTotalContents(Map<String, String> param);
+	int updateReceive(int orderNo);
 	//==========================  민호 끝
 	
 	// 하진 시작 ==========================

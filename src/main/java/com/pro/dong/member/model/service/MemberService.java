@@ -14,6 +14,7 @@ public interface MemberService {
 	Map<String, String> selectMemberPoints(Member memberLoggedIn);
 	List<OrderList> loadOrderList(Map<String, String> param, int cPage, int numPerPage);
 	int orderListTotalContents(Map<String, String> param);
+	int updateReceive(int orderNo);
 	//==========================  민호 끝
 	
 	// 하진 시작 ==========================

@@ -30,6 +30,10 @@
 		where pa.thumbnail = 'Y'
 		and o.member_id = #{memberId}
 	</select>
+	<update id="updateReceive" parameterType="_int">
+		update order_list set check_receive = 'Y'
+		where order_no = #{orderNo}
+	</update>
 	<!-- ==========================  민호 끝 -->
 	
 	<!-- 하진 시작 ========================== -->

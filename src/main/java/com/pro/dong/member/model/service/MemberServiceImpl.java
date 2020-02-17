@@ -40,7 +40,10 @@ public class MemberServiceImpl implements MemberService{
 	public int orderListTotalContents(Map<String, String> param) {
 		return md.orderListTotalContents(param);
 	}
-
+	@Override
+	public int updateReceive(int orderNo) {
+		return md.updateReceive(orderNo);
+	}
 	//==========================  민호 끝
 	
 	// 하진 시작 ==========================

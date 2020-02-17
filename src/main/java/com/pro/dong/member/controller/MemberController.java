@@ -98,6 +98,17 @@ public class MemberController {
 		result.put("pageBar", pageBar);
 		return result;
 	}
+	
+	@RequestMapping("/updateReceive")
+	@ResponseBody
+	public Map<String, Object> updateReceive(@RequestParam("orderNo")int orderNo){
+		
+		Map<String, Object> resultMap = new HashMap<>();
+		int result = ms.updateReceive(orderNo);
+		resultMap.put("result", result);
+		return resultMap;
+		
+	}
 //==========================민호 끝
 	
 // 하진 시작 ==========================

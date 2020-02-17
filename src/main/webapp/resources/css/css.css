@@ -73,6 +73,9 @@ footer .line{border: 1px rgb(95, 95, 95) solid; width: 100%;}
 .main-btn-outline:hover{background:#006600 !important; color:white !important;border-color:none !important;}
 
 #orderList-wrapper{width:100%;}
+#orderList-wrapper img{width:64px; height:64px;}
+#orderList-wrapper .orderListTitle{font-wight:bold;}
+#orderList-wrapper .orderListContent{text-align:center;}
 /* ==========================민호 끝 */
 	
 /* 하진 시작 ========================== */
