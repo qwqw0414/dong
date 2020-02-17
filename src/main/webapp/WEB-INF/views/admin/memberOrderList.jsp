@@ -162,44 +162,6 @@ function loadMemberOrderList(searchType, searchKeyword, cPage){
 
 </div>
 
-
-	<!-- 	<div class="col col-lg-2">
-			<input type="text" class='form-control' id="startDate"placeholder='시작날짜선택' readonly>
-		</div>
-		<span>~</span>
-		<div class="col-md-auto">
-			<input type="text" class='form-control' id="endDate"placeholder='종료날짜선택' readonly>
-		</div> -->
-		
-	      
-	      <!-- <div id="search-status">
-	      	<input type="hidden" name="searchType" value="status"/>
-	      	<input type="radio" name="searchKeyword" value="I" checked/> 입급내역
-	      	<input type="radio" name="searchKeyword" value="O"/> 출금내역
-	      </div> -->
-
-		<!-- <div class="input-group mb-3">
-			<div class="input-group-prepend">
-				<select class="btn btn-outline-secondary dropdown-toggle"
-					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-					id="searchType">
-					<option value="member_id">아이디</option>
-					<option value="order_no">주문번호</option>
-					<option value="dong">동네(동)</option>
-				</select>
-			</div>
-			<input type="text" class="form-control"
-				aria-label="Text input with dropdown button"
-				placeholder="검색어를 입력해 주세요" id="searchKeyword">
-			<button style="margin-left: 20px;" class="btn btn-primary btn-sm"
-				id="searchMemberOrder">검색하기</button>
-			<button style="margin-left: 30px;" class="btn btn-primary btn-sm"
-				id="memberOrderAll">전체보기</button>
-		</div> -->
-
-
-
-
 <div class="table-responsive">
 <br /><br />
 	<table class="table text-center" id="member-ordeList-tbl">
