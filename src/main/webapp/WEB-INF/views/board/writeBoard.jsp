@@ -5,6 +5,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
+
 <style>
     #boardWrite-contant{
         width: 600px;
@@ -21,17 +22,26 @@
 	List<BoardCategory> list = new ArrayList<>();
 	list = (List<BoardCategory>)request.getAttribute("boardCategoryList");
 	
+	System.out.println("listt="+list);
+	
 	String option = "";
 	option += "<option value=''/>전체</option>";
 	for(BoardCategory bc: list){
 		if("Y".equals(memberLoggedIn.getIsAdmin())){
 			option += "<option value=\""+bc.getCategoryId()+"\">"+bc.getCategoryName()+"</option>";
 		}
-		/* else{
+		else{
+			if(bc.getCategoryId().equals("A03")){
+				continue;
+			}
+			else{
 			option += "<option value=\""+bc.getCategoryId()+"\">"+bc.getCategoryName()+"</option>";
-		} */
+				
+			}
+		} 
 	}
 %>
+
 <script>
 function validate(){
 	var contents = $("#boardContents").val();
@@ -89,7 +99,7 @@ $(function(){
 				    <label class="input-group-text" for="inputGroupSelect01">카테고리</label>
 				 </div>
 				 <select class="custom-select" id="boardCategory" name="boardCategory">
-				    <%=option%> 
+				   <%=option%> 
 				 </select>
 				</div>
                <div class="input-group mb-3" >
