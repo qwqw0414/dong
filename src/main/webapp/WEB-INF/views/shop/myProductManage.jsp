@@ -82,7 +82,6 @@ $(()=>{
 				$("#pageBar a").click((e)=>{
 					loadMyProductList($(e.target).siblings("input").val());
 	            });
-				saleSelect();
 			}
 		});
 	}
@@ -174,10 +173,9 @@ $(()=>{
 			}
 		});
 	});
-
-	function saleSelect(){
-
-		$("#product-tbl .select").change((e)=>{
+	
+	/*상품판매상태변경*/
+	$(document).on("change","#product-tbl .select",function(e){
 			var $select = $(e.target); // Y판매완료 N판매중
 			console.log($select.val());
 
@@ -191,7 +189,7 @@ $(()=>{
 				},
 				dataType:"json",
 				success: data=>{
-					
+					console.log(data);
 					var select = $(".select").val();
 					
 					if(data==1){
@@ -206,9 +204,7 @@ $(()=>{
 
 			});
 
-		});
-	}
-	
+		});		
 });
 </script>
 
