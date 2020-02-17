@@ -46,7 +46,7 @@ function loadMemberOrderList(searchType, searchKeyword, cPage){
 			$table.html("");
 			let html = "";
 			data.list.forEach(cate => {
-				html += "<tr><td>"+cate.ORDER_NO+"</td><td>"+cate.MEMBER_ID+"</td><td>"+cate.PRODUCT_NO+"</td><td>"+cate.DONG+"</td><td>"+cate.PRICE+"</td><td>"+cate.ORDER_DATE+"</td></tr>";
+				html += "<tr><td>"+cate.ORDER_NO+"</td><td>"+cate.MEMBER_ID+"</td><td>"+cate.PRODUCT_NO+"</td><td>"+cate.DONG+"</td><td>"+cate.PRICE+"</td><td>"+cate.DATE+"</td></tr>";
 			});
 			$table.append(header+html);
 			$("#pageBar").html(data.pageBar);
@@ -65,7 +65,14 @@ function loadMemberOrderList(searchType, searchKeyword, cPage){
 	<div class="col-md-6 ">
 	    <div class="input-group">
 		  <label for="searchKeyword" class="sr-only">검색</label>
-		  <select class="custom-select" id="searchType" required>
+	<!-- 	<div class="col col-lg-2">
+			<input type="text" class='form-control' id="startDate"placeholder='시작날짜선택' readonly>
+		</div>
+		<span>~</span>
+		<div class="col-md-auto">
+			<input type="text" class='form-control' id="endDate"placeholder='종료날짜선택' readonly>
+		</div> -->
+		<select class="custom-select" id="searchType" required>
 	     	<option value="member_id">아이디</option>
 	     	<option value="order_no">주문번호</option>
 	     	<option value="dong">동네(동)</option>
@@ -95,6 +102,8 @@ function loadMemberOrderList(searchType, searchKeyword, cPage){
 	
 </div>
 <input type="hidden" name="cPage" id="cPage"/>
+
+
 
 
 
