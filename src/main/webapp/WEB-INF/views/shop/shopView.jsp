@@ -809,14 +809,14 @@ $("#shopView #shopNameUpdateBtn").click(shopNameUpdateEnd);
 				console.log(data);
 
 				$("#shopNameCheck").html("");
-				$("#shopNameSpan").html(data.SHOP_NAME);
+				$("#shopNameSpan").html(data.resultShop.SHOP_NAME);
 
 				var $shopNameSpanDiv = $("#shopNameSpanDiv");
 				var $shopNameInputDiv = $("#shopNameInputDiv");
 
 				$shopNameSpanDiv.show();
 				$shopNameInputDiv.hide();
-				location.reload();
+				/* location.reload(); */
 			},
 			error: (x, s, e) => {
 				console.log("ajax 요청 실패!");
@@ -869,11 +869,11 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 				var $shopInfoTextDiv = $("#shopInfoTextDiv");
 				$shopInfoTextDiv.hide();
 
-				$('#shopInfoDetail').html(data.SHOP_INFO);
+				$('#shopInfoDetail').html(data.resultShop.SHOP_INFO);
 
 				var $shopInfoSpanDiv = $("#shopInfoSpanDiv");
 				$shopInfoSpanDiv.show();
-				location.reload();
+				/* location.reload(); */
 			},
 			error: (x, s, e) => {
 				console.log("ajax 요청 실패!");

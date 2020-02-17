@@ -66,7 +66,7 @@ $(()=>{
 		    		html += "<td>"+data.list[i].CATEGORY_ID+"</td>";
 		    		html += "<td>"+data.list[i].MEMBER_ID+"</td>";
 		    		html += "<td>"+data.list[i].BOARD_TITLE+"</td>";
-		    		html += "<td>"+data.list[i].WRITE_DATE+"</td>";
+		    		html += "<td>"+life(data.list[i].WRITE_DATE)+"</td>";
 		    		html += "<td>"+data.list[i].READ_COUNT+"</td>";
 		    		html += "<td>"+data.list[i].CNT+"</td>";
 		    		html += "</tr>";
@@ -86,6 +86,19 @@ $(()=>{
 		});//end of ajax
 	}//end of loadBoardList();
 	
+	function life(date){
+		var preDate = new Date(date);
+
+		var year = preDate.getFullYear();
+		var month = preDate.getMonth()+1;
+		var date = preDate.getDate();
+
+		if(month < 10) month = "0"+month;
+		if(date < 10) date = "0"+date;
+
+		return year+"/"+month+"/"+date;
+	}
+
 	function loadReportBoardList(cPage){
 		var sido = $("#sido").val();
 		var sigungu = $("#sigungu").val();

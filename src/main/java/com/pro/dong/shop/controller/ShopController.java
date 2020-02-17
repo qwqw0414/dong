@@ -343,6 +343,8 @@ public class ShopController {
 		Map<String, Object> resultMap = new HashMap<>();
 		resultMap.put("resultShop", resultShop);
 		
+		Gson gson = new Gson();
+		
 		return resultMap;
 	}
 	
