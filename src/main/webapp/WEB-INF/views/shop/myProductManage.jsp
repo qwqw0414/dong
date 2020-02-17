@@ -30,7 +30,6 @@ $(()=>{
 		var saleCategory = $("#saleCategory").val();
 		var searchKeyword = $("#searchKeyword").val();
 		
-		
 		$.ajax({
 			url:"${pageContext.request.contextPath}/shop/loadMyProductManage",
 			type: "GET",
@@ -73,7 +72,7 @@ $(()=>{
 					
 				});
 				
-				$table.append(header+html);
+				$table.html(header+html);
 				$("#pageBar").html(data.pageBar);
 			},
 			error:(x,s,e)=>{
@@ -85,7 +84,6 @@ $(()=>{
 	            });
 				saleSelect();
 			}
-			
 		});
 	}
 	

@@ -139,11 +139,16 @@ public class ShopController {
 	}
 	@RequestMapping(value="/loadMyProductManage" , produces="text/plain;charset=UTF-8")
 	@ResponseBody
-	public String loadMyProductManage(@RequestParam(value="searchKeyword",defaultValue="") String searchKeyword,
+	public String loadMyProductManage(String searchKeyword,
+			String saleCategory, 
+			int cPage,
+			String memberId){
+		/*
+		 * @RequestParam(value="searchKeyword",defaultValue="") String searchKeyword,
 			@RequestParam(value="saleCategory",defaultValue="") String saleCategory, 
 			@RequestParam(value="cPage", defaultValue="1") int cPage,
-			@RequestParam(value="memberId") String memberId){
-		
+			@RequestParam(value="memberId") String memberId
+		 */
 		int numPerPage = 10;
 		
 		Map<String, String> param = new HashMap<>();

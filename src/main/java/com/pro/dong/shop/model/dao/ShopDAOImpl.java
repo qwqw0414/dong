@@ -86,7 +86,7 @@ public class ShopDAOImpl implements ShopDAO{
 	@Override
 	public List<Map<String, String>> loadMyProductManage(int cPage, int numPerPage, Map<String, String> param) {
 		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
-		return sst.selectList("shop.loadMyProductManage",param);
+		return sst.selectList("shop.loadMyProductManage",param,rowBounds);
 	}
 	//========================== 하진 끝
 	
