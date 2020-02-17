@@ -105,6 +105,45 @@
 	<!-- ==========================  근호 끝 -->
 	
 	<!-- 지은 시작 ========================== -->
+	<select id="selectMemberPoint" parameterType="map" resultType="map">
+		select M.member_id, P.point_amount, P.reg_date, M.point, P.status
+		from (member M left join point_status P on M.member_id = P.member_id) order by P.reg_date
+	</select>
+	
+	<select id="selectMemberPointTotal" parameterType="map" resultType="_int">
+		select count(*) from member M left join point_status P on M.member_id = P.member_id
+		<if test="searchKeyword != null and searchKeyword!=''">
+			and P.${searchType} like '%${searchKeyword}%'			
+		</if>
+	</select>
+	
+	<select id="selectMemberPointList" parameterType="map" resultType="map">
+		select *
+		from (member M left join point_status P on M.member_id = P.member_id) 
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+				and P.${searchType} like '%${searchKeyword}%'
+			</if>
+		</where>
+		order by P.reg_date
+	</select>
+	
+	<select id="selectMemberOrderTotal" parameterType="map" resultType="_int">
+	select count(*) from order_list O left join product P on O.dong = P.dong
+	<if test="searchKeyword != null and searchKeyword!=''">
+		and O.${searchType} like '%${searchKeyword}%'
+	</if>
+	</select>
+	
+	<select id="selectMemberOrderList" parameterType="map" resultType="map">
+	select * from (order_list O left join product P on O.dong = P.dong)
+	<where>
+		<if test="searchKeyword!=null and searchKeyword!=''">
+			and O.${searchType} like '%${searchKeyword}%'
+		</if>
+	</where>
+	order by O.order_date
+	</select>
 	
 	<!-- ==========================  지은 끝 -->
 	
@@ -158,7 +197,7 @@
 		select count(distinct r.board_no) boardCount
 		from board_report R left join member M
 		on r.member_id = m.member_id
-		left join board B on r.board_no = b.board_no
+		left join board_report B on r.board_no = b.board_no
 		<where>
 			<if test="searchKeyword!=null and searchKeyword!=''">
 				and b.${searchType} like '%${searchKeyword}%'
@@ -177,25 +216,59 @@
 	
 	<select id="loadReportBoardList" parameterType="map" resultType="map">
 		select * from
-		(select a.*, (select count(*) from board_report where board_no = a.board_no) cnt from
-    		(select * from board B
-    		left join member M on b.member_id = m.member_id) a )
+      	(select a.*, (select count(*) from board_report where board_no = a.board_no) cnt from
+          (select * from board B
+           left join member M on b.member_id = m.member_id) a )
+
 		<where>
 			cnt > 0
 			<if test="searchKeyword!=null and searchKeyword!=''">
 				and a.${searchType} like '%${searchKeyword}%'
 			</if>
 			<if test="sido!=null and sido!=''">
-				and a.sido like #{sido}
+				and sido like #{sido}
 			</if>
 			<if test="sigungu!=null and sigungu!=''">
-				and a.sigungu like #{sigungu}
+				and sigungu like #{sigungu}
 			</if>
 			<if test="dong!=null and dong!=''">
-				and a.dong like #{dong}
+				and dong like #{dong}
 			</if>
 		</where>
 	</select>
+	
+	<select id="selectProductReportTotalContents" parameterType="map" resultType="_int">
+		select count(*) from product_report
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!=''  and searchType == 'member_id'">
+				and ${searchType} like '%${searchKeyword}%'
+			</if>
+			<if test="searchKeyword!=null and searchKeyword!='' and searchType != 'member_id'">
+				and ${searchType} = #{searchKeyword}
+			</if>
+		</where>
+	</select>
+	
+	<select id="loadProductReportList" parameterType="map" resultType="map">
+		select * from product_report
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!='' and searchType == 'member_id'">
+				and ${searchType} like '%${searchKeyword}%'
+			</if>
+			<if test="searchKeyword!=null and searchKeyword!='' and searchType != 'member_id'">
+				and ${searchType} = #{searchKeyword}
+			</if>
+		</where>
+		order by report_no
+	</select>
+	
+	<select id="selectOneProductReport" parameterType="_int" resultType="map">
+		select * from product_report where report_no = #{boardNo}
+	</select>
+	
+	<update id="updateReportStatus" parameterType="_int">
+		update product_report set status = 'Y' where report_no = #{reportNo}
+	</update>
 	<!-- ==========================  주영 끝 -->
 	
 	<!-- 현규 시작 ========================== -->

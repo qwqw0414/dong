@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.pro.dong.product.model.dao.ProductDAO;
 import com.pro.dong.product.model.vo.Category;
 import com.pro.dong.product.model.vo.Like;
+import com.pro.dong.product.model.vo.OrderList;
 import com.pro.dong.product.model.vo.Product;
 import com.pro.dong.product.model.vo.ProductAttachment;
 import com.pro.dong.product.model.vo.ProductComment;
@@ -29,7 +30,14 @@ public class ProductServiceImpl implements ProductService{
 	ProductDAO pd;
 	
 	//민호 시작 ==========================
-
+	@Override
+	public int submitPurchase(OrderList orderList) {
+		return pd.submitPurchase(orderList);
+	}
+	@Override
+	public int updateMemberPoint(OrderList orderList) {
+		return pd.updateMemberPoint(orderList);
+	}
 	//==========================민호 끝
 		
 	//하진 시작 ==========================
@@ -37,10 +45,6 @@ public class ProductServiceImpl implements ProductService{
 	public List<Category> selectCategory() {
 		return pd.selectCategory();
 	}
-
-	
-	
-	
 	
 	//========================== 하진 끝
 		
@@ -115,47 +119,16 @@ public class ProductServiceImpl implements ProductService{
 	}
 	//========================== 예찬 끝
 
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		
 	//주영 시작 ==========================
-		
+	@Override
+	public List<Map<String, String>> loadProductReportCategory() {
+		return pd.loadProductReportCategory();
+	}
+	@Override
+	public int insertProductReport(Map<String, String> param) {
+		return pd.insertProductReport(param);
+	}
+
 	//========================== 주영 끝
 		
 	//현규 시작 ==========================
@@ -179,8 +152,6 @@ public class ProductServiceImpl implements ProductService{
 	public int deleteLevel2(int commentNo) {
 		return pd.deleteLevel2(commentNo);
 	}
-
-
 
 	//========================== 현규 끝
 	

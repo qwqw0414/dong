@@ -36,7 +36,7 @@
         	</div>   	
         	<div class="text-center">
         	<button id="AddressUpdate" class="btn btn-outline-success btn-sm" >주소 변경하기</button>
-        	<button type="button" class="btn btn-outline-danger btn-sm" data-dismiss="modal">취소</button>
+        	<button type="button" id="email-cancel" class="btn btn-outline-danger btn-sm" data-dismiss="modal">취소</button>
         	</div>
         			
    	   </div>   
@@ -190,10 +190,11 @@ $(()=>{
 			data: {sido: $sido.val(),
 				   sigungu: $sigungu.val(),
 				   dong: $dong.val()},
-		 	dataType:"POST",
+		 	dataType:"json",
 		 	success: data =>{
 		 		console.log(data);	
-		 		$("#updateAddress").text(data.SIDO);
+		 		alert("수정되었습니다");
+		 		$("#cureEmail").text("내 동네  : "+data.SIDO+" "+data.SIGUNGU+" "+data.DONG);
 		 	},
 		 	error: (x,s,e) =>{
 		 		console.log("실패", x,s,e);

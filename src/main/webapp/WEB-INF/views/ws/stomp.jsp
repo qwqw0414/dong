@@ -7,17 +7,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>${param.pageTitle}</title>
-<script src="${pageContext.request.contextPath }/resources/js/jquery-3.2.1.min.js"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/style.css" />
-
-
-<!-- WebSocket:sock.js CDN -->
+<script src="${pageContext.request.contextPath }/resources/js/jquery-3.4.1.js"></script>
+<script src="${pageContext.request.contextPath }/resources/js/js.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/css.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/animation.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.js"></script>
-<!-- WebSocket: stomp.js CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+<title>동네톡</title>
 </head>
 <body>
 
@@ -38,12 +36,10 @@
 $(document).ready(function() {
 	$("#sendBtn").click(function() {
 		sendMessage();
-		$('#message').val('')
 	});
 	$("#message").keydown(function(key) {
 		if (key.keyCode == 13) {// 엔터
 			sendMessage();
-			$('#message').val('')
 		}
 	});
 
@@ -53,22 +49,13 @@ $(document).ready(function() {
 		lastCheck();
 	});
 });
-//윈도우가 활성화 되었을때, chatroom테이블의 lastcheck(number)컬럼을 갱신한다.
-//안읽은 메세지 읽음 처리
-function lastCheck() {
-	let data = {
-		chatId : "${chatId}",
-		memberId : "${memberLoggedIn.memberId}",
-		time : new Date().getTime()
-	}
-	stompClient.send('<c:url value="/lastCheck" />', {}, JSON.stringify(data));
-}
 
 //웹소켓 선언
 //1.최초 웹소켓 생성 url: /stomp
 let socket = new SockJS('<c:url value="/stomp" />');
 let stompClient = Stomp.over(socket);
 
+//connection이 맺어지면, 콜백함수가 호출된다.
 stompClient.connect({}, function(frame) {
 	console.log('connected stomp over sockjs');
 	console.log(frame);
@@ -76,9 +63,16 @@ stompClient.connect({}, function(frame) {
 	//사용자 확인
 	lastCheck();
 	
-	// subscribe message
+	//stomp에서는 구독개념으로 세션을 관리한다. 핸들러 메소드의 @SendTo어노테이션과 상응한다.
+	stompClient.subscribe('/hello', function(message) {
+		console.log("receive from /hello :", message);
+		let messsageBody = JSON.parse(message.body);
+		$("#data").append("<li class=\"list-group-item\">"+messsageBody.memberId+" : "+messsageBody.msg+ "</li>");
+	}); 
+
+	//stomp에서는 구독개념으로 세션을 관리한다. 핸들러 메소드의 @SendTo어노테이션과 상응한다.
 	stompClient.subscribe('/chat/${chatId}', function(message) {
-		console.log("receive from /chat/${chatId} :", message);
+		console.log("receive from subscribe /chat/${chatId} :", message);
 		let messsageBody = JSON.parse(message.body);
 		$("#data").append("<li class=\"list-group-item\">"+messsageBody.memberId+" : "+messsageBody.msg+ "</li>");
 	});
@@ -89,14 +83,38 @@ function sendMessage() {
 
 	let data = {
 		chatId : "${chatId}",
-		memberId : "${memberLoggedIn.memberId}",
+		memberId : "${memberId}",
 		msg : $("#message").val(),
 		time : new Date().getTime(),
 		type: "MESSAGE"
 	}
 
+	console.log(data);
+
+	//테스트용 /hello
+	stompClient.send('<c:url value="/hello" />', {}, JSON.stringify(data));
+	
+	//채팅메세지: 1:1채팅을 위해 고유한 chatId를 서버측에서 발급해 관리한다.
 	stompClient.send('<c:url value="/chat/${chatId}" />', {}, JSON.stringify(data));
+	
+	//message창 초기화
+	$('#message').val('');
 }
+
+
+/*
+ * 윈도우가 활성화 되었을때, chatroom테이블의 lastcheck(number)컬럼을 갱신한다.
+ * 안읽은 메세지 읽음 처리
+ */ 
+function lastCheck() {
+    let data = {
+        chatId : "${chatId}",
+        memberId : "${memberId}",
+        time : new Date().getTime()
+    }
+    stompClient.send('<c:url value="/lastCheck" />', {}, JSON.stringify(data));
+}
+
 
 
 </script>

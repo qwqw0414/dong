@@ -75,6 +75,19 @@ public class ShopDAOImpl implements ShopDAO{
 	public int productDelete(String productNo) {
 		return sst.delete("shop.productDelete",productNo);
 	}
+	@Override
+	public int saleStatus(Map<String, String> param) {
+		return sst.update("shop.saleStatus",param);
+	}
+	@Override
+	public int totalProductContents(Map<String, String> param) {
+		return sst.selectOne("shop.totalProductContents",param);
+	}
+	@Override
+	public List<Map<String, String>> loadMyProductManage(int cPage, int numPerPage, Map<String, String> param) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sst.selectList("shop.loadMyProductManage",param);
+	}
 	//========================== 하진 끝
 	
 	

@@ -32,7 +32,7 @@
 	
 	<!-- 근호 시작 ========================== -->
 	<select id="selectLoginMember" resultType="member">
-		select * from member 
+		select * from member
 		where member_id = #{memberId}
 	</select>
 	<select id="emailDuplicate" resultType="_int">
@@ -113,11 +113,53 @@
 	
 	<select id="selectChargingDetails" resultType="map">
 		select * from point_status where member_id=#{memberId}
+		order by reg_date desc
 	</select>
 	
 	<select id="countDetails" resultType="_int">
 	select count(*) from point_status where member_id=#{memberId}
 	</select>
+	
+	
+	<select id="selectDetailsByOption" resultType="map">
+		select * from point_status
+		<where>
+			member_id=#{memberId}
+			
+			<if test="option!=null and option!=''">
+			and
+			status=#{option}
+			</if>
+
+			<if test="start!=null and start!='' and end!=null and end!=''">
+			and
+			reg_date between to_date(#{start}, 'yyyymmdd') and to_date(#{end},'yyyymmddhh24miss')	
+			</if>
+			
+		
+		</where>
+		
+	</select>
+	
+	<select id="countDetailsByOption" resultType="_int">
+			select count(*) from point_status 
+				<where>
+					member_id=#{memberId}
+			
+					<if test="option!=null and option!=''">
+					and
+					status=#{option}
+					</if>
+
+					<if test="start!=null and start!='' and end!=null and end!=''">
+					and
+					reg_date between to_date(#{start}, 'yyyymmdd') and to_date(#{end},'yyyymmddhh24miss')	
+					</if>
+				</where>
+	</select>
+	
+	
+	
 		
 	
 	<!-- ==========================  현규 끝 -->

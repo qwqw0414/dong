@@ -11,43 +11,74 @@ import com.pro.dong.stomp.model.vo.ChatRoom;
 import com.pro.dong.stomp.model.vo.Msg;
 
 @Repository
-public class StompDAOImpl implements StompDAO{
+public class StompDAOImpl implements StompDAO {
 
 	@Autowired
-	SqlSessionTemplate sst;
+	SqlSessionTemplate sqlSession;
 
 	@Override
 	public String findChatIdByMemberId(String memberId) {
-		return sst.selectOne("stomp.findChatIdByMemberId", memberId);
+		return sqlSession.selectOne("stomp.findChatIdByMemberId", memberId);
 	}
 
 	@Override
 	public int insertChatRoom(ChatRoom chatRoom) {
-		return sst.insert("stomp.insertChatRoom", chatRoom);
+		return sqlSession.insert("stomp.insertChatRoom", chatRoom);
 	}
 
 	@Override
 	public int updateLastCheck(Msg fromMessage) {
-		return sst.update("stomp.updateLastCheck", fromMessage);	
+		return sqlSession.update("stomp.updateLastCheck", fromMessage);	
 	}
 
 	@Override
 	public int insertChatLog(Msg fromMessage) {
-		return sst.insert("stomp.insertChatLog", fromMessage);
+		return sqlSession.insert("stomp.insertChatLog", fromMessage);
 	}
 
 	@Override
 	public int deleteChatRoom(String chatId) {
-		return sst.update("stomp.deleteChatRoom", chatId);
+		return sqlSession.update("stomp.deleteChatRoom", chatId);
 	}
 
 	@Override
 	public List<Map<String, String>> findRecentList() {
-		return sst.selectList("stomp.findRecentList");
+		return sqlSession.selectList("stomp.findRecentList");
 	}
 
 	@Override
 	public List<Msg> findChatListByChatId(String chatId) {
-		return sst.selectList("stomp.findChatListByChatId", chatId);
+		return sqlSession.selectList("stomp.findChatListByChatId", chatId);
 	}
+
+	@Override
+	public String findChatIdByMemberId2(Map<String, String> param) {
+		return sqlSession.selectOne("stomp.findChatIdByMemberId2", param);
+	}
+
+	@Override
+	public List<Map<String, String>> findRecentList2(String memberId) {
+		return sqlSession.selectList("stomp.findRecentList2", memberId);
+	}
+
+	@Override
+	public List<String> findChatId(String memberId) {
+		return sqlSession.selectList("stomp.findChatId", memberId);
+	}
+
+	@Override
+	public String findMemberId(Map<String, String> param) {
+		return sqlSession.selectOne("stomp.findMemberId", param);
+	}
+
+	@Override
+	public String findMsg(Map<String, String> param) {
+		return sqlSession.selectOne("stomp.findMsg", param);
+	}
+
+	@Override
+	public int countNoRead(Map<String, String> param) {
+		return sqlSession.selectOne("stomp.countNoRead", param);
+	}
+
 }

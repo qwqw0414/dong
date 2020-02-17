@@ -19,7 +19,7 @@ public interface BoardService {
 
 	List<BoardCategory> selectBoardCategory();
 
-	List<Board> selectBoardNotice();
+	List<Board> selectBoardNotice(Map<String, String> param);
 	
 	//==========================민호 끝
 		

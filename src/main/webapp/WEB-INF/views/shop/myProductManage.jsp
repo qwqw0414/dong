@@ -27,18 +27,21 @@ $(()=>{
 	function loadMyProductList(cPage){
 		
 		var memberId = '${memberLoggedIn.getMemberId()}';
+		var saleCategory = $("#saleCategory").val();
+		var searchKeyword = $("#searchKeyword").val();
+		
 		
 		$.ajax({
-			url:"${pageContext.request.contextPath}/shop/loadMyProduct",
-			contentType: "application/json; charset=utf-8",
+			url:"${pageContext.request.contextPath}/shop/loadMyProductManage",
+			type: "GET",
+			dataType: "json",
 			data:{
 				memberId:memberId,
-				cPage:cPage
+				cPage:cPage,
+				saleCategory:saleCategory,
+				searchKeyword:searchKeyword
 			},
-			dataType:"json",
 			success:data=>{
-				
-				console.log(data);
 				
 				let $table = $("#product-tbl");
 				let header = "<thead><tr><th scope='col'>사진</th><th scope='col'>판매상태</th><th scope='col'>상품명</th><th scope='col'>가격</th><th scope='col'>최근수정일</th><th scope='col'>기능</th></tr></thead>";
@@ -48,8 +51,16 @@ $(()=>{
 				data.product.forEach(product=>{
 					html += "<tr>";
 					html +=	"<tbody>";
-					html += "<td id='img-td'><img style='width:152px; height:152px;' src='${pageContext.request.contextPath}/resources/upload/product/"+product.PHOTO+"'/></td>";
-					html += "<td><select class='select' class='custom-select'><option ' value='N' selected>판매중</option><option value='Y'>판매완료</option></select></td>"
+					html += "<td id='img-td'><a href='${pageContext.request.contextPath}/product/productView.do?productNo="+product.PRODUCT_NO+"'><img style='width:152px; height:152px;' src='${pageContext.request.contextPath}/resources/upload/product/"+product.PHOTO+"'/></a></td>";
+					if(product.IS_SALE=='N'){
+						html += "<td><select class='select' class='custom-select'><option value='N' selected>판매중</option><option value='I'>거래중</option><option value='Y'>판매완료</option></select></td>"
+					}
+					else if(product.IS_SALE=='I'){
+						html += "<td><select class='select' class='custom-select'><option value='N'>판매중</option><option value='I' selected>거래중</option><option value='Y'>판매완료</option></select></td>"
+					}
+					else{
+						html += "<td><select class='select' class='custom-select'><option value='N'>판매중</option><option value='I'>거래중</option><option value='Y' selected>판매완료</option></select></td>"
+					}
 					html += "<input type='hidden' class='productNo' value='"+product.PRODUCT_NO+"'/>"
 					html += "<td>"+product.TITLE+"</td>";
 					html += "<td>"+numberComma(product.PRICE)+"원</td>";
@@ -76,6 +87,25 @@ $(()=>{
 			}
 			
 		});
+	}
+	
+	/*판매상태로 정렬*/
+	$("#saleCategory").change(function(){
+		$("#searchKeyword").val('');
+		loadMyProductList(1);
+	});
+	
+	/* $("#searchKeyword").keyup((e)=>{if(e.keyCode == 13) search();}); */
+	$("#searchProduct").click(function search(){
+		searchProduct();
+	});
+	
+	function searchProduct(){
+		var cPage = $("#cPage").val();
+		var saleCategory = $("#saleCategory").val();
+		var searchKeyword = $("#searchKeyword").val();
+
+		loadMyProductList(1);
 	}
 	
 	/*내 상품 끌어올리기*/
@@ -154,89 +184,53 @@ $(()=>{
 			console.log($select.val());
 
 			var productNo = $(e.target).parents("tr").find(".productNo").val() //productNo
-
+			console.log(productNo);
 			$.ajax({
-				url : "",
+				url : "${pageContext.request.contextPath}/shop/saleSelect",
 				data:{
 					productNo:productNo,
 					select: $select.val()
 				},
 				dataType:"json",
 				success: data=>{
-
+					
+					var select = $(".select").val();
+					
+					if(data==1){
+						alert("상품 판매상태가 정상적으로 변경되었습니다.");
+					}
+					else{
+						alert("상품 판매상태 변경이 실패하였습니다.");
+					}
 				},
 				error: (a,b,c)=>{
 				}
 
-			})
+			});
 
-		})
+		});
 	}
-
-	
-	/*내 상품 판매상태 변경하기*/
-	$(document).on("change",".sel2ect",function(e){
-		
-		/* var state = $(e).("#select option:selected").prop("id");
-		console.log(state); */
-		/* var state = $(e.target); */
-		/* var state = $("#select option:selected");
-		
-		var stateId = e.$("#select option:selected");
-		console.log(stateId);
-		
-		var optionId = stateId.prop("id");
-		console.log(optionId);
-		
-		
-		var saleTarget = $(e.target);
-		var productNo = saleTarget.val();
-		console.log(productNo);				 */
-		
-		
-		
-		
-		var state = $(e.target).val();
-		console.log(state);
-		
-		
-		var inputTarget = $(e.target);
-		var productNo = $("[name=productNo]").val();
-		console.log(productNo);
-		
-		/* var optionId = state.prop("id");
-		console.log(state.prop("id")); */
-		
-		
-		
-		
-		  /* $.ajax({
-			url:"${pageContext.request.contextPath}/shop/productDelete",
-			data:{
-				productNo:productNo
-			},
-			dataType:"json",
-			type:"post",
-			success: data=>{
-				
-				if(data==1){
-					alert("상품이 정상적으로 삭제되었습니다.");
-					location.reload();
-				}
-				else{
-					alert("상품삭제를 실패하였습니다.");
-				}
-			},
-			error:(x,s,e)=>{
-				console.log("실패",x,s,e);
-			}
-		}); */
-	});
 	
 });
 </script>
 
 <h1>상품관리</h1>
+
+	<div class="col-md-6">
+		<div class="input-group">
+	      <select class="custom-select" id="saleCategory" required>
+	     	<option value="">전체</option>
+	     	<option value="N">판매중</option>
+	     	<option value="I">거래중</option>
+	     	<option value="Y">판매완료</option>
+	      </select>
+		  <input style="margin-left: 20px;" type="text" size="30" id="searchKeyword" placeholder="상품명을 입력하세요.">
+		  <div class="input-group-append">
+	      	<button style="margin-left: 20px;" class="btn btn-primary btn-sm" id="searchProduct">검색하기</button>
+          </div>
+	    </div>
+	    <br />
+    </div>
 
 <table class="table text-center" id="product-tbl">
  

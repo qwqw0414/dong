@@ -43,8 +43,7 @@
 		select P.*, a.photo from product P left join shop S on p.shop_no=s.shop_no 
                         left join member M on s.member_id =M.member_id 
                         left join product_attachment A on p.product_no = a.product_no
-                   
-        where M.member_id = #{memberId} 
+        where M.member_id =#{memberId}
                 and a.thumbnail='Y'
 	</select>
 	
@@ -64,6 +63,44 @@
 	<delete id="productDelete">
 		delete FROM product where product_no = #{productNo}
 	</delete>
+	
+	<update id="saleStatus">
+		UPDATE product_status set is_sale=#{select} where product_no=#{productNo}
+	</update>
+	
+	<select id="totalProductContents" resultType="_int">
+		select count(*) from product P left join shop S on p.shop_no=s.shop_no 
+                        left join member M on s.member_id =M.member_id 
+                        left join product_attachment A on p.product_no = a.product_no
+                        left join product_status st on p.product_no=st.product_no
+        <where>
+        	 M.member_id = #{memberId}
+             and a.thumbnail='Y'
+             <if test="saleCategory!=null and saleCategory!=''">
+    	        and st.is_sale=#{saleCategory}
+             </if>
+             <if test="searchKeyword!=null and searchKeyword!=''">
+	            and p.title like '%$searchKeyword}%'
+             </if>
+        </where>
+	</select>
+	
+	<select id="loadMyProductManage" parameterType="map" resultType="map">
+		select P.*, a.photo,st.* from product P left join shop S on p.shop_no=s.shop_no 
+                       	left join member M on s.member_id =M.member_id 
+                        left join product_attachment A on p.product_no = a.product_no
+                        left join product_status st on p.product_no=st.product_no
+        <where>
+      		M.member_id = #{memberId}
+            and a.thumbnail='Y'
+             <if test="saleCategory!=null and saleCategory!=''">
+    	        and st.is_sale=#{saleCategory}
+             </if>
+             <if test="searchKeyword!=null and searchKeyword!=''">
+	            and p.title like '%${searchKeyword}%'
+             </if>
+		</where>
+	</select>
 	<!-- ==========================  하진 끝 -->
 	
 	<!-- 근호 시작 ========================== -->

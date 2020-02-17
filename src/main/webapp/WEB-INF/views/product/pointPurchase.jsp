@@ -16,6 +16,7 @@
       </div>
       <div class="modal-body">
 				<form>
+				${map }
 				<span class="smallTitle">구매자 정보</span>
 				<hr class="divide-m" />
 					<div class="form-row">
@@ -45,6 +46,10 @@
 							class="form-control" id="purchase-dong"
 							value="${map.memberLoggedIn.dong}">
 					</div>
+					<div class="form-group">
+						<label for="purchase-addr">추가 주소</label> <input type="text"
+							class="form-control" id="purchase-addr">
+					</div>
 					<hr class="divide-m" />
 					<div class="form-row">
 						<div class="form-group col-md-6">
@@ -54,6 +59,7 @@
 						</div>
 					</div>
 					<span class="smallTitle">구매 물품 정보</span>
+					<input type="hidden" name="purchase-productNo" id="purchase-productNo" value="${map.product.productNo }" />
 					<hr class="divide-m" />
 					<div id="purchase-img" class="media">
 						<c:forEach items="${map.attachment}" var="attch">
@@ -113,7 +119,9 @@ $(()=>{
 	$("#chargePoints").on('click',function(){
 		location.href = '${pageContext.request.contextPath}/member/memberView.do';
 	});
-	
+	$("#submitPay").on('click',function(){
+		submitPurchase();
+	});
 function useAllPoints(){
 	//전액사용
 		var price = Number('${map.product.price }');
@@ -131,6 +139,52 @@ function useAllPoints(){
 		}
 	
 }
-	
+function submitPurchase(){
+	/* var orderInfo = {
+			memberId: $("#purchase-memberId").val(),
+			memberName: $("#purchase-memberName").val(),
+			sido: $("#purchase-Sido").val(),
+			sigungu: $("#purchase-Sigungu").val(),
+			dong: $("#purchase-dong").val(),
+			addr: $("#purchase-addr").val(),
+			phone: $("#purchase-phone").val(),
+			productNo: $("#purchase-productNo").val(),
+			price: '${map.product.price}',
+			attachment: '${map.attachment}'
+	}
+	JSON.stringify(orderInfo);
+	console.log(orderInfo); */
+	$.ajax({
+		url: "${pageContext.request.contextPath}/product/submitPurchase",
+		data: {			
+			memberId: $("#purchase-memberId").val(),
+			memberName: $("#purchase-memberName").val(),
+			sido: $("#purchase-Sido").val(),
+			sigungu: $("#purchase-Sigungu").val(),
+			dong: $("#purchase-dong").val(),
+			address: $("#purchase-addr").val(),
+			phone: $("#purchase-phone").val(),
+			productNo: $("#purchase-productNo").val(),
+			price: '${map.product.price}',
+			attachment: '${map.attachment}'},
+			
+		success : data =>{
+			if(data==1){
+				alert("결제 성공");
+			}else {
+				alert("결제 실패");
+			}
+			
+		},
+		error : (x,s,e) =>{
+            console.log("실패",x,s,e);
+        },
+        complete: ()=>{
+        	location.href = '${pageContext.request.contextPath}/member/orderListView.do';
+        }
+		
+	});//end of ajax
+}//end of submitPurchase
+
 });//온로드 함수 끝
 </script>

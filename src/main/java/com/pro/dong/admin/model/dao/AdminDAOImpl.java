@@ -80,7 +80,29 @@ public class AdminDAOImpl implements AdminDAO {
 	// ========================== 근호 끝
 
 	// 지은 시작 ==========================
-
+	@Override
+	public List<Member> selectMemberPoint(String memberId) {
+		return sst.selectList("admin.selectMemberPoint",memberId);
+	}
+	@Override
+	public int selectMemberPointTotal(Map<String, String> param) {
+		return sst.selectOne("admin.selectMemberPointTotal",param);
+	}
+	@Override
+	public List<Map<String, String>> selectMemberPointList(int cPage, int numPerPage, Map<String, String> param) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return sst.selectList("admin.selectMemberPointList", param, rowBounds);
+	}
+	@Override
+	public int selectMemberOrderTotal(Map<String, String> param) {
+		return sst.selectOne("admin.selectMemberOrderTotal", param);
+	}
+	@Override
+	public List<Map<String, String>> selectMemberOrderList(int cPage, int numPerPage, Map<String, String> param) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return sst.selectList("admin.selectMemberOrderList", param,rowBounds);
+	}
+	
 	// ========================== 지은 끝
 
 	// 예찬 시작 ==========================
@@ -106,7 +128,27 @@ public class AdminDAOImpl implements AdminDAO {
 		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
 		return sst.selectList("admin.loadReportBoardList", param, rowBounds);
 	}
+	@Override
+	public int selectProductReportTotalContents(Map<String, String> param) {
+		return sst.selectOne("admin.selectProductReportTotalContents", param);
+	}
+	@Override
+	public List<Product> loadProductReportList(int cPage, int numPerPage, Map<String, String> param) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sst.selectList("admin.loadProductReportList", param, rowBounds);
+	}
+	@Override
+	public Map<String, String> selectOneProductReport(int boardNo) {
+		return sst.selectOne("admin.selectOneProductReport", boardNo);
+	}
+	@Override
+	public int updateReportStatus(int reportNo) {
+		return sst.update("admin.updateReportStatus", reportNo);
+	}
 	// ========================== 주영 끝
+	
+	
+	
 
 	// 현규 시작 ==========================
 

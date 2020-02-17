@@ -5,6 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+
 <%
 	Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
 %>
@@ -27,7 +28,11 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ea166326e5dc5657d4a2feb24b4cfe0b&libraries=services"></script>
 <!-- 우편번호 -->
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
+<!-- 달력 -->
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
+<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+<!-- end of 달력 -->
 </head>
 <style>
 #headerImgDiv{
@@ -191,18 +196,26 @@ $(()=>{
 					관리자
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-
-					
-
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/memberList.do">회원관리</a>
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/memberPointList.do">회원포인트관리</a>
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/memberOrderList.do">회원거래내역관리</a>
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/productList.do">상품관리</a>
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/boardList.do">게시글관리</a>
-
-
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/productReportList.do">상품신고관리</a>
 				</div>
 			</li>
 
+			<!-- 웹소켓 -->
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false">
+					웹소켓
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+			      <a class="nav-link" id="b-chat">qwqw0414채팅</a>
+				</div>
+			</li>
+			
 		</ul>
 	</div>
 </nav>
@@ -265,15 +278,32 @@ var $categoryBar = $("header #categoryDiv #headerMenu");
 var $categoryDiv = $("header #categoryDiv");
 var isCateShow = false;
 
-	$("header #a-chat").click(chatOn);
+	$("header #b-chat").click(chatView);
+	$("header #a-chat").click(chatList);
 
 // 채팅
-	function chatOn(){
+	function chatView(){
 		var width = 360;
 		var height = 660;
 		var top = (window.screen.height / 2) - (height / 2);
 		var left = (window.screen.width / 2) - (width / 2);
-		let url = "${pageContext.request.contextPath}/stomp/chatList.do";
+		var memberId = '${memberLoggedIn.memberId}';
+		let url = "";
+
+		url = "${pageContext.request.contextPath}/ws/stomp.do?memberId="+'qwqw0414';
+
+		window.open(url,"chatView", "width="+width+",height="+height+", top="+top+", left="+left);
+	}
+
+	function chatList(){
+		var width = 360;
+		var height = 660;
+		var top = (window.screen.height / 2) - (height / 2);
+		var left = (window.screen.width / 2) - (width / 2);
+		var memberId = '${memberLoggedIn.memberId}';
+		let url = "";
+
+		url = "${pageContext.request.contextPath}/ws/admin.do";
 
 		window.open(url,"chatView", "width="+width+",height="+height+", top="+top+", left="+left);
 	}

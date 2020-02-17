@@ -77,7 +77,26 @@ public class AdminServiceImpl implements AdminService {
 	// ========================== 근호 끝
 
 	// 지은 시작 ==========================
-
+	@Override
+	public List<Member> selectMemberPoint(String memberId) {
+		return ad.selectMemberPoint(memberId);
+	}
+	@Override
+	public int selectMemberPointTotal(Map<String, String> param) {
+		return ad.selectMemberPointTotal(param);
+	}
+	@Override
+	public List<Map<String, String>> selectMemberPointList(int cPage, int numPerPage, Map<String, String> param) {
+		return ad.selectMemberPointList(cPage,numPerPage,param);
+	}
+	@Override
+	public int selectMemberOrderTotal(Map<String, String> param) {
+		return ad.selectMemberOrderTotal(param);
+	}
+	@Override
+	public List<Map<String, String>> selectMemberOrderList(int cPage, int numPerPage, Map<String, String> param) {
+		return ad.selectMemberOrderList(cPage,numPerPage,param);
+	}
 	// ========================== 지은 끝
 
 	// 예찬 시작 ==========================
@@ -101,7 +120,28 @@ public class AdminServiceImpl implements AdminService {
 	public List<Product> loadReportBoardList(int cPage, int numPerPage, Map<String, String> param) {
 		return ad.loadReportBoardList(cPage, numPerPage, param);
 	}
+	@Override
+	public int selectProductReportTotalContents(Map<String, String> param) {
+		return ad.selectProductReportTotalContents(param);
+	}
+	@Override
+	public List<Product> loadProductReportList(int cPage, int numPerPage, Map<String, String> param) {
+		return ad.loadProductReportList(cPage, numPerPage, param);
+	}
+	@Override
+	public Map<String, String> selectOneProductReport(int boardNo) {
+		return ad.selectOneProductReport(boardNo);
+	}
+	@Override
+	public int updateReportStatus(int reportNo) {
+		return ad.updateReportStatus(reportNo);
+	}
 	// ========================== 주영 끝
+	
+	
+	
+	
+	
 
 	// 현규 시작 ==========================
 

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.w3c.dom.ls.LSInput;
 
 import com.google.gson.Gson;
 import com.pro.dong.common.util.Utils;
@@ -125,13 +126,39 @@ public class ShopController {
 		List<Map<String, String>> list = null;
 			
 		list = ss.loadMyProductList(memberId,cPage,numPerPage);
-		log.debug("@@@@@@@@@@@@@@@@@={}",list);
 		int totalContents = ss.totalCountMyProduct(memberId);
 			
 		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
 			
 		Map<String,Object> result = new HashMap<>();
 			
+		result.put("product", list);
+		result.put("pageBar", pageBar);
+		
+		return gson.toJson(result);
+	}
+	@RequestMapping(value="/loadMyProductManage" , produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String loadMyProductManage(@RequestParam(value="searchKeyword",defaultValue="") String searchKeyword,
+			@RequestParam(value="saleCategory",defaultValue="") String saleCategory, 
+			@RequestParam(value="cPage", defaultValue="1") int cPage,
+			@RequestParam(value="memberId") String memberId){
+		
+		int numPerPage = 10;
+		
+		Map<String, String> param = new HashMap<>();
+		param.put("memberId", memberId);
+		param.put("saleCategory", saleCategory);
+		param.put("searchKeyword", searchKeyword);
+	
+		int totalContents = ss.totalProductContents(param);
+
+		List<Map<String, String>> list = ss.loadMyProductManage(cPage,numPerPage,param);
+		
+		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);	
+
+		Map<String,Object> result = new HashMap<>();
+		
 		result.put("product", list);
 		result.put("pageBar", pageBar);
 		
@@ -159,6 +186,17 @@ public class ShopController {
 		Map<String, String> param = new HashMap<>();
 		param.put("productNo",productNo);
 		int result = ss.productDelete(productNo);
+		return ""+result;
+	}
+	@RequestMapping("/saleSelect")
+	@ResponseBody
+	public String saleStatus(@RequestParam("productNo") String productNo, @RequestParam("select") String select) {
+		
+		Map<String, String> param = new HashMap<>();
+		param.put("productNo", productNo);
+		param.put("select", select);
+		int result = ss.saleStatus(param);
+		
 		return ""+result;
 	}
 	//========================== 하진 끝
@@ -479,6 +517,7 @@ public class ShopController {
 		map.put("result", result);
 		return map;
 	}
+	
 
 	//========================== 주영 끝
 	

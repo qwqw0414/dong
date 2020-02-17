@@ -79,25 +79,24 @@ function loadMemberList(searchType, searchKeyword, cPage){
 
 <h1>회원관리</h1>
 
-	<div class="col-md-6 ">
+	<div class="col-md-6">
 	    <div class="input-group">
-		  <label for="searchKeyword" class="sr-only">검색</label>
 		  <select class="custom-select" id="searchType" required>
 	     	<option value="member_id">아이디</option>
 	     	<option value="member_name">이름</option>
 	      </select>
 		  <input style="margin-left: 20px;" type="text" size="30" id="searchKeyword" placeholder="검색어를 입력하세요">
 		  <div class="input-group-append">
-	      <button style="margin-left: 20px;" class="btn btn-primary btn-sm" id="searchMember">검색하기</button> 
-	      <button style="margin-left: 30px;" class="btn btn-primary btn-sm" id="memberAll">전체보기</button>
+	      	<button style="margin-left: 20px;" class="btn btn-primary btn-sm" id="searchMember">검색하기</button> 
+	      	<button style="margin-left: 30px;" class="btn btn-primary btn-sm" id="memberAll">전체보기</button>
           </div>
 	    </div>
+	    <br /><br />
     </div>
 
 <div class="table-responsive">
 <br /><br />
 	<table class="table text-center" id="member-list-tbl">
-		
 	</table>
 </div>
 <div id="pageBar">

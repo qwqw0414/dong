@@ -113,7 +113,7 @@ $(()=>{
 				console.log(data);
 				let $table = $("#member-list-tbl");
 		    	$table.html("");
-		    	let header = "<tr><th>No</th><th>카테고리</th><th>작성자</th><th>제목</th><th>작성일</th><th>조회수</th><th>누적신고수</th></tr>";
+		    	let header = "<tr><th>No</th><th>카테고리</th><th>작성자</th><th>제목</th><th>작성일</th><th>조회수</th><th>누적신고수</th><th>처리상태</th></tr>";
 		    	let	html = "";
 		    	for(var i=0; i<data.list.length;i++){
 		    		html += "<tr>";
@@ -124,6 +124,12 @@ $(()=>{
 		    		html += "<td>"+data.list[i].WRITE_DATE+"</td>";
 		    		html += "<td>"+data.list[i].READ_COUNT+"</td>";
 		    		html += "<td>"+data.list[i].CNT+"</td>";
+		    		if(data.list[i].STATUS == 'N'){
+		    			html += "<td>대기</td>";
+		    		}
+		    		else if(data.list[i].STATUS == 'Y'){
+		    			html += "<td>완료</td>";
+		    		}
 		    		html += "</tr>";
 		    	}
 		    	$table.append(header+html);

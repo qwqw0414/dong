@@ -96,8 +96,6 @@ public class AdminController {
 	public Map<String, Object> memberList(@RequestParam(value="searchType", defaultValue="")String searchType, 
 											@RequestParam(value="searchKeyword",defaultValue="") String searchKeyword,
 											@RequestParam(value="cPage",defaultValue="1") int cPage) {
-		
-		
 		// 페이징바 작업
 		final int numPerPage = 10;
 		
@@ -179,6 +177,67 @@ public class AdminController {
 	// ========================== 근호 끝
 	
 	// 지은 시작 ==========================
+	@RequestMapping("/memberPointList.do")
+	public void memberPointList() {
+		
+	}
+	
+	@RequestMapping("/memberPointListEnd")
+	@ResponseBody
+	public Map<String, Object> memberPointListEnd(@RequestParam(value="searchType", defaultValue="")String searchType, 
+												  @RequestParam(value="searchKeyword",defaultValue="") String searchKeyword,
+												  @RequestParam(value="cPage",defaultValue="1") int cPage) {
+		
+		final int numPerPage = 10;
+		Map<String,Object> result = new HashMap<>();
+		Map<String, String> param = new HashMap<>();
+		param.put("searchType", searchType);
+		param.put("searchKeyword", searchKeyword);
+		
+		int totalPoint = as.selectMemberPointTotal(param);
+		List<Map<String,String>> list = as.selectMemberPointList(cPage, numPerPage, param);
+		String function = "loadMemberPointList('"+searchType+"','"+searchKeyword+"',";
+		String pageBar = Utils.getAjaxPageBar(totalPoint, cPage, numPerPage, function);
+		
+		result.put("list",list);
+		result.put("totalPoint", totalPoint);
+		result.put("cPage", cPage);
+		result.put("numPerPage", numPerPage);
+		result.put("pageBar", pageBar);
+		//log.debug("result={}", result);
+		//log.debug("list={}", list);
+		
+		return result;
+	}
+	
+	@RequestMapping("/memberOrderList.do")
+	public void memberOrderList() {
+		
+	}
+	
+	@RequestMapping("/memberOrderListEnd")
+	@ResponseBody
+	public Map<String,Object> memberOrderListEnd(@RequestParam(value="searchType", defaultValue="")String searchType,@RequestParam(value="searchKeyword", defaultValue="")String searchKeyword, @RequestParam(value="cPage",defaultValue="1")int cPage){
+		final int numPerPage = 10;
+		Map<String, Object> result = new HashMap<>();
+		Map<String, String> param = new HashMap<>();
+		param.put("searchType", searchType);
+		param.put("searchKeyword", searchKeyword);
+		
+		int totalOrder = as.selectMemberOrderTotal(param);
+		List<Map<String,String>> list = as.selectMemberOrderList(cPage,numPerPage,param);
+		String function = "loadMemberOrderList('"+searchType+"','"+searchKeyword+"',";
+		String pageBar = Utils.getAjaxPageBar(totalOrder, cPage, numPerPage, function);
+		
+		result.put("list", list);
+		result.put("totalOrder", totalOrder);
+		result.put("cPage", cPage);
+		result.put("numPerPage", numPerPage);
+		result.put("pageBar", pageBar);
+		
+		return result;
+	}
+	
 	
 	// ========================== 지은 끝
 	
@@ -210,7 +269,6 @@ public class AdminController {
 		
 		//페이징바 작업
 		int totalContents = as.selectBoardTotalContents(param);
-		log.info("totalContents@@@@@@@@@@@@@@@@@={}", totalContents);
 
 		List<Product> list = as.loadBoardList(cPage, numPerPage, param);
 		result.put("list", list);
@@ -241,7 +299,6 @@ public class AdminController {
 		
 		//페이징바 작업
 		int totalContents = as.selectReportBoardTotalContents(param);
-		log.info("reportTotalContents@@@@@@@@@@@@@@@@@={}", totalContents);
 
 		List<Product> list = as.loadReportBoardList(cPage, numPerPage, param);
 		result.put("list", list);
@@ -250,9 +307,55 @@ public class AdminController {
 		result.put("totalContents", totalContents);
 		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
 		result.put("pageBar", pageBar);
-		log.info("list%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%={}", list);
 		return result;
 	}
+	//@@@@@@@@@@@@@@@@@@@@@@@@@@ 상품신고시작 @@@@@@@@@@@@@@@@@@@@@@@@@@
+	@RequestMapping("/productReportList.do")
+	public void productReportList() {
+
+	}
+	
+	@RequestMapping("/loadProductReportList")
+	@ResponseBody
+	public Map<String, Object> loadProductReportList(
+			@RequestParam(value="searchType", defaultValue="")String searchType, @RequestParam(value="searchKeyword",defaultValue="") String searchKeyword,@RequestParam(value="type",defaultValue="") String type,
+			@RequestParam(value="cPage",defaultValue="1") int cPage){
+		final int numPerPage = 10;
+		Map<String, Object> result = new HashMap<>();
+		
+		Map<String, String> param = new HashMap<>();
+		param.put("searchType", searchType);
+		param.put("searchKeyword", searchKeyword);
+		param.put("type", type);
+		
+		//페이징바 작업
+		int totalContents = as.selectProductReportTotalContents(param);
+
+		List<Product> list = as.loadProductReportList(cPage, numPerPage, param);
+		result.put("list", list);
+		result.put("cPage", cPage);
+		result.put("numPerPage", numPerPage);
+		result.put("totalContents", totalContents);
+		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
+		result.put("pageBar", pageBar);
+		return result;
+	}
+	
+	@RequestMapping("/productReportView.do")
+	public ModelAndView productReportView(int boardNo, ModelAndView mav) {
+		Map<String, String> map = as.selectOneProductReport(boardNo);
+		mav.addObject("map", map);
+		return mav;
+	}
+	
+	@RequestMapping("/updateReportStatus")
+	@ResponseBody
+	public String updateReportStatus(int reportNo) {
+		
+		int result = as.updateReportStatus(reportNo);
+		return result+"";
+	}
+	
 	
 	// ========================== 주영 끝
 	
