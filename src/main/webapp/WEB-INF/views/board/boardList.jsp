@@ -21,6 +21,8 @@
 <script>
 $(()=>{
 	
+	
+	
 	loadBoardList(1);
 	
 	function loadBoardList(cPage){
@@ -56,7 +58,7 @@ $(()=>{
 		    		html += "<td><span class='badge badge-pill badge-danger'>공지</span></td>";
 		    		html += "<td colspan='2'><a href='${pageContext.request.contextPath}/board/boardView.do?boardNo="+data.noticeList[i].BOARD_NO+"'>"+data.noticeList[i].BOARD_TITLE+"</a></td>";
 		    		html += "<td>"+data.noticeList[i].MEMBER_ID+"</td>";
-		    		html += "<td>"+data.noticeList[i].WRITE_DATE+"</td>";
+		    		html += "<td>"+life(data.noticeList[i].WRITE_DATE)+"</td>";
 		    		html += "<td>"+data.noticeList[i].READ_COUNT+"</td>";
 		    		html += "</tr>";
 		    	}
@@ -66,7 +68,7 @@ $(()=>{
 		    		html += "<td>"+data.list[i].BOARD_NO+"</td>";
 		    		html += "<td colspan='2'><a href='${pageContext.request.contextPath}/board/boardView.do?boardNo="+data.list[i].BOARD_NO+"'>"+data.list[i].BOARD_TITLE+"</a></td>";
 		    		html += "<td>"+data.list[i].MEMBER_ID+"</td>";
-		    		html += "<td>"+data.list[i].WRITE_DATE+"</td>";
+		    		html += "<td>"+life(data.list[i].WRITE_DATE)+"</td>";
 		    		html += "<td>"+data.list[i].READ_COUNT+"</td>";
 		    		html += "</tr>";
 		    	}
@@ -111,7 +113,18 @@ $(()=>{
 			loadBoardList(1);
 		}
 	}//end of search
+	function life(date){
+		var preDate = new Date(date);
 
+		var year = preDate.getFullYear();
+		var month = preDate.getMonth()+1;
+		var date = preDate.getDate();
+
+		if(month < 10) month = "0"+month;
+		if(date < 10) date = "0"+date;
+
+		return year+"/"+month+"/"+date;
+	}
 });
 </script>
  <h1>커뮤니티 게시판</h1>
@@ -124,7 +137,7 @@ $(()=>{
 		<div class="col-md-12">
 		<br /><br />
 		<h4>인기글</h4>
-			<table id="po-board" class="table table-striped table-hover">
+			<table id="po-board" class="table table-hover">
 				<tr>
 					<th>글번호</th>
 					<th>제목</th>
@@ -136,12 +149,12 @@ $(()=>{
 				<c:if test="${not empty boardList}">
 				<c:forEach items="${boardList}" var="list" varStatus="vs">
 					<tr>
-						<td>${list.BOARD_NO}</td>
+						<td id="popBoardNo" value="${list.BOARD_NO}">${list.BOARD_NO}</td>
 						<td><a href='${pageContext.request.contextPath}/board/boardView.do?boardNo=${list.BOARD_NO}'>${list.BOARD_TITLE}</a></td>
 						<td>${list.MEMBER_ID}</td>
 						<td>${list.WRITE_DATE}</td>
 						<td>${list.READ_COUNT}</td>
-						<td>${result}</td>
+						<td>${list.CNT}</td>
 					</tr>
 				</c:forEach>
 				</c:if>
@@ -156,28 +169,28 @@ $(()=>{
 			<br /><br /><br />
 		</div>
 	</div>
-
-	<div class="col-md-3 mb-3">
-	      <label for="boardCategory">카테고리</label>
-	      <select class="custom-select" id="boardCategory" required>
+<div class="col-md-6 ">
+	    <div class="input-group">
+		  <label for="boardCategory" class="sr-only">카테고리</label>
+		  <select class="custom-select" id="boardCategory" required>
 	     	<%=option %>
 	      </select>
-	    <div class="input-group mb-3">
-		  <label for="searchKeyword" class="sr-only">검색</label>
+	      <label for="searchKeyword" class="sr-only">검색</label>
 		  <select class="custom-select" id="searchType" required>
 	     	<option value="member_id" selected>아이디</option>
 	     	<option value="board_title">글제목</option>
 	      </select>
-		  <input type="text" size="30" id="searchKeyword" placeholder="검색어를 입력하세요">
+		  <input style="margin-left: 20px;" type="text" size="30" id="searchKeyword" placeholder="검색어를 입력하세요">
 		  <div class="input-group-append">
-	      <button class="btn btn-primary mb-2" id="searchBoard">검색하기</button>
+	      <button style="margin-left: 20px;" class="btn btn-primary btn-sm" id="searchBoard">검색하기</button> 
           </div>
 	    </div>
     </div>
+
 	<p id="totalContents"></p>
 	<input type="button" value="글쓰기" id="btn-add" class="btn btn-outline-success" onclick="fn_goWriteBoard();"/>
 	
-	<table id="tbl-board" class="table table-striped table-hover">
+	<table id="tbl-board" class="table table-hover">
 		
 	</table>
 	<!-- pageBar 출력 -->
