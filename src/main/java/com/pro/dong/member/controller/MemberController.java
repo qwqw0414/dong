@@ -328,6 +328,7 @@ public class MemberController {
 		String newEmail = (String) map.get("EMAIL");
 		m.put("email", newEmail);
 		m.put("result", result+"");
+
 		
 		log.debug("newEmail+{}",newEmail);	
 		

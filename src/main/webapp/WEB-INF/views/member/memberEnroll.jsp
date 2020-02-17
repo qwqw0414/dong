@@ -57,7 +57,7 @@
         </div>
         <input type="text" id="phone" placeholder="연락처를 입력해주세요. ( - 제외)" class="form-control form-control-lg" maxlength="13">
     </div>
-
+	
     <div class="enroll-map" id="page-3">
         <button id="btn-searchAddress" class="btn btn-info btn-block">위치 검색</button>
         <button id="btn-zipcode"  class="btn btn-info btn-block">우편번호 검색</button>

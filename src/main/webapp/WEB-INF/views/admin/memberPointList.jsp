@@ -48,7 +48,7 @@ function loadMemberPointList(searchType,searchKeyword, cPage){
 			$table.html("");
 			let html = "";
 			data.list.forEach(cate => {
-				html += "<tr><td>"+cate.MEMBER_ID+"</td><td>"+cate.POINT_AMOUNT+"</td><td>"+cate.REG_DATE+"</td><td>"+cate.POINT+"</td><td>"+cate.STATUS+"</td></tr>";
+				html += "<tr><td>"+cate.MEMBER_ID+"</td><td>"+cate.POINT_AMOUNT+"</td><td>"+cate.DATE+"</td><td>"+cate.POINT+"</td><td>"+cate.STATUS+"</td></tr>";
 			});
 			$table.append(header+html);
 			$("#pageBar").html(data.pageBar);

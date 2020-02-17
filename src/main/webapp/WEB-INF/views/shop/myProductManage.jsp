@@ -30,7 +30,6 @@ $(()=>{
 		var saleCategory = $("#saleCategory").val();
 		var searchKeyword = $("#searchKeyword").val();
 		
-		
 		$.ajax({
 			url:"${pageContext.request.contextPath}/shop/loadMyProductManage",
 			type: "GET",
@@ -49,8 +48,8 @@ $(()=>{
 				
 				let html = "";
 				data.product.forEach(product=>{
+	
 					html += "<tr>";
-					html +=	"<tbody>";
 					html += "<td id='img-td'><a href='${pageContext.request.contextPath}/product/productView.do?productNo="+product.PRODUCT_NO+"'><img style='width:152px; height:152px;' src='${pageContext.request.contextPath}/resources/upload/product/"+product.PHOTO+"'/></a></td>";
 					if(product.IS_SALE=='N'){
 						html += "<td><select class='select' class='custom-select'><option value='N' selected>판매중</option><option value='I'>거래중</option><option value='Y'>판매완료</option></select></td>"
@@ -68,12 +67,10 @@ $(()=>{
 					html += "<td id='btn-td'><button type='button' class='btn btn-outline-success btn-sm' id='btn-update' value='"+product.PRODUCT_NO+"' style='width: 45px;'>UP</button><br/>";
 			      	html += "<button type='button' class='btn btn-outline-primary btn-sm'>수정</button><br/>"
 			      	html += "<button type='button' class='btn btn-outline-danger btn-sm' id='btn-delete' value='"+product.PRODUCT_NO+"'>삭제</button></td>";
-					html += "</tbody>";
 					html += "</tr>";
-					
 				});
 				
-				$table.append(header+html);
+				$table.html(header+html);
 				$("#pageBar").html(data.pageBar);
 			},
 			error:(x,s,e)=>{
@@ -83,9 +80,7 @@ $(()=>{
 				$("#pageBar a").click((e)=>{
 					loadMyProductList($(e.target).siblings("input").val());
 	            });
-				saleSelect();
 			}
-			
 		});
 	}
 	
@@ -131,6 +126,7 @@ $(()=>{
 				
 				if(data==1){
 					alert("끌어올리기 성공");
+					location.reload();
 				}
 				else{
 					alert("끌어올리기 실패");
@@ -176,10 +172,9 @@ $(()=>{
 			}
 		});
 	});
-
-	function saleSelect(){
-
-		$("#product-tbl .select").change((e)=>{
+	
+	/*상품판매상태변경*/
+	$(document).on("change","#product-tbl .select",function(e){
 			var $select = $(e.target); // Y판매완료 N판매중
 			console.log($select.val());
 
@@ -193,7 +188,7 @@ $(()=>{
 				},
 				dataType:"json",
 				success: data=>{
-					
+					console.log(data);
 					var select = $(".select").val();
 					
 					if(data==1){
@@ -208,9 +203,7 @@ $(()=>{
 
 			});
 
-		});
-	}
-	
+		});		
 });
 </script>
 
