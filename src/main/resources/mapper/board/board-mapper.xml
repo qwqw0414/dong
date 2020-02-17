@@ -80,11 +80,11 @@
 	<select id="selectBoardList" parameterType="map" resultType="map">
 	
 	<![CDATA[
-	SELECT R.* FROM
-		(select * from board B left join member M on b.member_id=m.member_id
-    	 where m.dong=#{dong}
-    	 order by read_count desc) R 
-    WHERE ROWNUM < 6
+	select * from
+    	(select B.*, (select count(*) from BOARD_REPUTATION where BOARD_NO = B.BOARD_NO) CNT
+    		from (select * from member join BOARD using(MEMBER_ID) where DONG = #{dong}) B)
+			where CNT > 0
+	order by CNT desc
 	]]>
 		
 	</select>

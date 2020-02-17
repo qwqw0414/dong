@@ -21,6 +21,8 @@
 <script>
 $(()=>{
 	
+	
+	
 	loadBoardList(1);
 	
 	function loadBoardList(cPage){
@@ -136,12 +138,12 @@ $(()=>{
 				<c:if test="${not empty boardList}">
 				<c:forEach items="${boardList}" var="list" varStatus="vs">
 					<tr>
-						<td>${list.BOARD_NO}</td>
+						<td id="popBoardNo" value="${list.BOARD_NO}">${list.BOARD_NO}</td>
 						<td><a href='${pageContext.request.contextPath}/board/boardView.do?boardNo=${list.BOARD_NO}'>${list.BOARD_TITLE}</a></td>
 						<td>${list.MEMBER_ID}</td>
 						<td>${list.WRITE_DATE}</td>
 						<td>${list.READ_COUNT}</td>
-						<td>${result}</td>
+						<td>${list.CNT}</td>
 					</tr>
 				</c:forEach>
 				</c:if>
