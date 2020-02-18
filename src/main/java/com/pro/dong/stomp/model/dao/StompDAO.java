@@ -37,4 +37,8 @@ public interface StompDAO {
 
 	int countNoRead(Map<String, String> param);
 
+	String findSendId(Map<String, String> param);
+
+	int selectShopNoByMemberId(String memberId);
+
 }

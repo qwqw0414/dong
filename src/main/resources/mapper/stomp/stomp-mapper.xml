@@ -75,5 +75,10 @@
 	<select id="countNoRead" resultType="_int" parameterType="map">
 		select count(*) from chatlog where chatid = #{chatId} and time > (select lastcheck from chatroom where chatid = #{chatId} and memberid = #{memberId} ) and memberid != #{memberId}
 	</select>
-	
+	<select id="findSendId" parameterType="map" resultType="string">
+		select memberid from chatroom where memberid != #{memberId} and chatid = #{chatId}
+	</select>
+	<select id="selectShopNoByMemberId" parameterType="string" resultType="_int">
+		select shop_no from shop where member_id = #{memberId}
+	</select>
 </mapper>

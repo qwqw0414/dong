@@ -81,4 +81,14 @@ public class StompDAOImpl implements StompDAO {
 		return sqlSession.selectOne("stomp.countNoRead", param);
 	}
 
+	@Override
+	public String findSendId(Map<String, String> param) {
+		return sqlSession.selectOne("stomp.findSendId", param);
+	}
+
+	@Override
+	public int selectShopNoByMemberId(String memberId) {
+		return sqlSession.selectOne("stomp.selectShopNoByMemberId", memberId);
+	}
+
 }

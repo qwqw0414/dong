@@ -100,5 +100,15 @@ public class StompServiceImpl implements StompService {
 		return list;
 	}
 
+	@Override
+	public String findSendId(Map<String, String> param) {
+		return stompDao.findSendId(param);
+	}
+
+	@Override
+	public int selectShopNoByMemberId(String memberId) {
+		return stompDao.selectShopNoByMemberId(memberId);
+	}
+
 	
 }

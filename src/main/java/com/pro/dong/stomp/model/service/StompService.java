@@ -29,4 +29,8 @@ public interface StompService {
 
 	List<Map<String, String>> findRecentList2(String memberId);
 
+	String findSendId(Map<String, String> param);
+
+	int selectShopNoByMemberId(String memberId);
+
 }

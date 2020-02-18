@@ -42,7 +42,7 @@ public class StompController {
 	StompService ss;
     
     @GetMapping("/ws/stomp.do")
-    public void websocket(Model model, HttpSession session,@RequestParam("memberId")String sendId ) {
+    public String websocket(Model model, HttpSession session,@RequestParam("memberId")String sendId ) {
     	
     	log.debug(((Member)(session.getAttribute("memberLoggedIn"))).toString());
     	
@@ -72,6 +72,8 @@ public class StompController {
     	model.addAttribute("memberId", memberId);
     	model.addAttribute("sendId", sendId);
     	model.addAttribute("chatId", chatId);
+    	
+    	return "ws/chatView";
     }
     
 	@MessageMapping("/chat/{chatId}")
@@ -116,7 +118,7 @@ public class StompController {
 	}
 	
 	@GetMapping("/ws/admin.do")
-	public void admin(Model model, 
+	public String admin(Model model, 
 					  HttpSession session){
 //		String memberId = Optional.ofNullable(memberLoggedIn).map(Member::getMemberId)
 //															 .orElseThrow(IllegalStateException::new);
@@ -127,16 +129,29 @@ public class StompController {
 		log.info("recentList={}",recentList);
 		
 		model.addAttribute("recentList", recentList);
+		model.addAttribute("memberId", memberId);
+		
+		return "ws/chatList";
 	}
 	
 	@GetMapping("/ws/{chatId}/adminChat.do")
-	public String adminChat(@PathVariable("chatId") String chatId, Model model){
+	public String adminChat(@PathVariable("chatId") String chatId, Model model, HttpSession session){
 		
+		String memberId = ((Member)(session.getAttribute("memberLoggedIn"))).getMemberId();
 		List<Msg> chatList = ss.findChatListByChatId(chatId);
-		model.addAttribute("chatList", chatList);
 		
+		Map<String, String> param = new HashMap<>();
+		param.put("memberId", memberId);
+		param.put("chatId", chatId);
+		String sendId = ss.findSendId(param);
+		int shopNo = ss.selectShopNoByMemberId(sendId);
+		
+		model.addAttribute("chatList", chatList);
+		model.addAttribute("memberId", memberId);
+		model.addAttribute("sendId", sendId);
+		model.addAttribute("shopNo", shopNo);
 		log.info("chatList={}",chatList);
-		return "ws/adminChat";
+		return "ws/chatView";
 	}
 	
 }
