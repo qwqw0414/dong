@@ -165,6 +165,7 @@ span{
 
 </style>
 
+
 <script>
 $(function(){
 	$("#boardUpdate").click(function(){
@@ -175,9 +176,17 @@ $(function(){
 </script>
 
 <div class="boardView">
+	
+	<div id="boardReportModalWrapper">
+		<jsp:include page="/WEB-INF/views/admin/boardReportView.jsp"/>
+	</div>
+	
     <!-- head -->
     <div class="head_inflow">
         <div id="title"><strong>${board.boardTitle}</strong>
+        <%if("Y".equals(memberLoggedIn.getIsAdmin())) {%>
+        	<button type="button" id='adminLook' class="btn btn-primary btn-sm" data-toggle="modal" data-target=".bd-example-modal-xl">신고내역보기</button>
+        <%} %>
         <div id="thumbsUpBox">
         <span id="thumbsUpCount"><img id="thumbsUp" src="${pageContext.request.contextPath}/resources/images/thumbsup.png"/>&nbsp;<span id="likeCount" >${likeCnt}</span></span>
         </div>

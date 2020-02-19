@@ -370,7 +370,28 @@ public class BoardController {
 	//========================== 예찬 끝
 		
 	// 주영 시작 ==========================
+	@RequestMapping("/selectBoardReportList")
+	@ResponseBody
+	public Map<String, Object> selectBoardReportList(@RequestParam(value="boardNo", defaultValue="")int boardNo){
 		
+		Map<String, Object> map = new HashMap<>();
+		
+		List<Map<String, String>> list = bs.selectBoardReportList(boardNo);
+		
+		map.put("list", list);
+		
+		return map;
+	}
+	
+	@RequestMapping("/updateReportStatus")
+	@ResponseBody
+	public String updateReportStatus(@RequestParam(value="reportNo", defaultValue="")int reportNo) {
+		
+		int result = bs.updateReportStatus(reportNo);
+		
+		return  result+"";
+	}
+	
 	//========================== 주영 끝
 		
 	// 현규 시작 ==========================

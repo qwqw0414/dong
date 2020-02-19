@@ -56,7 +56,7 @@ $(()=>{
 				},
 			success: data=>{
 				console.log(data);
-				let $table = $("#member-list-tbl");
+				let $table = $("#board-list-tbl");
 		    	$table.html("");
 		    	let header = "<tr><th>No</th><th>카테고리</th><th>작성자</th><th>제목</th><th>작성일</th><th>조회수</th><th>누적신고수</th></tr>";
 		    	let	html = "";
@@ -105,6 +105,7 @@ $(()=>{
 		var dong = $("#dong").val();
 		var searchType = $("#searchType").val();
 		var searchKeyword = $("#searchKeyword").val();
+		var html = "";
 		var type = type;
 		console.log(searchType);
 		console.log(searchKeyword);
@@ -124,25 +125,18 @@ $(()=>{
 				},
 			success: data=>{
 				console.log(data);
-				let $table = $("#member-list-tbl");
+				let $table = $("#board-list-tbl");
 		    	$table.html("");
-		    	let header = "<tr><th>No</th><th>카테고리</th><th>작성자</th><th>제목</th><th>작성일</th><th>조회수</th><th>누적신고수</th><th>처리상태</th></tr>";
-		    	let	html = "";
+		    	var header = "<tr><th>No</th><th>카테고리</th><th>작성자</th><th>제목</th><th>작성일</th><th>조회수</th><th>누적신고수</th></tr>";
 		    	for(var i=0; i<data.list.length;i++){
 		    		html += "<tr>";
 		    		html += "<td><a href='${pageContext.request.contextPath}/board/boardView.do?boardNo="+data.list[i].BOARD_NO+"'>"+data.list[i].BOARD_NO+"</a></td>";
 		    		html += "<td>"+data.list[i].CATEGORY_ID+"</td>";
 		    		html += "<td>"+data.list[i].MEMBER_ID+"</td>";
 		    		html += "<td>"+data.list[i].BOARD_TITLE+"</td>";
-		    		html += "<td>"+data.list[i].WRITE_DATE+"</td>";
+		    		html += "<td>"+life(data.list[i].WRITE_DATE)+"</td>";
 		    		html += "<td>"+data.list[i].READ_COUNT+"</td>";
 		    		html += "<td>"+data.list[i].CNT+"</td>";
-		    		if(data.list[i].STATUS == 'N'){
-		    			html += "<td>대기</td>";
-		    		}
-		    		else if(data.list[i].STATUS == 'Y'){
-		    			html += "<td>완료</td>";
-		    		}
 		    		html += "</tr>";
 		    	}
 		    	$table.append(header+html);
@@ -152,14 +146,32 @@ $(()=>{
 				console.log("ajax 요청 실패!",x,s,e);
 	    	},
 			complete: (data)=>{
-	        
-	        	$("#pageBar a").click((e)=>{
-	        		loadBoardList($(e.target).siblings("input").val());
-            	});
 	      	}
 		});//end of ajax
 	}//end of loadBoardList();
 	
+	function reportCnt(data){
+		console.log("data===");
+		console.log(data);
+		console.log(data.responseText.BOARD_NO);
+		var boardNo = data.list[i].BOARD_NO;
+		var $td = $("#cntTr");
+		console.log($td);
+		$.ajax({
+			url: "${pageContext.request.contextPath}/admin/loadBoardListByStatusCnt",
+			type: "GET",
+			data:{boardNo : boardNo},
+			success: data=>{
+				console.log(data);
+				console.log(data.list[0].REPORTCNT);
+				/* let html = ""; */
+				$td.html(data.list[0].REPORTCNT);
+			},
+			error : (x, s, e) => {
+				console.log("ajax 요청 실패!",x,s,e);
+	    	}
+		});//end of ajax
+	}
 	
 	$.ajax({
 		url: "${pageContext.request.contextPath}/admin/loadSidoList",
@@ -270,7 +282,7 @@ $(()=>{
 
 <div class="table-responsive">
 <br /><br />
-	<table class="table text-center" id="member-list-tbl">
+	<table class="table text-center" id="board-list-tbl">
 		<tr>
 		<th>No</th>
 		<th>카테고리</th>

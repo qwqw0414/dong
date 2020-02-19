@@ -321,6 +321,7 @@ public class AdminController {
 		result.put("pageBar", pageBar);
 		return result;
 	}
+	
 	//@@@@@@@@@@@@@@@@@@@@@@@@@@ 상품신고시작 @@@@@@@@@@@@@@@@@@@@@@@@@@
 	@RequestMapping("/productReportList.do")
 	public void productReportList() {
