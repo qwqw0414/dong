@@ -35,8 +35,8 @@ $(()=>{
 				for(var i=0; i<data.orderList.length;i++){
 					html += "<tr><input type='hidden' value='"+data.orderList[i].PRODUCT_NO+"'/><td name='orderNo'>"+data.orderList[i].ORDER_NO+"</td>";
 					html += "<td><img src='${pageContext.request.contextPath}/resources/upload/product/"+data.orderList[i].PHOTO+"' class='mr-3'>"+data.orderList[i].TITLE+"</td>";
-					html += "<td>"+data.orderList[i].PRICE+"</td>";
-					html += "<td>"+data.orderList[i].SHOP_NAME+"</td>";
+					html += "<td name='price'>"+data.orderList[i].PRICE+"</td>";
+					html += "<td name='shopName'>"+data.orderList[i].SHOP_NAME+"</td>";
 					if(data.orderList[i].CHECK_SEND==="N"){
 						html += "<td>배송 준비중</td>";	
 					} else {
@@ -77,8 +77,8 @@ $(()=>{
 				for(var i=0; i<data.saleList.length;i++){
 					html += "<tr><input type='hidden' value='"+data.saleList[i].PRODUCT_NO+"'/><td name='orderNo'>"+data.saleList[i].ORDER_NO+"</td>";
 					html += "<td><img src='${pageContext.request.contextPath}/resources/upload/product/"+data.saleList[i].PHOTO+"' class='mr-3'>"+data.saleList[i].TITLE+"</td>";
-					html += "<td>"+data.saleList[i].PRICE+"</td>";
-					html += "<td>"+data.saleList[i].SHOP_NAME+"</td>";
+					html += "<td name='price'>"+data.saleList[i].PRICE+"</td>";
+					html += "<td name='shopName'>"+data.saleList[i].SHOP_NAME+"</td>";
 					if(data.saleList[i].CHECK_SEND==="N"){
 						html += "<td><button class='btn btn-primary main-btn' name='updateSend'>배송</button></td>";	
 					} else {
@@ -114,13 +114,19 @@ $(()=>{
 		var btnReceive = $(e.target);
 		var orderNo = btnReceive.parent("td").siblings("[name=orderNo]").text();
 		var productNo = btnReceive.parent("td").siblings("input").val();
+		var price = btnReceive.parent("td").siblings("[name=price]").text();
+		var shopName = btnReceive.parent("td").siblings("[name=shopName]").text();
 		console.log(orderNo);
 		console.log(productNo);
+		console.log(price);
+		console.log(shopName);
 		if(confirm("상품을 인수하셨습니까?")){
 		$.ajax({
 			url: "${pageContext.request.contextPath}/member/updateReceive",
 			data:{orderNo:orderNo,
-				productNo:productNo},
+				productNo:productNo,
+				price:price,
+				shopName:shopName},
 			success: data=>{
 				console.log(data);
 				loadOrderList(1);
@@ -137,13 +143,18 @@ $(()=>{
 		var btnSend = $(e.target);
 		var orderNo = btnSend.parent("td").siblings("[name=orderNo]").text();
 		var productNo = btnSend.parent("td").siblings("input").val();
+		var price = btnSend.parent("td").siblings("[name=price]").text();
+		var shopName = btnSend.parent("td").siblings("[name=shopName]").text();
 		console.log(orderNo);
 		console.log(productNo);
+		console.log(price);
+		console.log(shopName);
 		if(confirm("배송 완료하시겠습니까?")){
 		 $.ajax({
 			url: "${pageContext.request.contextPath}/member/updateSend",
 			data:{orderNo:orderNo,
-				productNo:productNo},
+				productNo:productNo,
+				price:price},
 			success: data=>{
 				console.log(data);
 				loadSaleList(1);

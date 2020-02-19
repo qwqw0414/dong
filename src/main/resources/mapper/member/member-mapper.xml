@@ -29,6 +29,7 @@
         on o.product_no = v.product_no
 		where pa.thumbnail = 'Y'
 		and o.member_id = #{memberId}
+		order by o.order_no desc
 	</select>
 	<update id="updateReceive" parameterType="_int">
 		update order_list set check_receive = 'Y'
@@ -47,7 +48,7 @@
         on p.shop_no = s.shop_no) V
         on o.product_no = v.product_no
 		where pa.thumbnail = 'Y'
-        and V.shop_name like #{shopName}
+        and V.shop_name = #{shopName}
 	</select>
 	<select id="loadSaleList" resultType="map">
 		select o.*, p.title, V.shop_name, pa.photo from 
@@ -59,7 +60,8 @@
         on p.shop_no = s.shop_no) V
         on o.product_no = v.product_no
 		where pa.thumbnail = 'Y'
-		and V.shop_name like #{shopName}
+		and V.shop_name = #{shopName}
+		order by o.order_no desc
 	</select>
 	<update id="updateSend" parameterType="_int">
 		update order_list set check_send = 'Y'
@@ -82,6 +84,12 @@
 		update product_status set is_sale = 'Y'
 		where product_no = #{product_no}
 	</update>
+	<select id="selectMemberIdByShopName" parameterType="map" resultType="map">
+		select * from 
+		member m join shop s 
+		on m.member_id = s.member_id 
+		where s.shop_name = #{shopName}
+	</select>
 	<!-- ==========================  민호 끝 -->
 	
 	<!-- 하진 시작 ========================== -->
