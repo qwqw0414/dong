@@ -7,43 +7,77 @@
 
 <script>
 $(function (){
-	loadMemberPointList();
 	
-/* 	$("#searchDate").click(function () {
-		var start = $("#startDate").val();
-		var end = $("#endDate").val();
-		
-	}); */
+
+	loadMemberPointList();
 	
 	$("#searchMemberPoint").click(function (){
 		var cPage = $("#cPage").val();
 		var searchType = $("#searchType").val();
 		var searchKeyword = $("#searchKeyword").val();
-		var start = $("#startDate").val();
-		var end = $("#endDate").val();
 		
-		/* if(searchKeyword.length == 0){
-			alert("검색어를 입력하세요.");
-			$("#searchKeyword").focus();
-			return;
-		} else{ */
-			loadMemberPointList(searchType,searchKeyword,cPage,start,end);
-		
-	});
+		loadMemberPointList(searchType,searchKeyword,cPage/* ,start,end */);
+
+	});	
 	
 	$("#memberPointAll").click(function (){
 		location.reload();		
 	});
-});
+
+	$("#searchDate").click(function (){
+		var cPage = $("#cPage").val();
+		var start = $("#startDate").val();
+		var end = $("#endDate").val();
+		
+		loadMemberPointDate(cPage,start,end);
+	});
 
 
-function loadMemberPointList(searchType,searchKeyword,cPage,start,end){
+	function loadMemberPointDate(cPage,start,end){
+		var cPage = cPage;
+		var start = start;
+		var end = end; 
+		
+		$("#cPage").val(cPage);
+		
+		$.ajax({
+			url: "${pageContext.request.contextPath}/admin/memberPointDate",
+			type: "GET",
+			data: {
+				cPage:cPage,
+				start: start,
+				end: end 
+			},
+			success: data => {
+				console.log("memberPointDate@ajax실행즁"+data);
+				let header = "<tr><th>아이디</th><th>충전금액</th><th>충전날짜</th><th>잔여포인트</th><th>상태(입/출)</th></tr>";
+				let $table = $("#member-pointList-tbl");
+				$table.html("");
+				let html = "";
+				data.list.forEach(cate => {
+					html += "<tr><td>"+cate.MEMBER_ID+"</td><td>"+cate.POINT_AMOUNT+"</td><td>"+cate.DATE+"</td><td>"+cate.POINT+"</td><td>"+cate.STATUS+"</td></tr>";
+				});
+				$table.append(header+html);
+				$("#pageBar").html(data.pageBar);
+				$("#totalPoint").text(data.totalPoint);
+				
+			},error : (x,s,e) => {
+				console.log("memberPointDate@ajax 실패실패!!!");
+			}
+		});/* end of ajax */
+		
+	}/* end of loadMemberPointDate */
+	
+function loadMemberPointList(searchType,searchKeyword,cPage/* ,start,end */){
 	var cPage = cPage;
 	var searchType = searchType;
 	var searchKeyword = searchKeyword;
-	var start = start;
-	var end = end;
-	console.log(start);
+	if($("#searchType").val()=="충전"){
+		option = "I";
+	}else if($("#searchType").val()=="사용"){
+		option = "O";
+	}else
+		option = "";
 
 	
 	$("#cPage").val(cPage);
@@ -54,9 +88,9 @@ function loadMemberPointList(searchType,searchKeyword,cPage,start,end){
 		data: {
 			cPage:cPage,
 			searchType: searchType,
-			searchKeyword: searchKeyword,
-			start: start,
-			end: end
+			searchKeyword: searchKeyword
+			/* start: start,
+			end: end */
 		},
 		success: data => {
 			console.log("memberPointList@ajax실행즁"+data);
@@ -74,19 +108,19 @@ function loadMemberPointList(searchType,searchKeyword,cPage,start,end){
 		},error : (x,s,e) => {
 			console.log("memberPointList@ajax 실패실패!!!");
 		}
-	});
-}
-
+	});/* end of ajax */
+	}/* end of loadMemberPointList */
+});/* end of function */
 </script>
 
-<h1>회원포인트 관리</h1>
+<h1 style='display: inline-block;'>회원포인트 관리</h1>
 
 <div class="input-group mb-3">
   <div class="input-group-prepend">
      <select class="custom-select" id="searchType" required>
 	     <option value="member_id">아이디</option>
 	    <option value="reg_date">충전날짜</option>
-	    <option value="status">입/출내역</option>
+	    <option value="status">충전/사용</option>
 	 </select>
 
 		<!--  <div id="search-status">
@@ -105,7 +139,7 @@ function loadMemberPointList(searchType,searchKeyword,cPage,start,end){
 		<div class="col-md-auto">
 			<input type="text" class='form-control' id="endDate" placeholder='종료날짜선택' readonly>
 		</div>
-<!-- 		<button class="btn btn-outline-secondary" id="searchDate">검색</button> -->
+ 		<button class="btn btn-outline-secondary" id="searchDate">검색</button>
 </div>
 
 

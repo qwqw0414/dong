@@ -222,14 +222,14 @@ public class BoardController {
 	public ModelAndView boardView(ModelAndView mav, @RequestParam("boardNo") int boardNo, HttpSession session) {
 		
 		Board board = bs.selectOneBoard(boardNo);
-		log.debug("boardNo="+boardNo);
+		//log.debug("boardNo="+boardNo);
 		List<Attachment> attachmentList = bs.selectAttachmentList(boardNo);
 		int readCount = bs.boardInCount(boardNo);
-		log.debug("readCount="+readCount);
+		//log.debug("readCount="+readCount);
 		
 		String memberId = ((Member)(session.getAttribute("memberLoggedIn"))).getMemberId();
 		
-		log.debug(memberId);
+		//log.debug(memberId);
 		
 		mav.addObject("board", board);
 		mav.addObject("attachmentList", attachmentList);
@@ -258,15 +258,15 @@ public class BoardController {
 	@ResponseBody
 	public String boardUpdateEnd(Board board,HttpServletRequest request) {
 		int result = bs.boardUpdate(board);
-		log.debug("boardUpdate@board", board);
+		//log.debug("boardUpdate@board", board);
 		String msg = "";
 		String loc = "/";
 		if(result>0) {
-			log.debug("게시글 수정성공!");
+			//log.debug("게시글 수정성공!");
 			msg = "게시글 수정이 완료되었습니다.";
 			loc = "/board/boardList.do";
 		}else {
-			log.debug("게시글 수정실패!");
+			//log.debug("게시글 수정실패!");
 			msg = "게시글 수정에 실패하였습니다.";
 		}
 		
@@ -277,16 +277,16 @@ public class BoardController {
 	@ResponseBody
 	public String boardDelete(@RequestParam("boardNo") int boardNo) {
 		int result = bs.deleteBoard(boardNo);
-		log.debug("boardDelete@boardNo="+boardNo);
+		//log.debug("boardDelete@boardNo="+boardNo);
 		
 		String msg = "";
 		String loc = "/";
 		if(result>0) {
-			log.debug("board삭제 성공!!!!!");
+			//log.debug("board삭제 성공!!!!!");
 			msg = "삭제성공!";
 			loc = "/board/boardList.do";
 		}else {
-			log.debug("board삭제 실패!!!");
+			//log.debug("board삭제 실패!!!");
 			msg = "삭제실패!";
 		}
 
@@ -345,7 +345,7 @@ public class BoardController {
 		map.put("boardNo", boardNo+"");
 		map.put("memberId", memberId);
 		//map.put("reputationNo", reputationNo+"");
-		log.debug("boardLike@memberId={}", memberId);
+		//log.debug("boardLike@memberId={}", memberId);
 		int likeCnt = bs.selectBoardLikeByMemberId(map);
 		
 		int result;
