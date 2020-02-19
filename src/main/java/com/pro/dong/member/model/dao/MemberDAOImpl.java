@@ -71,6 +71,10 @@ public class MemberDAOImpl implements MemberDAO{
 	public int updateProductStatus(int productNo) {
 		return sst.update("member.updateProductStatus",productNo);
 	}
+	@Override
+	public List<Map<String, String>> selectMemberIdByShopName(Map<String, String> param) {
+		return sst.selectList("member.selectMemberIdByShopName", param);
+	}
 	//==========================  민호 끝
 	
 	// 하진 시작 ==========================

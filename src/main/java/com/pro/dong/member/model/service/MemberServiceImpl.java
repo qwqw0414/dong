@@ -69,6 +69,11 @@ public class MemberServiceImpl implements MemberService{
 	public int updateProductStatus(int productNo) {
 		return md.updateProductStatus(productNo);
 	}
+	@Override
+	public List<Map<String, String>> selectMemberIdByShopName(Map<String, String> param) {
+		return md.selectMemberIdByShopName(param);
+	}
+
 	//==========================  민호 끝
 	
 	// 하진 시작 ==========================

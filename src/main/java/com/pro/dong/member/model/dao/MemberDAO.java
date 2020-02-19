@@ -22,6 +22,7 @@ public interface MemberDAO {
 	int updateSend(int orderNo);
 	int checkOrderStatus(int orderNo);
 	int updateProductStatus(int productNo);
+	List<Map<String, String>> selectMemberIdByShopName(Map<String, String> param);
 	//==========================  민호 끝
 	
 	// 하진 시작 ==========================
