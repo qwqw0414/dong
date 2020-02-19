@@ -33,7 +33,7 @@ $(()=>{
 			success: data=>{
 				let html = "<tr class='orderListTitle'><th>주문번호</th><th>상품정보</th><th>상품금액</th><th>판매자</th><th>배송상태</th><th>인수확인</th><th>거래상태<th></tr>";
 				for(var i=0; i<data.orderList.length;i++){
-					html += "<tr><td name='orderNo'>"+data.orderList[i].ORDER_NO+"</td>";
+					html += "<tr><input type='hidden' value='"+data.orderList[i].PRODUCT_NO+"'/><td name='orderNo'>"+data.orderList[i].ORDER_NO+"</td>";
 					html += "<td><img src='${pageContext.request.contextPath}/resources/upload/product/"+data.orderList[i].PHOTO+"' class='mr-3'>"+data.orderList[i].TITLE+"</td>";
 					html += "<td>"+data.orderList[i].PRICE+"</td>";
 					html += "<td>"+data.orderList[i].SHOP_NAME+"</td>";
