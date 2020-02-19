@@ -58,14 +58,26 @@ $(()=>{
 						html += "<td><select class='select' class='custom-select'><option value='N'>판매중</option><option value='I' selected>거래중</option><option value='Y'>판매완료</option></select></td>"
 					}
 					else{
-						html += "<td><select class='select' class='custom-select'><option value='N'>판매중</option><option value='I'>거래중</option><option value='Y' selected>판매완료</option></select></td>"
+						html += "<td><select class='select' class='custom-select' disabled><option value='N'>판매중</option><option value='I'>거래중</option><option value='Y' selected >판매완료</option></select></td>"
 					}
 					html += "<input type='hidden' class='productNo' value='"+product.PRODUCT_NO+"'/>"
 					html += "<td>"+product.TITLE+"</td>";
 					html += "<td>"+numberComma(product.PRICE)+"원</td>";
 					html += "<td>"+product.REG_DATE+"</td>";
-					html += "<td id='btn-td'><button type='button' class='btn btn-outline-success btn-sm' id='btn-update' value='"+product.PRODUCT_NO+"' style='width: 45px;'>UP</button><br/>";
-			      	html += "<button type='button' class='btn btn-outline-primary btn-sm'>수정</button><br/>"
+					if(product.IS_SALE=='Y'){
+						html += "<td id='btn-td'><button type='button' disabled class='btn btn-outline-success btn-sm' id='btn-update' value='"+product.PRODUCT_NO+"' style='width: 45px;'>UP</button><br/>";
+					}
+					else{
+						html += "<td id='btn-td'><button type='button' class='btn btn-outline-success btn-sm' id='btn-update' value='"+product.PRODUCT_NO+"' style='width: 45px;'>UP</button><br/>";
+					}
+					
+					if(product.IS_SALE=='Y'){
+						html += "<button type='button' disabled class='btn btn-outline-primary btn-sm'>수정</button><br/>"
+					}
+					else{
+						html += "<button type='button' class='btn btn-outline-primary btn-sm'>수정</button><br/>"
+					}
+			      	
 			      	html += "<button type='button' class='btn btn-outline-danger btn-sm' id='btn-delete' value='"+product.PRODUCT_NO+"'>삭제</button></td>";
 					html += "</tr>";
 				});
