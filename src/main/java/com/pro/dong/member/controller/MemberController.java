@@ -39,6 +39,7 @@ import com.pro.dong.member.model.exception.MemberException;
 import com.pro.dong.member.model.service.MemberService;
 import com.pro.dong.member.model.vo.Member;
 import com.pro.dong.product.model.vo.OrderList;
+import com.pro.dong.shop.model.vo.Shop;
 
 @SessionAttributes(value= {"memberLoggedIn"})
 @Controller
@@ -82,7 +83,7 @@ public class MemberController {
 	}
 	@RequestMapping("/loadOrderList")
 	@ResponseBody
-	public Map<String, Object> loadOrderList(HttpSession session,@RequestParam(value="cPage", defaultValue="") int cPage){
+	public Map<String, Object> loadOrderList(HttpSession session, @RequestParam(value="cPage", defaultValue="") int cPage){
 		Member memberLoggedIn = (Member) session.getAttribute("memberLoggedIn");
 		String memberId = memberLoggedIn.getMemberId();
 		Map<String, String> param = new HashMap<>();
@@ -98,16 +99,86 @@ public class MemberController {
 		result.put("pageBar", pageBar);
 		return result;
 	}
+	@RequestMapping("/loadSaleList")
+	@ResponseBody
+	public Map<String, Object> loadSaleList(HttpSession session, @RequestParam(value="cPage", defaultValue="") int cPage){
+		Member memberLoggedIn = (Member) session.getAttribute("memberLoggedIn");
+		String memberId = memberLoggedIn.getMemberId();
+		Shop shop = ms.getShopName(memberId);
+		String shopName = shop.getShopName();
+		Map<String, String> param = new HashMap<>();
+		Map<String, Object> result = new HashMap<>();
+		param.put("memberId", memberId);
+		param.put("shopName", shopName);
+		
+		int numPerPage = 10;
+		int totalContents = ms.saleListTotalContents(param);
+		List<OrderList> saleList = ms.loadSaleList(param,cPage,numPerPage);
+		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
+		result.put("saleList", saleList);
+		result.put("pageBar", pageBar);
+		return result;
+	}
 	
 	@RequestMapping("/updateReceive")
 	@ResponseBody
-	public Map<String, Object> updateReceive(@RequestParam("orderNo")int orderNo){
+	public Map<String, Object> updateReceive(@RequestParam("orderNo")int orderNo, @RequestParam("productNo")int productNo,
+			@RequestParam("price")int price, @RequestParam("shopName")String shopName){
 		
+		Map<String, String> param = new HashMap<>();
+		param.put("shopName", shopName);
+		List<Map<String, String>> list = ms.selectMemberIdByShopName(param);
+		log.debug("list={}",list);
+		String memberId = list.get(0).get("MEMBER_ID");
+		
+		log.debug("memberId={}",memberId);
 		Map<String, Object> resultMap = new HashMap<>();
 		int result = ms.updateReceive(orderNo);
+		int checkOrderStatus = ms.checkOrderStatus(orderNo);
+		int updateProductStatus = 0;
+		int chargePoint = 0;
+		if(checkOrderStatus>0) {
+			updateProductStatus = ms.updateProductStatus(productNo);
+			if(updateProductStatus>0) {
+				param.put("pointAmount", price+"");
+				param.put("memberId", memberId);
+				chargePoint = ms.updatePoint(param);
+			}
+		}
 		resultMap.put("result", result);
+		resultMap.put("checkOrderStatus", checkOrderStatus);
+		resultMap.put("updateProductStatus", updateProductStatus);
+		resultMap.put("chargePoint", chargePoint);
+		
 		return resultMap;
 		
+	}
+	@RequestMapping("/updateSend")
+	@ResponseBody
+	public Map<String, Object> updateSend(@RequestParam("orderNo")int orderNo, @RequestParam("productNo")int productNo,
+			@RequestParam("price")int price, HttpSession session){
+		Member memberLoggedIn = (Member) session.getAttribute("memberLoggedIn");
+		String memberId = memberLoggedIn.getMemberId();
+		
+		Map<String, Object> resultMap = new HashMap<>();
+		Map<String, String> param = new HashMap<>();
+		param.put("pointAmount", price+"");
+		param.put("memeberId", memberId);
+		int result = ms.updateSend(orderNo);
+		int checkOrderStatus = ms.checkOrderStatus(orderNo);
+		int updateProductStatus = 0;
+		int chargePoint = 0;
+		if(checkOrderStatus>0) {
+			updateProductStatus = ms.updateProductStatus(productNo);
+			if(updateProductStatus>0) {
+				chargePoint = ms.updatePoint(param);
+			}
+		}
+		resultMap.put("result", result);
+		resultMap.put("checkOrderStatus", checkOrderStatus);
+		resultMap.put("updateProductStatus", updateProductStatus);
+		resultMap.put("chargePoint", chargePoint);
+		return resultMap;
 	}
 //==========================민호 끝
 	

@@ -76,6 +76,10 @@ footer .line{border: 1px rgb(95, 95, 95) solid; width: 100%;}
 #orderList-wrapper img{width:64px; height:64px;}
 #orderList-wrapper .orderListTitle{font-wight:bold;}
 #orderList-wrapper .orderListContent{text-align:center;}
+#saleList-wrapper{width:100%;}
+#saleList-wrapper img{width:64px; height:64px;}
+#saleList-wrapper .saleListTitle{font-wight:bold;}
+#saleList-wrapper .saleListContent{text-align:center;}
 /* ==========================민호 끝 */
 	
 /* 하진 시작 ========================== */

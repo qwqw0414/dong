@@ -29,11 +29,67 @@
         on o.product_no = v.product_no
 		where pa.thumbnail = 'Y'
 		and o.member_id = #{memberId}
+		order by o.order_no desc
 	</select>
 	<update id="updateReceive" parameterType="_int">
 		update order_list set check_receive = 'Y'
 		where order_no = #{orderNo}
 	</update>
+	<select id="getShopName" parameterType="string" resultType="shop">
+		select * from shop where member_id = #{memberId}
+	</select>
+	<select id="saleListTotalContents" parameterType="map" resultType="_int">
+		select count(*)cnt from 
+		order_list o left join product p
+		on o.product_no = p.product_no
+		left join product_attachment pa
+		on o.product_no = pa.product_no
+        left join (select * from product p left join shop s
+        on p.shop_no = s.shop_no) V
+        on o.product_no = v.product_no
+		where pa.thumbnail = 'Y'
+        and V.shop_name = #{shopName}
+	</select>
+	<select id="loadSaleList" resultType="map">
+		select o.*, p.title, V.shop_name, pa.photo from 
+		order_list o left join product p
+		on o.product_no = p.product_no
+		left join product_attachment pa
+		on o.product_no = pa.product_no
+        left join (select * from product p left join shop s
+        on p.shop_no = s.shop_no) V
+        on o.product_no = v.product_no
+		where pa.thumbnail = 'Y'
+		and V.shop_name = #{shopName}
+		order by o.order_no desc
+	</select>
+	<update id="updateSend" parameterType="_int">
+		update order_list set check_send = 'Y'
+		where order_no = #{orderNo}
+	</update>
+	<select id="checkOrderStatus" parameterType="_int" resultType="_int">
+		select count(*) from 
+		order_list o left join product p
+		on o.product_no = p.product_no
+		left join product_attachment pa
+		on o.product_no = pa.product_no
+        left join (select * from product p left join shop s
+        on p.shop_no = s.shop_no) V
+        on o.product_no = v.product_no
+		where pa.thumbnail = 'Y'
+        and o.check_send = 'Y' and o.check_receive= 'Y'
+        and o.order_no = #{orderNo}
+	</select>
+	<update id="updateProductStatus">
+		update product_status set is_sale = 'Y'
+		where product_no = #{product_no}
+	</update>
+	<select id="selectMemberIdByShopName" parameterType="map" resultType="map">
+		select * from 
+		member m join shop s 
+		on m.member_id = s.member_id 
+		where s.shop_name = #{shopName}
+	</select>
 	<!-- ==========================  민호 끝 -->
 	
 	<!-- 하진 시작 ========================== -->

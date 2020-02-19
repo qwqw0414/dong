@@ -36,8 +36,8 @@ public class ProductDAOImpl implements ProductDAO{
 		
 	//하진 시작 ==========================
 	@Override
-	public List<Category> selectCategory() {
-		return sst.selectList("product.selectCategory");
+	public List<Map<String, String>> productStatus(Map<String, String> param) {
+		return sst.selectList("product.productStatus",param);
 	}
 	//========================== 하진 끝
 		

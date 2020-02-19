@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.pro.dong.member.model.vo.Member;
 import com.pro.dong.product.model.vo.OrderList;
+import com.pro.dong.shop.model.vo.Shop;
 
 @Repository
 public class MemberDAOImpl implements MemberDAO{
@@ -44,6 +45,35 @@ public class MemberDAOImpl implements MemberDAO{
 	@Override
 	public int updateReceive(int orderNo) {
 		return sst.update("member.updateReceive", orderNo);
+	}
+	@Override
+	public Shop getShopName(String memberId) {
+		return sst.selectOne("member.getShopName",memberId);
+	}
+	@Override
+	public int saleListTotalContents(Map<String, String> param) {
+		return sst.selectOne("member.saleListTotalContents",param);
+	}
+	@Override
+	public List<OrderList> loadSaleList(Map<String, String> param, int cPage, int numPerPage) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return sst.selectList("member.loadSaleList", param, rowBounds);
+	}
+	@Override
+	public int updateSend(int orderNo) {
+		return sst.update("member.updateSend", orderNo);
+	}
+	@Override
+	public int checkOrderStatus(int orderNo) {
+		return sst.selectOne("member.checkOrderStatus",orderNo);
+	}
+	@Override
+	public int updateProductStatus(int productNo) {
+		return sst.update("member.updateProductStatus",productNo);
+	}
+	@Override
+	public List<Map<String, String>> selectMemberIdByShopName(Map<String, String> param) {
+		return sst.selectList("member.selectMemberIdByShopName", param);
 	}
 	//==========================  민호 끝
 	

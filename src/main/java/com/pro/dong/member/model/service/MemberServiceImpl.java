@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.pro.dong.member.model.dao.MemberDAO;
 import com.pro.dong.member.model.vo.Member;
 import com.pro.dong.product.model.vo.OrderList;
+import com.pro.dong.shop.model.vo.Shop;
 
 @Service
 public class MemberServiceImpl implements MemberService{
@@ -44,6 +45,35 @@ public class MemberServiceImpl implements MemberService{
 	public int updateReceive(int orderNo) {
 		return md.updateReceive(orderNo);
 	}
+	@Override
+	public Shop getShopName(String memberId) {
+		return md.getShopName(memberId);
+	}
+	@Override
+	public int saleListTotalContents(Map<String, String> param) {
+		return md.saleListTotalContents(param);
+	}
+	@Override
+	public List<OrderList> loadSaleList(Map<String, String> param, int cPage, int numPerPage) {
+		return md.loadSaleList(param,cPage,numPerPage);
+	}
+	@Override
+	public int updateSend(int orderNo) {
+		return md.updateSend(orderNo);
+	}
+	@Override
+	public int checkOrderStatus(int orderNo) {
+		return md.checkOrderStatus(orderNo);
+	}
+	@Override
+	public int updateProductStatus(int productNo) {
+		return md.updateProductStatus(productNo);
+	}
+	@Override
+	public List<Map<String, String>> selectMemberIdByShopName(Map<String, String> param) {
+		return md.selectMemberIdByShopName(param);
+	}
+
 	//==========================  민호 끝
 	
 	// 하진 시작 ==========================
