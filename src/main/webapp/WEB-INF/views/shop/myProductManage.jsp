@@ -10,6 +10,7 @@ td{
 }
 #img-td{
 	padding-top: 8px !important;
+	
 }
 #btn-td{
 	padding-top:39px !important;
@@ -17,6 +18,11 @@ td{
 select{
     width: 110px !important;
 }
+a:link {color: white; text-decoration: none;}
+a:visited {color: white; text-decoration: none;}
+a:hover {color: white; text-decoration: underline;}
+
+
 </style>
 <script>
 $(()=>{
@@ -50,7 +56,12 @@ $(()=>{
 				data.product.forEach(product=>{
 	
 					html += "<tr>";
-					html += "<td id='img-td'><a href='${pageContext.request.contextPath}/product/productView.do?productNo="+product.PRODUCT_NO+"'><img style='width:152px; height:152px;' src='${pageContext.request.contextPath}/resources/upload/product/"+product.PHOTO+"'/></a></td>";
+					if(product.IS_SALE=='Y'){
+						html += "<td id='img-td'><div style:'position:relative;'><a href='${pageContext.request.contextPath}/product/productView.do?productNo="+product.PRODUCT_NO+"'><div style=' margin-left:30.5px; position:absolute; background-color:rgba(0, 0, 0, 0.65); z-index:10; height:152px; width:152px;'><p style='margin-top:64px;'>판매완료</p></div></a><img style='width:152px; height:152px; position:relative; z-index:1;' src='${pageContext.request.contextPath}/resources/upload/product/"+product.PHOTO+"'/></div></td>";
+					}
+					else{
+						html += "<td id='img-td'><a href='${pageContext.request.contextPath}/product/productView.do?productNo="+product.PRODUCT_NO+"'><img style='width:152px; height:152px;' src='${pageContext.request.contextPath}/resources/upload/product/"+product.PHOTO+"'/></a></td>";
+					}
 					if(product.IS_SALE=='N'){
 						html += "<td><select class='select' class='custom-select'><option value='N' selected>판매중</option><option value='I'>거래중</option><option value='Y'>판매완료</option></select></td>"
 					}
@@ -58,6 +69,7 @@ $(()=>{
 						html += "<td><select class='select' class='custom-select'><option value='N'>판매중</option><option value='I' selected>거래중</option><option value='Y'>판매완료</option></select></td>"
 					}
 					else{
+
 						html += "<td><select class='select' class='custom-select' disabled><option value='N'>판매중</option><option value='I'>거래중</option><option value='Y' selected >판매완료</option></select></td>"
 					}
 					html += "<input type='hidden' class='productNo' value='"+product.PRODUCT_NO+"'/>"
@@ -205,6 +217,7 @@ $(()=>{
 					
 					if(data==1){
 						alert("상품 판매상태가 정상적으로 변경되었습니다.");
+						location.reload();
 					}
 					else{
 						alert("상품 판매상태 변경이 실패하였습니다.");

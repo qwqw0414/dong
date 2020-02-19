@@ -410,7 +410,12 @@
 
 				          html += "<div class='card'>";
 				          html += "<input type='hidden' class='productNo' value='"+product.PRODUCT_NO+"'>";
-				          html += "<img src='${pageContext.request.contextPath}/resources/upload/product/" + product.PHOTO + "' class='card-img-top'>";
+				          if(product.IS_SALE=='Y'){
+				          	html += "<div position:relative'><div style='position:absolute; background-color:rgba(0, 0, 0, 0.65); z-index:10; height:200px; width:200px;'><p style='color:white; text-align:center; margin-top:88px;'>판매완료</p></div><img src='${pageContext.request.contextPath}/resources/upload/product/" + product.PHOTO + "' class='card-img-top'></div>";
+				          }
+				          else{
+				        	  html += "<img src='${pageContext.request.contextPath}/resources/upload/product/" + product.PHOTO + "' class='card-img-top'>";
+				          }
 				          html += '<div class="card-body">';
 				          html += '<p class="card-title">' + preTitle + '</p>';
 				          html += '<p class="card-text"><span>' + numberComma(product.PRICE) + '<small>원</small></span></p>';
