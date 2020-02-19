@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.pro.dong.member.model.vo.Member;
 import com.pro.dong.product.model.vo.OrderList;
+import com.pro.dong.shop.model.vo.Shop;
 
 public interface MemberService {
 
@@ -15,6 +16,12 @@ public interface MemberService {
 	List<OrderList> loadOrderList(Map<String, String> param, int cPage, int numPerPage);
 	int orderListTotalContents(Map<String, String> param);
 	int updateReceive(int orderNo);
+	Shop getShopName(String memberId);
+	int saleListTotalContents(Map<String, String> param);
+	List<OrderList> loadSaleList(Map<String, String> param, int cPage, int numPerPage);
+	int updateSend(int orderNo);
+	int checkOrderStatus(int orderNo);
+	int updateProductStatus(int productNo);
 	//==========================  민호 끝
 	
 	// 하진 시작 ==========================

@@ -39,6 +39,7 @@ import com.pro.dong.member.model.exception.MemberException;
 import com.pro.dong.member.model.service.MemberService;
 import com.pro.dong.member.model.vo.Member;
 import com.pro.dong.product.model.vo.OrderList;
+import com.pro.dong.shop.model.vo.Shop;
 
 @SessionAttributes(value= {"memberLoggedIn"})
 @Controller
@@ -82,7 +83,7 @@ public class MemberController {
 	}
 	@RequestMapping("/loadOrderList")
 	@ResponseBody
-	public Map<String, Object> loadOrderList(HttpSession session,@RequestParam(value="cPage", defaultValue="") int cPage){
+	public Map<String, Object> loadOrderList(HttpSession session, @RequestParam(value="cPage", defaultValue="") int cPage){
 		Member memberLoggedIn = (Member) session.getAttribute("memberLoggedIn");
 		String memberId = memberLoggedIn.getMemberId();
 		Map<String, String> param = new HashMap<>();
@@ -98,16 +99,60 @@ public class MemberController {
 		result.put("pageBar", pageBar);
 		return result;
 	}
+	@RequestMapping("/loadSaleList")
+	@ResponseBody
+	public Map<String, Object> loadSaleList(HttpSession session, @RequestParam(value="cPage", defaultValue="") int cPage){
+		Member memberLoggedIn = (Member) session.getAttribute("memberLoggedIn");
+		String memberId = memberLoggedIn.getMemberId();
+		Shop shop = ms.getShopName(memberId);
+		String shopName = shop.getShopName();
+		Map<String, String> param = new HashMap<>();
+		Map<String, Object> result = new HashMap<>();
+		param.put("memberId", memberId);
+		param.put("shopName", shopName);
+		
+		int numPerPage = 10;
+		int totalContents = ms.saleListTotalContents(param);
+		List<OrderList> saleList = ms.loadSaleList(param,cPage,numPerPage);
+		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
+		result.put("saleList", saleList);
+		result.put("pageBar", pageBar);
+		return result;
+	}
 	
 	@RequestMapping("/updateReceive")
 	@ResponseBody
-	public Map<String, Object> updateReceive(@RequestParam("orderNo")int orderNo){
+	public Map<String, Object> updateReceive(@RequestParam("orderNo")int orderNo, @RequestParam("productNo")int productNo){
 		
 		Map<String, Object> resultMap = new HashMap<>();
 		int result = ms.updateReceive(orderNo);
+		int checkOrderStatus = ms.checkOrderStatus(orderNo);
+		int updateProductStatus = 0;
+		if(checkOrderStatus>0) {
+			updateProductStatus = ms.updateProductStatus(productNo);
+		}
 		resultMap.put("result", result);
+		resultMap.put("checkOrderStatus", checkOrderStatus);
+		resultMap.put("updateProductStatus", updateProductStatus);
+		
 		return resultMap;
 		
+	}
+	@RequestMapping("/updateSend")
+	@ResponseBody
+	public Map<String, Object> updateSend(@RequestParam("orderNo")int orderNo, @RequestParam("productNo")int productNo){
+		
+		Map<String, Object> resultMap = new HashMap<>();
+		int result = ms.updateSend(orderNo);
+		int checkOrderStatus = ms.checkOrderStatus(orderNo);
+		int updateProductStatus = 0;
+		if(checkOrderStatus>0) {
+			updateProductStatus = ms.updateProductStatus(productNo);
+		}
+		resultMap.put("result", result);
+		resultMap.put("checkOrderStatus", checkOrderStatus);
+		resultMap.put("updateProductStatus", updateProductStatus);
+		return resultMap;
 	}
 //==========================민호 끝
 	
