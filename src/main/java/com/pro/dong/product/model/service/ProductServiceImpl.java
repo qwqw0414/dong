@@ -42,8 +42,8 @@ public class ProductServiceImpl implements ProductService{
 		
 	//하진 시작 ==========================
 	@Override
-	public List<Category> selectCategory() {
-		return pd.selectCategory();
+	public List<Map<String, String>> productStatus(Map<String, String> param) {
+		return pd.productStatus(param);
 	}
 	
 	//========================== 하진 끝
