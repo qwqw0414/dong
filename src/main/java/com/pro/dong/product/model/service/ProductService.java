@@ -20,8 +20,7 @@ public interface ProductService {
 	//==========================민호 끝
 		
 	//하진 시작 ==========================
-	List<Category> selectCategory();
-
+	List<Map<String, String>> productStatus(Map<String, String> param);
 	//========================== 하진 끝
 		
 	//근호 시작 ==========================

@@ -65,7 +65,16 @@ public class ProductController {
 	//==========================민호 끝
 		
 	//하진 시작 ==========================
-	
+	@RequestMapping("/productStatus")
+	@ResponseBody
+	public Map<String, Object> productStatus(@RequestParam("productNo") String productNo){
+		Map<String, String> param = new HashMap<>();
+		param.put("productNo", productNo);
+		List<Map<String, String>> list = ps.productStatus(param);
+		Map<String, Object> result = new HashMap<>();
+		result.put("list", list);
+		return result;
+	}
 	
 	//========================== 하진 끝
 		

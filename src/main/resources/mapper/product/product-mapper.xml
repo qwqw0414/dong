@@ -20,6 +20,10 @@
 		select * from product_category
 		where category_id like 'A%'
 	</select>
+	
+	<select id="productStatus" resultType="map">
+		select * from product p left join product_status s on p.product_no=s.product_no  where p.product_no = #{productNo}
+	</select>
 	<!-- ==========================  하진 끝 -->
 	
 	<!-- 근호 시작 ========================== -->

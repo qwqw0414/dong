@@ -4,6 +4,7 @@
 <%@page import="java.util.List"%>
 <%@page import="com.pro.dong.product.model.vo.Product"%>
 <%@page import="com.pro.dong.member.model.vo.Member"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -59,7 +60,53 @@
 		}
 	} 
 %>
-
+<!--하진시작-->
+<script>
+$(()=>{
+	
+	
+	
+	var productNo = $("#productNo").val();
+	console.log(productNo);
+	
+	$.ajax({
+		url:"${pageContext.request.contextPath}/product/productStatus",
+		type:"GET",
+		data:{
+			productNo:productNo
+		},
+		success:data=>{
+			
+			var btn = $("#purchaseByPoint");
+			console.log(data.list);
+			
+			for(var i=0; i<data.list.length; i++){
+				if(data.list[i].IS_SALE==="Y"){
+					$("#purchaseByPoint").click((e)=>{
+						alert("판매완료된 상품입니다. 판매자에게 문의해주세요.");
+						btn.attr('disabled',true);
+					});
+					
+				}
+				else if(data.list[i].IS_SALE==="I"){
+					$("#purchaseByPoint").click((e)=>{
+						alert("거래중인 상품입니다. 판매자에게 문의해주세요.");
+						btn.attr('disabled',true);
+					});
+				}
+			}
+			
+			
+		},
+		error:(x,s,e)=>{
+			console.log("실패",x,s,e);
+		}
+		
+	});
+	
+});
+</script>
+<!--하진끝-->
 <div class="card mb-3 border-light" id="productView">
     <div class="row">
 
@@ -152,6 +199,7 @@
 		<br />
 		<div id="commentListView"></div>
 	</div>
+	
 	<div id="pageBar"></div>
 
 <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 신고하기 Modal @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
