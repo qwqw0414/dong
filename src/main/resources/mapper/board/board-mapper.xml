@@ -171,7 +171,16 @@
 	<!-- ==========================  예찬 끝 -->
 	
 	<!-- 주영 시작 ========================== -->
+	<select id="selectBoardReportList" resultType="map" parameterType="_int">
+		select * from
+      	(select a.*, (select count(*) from board_report where board_no = a.board_no) cnt, r.status, r.report_comment, r.member_id, r.report_no, r.category_id rCategory from
+          (select * from board B
+           left join member M on b.member_id = m.member_id) a  left join board_report R on r.board_no = a.board_no ) where cnt > 0 and board_no = #{boardNo} order by board_no
+	</select>
 	
+	<update id="updateReportStatus" parameterType="_int">
+		update board_report set status = 'Y' where report_no = #{reportNo}
+	</update>
 	<!-- ==========================  주영 끝 -->
 	
 	<!-- 현규 시작 ========================== -->
