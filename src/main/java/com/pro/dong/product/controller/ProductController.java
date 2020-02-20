@@ -332,8 +332,13 @@ public class ProductController {
 	}
 	
 	@RequestMapping("/productUpdate.do")
-	public void productUpdate(@RequestParam("productNo") int productNo) {
+	public Map<String, Object> productUpdate(@RequestParam("productNo") int productNo) {
 		
+		Map<String, Object> map = new HashMap<>();
+		List<Map<String, String>> list = ps.selectProductByProductNo(productNo);
+		map.put("list", list);
+		
+		return map;
 	}
 	
 	

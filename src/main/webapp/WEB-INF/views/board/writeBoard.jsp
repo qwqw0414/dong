@@ -82,7 +82,7 @@ $(function(){
                           <div class="input-group-prepend">
                             <div class="input-group-text">제목&nbsp;&nbsp;&nbsp;&nbsp;</div>
                           </div>
-                          <input type="text" class="form-control" id="boardTitle" name="boardTitle" placeholder="제목을 입력하세요">
+                          <input type="text" class="form-control" id="boardTitle" name="boardTitle" placeholder="제목을 입력하세요" required>
                         </div>
                       </div>
                 <div class="col-auto">
@@ -98,7 +98,7 @@ $(function(){
 				 <div class="input-group-prepend">
 				    <label class="input-group-text" for="inputGroupSelect01">카테고리</label>
 				 </div>
-				 <select class="custom-select" id="boardCategory" name="boardCategory">
+				 <select class="custom-select" id="boardCategory" name="boardCategory" required>
 				   <%=option%> 
 				 </select>
 				</div>

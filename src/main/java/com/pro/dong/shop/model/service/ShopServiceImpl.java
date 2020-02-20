@@ -51,6 +51,26 @@ public class ShopServiceImpl implements ShopService{
 	public List<Map<String, String>> selectFollowerList(String follower, int cPage, int numPerPage) {
 		return sd.selectFollowerList(follower,cPage,numPerPage);
 	}
+	@Override
+	public List<Map<String, String>> loadReviewGrade() {
+		return sd.loadReviewGrade();
+	}
+	@Override
+	public Shop selectOneShopByShopName(String shopName) {
+		return sd.selectOneShopByShopName(shopName);
+	}
+	@Override
+	public int insertReview(Map<String, String> param) {
+		return sd.insertReview(param);
+	}
+	@Override
+	public List<Map<String, String>> loadShopReview(Map<String, String> param, int cPage, int numPerPage) {
+		return sd.loadShopReview(param,cPage,numPerPage);
+	}
+	@Override
+	public int selectShopReviewListCount(Map<String, String> param) {
+		return sd.selectShopReviewListCount(param);
+	}
 	//========================== 민호 끝
 	
 	
@@ -195,6 +215,7 @@ public class ShopServiceImpl implements ShopService{
 	public int deleteShopInquriyComment(int deleteCommentBtn) {
 		return sd.deleteShopInquriyComment(deleteCommentBtn);
 	}
+
 	
 	
 	
