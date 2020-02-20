@@ -32,6 +32,9 @@ footer .line{border: 1px rgb(95, 95, 95) solid; width: 100%;}
 #follow #followIcon{
 	width: 20px;
 }
+.animation-img-heartbeat{
+	animation: heartbeat 1.5s ease-in-out infinite both;
+}
 /* 팔로잉 css */
 #follow-wrapper .card {width: 201px; border-radius: 0; height: 280px;}
 #follow-wrapper .card img{padding-top:10px; margin:0 auto; width: 150px; height: 150px; border: none; border-radius: 50%}
@@ -88,7 +91,7 @@ header #categoryDiv hr{margin: 0;}
 header #categoryDiv ul{list-style: none; padding: 0; margin: 0;}
 header #categoryDiv li:hover{background-color: rgb(255, 30, 60); color: white; cursor: pointer;}
 header #categoryDiv p{padding: 5px 0 5px 25px; margin: 0;}
-header #categoryDiv .cate-list{border: rgb(233, 233, 233) 1px solid; position: absolute; z-index: 1; background-color: white; left: 50px; margin-top: 30px; font-family: 'MapoPeacefull'; font-size: 1em;}
+header #categoryDiv .cate-list{border: rgb(233, 233, 233) 1px solid; position: absolute; z-index: 1; background-color: white; left: 50px; margin-top: 30px; font-family: 'MapoPeacefull'; font-size: 1em; z-index: 2000;}
 header #categoryDiv .cate-list-content{width: 220px; margin: 20px 0 5px 0; float: left;}
 header #categoryDiv .cate-text{margin: 10px;}
 header #categoryDiv #category-list-end{border-left: rgb(255, 30, 60) 1px solid;}

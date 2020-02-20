@@ -232,7 +232,7 @@ $(()=>{
 	<div class="row text-right" style="width: 1200px;">
 		<div id="categoryDiv" class="col-md-1"> 
 			<img id="headerMenu" src="${pageContext.request.contextPath}/resources/images/menuImg.PNG"/>
-			<div class="cate-list text-left" style="display: none; z-index: 2">
+			<div class="cate-list text-left" style="display: none;">
 				<p>전체 카테고리</p>
 				<hr>
 				<div id="cate-autowire" style="width: 220px;">
