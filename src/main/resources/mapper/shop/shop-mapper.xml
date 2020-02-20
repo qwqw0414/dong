@@ -46,6 +46,13 @@
 		insert into shop_review
 		values(seq_shop_review.nextval, #{shopNo},#{memberId},#{reviewGrade},#{reviewContent},default,#{productNo})
 	</insert>
+	<select id="selectShopReviewListCount" parameterType="map" resultType="_int">
+		select count(*) from shop_review where shop_no = #{shopNo}
+	</select>
+	<select id="loadShopReview" resultType="map" parameterType="map">
+		select * from shop_review sr join review_grade rg
+		on sr.grade_id = rg.grade_id where sr.shop_no = #{shopNo}
+	</select>
 	<!-- ==========================  민호 끝 -->
 	
 	<!-- 하진 시작 ========================== -->

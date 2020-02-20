@@ -41,4 +41,6 @@ public interface StompDAO {
 
 	int selectShopNoByMemberId(String memberId);
 
+	String selectMemberIdByShopNo(int shopNo);
+
 }

@@ -63,6 +63,14 @@ public class ShopServiceImpl implements ShopService{
 	public int insertReview(Map<String, String> param) {
 		return sd.insertReview(param);
 	}
+	@Override
+	public List<Map<String, String>> loadShopReview(Map<String, String> param, int cPage, int numPerPage) {
+		return sd.loadShopReview(param,cPage,numPerPage);
+	}
+	@Override
+	public int selectShopReviewListCount(Map<String, String> param) {
+		return sd.selectShopReviewListCount(param);
+	}
 	//========================== 민호 끝
 	
 	

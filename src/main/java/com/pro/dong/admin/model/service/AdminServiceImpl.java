@@ -102,11 +102,13 @@ public class AdminServiceImpl implements AdminService {
 
 	// 예찬 시작 ==========================
 	@Override
-	public List<List<Map<String, String>>> kingOfDongnae(int rank) {
+	public List<List<Map<String, String>>> kingOfDongnae(int rank, int month) {
 		
 		List<List<Map<String, String>>> list = new ArrayList<>();
 		
-		
+		for(int i = 0; i < rank; i++) {
+			list.add(ad.kingOfDongnae(i+1, month));
+		}
 		
 		return list;
 	}

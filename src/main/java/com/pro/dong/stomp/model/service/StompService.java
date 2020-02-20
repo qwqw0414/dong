@@ -33,4 +33,6 @@ public interface StompService {
 
 	int selectShopNoByMemberId(String memberId);
 
+	String selectMemberIdByShopNo(int shopNo);
+
 }

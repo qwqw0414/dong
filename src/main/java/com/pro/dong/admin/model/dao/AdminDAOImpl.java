@@ -107,7 +107,7 @@ public class AdminDAOImpl implements AdminDAO {
 
 	// 예찬 시작 ==========================
 	@Override
-	public List<Map<String, String>> kingOfDongnae(int rank) {
+	public List<Map<String, String>> kingOfDongnae(int rank, int month) {
 		return sst.selectList("admin.kingOfDongnae");
 	}
 	// ========================== 예찬 끝

@@ -143,6 +143,22 @@ public class ShopController {
 		return resultMap;
 		
 	}
+	@RequestMapping("/loadShopReview")
+	@ResponseBody
+	public Map<String, Object> loadShopReview(@RequestParam(value="cPage",defaultValue="1")int cPage, @RequestParam("shopNo")int shopNo){
+		log.debug("shopNo={}",shopNo);
+		int numPerPage = 10;
+		
+		Map<String, String> param = new HashMap<>();
+		Map<String, Object> result = new HashMap<>();
+		param.put("shopNo", shopNo+"");
+		int totalContents = ss.selectShopReviewListCount(param);
+		List<Map<String,String>> shopReviewList = ss.loadShopReview(param, cPage, numPerPage);
+		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
+		result.put("shopReviewList", shopReviewList);
+		result.put("pageBar", pageBar);
+		return result;
+	}
 	//========================== 민호 끝
 	
 	
