@@ -1133,13 +1133,15 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 			success: data => {
 				console.log(data);
 				let html = "";
+				console.log(data.shopReviewList.length);
 				for(var i=0; i<data.shopReviewList.length; i++){
+					console.log(i);
 					var score = data.shopReviewList[i].SCORE;
 					var cardClass = "";
 					if(score>=4){
 						cardClass = "card border-success mb-3";
 					} else if(score==3){
-						cardClass = "card border-waring mb-3";
+						cardClass = "card border-warning mb-3";
 					} else{
 						cardClass = "card border-danger mb-3";
 					}
@@ -1147,11 +1149,12 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 					html += "<div class='card-header'>"+data.shopReviewList[i].MEMBER_ID+"님의 후기</div>";
 					html += "<div class='card-body'><h5 class='card-title'>"+data.shopReviewList[i].PRODUCT_NO+"</h5><span>";
 					html += "<p class='card-text'>"+data.shopReviewList[i].CONTENTS+"</p><br>";
-					for(var i=0; i<score; i++){
+					for(var j=0; j<score; j++){
 						html += "<img src='/dong/resources/images/star.png'>";
 					}
 					html += "</span></div></div>";
 				}
+				console.log(html);
 				$("#shopReview-wrapper").html(html);
 				$("#shopReviewPageBar").html(data.pageBar);
 			},
@@ -1166,6 +1169,8 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 		});//end of ajax
 	}//end of loadShopReview
 });
+
+
 
 /* 주영 끝 */
 </script>
