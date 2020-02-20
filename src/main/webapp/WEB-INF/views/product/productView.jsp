@@ -163,7 +163,7 @@ $(()=>{
                     <c:if test="${map.likeCnt ne '0'}">
                         <button class="btn btn-warning" id="btn-like">찜취소</button>
                     </c:if>                        
-                    <button class="btn btn-danger">연락하기</button>
+                    <button class="btn btn-danger" id="connect" data-toggle="modal" data-target="#connectModal">연락하기</button>
                     <button class="btn btn-info"  id="purchaseByPoint" data-toggle="modal" data-target="#purchaseModal">구매하기</button>
                 </div>
 			</div>
@@ -174,6 +174,11 @@ $(()=>{
 <div id="purchaseModal-wrapper">
 	<div class="modal-body" id="purchasePage">
 		<jsp:include page="/WEB-INF/views/product/pointPurchase.jsp"/>
+	</div>
+</div>
+
+<div id="connectModal-wrapper">
+	<div class="modal-body" id="connectPage">
 	</div>
 </div>
 
@@ -243,6 +248,40 @@ $(()=>{
    </div>
  </div>
 </div>
+
+<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@연락하기 모달@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+<div class="modal fade" id="connectModal"  role="dialog" aria-labelledby="purchaseModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="purchaseModalLabel">판매자에게 연락하기</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+				<form>
+				<span class="smallTitle">판매자 전화번호</span><br /><br />
+				<label for="">${map.result}</label>
+				<hr class="divide-m" />
+					
+					<span class="smallTitle">동네톡으로 연락하기</span><br /><br />
+					<button type="button" class="btn btn-secondary">동네톡주소를 쓰시면 됩니당</button>
+					
+					
+					
+					
+					<hr class="divide-m" />
+					
+					
+					<br>
+				</form>
+			</div>
+
+    </div>
+  </div>
+</div>
+
 
 <script>
 $(()=>{

@@ -1,5 +1,6 @@
 package com.pro.dong.admin.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -100,7 +101,15 @@ public class AdminServiceImpl implements AdminService {
 	// ========================== 지은 끝
 
 	// 예찬 시작 ==========================
-
+	@Override
+	public List<List<Map<String, String>>> kingOfDongnae(int rank) {
+		
+		List<List<Map<String, String>>> list = new ArrayList<>();
+		
+		
+		
+		return list;
+	}
 	// ========================== 예찬 끝
 
 	// 주영 시작 ==========================
@@ -137,6 +146,7 @@ public class AdminServiceImpl implements AdminService {
 		return ad.updateReportStatus(reportNo);
 	}
 	// ========================== 주영 끝
+
 	
 	
 	

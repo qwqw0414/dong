@@ -22,7 +22,7 @@
 	</select>
 	
 	<select id="productStatus" resultType="map">
-		select * from product p left join product_status s on p.product_no=s.product_no  where p.product_no = #{productNo}
+		select * from product p left join product_status s on p.product_no=s.product_no  where p.product_no = #{shopNo}
 	</select>
 	<!-- ==========================  하진 끝 -->
 	
@@ -31,6 +31,9 @@
 	<!-- ==========================  근호 끝 -->
 	
 	<!-- 지은 시작 ========================== -->
+	<select id="selectShopMember" resultType="string">
+		select phone from member where member_id = (select DISTINCT  member_id from (shop S join product P on S.shop_no = P.shop_no) where P.product_no=#{productNo})
+	</select>
 	
 	<!-- ==========================  지은 끝 -->
 	
@@ -209,6 +212,7 @@
 	where product_no=#{productNo}
 	start with comment_level = 1
 	connect by comment_ref = prior comment_no
+	order siblings by comment_no desc,comment_level desc
 	</select>
 	
 	<delete id="deleteLevel1">

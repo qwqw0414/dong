@@ -257,6 +257,15 @@ public class MemberController {
 		if(passwordEncoder.matches(password, m.getPassword())) {
 			msg = "로그인 성공";
 			mav.addObject("memberLoggedIn", m);
+			
+			Map<String,String>islogin = new HashMap<>();
+			islogin.put(session.getId(), m.getMemberId());
+			
+			System.out.println("===================================="+islogin);
+			
+			
+			
+			
 
 			//아이디저장
 			String saveId = request.getParameter("saveId");
@@ -328,7 +337,7 @@ public class MemberController {
 						 "<a href='http://localhost:9090/dong/verify.do?email=" +email +
 						 "authKey="+authKey+
 						 "' target='_blank'>이메일 인증 확인</a>");*/
-		sendMail.setFrom("dhrmsghss@gmail.com", "오근호");
+		sendMail.setFrom("dhrmsghss@gmail.com", "관리자");
 		sendMail.setTo(email);
 		sendMail.send();
 		

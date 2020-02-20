@@ -990,7 +990,7 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 					console.log(data);
 			if(data.isFollowing ==1){
 				console.log("팔로우 중");
-				followDiv.html("<img id ='followIcon' src='${pageContext.request.contextPath}/resources/images/like.png'/>");
+				followDiv.html("<img id ='followIcon' src='${pageContext.request.contextPath}/resources/images/like.png' class='animation-img-heartbeat'/>");
 			}else {
 				console.log("팔로우 중이 아님");
 				followDiv.html("<img id ='followIcon' src='${pageContext.request.contextPath}/resources/images/dislike.png'/>");	
@@ -1027,11 +1027,13 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 		
 		 img.attr("src", function(index, attr){
 			if(attr.match('${pageContext.request.contextPath}/resources/images/like.png')){
+				img.removeClass("animation-img-heartbeat");
 				return attr.replace("${pageContext.request.contextPath}/resources/images/like.png", "${pageContext.request.contextPath}/resources/images/dislike.png");
 			} else {
+				img.addClass("animation-img-heartbeat");
 				return attr.replace("${pageContext.request.contextPath}/resources/images/dislike.png","${pageContext.request.contextPath}/resources/images/like.png");
 			} 
-		}) 
+		});
 	});//팔로우 하트 토글 함수 끝
 	
 	//팔로우 하는 상점 조회

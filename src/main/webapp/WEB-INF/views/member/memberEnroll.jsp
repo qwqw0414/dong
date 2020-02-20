@@ -244,8 +244,45 @@ $(()=>{
     	$("#btn-zipcode").click(()=>{
     		new daum.Postcode({
 	    	    oncomplete: function(data) {
+	    	    	
+	    	    	var sido = "";
+	    			
+	    	    	if(data.sido=='서울') {
+	    	    		sido = data.sido+"특별시";
+	    	    	}
+	    	    	if(data.sido=='부산' || data.sido=='대구' || data.sido=='인천' || data.sido=='광주' || data.sido=='대전' || data.sido=='울산') {
+	    	    		sido = data.sido+"광역시";
+	    	    	}
+	    	    	if(data.sido == '경기') {
+	    	    		sido = data.sido+"도";
+	    	    	}
+	    	    	if(data.sido == '강원') {
+	    	    		sido = data.sido+"도";
+	    	    	}
+	    	    	if(data.sido == '제주특별자치도') {
+	    	    		sido = data.sido;
+	    	    	}
+	    	    	if(data.sido == '충북') {
+	    	    		sido = "충청북도";
+	    	    	}
+	    	    	if(data.sido == '충남') {
+	    	    		sido = "충청남도";
+	    	    	}
+	    	    	if(data.sido == '전북') {
+	    	    		sido = "전라북도";
+	    	    	}
+	    	    	if(data.sido == '전남') {
+	    	    		sido = "전라남도";
+	    	    	}
+	    	    	if(data.sido == '경북') {
+	    	    		sido = "경상북도";
+	    	    	}
+	    	    	if(data.sido == '경남') {
+	    	    		sido = "경상남도";
+	    	    	}
+	    	    	console.log(sido);
 	    	   
-	    	     document.getElementById('sido').value = data.sido;
+	    	     document.getElementById("sido").value = sido;
 	             document.getElementById("sigungu").value = data.sigungu;
 	             document.getElementById("dong").value = data.bname; 
 	    	    }
