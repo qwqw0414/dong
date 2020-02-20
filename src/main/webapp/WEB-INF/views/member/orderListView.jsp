@@ -21,6 +21,11 @@
 </div>
 
 <div id="orderListPageBar"></div>
+<div id="review-wrapper">
+	<jsp:include page="/WEB-INF/views/member/productReview.jsp"/>
+</div>
+
+
 <script>
 $(()=>{
 	loadOrderList(1);
@@ -31,27 +36,37 @@ $(()=>{
 			data:{cPage: cPage},
 			type: "GET",
 			success: data=>{
+				console.log(data);
 				let html = "<tr class='orderListTitle'><th>주문번호</th><th>상품정보</th><th>상품금액</th><th>판매자</th><th>배송상태</th><th>인수확인</th><th>거래상태<th></tr>";
-				for(var i=0; i<data.orderList.length;i++){
-					html += "<tr><input type='hidden' value='"+data.orderList[i].PRODUCT_NO+"'/><td name='orderNo'>"+data.orderList[i].ORDER_NO+"</td>";
-					html += "<td><img src='${pageContext.request.contextPath}/resources/upload/product/"+data.orderList[i].PHOTO+"' class='mr-3'>"+data.orderList[i].TITLE+"</td>";
-					html += "<td name='price'>"+data.orderList[i].PRICE+"</td>";
-					html += "<td name='shopName'>"+data.orderList[i].SHOP_NAME+"</td>";
-					if(data.orderList[i].CHECK_SEND==="N"){
-						html += "<td>배송 준비중</td>";	
-					} else {
-						html += "<td>배송완료</td>";	
+				if(data.orderList.length==0){
+					html += "<tr><td class='text-center orderListContent' colspan='7'><h2>구매내역이 없습니다</h2></td></tr>";
+				} else {
+					for(var i=0; i<data.orderList.length;i++){
+						html += "<tr><input type='hidden' value='"+data.orderList[i].PRODUCT_NO+"'/><td name='orderNo'>"+data.orderList[i].ORDER_NO+"</td>";
+						html += "<td><img src='${pageContext.request.contextPath}/resources/upload/product/"+data.orderList[i].PHOTO+"' class='mr-3'>"+data.orderList[i].TITLE+"</td>";
+						html += "<td name='price'>"+data.orderList[i].PRICE+"</td>";
+						html += "<td name='shopName' id="+data.orderList[i].SHOP_NO+">"+data.orderList[i].SHOP_NAME+"</td>";
+						if(data.orderList[i].CHECK_SEND==="N"){
+							html += "<td>배송 준비중</td>";	
+						} else {
+							html += "<td>배송완료</td>";	
+						}
+						if(data.orderList[i].CHECK_RECEIVE==="N"){
+						html += "<td><button class='btn btn-primary main-btn' name='updateReceive'>인수확인</button></td>";	
+						}else {		
+						html += "<td><button class='btn btn-primary sub-btn' disabled>인수완료</button></td>";	
+						}
+						if(data.orderList[i].CHECK_SEND==="Y"&&data.orderList[i].CHECK_RECEIVE==="Y"){
+							if(data.orderList[i].REVIEW_NO!=null){
+								html += "<td>리뷰 작성 완료</td></tr>";
+							}else {
+							html += "<td><button type='button' id='reviewBtn' class='btn btn-primary main-btn' data-toggle='modal' data-target='#productReviewModal'><span class='reviewBtnTxt'>거래완료(후기 작성)</span></button></td></tr>";
+							}
+						} else {
+							html += "<td>거래 진행중</td></tr>";
+						}
 					}
-					if(data.orderList[i].CHECK_RECEIVE==="N"){
-					html += "<td><button class='btn btn-primary main-btn' name='updateReceive'>인수확인</button></td>";	
-					}else {		
-					html += "<td><button class='btn btn-primary sub-btn' disabled>인수완료</button></td>";	
-					}
-					if(data.orderList[i].CHECK_SEND==="Y"&&data.orderList[i].CHECK_RECEIVE==="Y"){
-						html += "<td>거래종료</td></tr>";
-					} else {
-						html += "<td>거래 진행중</td></tr>";
-					}
+					
 				}
 				$("#orderList-wrapper").html(html);
 				$("#orderListPageBar").html(data.pageBar);
@@ -74,25 +89,29 @@ $(()=>{
 			type: "GET",
 			success: data=>{
 				let html = "<tr class='saleListTitle'><th>주문번호</th><th>상품정보</th><th>상품금액</th><th>판매자</th><th>배송상태</th><th>인수확인</th><th>거래상태<th></tr>";
-				for(var i=0; i<data.saleList.length;i++){
-					html += "<tr><input type='hidden' value='"+data.saleList[i].PRODUCT_NO+"'/><td name='orderNo'>"+data.saleList[i].ORDER_NO+"</td>";
-					html += "<td><img src='${pageContext.request.contextPath}/resources/upload/product/"+data.saleList[i].PHOTO+"' class='mr-3'>"+data.saleList[i].TITLE+"</td>";
-					html += "<td name='price'>"+data.saleList[i].PRICE+"</td>";
-					html += "<td name='shopName'>"+data.saleList[i].SHOP_NAME+"</td>";
-					if(data.saleList[i].CHECK_SEND==="N"){
-						html += "<td><button class='btn btn-primary main-btn' name='updateSend'>배송</button></td>";	
-					} else {
-						html += "<td><button class='btn btn-primary sub-btn' disabled>배송완료</button></td>";	
-					}
-					if(data.saleList[i].CHECK_RECEIVE==="N"){
-					html += "<td>인수 대기</td>";	
-					}else {		
-					html += "<td>인수완료</td>";	
-					}
-					if(data.saleList[i].CHECK_SEND==="Y"&&data.saleList[i].CHECK_RECEIVE==="Y"){
-						html += "<td>거래종료</td></tr>";
-					} else {
-						html += "<td>거래 진행중</td></tr>";
+				if(data.saleList.length==0){
+					html += "<tr><td class='text-center saleListContent' colspan='7'><h2>판매내역이 없습니다</h2></td></tr>";
+				} else {
+					for(var i=0; i<data.saleList.length;i++){
+						html += "<tr><input type='hidden' value='"+data.saleList[i].PRODUCT_NO+"'/><td name='orderNo'>"+data.saleList[i].ORDER_NO+"</td>";
+						html += "<td><img src='${pageContext.request.contextPath}/resources/upload/product/"+data.saleList[i].PHOTO+"' class='mr-3'>"+data.saleList[i].TITLE+"</td>";
+						html += "<td name='price'>"+data.saleList[i].PRICE+"</td>";
+						html += "<td name='shopName'>"+data.saleList[i].SHOP_NAME+"</td>";
+						if(data.saleList[i].CHECK_SEND==="N"){
+							html += "<td><button class='btn btn-primary main-btn' name='updateSend'>배송</button></td>";	
+						} else {
+							html += "<td><button class='btn btn-primary sub-btn' disabled>배송완료</button></td>";	
+						}
+						if(data.saleList[i].CHECK_RECEIVE==="N"){
+						html += "<td>인수 대기</td>";	
+						}else {		
+						html += "<td>인수완료</td>";	
+						}
+						if(data.saleList[i].CHECK_SEND==="Y"&&data.saleList[i].CHECK_RECEIVE==="Y"){
+							html += "<td>거래완료</td></tr>";
+						} else {
+							html += "<td>거래 진행중</td></tr>";
+						}
 					}
 				}
 				$("#saleList-wrapper").html(html);

@@ -36,6 +36,16 @@
 		on s.shop_no = sf.follower
 		where sf.follow = #{follower}
 	</select>
+	<select id="loadReviewGrade" resultType="map">
+		select * from review_grade
+	</select>
+	<select id="selectOneShopByShopName" resultType="shop" parameterType="string">
+		select * from shop where shop_name = #{shopName}
+	</select>
+	<insert id="insertReview" parameterType="map">
+		insert into shop_review
+		values(seq_shop_review.nextval, #{shopNo},#{memberId},#{reviewGrade},#{reviewContent},default,#{productNo})
+	</insert>
 	<!-- ==========================  민호 끝 -->
 	
 	<!-- 하진 시작 ========================== -->
