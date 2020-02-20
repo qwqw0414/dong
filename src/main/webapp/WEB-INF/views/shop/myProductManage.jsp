@@ -84,10 +84,10 @@ $(()=>{
 					}
 					
 					if(product.IS_SALE=='Y'){
-						html += "<button type='button' disabled class='btn btn-outline-primary btn-sm'>수정</button><br/>"
+						html += "<button  type='button' disabled class='btn btn-outline-primary btn-sm'>수정</button><br/>"
 					}
 					else{
-						html += "<button type='button' class='btn btn-outline-primary btn-sm'>수정</button><br/>"
+						html += "<button type='button' class='btn btn-outline-primary btn-sm' id='updateBtn' value='"+product.PRODUCT_NO+"'>수정</button><br/>"
 					}
 			      	
 			      	html += "<button type='button' class='btn btn-outline-danger btn-sm' id='btn-delete' value='"+product.PRODUCT_NO+"'>삭제</button></td>";
@@ -107,6 +107,12 @@ $(()=>{
 			}
 		});
 	}
+	
+	/* 상품수정 페이지로 이동 */
+	$(document).on("click", "#updateBtn", function(e){
+		var no = $(e.target).val();
+		location.href="${pageContext.request.contextPath}/product/productUpdate.do?productNo="+no;
+	});
 	
 	/*판매상태로 정렬*/
 	$("#saleCategory").change(function(){

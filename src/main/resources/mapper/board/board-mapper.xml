@@ -203,6 +203,7 @@
 	where board_no=#{boardNo}
 	start with comment_level = 1
 	connect by comment_ref = prior comment_no
+	order siblings by comment_no desc,comment_level desc
 	
 	
 	 

@@ -130,8 +130,9 @@ $(()=>{
 		    		if(data.list[i].REPORT_CONTENTS.length > 12) 
 		    			data.list[i].REPORT_CONTENTS = data.list[i].REPORT_CONTENTS.substring(0,12)+"..."
 		    		
-		    		html += "<tr>";
-		    		html += "<td><a href='${pageContext.request.contextPath}/admin/productReportView.do?boardNo="+data.list[i].REPORT_NO+"'>"+data.list[i].REPORT_NO+"</a></td>";
+					html += "<tr style='cursor:pointer;' class='trAtag'>";
+		    		html += "<input class='hiddenNo' type='hidden' value='"+data.list[i].REPORT_NO+"'>";
+		    		html += "<td>"+data.list[i].REPORT_NO+"</td>";
 		    		html += "<td>"+life(data.list[i].REPORT_DATE)+"</td>";
 		    		if(data.list[i].CATEGORY_ID == 'A001'){
 		    			html += "<td>사기신고</td>";
@@ -156,7 +157,7 @@ $(()=>{
 		    		else{
 		    			html += "<td>O</td>";
 		    		}
-		    		html += "</tr>";
+		    		html += "</a></tr>";
 		    	}
 		    	$table.append(header+html);
 				$("#pageBar").html(data.pageBar);
@@ -169,10 +170,18 @@ $(()=>{
 	        	$("#pageBar a").click((e)=>{
 	        		loadProductReportList($(e.target).siblings("input").val(), searchType, searchKeyword);
             	});
+	        	
+	        	function goReportView(no){
+	        		location.href = "${pageContext.request.contextPath}/admin/productReportView.do?boardNo="+no;
+	        	}
 	      	}
 		});//end of ajax
 	}//end of loadProductReportList();
 		
+/* 	function goReportView(no){
+		location.href = "${pageContext.request.contextPath}/admin/productReportView.do?boardNo="+no;
+	} */
+	
 	function life(date){
 		var preDate = new Date(date);
 
@@ -186,6 +195,14 @@ $(()=>{
 		return year+"/"+month+"/"+date;
 	}
 	
+	$(document).on("click", ".trAtag", function(e){
+		var no = $(e.target).siblings("[type=hidden]").val();
+		console.log("no=");
+		console.log(no);
+		location.href = "${pageContext.request.contextPath}/admin/productReportView.do?boardNo="+no;
+	});
+	
+
 });
 </script>
 
