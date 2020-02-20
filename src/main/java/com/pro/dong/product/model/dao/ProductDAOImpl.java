@@ -46,6 +46,10 @@ public class ProductDAOImpl implements ProductDAO{
 	//========================== 근호 끝
 		
 	//지은 시작 ==========================
+	@Override
+	public String selectShopMember(int productNo) {
+		return sst.selectOne("product.selectShopMember", productNo);
+	}
 
 	//========================== 지은 끝
 		
@@ -145,4 +149,5 @@ public class ProductDAOImpl implements ProductDAO{
 		return sst.delete("product.deleteLevel2",commentNo);
 	}
 	//========================== 현규 끝
+	
 }

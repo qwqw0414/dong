@@ -45,7 +45,7 @@ import com.pro.dong.shop.model.vo.Shop;
 @Controller
 @RequestMapping("/member")
 public class MemberController {
-	
+	static Map<String,String> loginstatus = new HashMap<>();
 	static Logger log = LoggerFactory.getLogger(MemberController.class);
 	static Gson gson = new Gson();
 	
@@ -231,6 +231,7 @@ public class MemberController {
 //========================== 하진 끝
 	
 // 근호 시작 ==========================
+	
 	@RequestMapping("/memberLogin.do")
 	public void memberLogin() {
 		
@@ -238,7 +239,6 @@ public class MemberController {
 	@RequestMapping("/memberLoginId.do")
 	public ModelAndView memberLoginId(@RequestParam(value="loginMemberId") String memberId, @RequestParam(value="loginPassword") String password,
 			ModelAndView mav, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
-
 	Member m = ms.selectLoginMember(memberId);
 	log.debug("m={}", m);
 	
@@ -258,10 +258,11 @@ public class MemberController {
 			msg = "로그인 성공";
 			mav.addObject("memberLoggedIn", m);
 			
-			Map<String,String>islogin = new HashMap<>();
-			islogin.put(session.getId(), m.getMemberId());
 			
-			System.out.println("===================================="+islogin);
+			
+			loginstatus.put(session.getId(), m.getMemberId());
+			
+			System.out.println("===================================="+loginstatus+"==========================================");
 			
 			
 			
@@ -337,7 +338,7 @@ public class MemberController {
 						 "<a href='http://localhost:9090/dong/verify.do?email=" +email +
 						 "authKey="+authKey+
 						 "' target='_blank'>이메일 인증 확인</a>");*/
-		sendMail.setFrom("dhrmsghss@gmail.com", "오근호");
+		sendMail.setFrom("dhrmsghss@gmail.com", "관리자");
 		sendMail.setTo(email);
 		sendMail.send();
 		

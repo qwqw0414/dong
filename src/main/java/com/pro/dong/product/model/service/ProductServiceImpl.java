@@ -53,7 +53,10 @@ public class ProductServiceImpl implements ProductService{
 	//========================== 근호 끝
 		
 	//지은 시작 ==========================
-
+	@Override
+	public String selectShopMember(int productNo) {
+		return pd.selectShopMember(productNo);
+	}
 	//========================== 지은 끝
 		
 	//예찬 시작 ==========================
