@@ -194,6 +194,9 @@ public class BoardController {
 		log.debug("attachList={}", attachList);
 		//업로드 처리 끝
 		
+		board.setBoardTitle(board.getBoardTitle().replaceAll("<", "&lt").replaceAll(">", "&gt;"));
+		board.setBoardContents(board.getBoardContents().replaceAll("<", "&lt").replaceAll(">", "&gt;"));
+		
 		//2.업무로직
 		int result = bs.insertBoard(board, attachList);
 		
