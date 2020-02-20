@@ -66,6 +66,16 @@ public class ShopDAOImpl implements ShopDAO{
 	public int insertReview(Map<String, String> param) {
 		return sst.insert("shop.insertReview", param);
 	}
+	@Override
+	public int selectShopReviewListCount(Map<String, String> param) {
+		return sst.selectOne("shop.selectShopReviewListCount", param);
+	}
+	@Override
+	public List<Map<String, String>> loadShopReview(Map<String, String> param, int cPage, int numPerPage) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sst.selectList("shop.loadShopReview", param, rowBounds);
+	}
+
 	//========================== 민호 끝
 	
 	
