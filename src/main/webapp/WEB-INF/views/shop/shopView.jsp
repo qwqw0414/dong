@@ -1149,7 +1149,7 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 					html += "<div class='card-header'>"+data.shopReviewList[i].MEMBER_ID+"님의 후기</div>";
 					html += "<div class='card-body'><h5 class='card-title'>"+data.shopReviewList[i].PRODUCT_NO+"</h5><span>";
 					html += "<p class='card-text'>"+data.shopReviewList[i].CONTENTS+"</p><br>";
-					for(var i=0; i<score; i++){
+					for(var j=0; j<score; j++){
 						html += "<img src='/dong/resources/images/star.png'>";
 					}
 					html += "</span></div></div>";
