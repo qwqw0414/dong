@@ -1133,13 +1133,15 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 			success: data => {
 				console.log(data);
 				let html = "";
+				console.log(data.shopReviewList.length);
 				for(var i=0; i<data.shopReviewList.length; i++){
+					console.log(i);
 					var score = data.shopReviewList[i].SCORE;
 					var cardClass = "";
 					if(score>=4){
 						cardClass = "card border-success mb-3";
 					} else if(score==3){
-						cardClass = "card border-waring mb-3";
+						cardClass = "card border-warning mb-3";
 					} else{
 						cardClass = "card border-danger mb-3";
 					}
@@ -1152,6 +1154,7 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 					}
 					html += "</span></div></div>";
 				}
+				console.log(html);
 				$("#shopReview-wrapper").html(html);
 				$("#shopReviewPageBar").html(data.pageBar);
 			},
@@ -1166,6 +1169,8 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 		});//end of ajax
 	}//end of loadShopReview
 });
+
+
 
 /* 주영 끝 */
 </script>
