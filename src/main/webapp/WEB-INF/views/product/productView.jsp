@@ -264,16 +264,9 @@ $(()=>{
 				<span class="smallTitle">판매자 전화번호</span><br /><br />
 				<label for="">${map.result}</label>
 				<hr class="divide-m" />
-					
 					<span class="smallTitle">동네톡으로 연락하기</span><br /><br />
-					<button type="button" class="btn btn-secondary">동네톡주소를 쓰시면 됩니당</button>
-					
-					
-					
-					
+					<button type="button" class="btn btn-secondary" id="btnTalk">연락하기</button>
 					<hr class="divide-m" />
-					
-					
 					<br>
 				</form>
 			</div>
@@ -286,6 +279,18 @@ $(()=>{
 <script>
 $(()=>{
 	
+	$("#connectModal #btnTalk").click(()=>{
+		var shopNo = '${map.product.shopNo}';
+		var width = 360;
+		var height = 660;
+		var top = (window.screen.height / 2) - (height / 2);
+		var left = (window.screen.width / 2) - (width / 2);
+		let url = "";
+
+		url = "${pageContext.request.contextPath}/ws/stomp.do?shopNo="+shopNo;
+		window.open(url,"chatView", "width="+width+",height="+height+", top="+top+", left="+left);
+	})
+
 	loadProductReportCategory();
 	
 // 주영시작 =======================================

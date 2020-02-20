@@ -81,4 +81,8 @@
 	<select id="selectShopNoByMemberId" parameterType="string" resultType="_int">
 		select shop_no from shop where member_id = #{memberId}
 	</select>
+	<select id="selectMemberIdByShopNo" parameterType="_int" resultType="string">
+		select member_id from shop where shop_no = #{shopNo}
+	</select>
+	
 </mapper>

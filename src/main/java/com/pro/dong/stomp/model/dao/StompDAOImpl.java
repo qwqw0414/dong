@@ -91,4 +91,9 @@ public class StompDAOImpl implements StompDAO {
 		return sqlSession.selectOne("stomp.selectShopNoByMemberId", memberId);
 	}
 
+	@Override
+	public String selectMemberIdByShopNo(int shopNo) {
+		return sqlSession.selectOne("stomp.selectMemberIdByShopNo", shopNo);
+	}
+
 }
