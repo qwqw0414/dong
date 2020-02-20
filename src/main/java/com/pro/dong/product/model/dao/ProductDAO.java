@@ -50,6 +50,7 @@ public interface ProductDAO {
 	//주영 시작 ==========================
 	List<Map<String, String>> loadProductReportCategory();	
 	int insertProductReport(Map<String, String> param);
+	List<Map<String, String>> selectProductByProductNo(int productNo);
 	//========================== 주영 끝
 		
 	//현규 시작 ==========================

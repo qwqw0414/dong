@@ -116,6 +116,10 @@ public class ProductDAOImpl implements ProductDAO{
 	public int insertProductReport(Map<String, String> param) {
 		return sst.insert("product.insertProductReport", param);
 	}
+	@Override
+	public List<Map<String, String>> selectProductByProductNo(int productNo) {
+		return sst.selectList("product.selectProductByProductNo", productNo);
+	}
 	//========================== 주영 끝
 		
 	//현규 시작 ==========================
@@ -123,7 +127,6 @@ public class ProductDAOImpl implements ProductDAO{
 	public int insertProductComment(ProductComment pc) {
 		return sst.insert("product.insertProductComment",pc);
 	}
-
 	@Override
 	public List<Map<String, String>> selectProductCommentList(int productNo, int cPage, int numPerPage) {
 		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage,numPerPage);

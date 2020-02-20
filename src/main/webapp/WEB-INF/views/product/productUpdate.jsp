@@ -1,5 +1,6 @@
 <%@page import="com.pro.dong.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <%
 	Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
@@ -26,22 +27,30 @@
             <div id="images">
                 <input type="file" class="product-photo" id="file-4" name="upFile">
                 <br>
-                <img src="" id="img-4">
+                <c:if test="${list[3] ne null}">
+                	<img src="${pageContext.request.contextPath}/resources/upload/product/${list[3].PHOTO}" id="img-4">
+                </c:if>
             </div>
             <div id="images">
                 <input type="file" class="product-photo" id="file-3" name="upFile">
                 <br>
-                <img src="" id="img-2">
+                <c:if test="${list[2] ne null}">
+                	<img src="${pageContext.request.contextPath}/resources/upload/product/${list[2].PHOTO}" id="img-2">
+                </c:if>
             </div>
             <div id="images">
                 <input type="file" class="product-photo" id="file-2" name="upFile">
                 <br>
-                <img src="" id="img-3">
+                <c:if test="${list[1] ne null}">
+                	<img src="${pageContext.request.contextPath}/resources/upload/product/${list[1].PHOTO}" id="img-3">
+                </c:if>
             </div>
             <div id="images">
                 <input type="file" class="product-photo" id="file-1" name="upFile">
                 <br>
-                <img src="" id="img-1">
+                <c:if test="${list[0] ne null}">
+                	<img src="${pageContext.request.contextPath}/resources/upload/product/${list[0].PHOTO}" id="img-1">
+                </c:if>
             </div>
         </form>
         <!-- <div style="position: relative; top: 100px;">
@@ -57,7 +66,7 @@
 <div class="input-area" style="height: 80px;">
     <div class="product-tag">제목</div>
     <div class="product-insert">
-        <input type="text" id="title" maxlength="40">
+        <input type="text" id="title" maxlength="40" value="${list[0].TITLE}">
     </div>
 </div>
 <hr>
@@ -80,7 +89,7 @@
     <div class="product-tag">거래지역</div>
     <div class="product-insert">
         <button id="btn-myLoaction">내 위치</button> <button>주소 검색</button> <br>
-        <input type="text" id="address" readonly>
+        <input type="text" id="address" value="${list[0].SIDO} ${list[0].SIGUNGU} ${list[0].DONG}" readonly>
     </div>
 </div>
 <hr>
@@ -88,11 +97,11 @@
     <div class="product-tag">상태</div>
     <div class="product-insert">
         <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="status-o" name="status" class="custom-control-input" value="O">
+            <input type="radio" id="status-o" name="status" ${list[0].STATUS eq 'O' ? "checked" : ""} class="custom-control-input" value="O">
             <label class="custom-control-label" for="status-o">중고상품</label>
         </div>
         <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="status-n" name="status" class="custom-control-input" value="N">
+            <input type="radio" id="status-n" name="status" ${list[0].STATUS eq 'N' ? "checked" : ""} class="custom-control-input" value="N">
             <label class="custom-control-label" for="status-n">새상품</label>
         </div>
     </div>
@@ -102,11 +111,11 @@
     <div class="product-tag">교환</div>
     <div class="product-insert">
         <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="isTrade-y" name="isTrade" class="custom-control-input" value="Y">
+            <input type="radio" id="isTrade-y" name="isTrade" ${list[0].IS_TRADE eq 'Y' ? "checked" : ""} class="custom-control-input" value="Y">
             <label class="custom-control-label" for="isTrade-y">교환가능</label>
         </div>
         <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="isTrade-n" name="isTrade" class="custom-control-input" value="N">
+            <input type="radio" id="isTrade-n" name="isTrade" ${list[0].IS_TRADE eq 'N' ? "checked" : ""} class="custom-control-input" value="N">
             <label class="custom-control-label" for="isTrade-n">교환불가</label>
         </div>
     </div>
@@ -115,13 +124,13 @@
 <div class="input-area">
     <div class="product-tag">가격</div class="product-tag">
     <div class="product-insert">
-        <input type="text" id="price">
+        <input type="text" id="price" value="${list[0].PRICE}">
         <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="shipping">
+            <input type="checkbox" class="custom-control-input" ${list[0].SHIPPING eq 'Y' ? "checked" : ""} id="shipping">
             <label class="custom-control-label" for="shipping">무료 배송</label>
         </div>
         <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="haggle">
+            <input type="checkbox" class="custom-control-input" ${list[0].HAGGLE eq 'Y' ? "checked" : ""} id="haggle">
             <label class="custom-control-label" for="haggle">가격협의 가능</label>
         </div>
     </div>
@@ -134,7 +143,7 @@
     </div>
 </div>
 <hr>
-<button id="btn-reg">등록하기</button>
+<button id="btn-reg">수정하기</button>
 
 </div>
 
@@ -152,6 +161,8 @@ var $title = $("#productReg #title");
 var $address = $("#productReg #address");
 var $price = $("#productReg #price");
 var $info = $("#productReg #info");
+
+$("#info").text("${list[0].INFO}");
 
 // 상품 등록
 $("#productReg #btn-reg").click(()=>{
@@ -205,7 +216,7 @@ $("#productReg #btn-reg").click(()=>{
     var $form = $("#productReg #formData");
 
     var formData = new FormData();
-
+	
     formData.append("title",$title.val());
     formData.append("categoryId",$selectEnd.val());
     formData.append("sido",addrArr[0]);
@@ -222,10 +233,12 @@ $("#productReg #btn-reg").click(()=>{
     formData.append("files", $file2[0].files[0]);
     formData.append("files", $file3[0].files[0]);
     formData.append("files", $file4[0].files[0]);
-
-
+    
+    console.log("formData를 찍습니다.=");
+    console.log(formData);
+	
     $.ajax({
-        url: "${pageContext.request.contextPath}/product/productReg",
+        url: "${pageContext.request.contextPath}/product/productUpdate",
         data: formData,
         dataType: "json",
         type: "post",
