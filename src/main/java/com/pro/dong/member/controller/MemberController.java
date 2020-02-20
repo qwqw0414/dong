@@ -163,7 +163,7 @@ public class MemberController {
 		Map<String, Object> resultMap = new HashMap<>();
 		Map<String, String> param = new HashMap<>();
 		param.put("pointAmount", price+"");
-		param.put("memeberId", memberId);
+		param.put("memberId", memberId);
 		int result = ms.updateSend(orderNo);
 		int checkOrderStatus = ms.checkOrderStatus(orderNo);
 		int updateProductStatus = 0;
