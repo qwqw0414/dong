@@ -317,7 +317,6 @@ public class ProductController {
 			}
 		} //end if
 		else {
-				
 				Map<String, String> param = new HashMap<>();
 				param.put("reportContents", reportContents);
 				param.put("categoryId", categoryId);
@@ -328,6 +327,12 @@ public class ProductController {
 		}
 		return ""+result;
 	}
+	
+	@RequestMapping("/productUpdate.do")
+	public void productUpdate(@RequestParam("productNo") int productNo) {
+		
+	}
+	
 	
 	//========================== 주영 끝
 		

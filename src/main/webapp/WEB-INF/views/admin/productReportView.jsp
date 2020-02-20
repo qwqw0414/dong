@@ -30,6 +30,7 @@
 </style>
 
 <h1 style='display: inline-block;'>상품 신고 상세보기</h1>
+<button onclick="location.href ='${pageContext.request.contextPath}/admin/productReportList.do'">뒤로가기</button>
 <div id="productReportDiv">
 	<hr />
 	<span>
