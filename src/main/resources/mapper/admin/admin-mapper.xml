@@ -114,7 +114,7 @@
 		select count(*) from member M left join point_status P on M.member_id = P.member_id
 		<where>
 			<if test="searchKeyword != null and searchKeyword!=''">
-				and P.${searchType} like '%${searchKeyword}%'			
+			 and P.member_id like '%${searchKeyword}%'		
 			</if>
 		</where>
 	</select>
@@ -124,8 +124,13 @@
 		from (select * from member left join point_status using(member_id)) A
 		<where>
 			<if test="searchKeyword!=null and searchKeyword!=''">
-				and A.${searchType} like '%${searchKeyword}%'
+				and A.member_id like '%${searchKeyword}%'	
 			</if>
+			
+			<if test="start!=null and start !='' and end != null and end != ''">
+			and A.reg_date between to_date(#{start}, 'yyyymmdd') and to_date(#{end},'yyyymmddhh24miss') 
+			</if>
+			
 		</where>
 	</select>
 	
@@ -162,6 +167,9 @@
 			</if>
 			<if test="dong!=null and dong!=''">
 				and A.dong like #{dong}
+			</if>
+			<if test="start!=null and start !='' and end != null and end != ''">
+			and A.reg_date between to_date(#{start}, 'yyyymmdd') and to_date(#{end},'yyyymmddhh24miss') 
 			</if>
 		</where>
 	order by order_no

@@ -7,25 +7,19 @@
 
 
 <h1 style='display: inline-block;'>회원포인트 관리</h1>
+<div style='display: inline;' class="custom-control custom-switch">
+  <input type="checkbox" class="custom-control-input" id="customSwitch1">
+  <label class="custom-control-label" for="customSwitch1">충전내역 보기</label>
+</div>
 
 <div class="input-group mb-3">
   <div class="input-group-prepend">
-     <select class="custom-select" id="searchType" required>
-	     <option value="member_id">아이디</option>
-	    <option value="reg_date">충전날짜</option>
-	    <option value="status">충전/사용</option>
-	 </select>
-
-		<!--  <div id="search-status">
-	      	<input type="hidden" name="searchType" value="status"/>
-	      	<input type="radio"  id="inputRadio" name="searchKeyword" value="I" checked/> 입급내역
-	      	<input type="radio" id="outputRadio" name="searchKeyword" value="O"/> 출금내역
-	      </div> -->
-  </div>
-  <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="검색어를 입력해 주세요" id="searchKeyword">
-   <button class="btn btn-outline-secondary" id="searchMemberPoint">검색</button>
-   <button class="btn btn-outline-secondary" id="memberPointAll">전체</button>	
-   <br />
+     <!-- <select class="custom-select" id="searchType" required>
+	    <option value="member_id">아이디</option>
+	    <option value="status" id="inout">충전/사용</option>
+	 </select> -->
+	</div>
+  <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="검색할 아이디를 입력해 주세요" id="searchKeyword">
 		<div class="col col-lg-2">
 			<input type="text" class='form-control' id="startDate" placeholder='시작날짜선택' readonly>
 		</div>
@@ -33,9 +27,17 @@
 		<div class="col-md-auto">
 			<input type="text" class='form-control' id="endDate" placeholder='종료날짜선택' readonly>
 		</div>
- 		<button class="btn btn-outline-secondary" id="searchDate">검색</button>
+   <button class="btn btn-outline-secondary" id="searchMemberPoint">검색</button>
+   <button class="btn btn-outline-secondary" id="memberPointAll">전체</button>	
+   <br />
 </div>
-
+<!-- 충전/사용 라디오버튼 -->
+<!-- <div id="search-status">
+	<input type="hidden" name="searchType" value="status" /> 
+	<input type="radio" id="inputRadio" name="searchKeyword" value="I" checked />충전내역
+	&nbsp;&nbsp; 
+	<input type="radio" id="outputRadio" name="searchKeyword" value="O" />사용내역
+</div> -->
 
 
 <div class="table-responsive">
@@ -44,24 +46,33 @@
 		
 	</table>
 </div>
-<div id="pageBar">
-	
-</div>
-<input type="hidden" name="cPage" id="cPage"/>
-
+<div id="pageBar"></div>
 
 <script>
-$(function (){
+$(() => {
+	loadMemberPointList(1);
 	
+	/* 스위치 버튼 함수 */
+		$("#customSwitch1").change(function(){
+		var checked = $(this).prop("checked");
+		if(checked == false){
+			$(this).next().html("충전내역 보기");
+			loadMemberPointList(1);
+		}	
+		else if(checked == true){
+			$(this).next().html("사용내역 보기");
+			loadMemberPointOutList(1);
+		}
+	});
 
-	loadMemberPointList();
-	
 	$("#searchMemberPoint").click(function (){
-		var cPage = $("#cPage").val();
 		var searchType = $("#searchType").val();
 		var searchKeyword = $("#searchKeyword").val();
+		var cPage = $("#cPage").val();
+		var start = $("#startDate").val();
+		var end = $("#endDate").val();
 		
-		loadMemberPointList(searchType,searchKeyword,cPage/* ,start,end */);
+		loadMemberPointList(cPage);
 
 	});	
 	
@@ -69,117 +80,96 @@ $(function (){
 		location.reload();		
 	});
 
-	$("#searchDate").click(function (){
+
+	function loadMemberPointList(cPage){
+		var searchType = $("#searchType").val();
+		var searchKeyword = $("#searchKeyword").val();
 		var cPage = $("#cPage").val();
 		var start = $("#startDate").val();
 		var end = $("#endDate").val();
-		
-		loadMemberPointDate(cPage,start,end);
-	});
 
-
-	function loadMemberPointDate(cPage,start,end){
-		var cPage = cPage;
-		var start = start;
-		var end = end; 
-		
 		$("#cPage").val(cPage);
 		
 		$.ajax({
-			url: "${pageContext.request.contextPath}/admin/memberPointDate",
+			url: "${pageContext.request.contextPath}/admin/memberPointListEnd",
 			type: "GET",
 			data: {
 				cPage:cPage,
+				searchType: searchType,
+				searchKeyword: searchKeyword,
 				start: start,
-				end: end 
+				end: end
 			},
+			dataType:"json",
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 			success: data => {
-				console.log("memberPointDate@ajax실행즁"+data);
+				console.log("memberPointList@ajax실행즁"+data);
 				let header = "<tr><th>아이디</th><th>충전금액</th><th>충전날짜</th><th>잔여포인트</th><th>상태(입/출)</th></tr>";
 				let $table = $("#member-pointList-tbl");
 				$table.html("");
 				let html = "";
 				data.list.forEach(cate => {
-					html += "<tr><td>"+cate.MEMBER_ID+"</td><td>"+cate.POINT_AMOUNT+"</td><td>"+cate.DATE+"</td><td>"+cate.POINT+"</td><td>"+cate.STATUS+"</td></tr>";
+					if(cate.STATUS == 'I'){
+						html += "<tr><td>"+cate.MEMBER_ID+"</td><td>"+cate.POINT_AMOUNT+"</td><td>"+cate.DATE+"</td><td>"+cate.POINT+"</td><td>"+"충전"+"</td></tr>";
+					}
 				});
 				$table.append(header+html);
+				
 				$("#pageBar").html(data.pageBar);
 				$("#totalPoint").text(data.totalPoint);
 				
 			},error : (x,s,e) => {
-				console.log("memberPointDate@ajax 실패실패!!!");
+				console.log("memberPointList@ajax 실패실패!!!");
 			}
-			
 		});/* end of ajax */
-		
-	}/* end of loadMemberPointDate */
-	
-	
-	
-	
-	
-	
-	
-function loadMemberPointList(searchType,searchKeyword,cPage/* ,start,end */){
-	var cPage = cPage;
-	var searchType = searchType;
-	var searchKeyword = searchKeyword;
-	if($("#searchType").val()=="충전"){
-		option = "I";
-	}else if($("#searchType").val()=="사용"){
-		option = "O";
-	}else
-		option = "";
-
-	
-	$("#cPage").val(cPage);
-	
-	$.ajax({
-		url: "${pageContext.request.contextPath}/admin/memberPointListEnd",
-		type: "GET",
-		data: {
-			cPage:cPage,
-			searchType: searchType,
-			searchKeyword: searchKeyword
-			/* start: start,
-			end: end */
-		},
-		success: data => {
-			console.log("memberPointList@ajax실행즁"+data);
-			let header = "<tr><th>아이디</th><th>충전금액</th><th>충전날짜</th><th>잔여포인트</th><th>상태(입/출)</th></tr>";
-			let $table = $("#member-pointList-tbl");
-			$table.html("");
-			let html = "";
-			data.list.forEach(cate => {
-				html += "<tr><td>"+cate.MEMBER_ID+"</td><td>"+cate.POINT_AMOUNT+"</td><td>"+cate.DATE+"</td><td>"+cate.POINT+"</td><td>"+cate.STATUS+"</td></tr>";
-			});
-			$table.append(header+html);
-			$("#pageBar").html(data.pageBar);
-			$("#totalPoint").text(data.totalPoint);
-			
-		},error : (x,s,e) => {
-			console.log("memberPointList@ajax 실패실패!!!");
-		}
-	});/* end of ajax */
 	}/* end of loadMemberPointList */
-});/* end of function */
+	
+	/* ================================================================================= */
+	function loadMemberPointOutList(cPage){
+		var searchType = $("#searchType").val();
+		var searchKeyword = $("#searchKeyword").val();
+		var cPage = $("#cPage").val();
+		var start = $("#startDate").val();
+		var end = $("#endDate").val();
+
+		$("#cPage").val(cPage);
+		
+		$.ajax({
+			url: "${pageContext.request.contextPath}/admin/memberPointOutListEnd",
+			type: "GET",
+			data: {
+				cPage:cPage,
+				searchType: searchType,
+				searchKeyword: searchKeyword,
+				start: start,
+				end: end
+			},
+			dataType:"json",
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			success: data => {
+				console.log("memberPointOutList@ajax실행즁"+data);
+				let header = "<tr><th>아이디</th><th>충전금액</th><th>충전날짜</th><th>잔여포인트</th><th>상태(입/출)</th></tr>";
+				let $table = $("#member-pointList-tbl");
+				$table.html("");
+				let html = "";
+				data.list.forEach(cate => {
+					if(cate.STATUS == 'O'){
+						html += "<tr><td>"+cate.MEMBER_ID+"</td><td>"+cate.POINT_AMOUNT+"</td><td>"+cate.DATE+"</td><td>"+cate.POINT+"</td><td>"+"사용"+"</td></tr>";
+					}
+				});
+				$table.append(header+html);
+				
+				$("#pageBar").html(data.pageBar);
+				$("#totalPoint").text(data.totalPoint);
+				
+			},error : (x,s,e) => {
+				console.log("memberPointOutList@ajax 실패실패!!!");
+			}
+		});/* end of ajax */
+	}/* end of loadMemberPointList */
+	
+});
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 <!-- 달력 스크립트 -->

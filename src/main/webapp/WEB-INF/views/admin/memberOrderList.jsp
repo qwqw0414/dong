@@ -6,8 +6,8 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
 <script>
-$(function () {
-	loadMemberOrderList();
+$(() => {
+	loadMemberOrderList(1);
 	
 	$("#searchMemberOrder").click(function (){
 		var cPage = $("#cPage").val();
@@ -16,26 +16,21 @@ $(function () {
 		var start = $("#startDate").val();
 		var end = $("#endDate").val();
 		
-	/* 	if(searchKeyword.length == 0){
-			alert("검색어를 입력하세요.");
-			$("#searchKeyword").focus();
-			return;
-		}else{
-		} */
-			loadMemberOrderList(searchType,searchKeyword,cPage,start,end);
+		loadMemberOrderList(cPage);
+		
 	});
 	
 	$("#memberOrderAll").click(function (){
 		location.reload();
 	});
-});
 
-function loadMemberOrderList(searchType, searchKeyword, cPage){
-	var cPage = cPage;
-	var searchType = searchType;
-	var searchKeyword = searchKeyword;
-	var start = start;
-	var end = end;
+
+function loadMemberOrderList(cPage){
+	var searchType = $("#searchType").val();
+	var searchKeyword = $("#searchKeyword").val();
+	var cPage = $("#cPage").val();
+	var start = $("#startDate").val();
+	var end = $("#endDate").val();
 	
 	$("#cPage").val(cPage);
 	
@@ -43,12 +38,15 @@ function loadMemberOrderList(searchType, searchKeyword, cPage){
 		url : "${pageContext.request.contextPath}/admin/memberOrderListEnd",
 		type : "GET",
 		data: {
-			cPage: cPage,
 			searchType: searchType,
 			searchKeyword: searchKeyword,
+			cPage: cPage,
 			start: start,
 			end: end
-		}, success: data => {
+		}, 
+		dataType:"json",
+		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		success: data => {
 			console.log("memberOrderList@ajax 진행!");
 			let header = "<tr><th>주문번호</th><th>회원아이디</th><th>주문내역</th><th>주소(동)</th><th>상품가격</th><th>주문날짜</th></tr>";
 			let $table = $("#member-ordeList-tbl");
@@ -139,6 +137,9 @@ function loadMemberOrderList(searchType, searchKeyword, cPage){
 	});//end of ajax
 }//end of loadDongList
 }
+	
+});
+	
 
 </script>
 
@@ -163,8 +164,6 @@ function loadMemberOrderList(searchType, searchKeyword, cPage){
 	</select>
   </div>
   <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="검색어를 입력해 주세요" id="searchKeyword">
-   <button class="btn btn-outline-secondary" id="searchMemberOrder">검색</button>
-   <button class="btn btn-outline-secondary" id="memberOrderAll">전체</button>
 		<div class="col col-lg-2">
 			<input type="text" class='form-control' id="startDate" placeholder='시작날짜선택' readonly>
 		</div>
@@ -172,6 +171,8 @@ function loadMemberOrderList(searchType, searchKeyword, cPage){
 		<div class="col-md-auto">
 			<input type="text" class='form-control' id="endDate" placeholder='종료날짜선택' readonly>
 		</div>
+   <button class="btn btn-outline-secondary" id="searchMemberOrder">검색</button>
+   <button class="btn btn-outline-secondary" id="memberOrderAll">전체</button>
 </div>
 
 <div class="table-responsive">
