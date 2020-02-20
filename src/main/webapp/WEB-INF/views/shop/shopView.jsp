@@ -455,7 +455,7 @@
 				<li><div class="shop-nav-selected shop-nav">내 상품</div></li>
 				<li><div id="shopInquiryDiv" class="shop-nav-disabled shop-nav">상점문의</div></li>
 				<li><div id="myWishListDiv" class="shop-nav-disabled shop-nav">찜 목록</div></li>
-				<li><div class="shop-nav-disabled shop-nav">상점후기</div></li>
+				<li><div id="shopReview" class="shop-nav-disabled shop-nav">상점후기</div></li>
 				<li><div id="viewFollow" class="shop-nav-disabled shop-nav">팔로우</div></li>
 				<li><div id="viewFollower" class="shop-nav-disabled shop-nav">팔로워</div></li>
 			</ul>
@@ -497,6 +497,9 @@
 				
 			<div id="nav-review">
 				<h1>상점 후기</h1>
+				<div id="shopReview-wrapper"></div>
+				<br>
+				<div id="shopReviewPageBar"></div>
 			</div>
 			<div id="nav-follow">
 				<h1>팔로우</h1>
@@ -1071,7 +1074,12 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 			},
 			error: (x, s, e) => {
 				console.log("ajax 요청 실패!",x,s,e);
-			}
+			},
+			complete: (data)=>{
+	        	$("#followerPageBar a").click((e)=>{
+	        		viewFollower($(e.target).siblings("input").val());
+            	});
+	      	}
 		});//end of ajax
 	}//end of viewFollower
 	
@@ -1100,10 +1108,68 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 			},
 			error: (x, s, e) => {
 				console.log("ajax 요청 실패!",x,s,e);
-			}
+			},
+			complete: (data)=>{
+	        	$("#followPageBar a").click((e)=>{
+	        		viewFollow($(e.target).siblings("input").val());
+            	});
+	      	}
 		});//end of ajax
 	}//end of viewFollow
+	
+	//상점 후기 조회 온클릭
+	$("#shopReview").on('click', function(){
+		loadShopReview(1);
+	});
+	
+	//상점 후기 조회 함수
+	function loadShopReview(cPage){
+		var shopNo = '${map.SHOP_NO}';
+		console.log(shopNo);
+		$.ajax({
+			url: "${pageContext.request.contextPath}/shop/loadShopReview",
+			data:{shopNo:shopNo,
+				cPage:cPage},
+			success: data => {
+				console.log(data);
+				let html = "";
+				console.log(data.shopReviewList.length);
+				for(var i=0; i<data.shopReviewList.length; i++){
+					console.log(i);
+					var score = data.shopReviewList[i].SCORE;
+					var cardClass = "";
+					if(score>=4){
+						cardClass = "card border-success mb-3";
+					} else if(score==3){
+						cardClass = "card border-warning mb-3";
+					} else{
+						cardClass = "card border-danger mb-3";
+					}
+					html += "<div class='"+cardClass+"' style='max-width: 18rem;'>";
+					html += "<div class='card-header'>"+data.shopReviewList[i].MEMBER_ID+"님의 후기</div>";
+					html += "<div class='card-body'><h5 class='card-title'>"+data.shopReviewList[i].PRODUCT_NO+"</h5><span>";
+					html += "<p class='card-text'>"+data.shopReviewList[i].CONTENTS+"</p><br>";
+					for(var j=0; j<score; j++){
+						html += "<img src='/dong/resources/images/star.png'>";
+					}
+					html += "</span></div></div>";
+				}
+				console.log(html);
+				$("#shopReview-wrapper").html(html);
+				$("#shopReviewPageBar").html(data.pageBar);
+			},
+			error: (x, s, e) => {
+				console.log("ajax 요청 실패!",x,s,e);
+			},
+			complete: (data)=>{
+	        	$("#shopReviewPageBar a").click((e)=>{
+	        		loadShopReview($(e.target).siblings("input").val());
+            	});
+	      	}
+		});//end of ajax
+	}//end of loadShopReview
 });
+
 
 
 /* 주영 끝 */

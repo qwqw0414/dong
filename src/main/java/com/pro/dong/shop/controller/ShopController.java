@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -111,6 +112,51 @@ public class ShopController {
 		String followPageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
 		result.put("followerList", followerList);
 		result.put("followPageBar", followPageBar);
+		return result;
+	}
+	@RequestMapping("/loadReviewGrade")
+	@ResponseBody
+	public Map<String, Object> loadReviewGrade(){
+		Map<String, Object> result = new HashMap<>();
+		List<Map<String, String>> reviewGradeList = ss.loadReviewGrade();
+		result.put("reviewGradeList", reviewGradeList);
+		return result;
+	}
+	@RequestMapping("/insertReview")
+	@ResponseBody
+	public Map<String, Object> insertReview(HttpSession session, 
+			@RequestParam("shopName")String shopName, @RequestParam("reviewGrade")String reviewGrade, @RequestParam("reviewContent")String reviewContent,@RequestParam("productNo")String productNo){
+		Member memberLoggedIn = (Member) session.getAttribute("memberLoggedIn");
+		String memberId = memberLoggedIn.getMemberId();
+		Shop shop = ss.selectOneShopByShopName(shopName);
+		int shopNo = shop.getShopNo();
+		
+		Map<String, String> param = new HashMap<>();
+		param.put("memberId", memberId);
+		param.put("shopNo", shopNo+"");
+		param.put("reviewGrade", reviewGrade);
+		param.put("reviewContent", reviewContent);
+		param.put("productNo", productNo);
+		Map<String, Object> resultMap = new HashMap<>();
+		int result = ss.insertReview(param);
+		resultMap.put("result", result);
+		return resultMap;
+		
+	}
+	@RequestMapping("/loadShopReview")
+	@ResponseBody
+	public Map<String, Object> loadShopReview(@RequestParam(value="cPage",defaultValue="1")int cPage, @RequestParam("shopNo")int shopNo){
+		log.debug("shopNo={}",shopNo);
+		int numPerPage = 10;
+		
+		Map<String, String> param = new HashMap<>();
+		Map<String, Object> result = new HashMap<>();
+		param.put("shopNo", shopNo+"");
+		int totalContents = ss.selectShopReviewListCount(param);
+		List<Map<String,String>> shopReviewList = ss.loadShopReview(param, cPage, numPerPage);
+		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
+		result.put("shopReviewList", shopReviewList);
+		result.put("pageBar", pageBar);
 		return result;
 	}
 	//========================== 민호 끝

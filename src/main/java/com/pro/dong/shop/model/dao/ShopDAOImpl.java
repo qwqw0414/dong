@@ -54,6 +54,28 @@ public class ShopDAOImpl implements ShopDAO{
 		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
 		return sst.selectList("shop.selectFollowerList",follower, rowBounds);
 	}
+	@Override
+	public List<Map<String, String>> loadReviewGrade() {
+		return sst.selectList("shop.loadReviewGrade");
+	}
+	@Override
+	public Shop selectOneShopByShopName(String shopName) {
+		return sst.selectOne("shop.selectOneShopByShopName", shopName);
+	}
+	@Override
+	public int insertReview(Map<String, String> param) {
+		return sst.insert("shop.insertReview", param);
+	}
+	@Override
+	public int selectShopReviewListCount(Map<String, String> param) {
+		return sst.selectOne("shop.selectShopReviewListCount", param);
+	}
+	@Override
+	public List<Map<String, String>> loadShopReview(Map<String, String> param, int cPage, int numPerPage) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sst.selectList("shop.loadShopReview", param, rowBounds);
+	}
+
 	//========================== 민호 끝
 	
 	
@@ -201,6 +223,7 @@ public class ShopDAOImpl implements ShopDAO{
 	public int deleteShopInquriyComment(int deleteCommentBtn) {
 		return sst.delete("shop.deleteShopInquriyComment", deleteCommentBtn);
 	}
+
 	
 	
 	

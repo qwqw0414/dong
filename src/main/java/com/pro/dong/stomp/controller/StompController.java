@@ -42,12 +42,16 @@ public class StompController {
 	StompService ss;
     
     @GetMapping("/ws/stomp.do")
-    public String websocket(Model model, HttpSession session,@RequestParam("memberId")String sendId ) {
+    public String websocket(Model model, HttpSession session, int shopNo) {
     	
-    	log.debug(((Member)(session.getAttribute("memberLoggedIn"))).toString());
+    	log.debug(shopNo+"");
+    	
+    	String sendId = ss.selectMemberIdByShopNo(shopNo);
     	
     	String memberId = ((Member)(session.getAttribute("memberLoggedIn"))).getMemberId();
     	String chatId = null;
+    	
+    	if(sendId.equals(memberId)) return "/";
     	
     	Map<String, String> param = new HashMap<>();
     	param.put("memberId", memberId);

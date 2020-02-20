@@ -284,11 +284,7 @@ public class AdminController {
 	
 	// 예찬 시작 ==========================
 	@RequestMapping(value="/kingOfDongnae.do",produces="text/plain;charset=UTF-8")
-	public String kingOfDongnae() {
-		
-		List<List<Map<String, String>>> map = as.kingOfDongnae(5);
-		
-		return gson.toJson(map);
+	public void kingOfDongnae() {
 	}
 	
 	// ========================== 예찬 끝

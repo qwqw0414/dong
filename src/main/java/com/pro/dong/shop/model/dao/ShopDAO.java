@@ -16,7 +16,11 @@ public interface ShopDAO {
 	List<Map<String, String>> selectFollowList(String follow, int cPage, int numPerPage);
 	int selectselectFollowerListCount(String follower);
 	List<Map<String, String>> selectFollowerList(String follower, int cPage, int numPerPage);
-	
+	List<Map<String, String>> loadReviewGrade();
+	Shop selectOneShopByShopName(String shopName);
+	int insertReview(Map<String, String> param);
+	List<Map<String, String>> loadShopReview(Map<String, String> param, int cPage, int numPerPage);
+	int selectShopReviewListCount(Map<String, String> param);
 	//========================== 민호 끝
 	
 	

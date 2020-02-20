@@ -42,7 +42,7 @@
 		select count(*) from product_like where member_id = #{memberId} and product_no = #{productNo}
 	</select>
 	<insert id="insertStatus" parameterType="product">
-		insert into product_status values(seq_product.currval, 'N')
+		insert into product_status values(seq_product.currval, 'N', default)
 	</insert>
 	<insert id="insertLike" parameterType="like">
 		insert into product_like values(seq_product_like.nextval, #{memberId}, #{productNo}, default)
@@ -197,6 +197,12 @@
 		</if>
 		, default)
 	</insert>
+	
+	<select id="selectProductByProductNo" parameterType="_int" resultType="map">
+		select * from product P
+		left join product_attachment A on p.product_no = a.product_no
+		where p.product_no = #{productNo}
+	</select>
 	<!-- ==========================  주영 끝 -->
 	
 	<!-- 현규 시작 ========================== -->

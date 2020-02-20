@@ -45,7 +45,7 @@ import com.pro.dong.shop.model.vo.Shop;
 @Controller
 @RequestMapping("/member")
 public class MemberController {
-	
+	static Map<String,String> loginstatus = new HashMap<>();
 	static Logger log = LoggerFactory.getLogger(MemberController.class);
 	static Gson gson = new Gson();
 	
@@ -163,7 +163,7 @@ public class MemberController {
 		Map<String, Object> resultMap = new HashMap<>();
 		Map<String, String> param = new HashMap<>();
 		param.put("pointAmount", price+"");
-		param.put("memeberId", memberId);
+		param.put("memberId", memberId);
 		int result = ms.updateSend(orderNo);
 		int checkOrderStatus = ms.checkOrderStatus(orderNo);
 		int updateProductStatus = 0;
@@ -231,6 +231,7 @@ public class MemberController {
 //========================== 하진 끝
 	
 // 근호 시작 ==========================
+	
 	@RequestMapping("/memberLogin.do")
 	public void memberLogin() {
 		
@@ -238,7 +239,6 @@ public class MemberController {
 	@RequestMapping("/memberLoginId.do")
 	public ModelAndView memberLoginId(@RequestParam(value="loginMemberId") String memberId, @RequestParam(value="loginPassword") String password,
 			ModelAndView mav, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
-
 	Member m = ms.selectLoginMember(memberId);
 	log.debug("m={}", m);
 	
@@ -258,12 +258,13 @@ public class MemberController {
 			msg = "로그인 성공";
 			mav.addObject("memberLoggedIn", m);
 			
-			Map<String,String>islogin = new HashMap<>();
-			islogin.put(session.getId(), m.getMemberId());
 			
-			System.out.println("===================================="+islogin);
-			
-			
+			if(loginstatus.containsKey(m.getMemberId())) {
+//				loginstatus.remove(session.getId());
+			}
+					
+			loginstatus.put(m.getMemberId(),session.getId());
+			System.out.println("====================================지금 로그인 중인 살함"+loginstatus+"==========================================");
 			
 			
 
@@ -305,10 +306,12 @@ public class MemberController {
 	return mav;
 	}
 	@RequestMapping("/memberLogOut.do")
-	public String memberLogOut(SessionStatus sessionStatus) {
+	public String memberLogOut(SessionStatus sessionStatus, HttpSession session) {
 		if(!sessionStatus.isComplete()) {
+			loginstatus.remove(session.getId());
 			sessionStatus.setComplete();
 		}
+		System.out.println("로그아웃후============================"+loginstatus+"=========================================");
 		return "redirect:/";
 	}
 	
@@ -337,7 +340,7 @@ public class MemberController {
 						 "<a href='http://localhost:9090/dong/verify.do?email=" +email +
 						 "authKey="+authKey+
 						 "' target='_blank'>이메일 인증 확인</a>");*/
-		sendMail.setFrom("dhrmsghss@gmail.com", "오근호");
+		sendMail.setFrom("dhrmsghss@gmail.com", "관리자");
 		sendMail.setTo(email);
 		sendMail.send();
 		

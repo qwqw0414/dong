@@ -48,19 +48,15 @@ public interface ProductService {
 	//주영 시작 ==========================
 	List<Map<String, String>> loadProductReportCategory();
 	int insertProductReport(Map<String, String> param);
+	List<Map<String, String>> selectProductByProductNo(int productNo);
 	//========================== 주영 끝
 		
 	//현규 시작 ==========================
 	int insertProductComment(ProductComment pc);
-
 	List<Map<String, String>> selectProductCommentList(int productNo, int cPage, int numPerPage);
-
 	int deleteLevel1(int commentNo);
-
 	int countComment(int boardNo);
-
 	int deleteLevel2(int commentNo);
-
 	//========================== 현규 끝
 	
 }

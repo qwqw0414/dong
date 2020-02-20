@@ -41,7 +41,7 @@ public interface AdminService {
 	// ========================== 지은 끝
 
 	// 예찬 시작 ==========================
-	List<List<Map<String, String>>> kingOfDongnae(int rank);
+	List<List<Map<String, String>>> kingOfDongnae(int rank,int month);
 	// ========================== 예찬 끝
 
 	// 주영 시작 ==========================

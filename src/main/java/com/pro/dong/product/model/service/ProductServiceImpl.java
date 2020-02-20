@@ -131,7 +131,10 @@ public class ProductServiceImpl implements ProductService{
 	public int insertProductReport(Map<String, String> param) {
 		return pd.insertProductReport(param);
 	}
-
+	@Override
+	public List<Map<String, String>> selectProductByProductNo(int productNo) {
+		return pd.selectProductByProductNo(productNo);
+	}
 	//========================== 주영 끝
 		
 	//현규 시작 ==========================
@@ -155,8 +158,6 @@ public class ProductServiceImpl implements ProductService{
 	public int deleteLevel2(int commentNo) {
 		return pd.deleteLevel2(commentNo);
 	}
-	
-
 	//========================== 현규 끝
 	
 }

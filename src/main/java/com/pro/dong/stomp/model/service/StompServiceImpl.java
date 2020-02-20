@@ -110,5 +110,9 @@ public class StompServiceImpl implements StompService {
 		return stompDao.selectShopNoByMemberId(memberId);
 	}
 
+	@Override
+	public String selectMemberIdByShopNo(int shopNo) {
+		return stompDao.selectMemberIdByShopNo(shopNo);
+	}
 	
 }
