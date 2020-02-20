@@ -255,8 +255,6 @@ $("#productReg #btn-reg").click(()=>{
             console.log("실패", x, s, e);
         }
     });
-
-
 });
 
 //첨부파일 등록
