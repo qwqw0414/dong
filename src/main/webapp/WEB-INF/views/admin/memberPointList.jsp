@@ -5,6 +5,51 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
+
+<h1 style='display: inline-block;'>회원포인트 관리</h1>
+
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+     <select class="custom-select" id="searchType" required>
+	     <option value="member_id">아이디</option>
+	    <option value="reg_date">충전날짜</option>
+	    <option value="status">충전/사용</option>
+	 </select>
+
+		<!--  <div id="search-status">
+	      	<input type="hidden" name="searchType" value="status"/>
+	      	<input type="radio"  id="inputRadio" name="searchKeyword" value="I" checked/> 입급내역
+	      	<input type="radio" id="outputRadio" name="searchKeyword" value="O"/> 출금내역
+	      </div> -->
+  </div>
+  <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="검색어를 입력해 주세요" id="searchKeyword">
+   <button class="btn btn-outline-secondary" id="searchMemberPoint">검색</button>
+   <button class="btn btn-outline-secondary" id="memberPointAll">전체</button>	
+   <br />
+		<div class="col col-lg-2">
+			<input type="text" class='form-control' id="startDate" placeholder='시작날짜선택' readonly>
+		</div>
+		<span>~</span>
+		<div class="col-md-auto">
+			<input type="text" class='form-control' id="endDate" placeholder='종료날짜선택' readonly>
+		</div>
+ 		<button class="btn btn-outline-secondary" id="searchDate">검색</button>
+</div>
+
+
+
+<div class="table-responsive">
+<br /><br />
+	<table class="table text-center" id="member-pointList-tbl">
+		
+	</table>
+</div>
+<div id="pageBar">
+	
+</div>
+<input type="hidden" name="cPage" id="cPage"/>
+
+
 <script>
 $(function (){
 	
@@ -64,9 +109,16 @@ $(function (){
 			},error : (x,s,e) => {
 				console.log("memberPointDate@ajax 실패실패!!!");
 			}
+			
 		});/* end of ajax */
 		
 	}/* end of loadMemberPointDate */
+	
+	
+	
+	
+	
+	
 	
 function loadMemberPointList(searchType,searchKeyword,cPage/* ,start,end */){
 	var cPage = cPage;
@@ -113,47 +165,21 @@ function loadMemberPointList(searchType,searchKeyword,cPage/* ,start,end */){
 });/* end of function */
 </script>
 
-<h1 style='display: inline-block;'>회원포인트 관리</h1>
-
-<div class="input-group mb-3">
-  <div class="input-group-prepend">
-     <select class="custom-select" id="searchType" required>
-	     <option value="member_id">아이디</option>
-	    <option value="reg_date">충전날짜</option>
-	    <option value="status">충전/사용</option>
-	 </select>
-
-		<!--  <div id="search-status">
-	      	<input type="hidden" name="searchType" value="status"/>
-	      	<input type="radio"  id="inputRadio" name="searchKeyword" value="I" checked/> 입급내역
-	      	<input type="radio" id="outputRadio" name="searchKeyword" value="O"/> 출금내역
-	      </div> -->
-  </div>
-  <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="검색어를 입력해 주세요" id="searchKeyword">
-   <button class="btn btn-outline-secondary" id="searchMemberPoint">검색</button>
-   <button class="btn btn-outline-secondary" id="memberPointAll">전체</button>
-		<div class="col col-lg-2">
-			<input type="text" class='form-control' id="startDate" placeholder='시작날짜선택' readonly>
-		</div>
-		<span>~</span>
-		<div class="col-md-auto">
-			<input type="text" class='form-control' id="endDate" placeholder='종료날짜선택' readonly>
-		</div>
- 		<button class="btn btn-outline-secondary" id="searchDate">검색</button>
-</div>
 
 
 
-<div class="table-responsive">
-<br /><br />
-	<table class="table text-center" id="member-pointList-tbl">
-		
-	</table>
-</div>
-<div id="pageBar">
-	
-</div>
-<input type="hidden" name="cPage" id="cPage"/>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <!-- 달력 스크립트 -->
