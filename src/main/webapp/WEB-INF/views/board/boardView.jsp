@@ -445,7 +445,7 @@ $(function(){
 				success:data=>{
 					console.log(data);
 						if(data=="1"){
-							alert("성공 니 댓글 맨뒤에~");
+							alert("성공");
 						}
 						else{
 							alert("실패")
@@ -759,7 +759,7 @@ $(function(){
 	       		
 	       		<!--모달푸터시작-->
 	       		<div class="modal-footer">
-	         			<button type="button" class="	 btn-sm" data-dismiss="modal">취소</button>
+	         			<button type="button" class="btn-sm" data-dismiss="modal">취소</button>
 	         			<button type="submit" id="report-btn" class="btn btn-danger btn-sm" >신고</button>
 	       		</div>
 	       		<!--모달푸터끝-->

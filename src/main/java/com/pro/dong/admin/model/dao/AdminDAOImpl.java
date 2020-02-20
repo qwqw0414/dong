@@ -106,7 +106,10 @@ public class AdminDAOImpl implements AdminDAO {
 	// ========================== 지은 끝
 
 	// 예찬 시작 ==========================
-
+	@Override
+	public List<Map<String, String>> kingOfDongnae(int rank) {
+		return sst.selectList("admin.kingOfDongnae");
+	}
 	// ========================== 예찬 끝
 
 	// 주영 시작 ==========================
@@ -146,6 +149,7 @@ public class AdminDAOImpl implements AdminDAO {
 		return sst.update("admin.updateReportStatus", reportNo);
 	}
 	// ========================== 주영 끝
+
 	
 	
 	

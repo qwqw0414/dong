@@ -407,8 +407,9 @@ public class BoardController {
 	@ResponseBody
 	public String insertComments(HttpSession session, BoardComment bc, @RequestParam("boardNo") int boardNo) {
 		
+		bc.setContents(bc.getContents().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\\n", "<br/>"));
+		
 		int result = bs.insertBoardComment(bc);
-		System.out.println(result);
 		
 		
 		
@@ -470,7 +471,7 @@ public class BoardController {
 	@RequestMapping(value="/insertLevel2", produces="text/plain;charset=UTF-8")
 	public String insertLevel2(BoardComment bc,@RequestParam("boardNo")int boardNo) {
 		log.debug("dddddd={}",bc);
-		
+		bc.setContents(bc.getContents().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\\n", "<br/>"));
 		int result = bs.insertBoardComment(bc);
 		
 		

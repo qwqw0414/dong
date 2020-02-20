@@ -28,7 +28,8 @@ public interface ProductDAO {
 	//========================== 근호 끝
 		
 	//지은 시작 ==========================
-
+	String selectShopMember(int productNo);
+	
 	//========================== 지은 끝
 		
 	//예찬 시작 ==========================
@@ -59,5 +60,6 @@ public interface ProductDAO {
 	int countComment(int boardNo);
 	int deleteLevel2(int commentNo);
 	//========================== 현규 끝
+	
 	
 }

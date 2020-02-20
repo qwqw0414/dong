@@ -212,9 +212,10 @@ public class ProductController {
 		}
 		
 		@RequestMapping("/productView.do")
-		public ModelAndView productView(ModelAndView mav, int productNo, HttpServletRequest request) {
+		public ModelAndView productView(ModelAndView mav, int productNo,HttpServletRequest request) {
 			
 			Map<String, Object> map = ps.selectOneProduct(productNo);
+			String result = ps.selectShopMember(productNo);
 			
 			HttpSession session = request.getSession();
 			Member member = (Member) session.getAttribute("memberLoggedIn");
@@ -224,7 +225,9 @@ public class ProductController {
 			like.setProductNo(productNo);
 			
 			int likeCnt = ps.countLike(like);
+			log.info("result={}",result);
 			
+			map.put("result", result);
 			map.put("likeCnt", likeCnt+"");
 			map.put("memberLoggedIn", member);
 			mav.addObject("map",map);
@@ -317,7 +320,6 @@ public class ProductController {
 			}
 		} //end if
 		else {
-				
 				Map<String, String> param = new HashMap<>();
 				param.put("reportContents", reportContents);
 				param.put("categoryId", categoryId);
@@ -329,6 +331,12 @@ public class ProductController {
 		return ""+result;
 	}
 	
+	@RequestMapping("/productUpdate.do")
+	public void productUpdate(@RequestParam("productNo") int productNo) {
+		
+	}
+	
+	
 	//========================== 주영 끝
 		
 	//현규 시작 ==========================
@@ -336,7 +344,7 @@ public class ProductController {
 		@RequestMapping(value="/insertComments", produces="text/plain;charset=UTF-8")
 		@ResponseBody
 		public String insertComments(HttpSession session, ProductComment pc, @RequestParam("productNo") int productNo) {
-			
+			pc.setContents(pc.getContents().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\\n", "<br/>"));
 			int result = ps.insertProductComment(pc);
 			System.out.println(result);
 			
@@ -399,6 +407,7 @@ public class ProductController {
 		@ResponseBody
 		@RequestMapping(value="/insertLevel2", produces="text/plain;charset=UTF-8")
 		public String insertLevel2(ProductComment pc,@RequestParam("productNo")int productNo) {
+			pc.setContents(pc.getContents().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\\n", "<br/>"));
 			log.debug("dddddd={}",pc);
 			
 			int result = ps.insertProductComment(pc);
