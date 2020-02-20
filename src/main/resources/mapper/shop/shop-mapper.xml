@@ -66,7 +66,7 @@
 	</delete>
 	
 	<update id="saleStatus">
-		UPDATE product_status set is_sale=#{select} where product_no=#{productNo}
+		UPDATE product_status set is_sale=#{select}, reg_date = sysdate where product_no=#{productNo}
 	</update>
 	
 	<select id="totalProductContents" resultType="_int">

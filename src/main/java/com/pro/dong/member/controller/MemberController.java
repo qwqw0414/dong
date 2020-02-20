@@ -257,6 +257,15 @@ public class MemberController {
 		if(passwordEncoder.matches(password, m.getPassword())) {
 			msg = "로그인 성공";
 			mav.addObject("memberLoggedIn", m);
+			
+			Map<String,String>islogin = new HashMap<>();
+			islogin.put(session.getId(), m.getMemberId());
+			
+			System.out.println("===================================="+islogin);
+			
+			
+			
+			
 
 			//아이디저장
 			String saveId = request.getParameter("saveId");

@@ -209,6 +209,7 @@
 	where product_no=#{productNo}
 	start with comment_level = 1
 	connect by comment_ref = prior comment_no
+	order siblings by comment_no desc,comment_level desc
 	</select>
 	
 	<delete id="deleteLevel1">

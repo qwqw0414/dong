@@ -445,7 +445,7 @@ $(function(){
 				success:data=>{
 					console.log(data);
 						if(data=="1"){
-							alert("성공 니 댓글 맨뒤에~");
+							alert("성공");
 						}
 						else{
 							alert("실패")
