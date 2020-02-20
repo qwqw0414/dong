@@ -336,7 +336,7 @@ public class ProductController {
 		@RequestMapping(value="/insertComments", produces="text/plain;charset=UTF-8")
 		@ResponseBody
 		public String insertComments(HttpSession session, ProductComment pc, @RequestParam("productNo") int productNo) {
-			
+			pc.setContents(pc.getContents().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\\n", "<br/>"));
 			int result = ps.insertProductComment(pc);
 			System.out.println(result);
 			
@@ -399,6 +399,7 @@ public class ProductController {
 		@ResponseBody
 		@RequestMapping(value="/insertLevel2", produces="text/plain;charset=UTF-8")
 		public String insertLevel2(ProductComment pc,@RequestParam("productNo")int productNo) {
+			pc.setContents(pc.getContents().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\\n", "<br/>"));
 			log.debug("dddddd={}",pc);
 			
 			int result = ps.insertProductComment(pc);
