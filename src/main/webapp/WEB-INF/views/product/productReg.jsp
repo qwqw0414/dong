@@ -222,7 +222,9 @@ $("#productReg #btn-reg").click(()=>{
     formData.append("files", $file2[0].files[0]);
     formData.append("files", $file3[0].files[0]);
     formData.append("files", $file4[0].files[0]);
-
+	
+    console.log("formData찍는다");
+    console.log(formData);
 
     $.ajax({
         url: "${pageContext.request.contextPath}/product/productReg",
