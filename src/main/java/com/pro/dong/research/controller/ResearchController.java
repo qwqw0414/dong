@@ -29,14 +29,14 @@ public class ResearchController {
 	public String selectTop(String rank, String year, String month) {
 		
 		Map<String, String> param = new HashMap<>();
-		param.put("rank", rank);
-		param.put("year", year);
-		param.put("month", month);
+		param.put("rank", 3+"");
+		param.put("year", 2020+"");
+		param.put("month", 1+"");
 		
-		List<Map<String,String>> addr = new ArrayList<>();
-//		addr = rs.selectTopAddr()
+		List<Map<String,String>> addr = rs.selectTopAddr(param);
 		
 		
-		return gson.toJson(param);
+		
+		return gson.toJson(addr);
 	}
 }

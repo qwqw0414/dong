@@ -1,4 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="research">
+
+	<select id="selectTopAddr" resultType="map" parameterType="map">
+		select * 
+		from (
+		    select sido, sigungu, dong, count(*) cnt
+		    from(
+		        select sido, sigungu, dong, is_sale, s.reg_date 
+		        from product p join product_status s using(product_no) 
+		        where is_sale = 'Y' and to_char(s.reg_date,'yyyy') = ${year} and to_char(s.reg_date,'mm') = ${month})
+		    group by(sido,sigungu,dong)
+		    )
+		where rownum <![CDATA[ <= ]]> ${rank}
+	</select>
+
 </mapper>
