@@ -338,7 +338,7 @@ public class MemberController {
 						 "<a href='http://localhost:9090/dong/verify.do?email=" +email +
 						 "authKey="+authKey+
 						 "' target='_blank'>이메일 인증 확인</a>");*/
-		sendMail.setFrom("dhrmsghss@gmail.com", "오근호");
+		sendMail.setFrom("dhrmsghss@gmail.com", "관리자");
 		sendMail.setTo(email);
 		sendMail.send();
 		
