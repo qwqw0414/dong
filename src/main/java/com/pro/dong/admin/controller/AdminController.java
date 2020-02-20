@@ -270,6 +270,10 @@ public class AdminController {
 	// ========================== 지은 끝
 	
 	// 예찬 시작 ==========================
+	@RequestMapping("/kingOfDongnae.do")
+	public void kingOfDongnae() {
+		
+	}
 	
 	// ========================== 예찬 끝
 	
