@@ -116,6 +116,9 @@
 			<if test="searchKeyword != null and searchKeyword!=''">
 			 and P.member_id like '%${searchKeyword}%'		
 			</if>
+			<if test="start!=null and start !='' and end != null and end != ''">
+			and P.reg_date between to_date(#{start}, 'yyyymmdd') and to_date(#{end},'yyyymmddhh24miss') 
+			</if>
 		</where>
 	</select>
 	
@@ -148,6 +151,9 @@
 			</if>
 			<if test="dong!=null and dong!=''">
 				and O.dong like #{dong}
+			</if>
+			<if test="start!=null and start !='' and end != null and end != ''">
+			and O.reg_date between to_date(#{start}, 'yyyymmdd') and to_date(#{end},'yyyymmddhh24miss') 
 			</if>
 		</where>
 	</select>
