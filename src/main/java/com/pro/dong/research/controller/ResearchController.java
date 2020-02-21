@@ -35,13 +35,25 @@ public class ResearchController {
 		param.put("year", year);
 		param.put("month",month);
 		
+		//주소, 총 상품, 거래 수, 거래 비 조회
 		List<Map<String,String>> addr = rs.selectTopAddr(param);
 		
+		Map<String,List<Map<String,String>>> result = new HashMap<>();
+		result.put("addr", addr);
 		
-		
-		return gson.toJson(addr);
+		return gson.toJson(result);
 	}
 	
+	@RequestMapping("/thermometer")
+	@ResponseBody
+	public String thermometer(int shopNo) {
+
+		int result = rs.getThermometer(shopNo);
+		
+		return result+"";
+	}
+	
+
 	@RequestMapping("/insertHallOfFame")
 	@ResponseBody
 	public Map<String, Object> insertHallOfFame(@RequestParam("goldSido")String goldSido,@RequestParam("goldSigungu")String goldSigungu,@RequestParam("goldDong")String goldDong,
@@ -91,4 +103,6 @@ public class ResearchController {
 		
 		return resultMap;
 	}
+
+
 }

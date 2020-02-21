@@ -45,7 +45,6 @@ import com.pro.dong.shop.model.vo.Shop;
 @Controller
 @RequestMapping("/member")
 public class MemberController {
-	static Map<String,String> loginstatus = new HashMap<>();
 	static Logger log = LoggerFactory.getLogger(MemberController.class);
 	static Gson gson = new Gson();
 	
@@ -259,12 +258,6 @@ public class MemberController {
 			mav.addObject("memberLoggedIn", m);
 			
 			
-			if(loginstatus.containsKey(m.getMemberId())) {
-//				loginstatus.remove(session.getId());
-			}
-					
-			loginstatus.put(m.getMemberId(),session.getId());
-			System.out.println("====================================지금 로그인 중인 살함"+loginstatus+"==========================================");
 			
 			
 
@@ -308,10 +301,8 @@ public class MemberController {
 	@RequestMapping("/memberLogOut.do")
 	public String memberLogOut(SessionStatus sessionStatus, HttpSession session) {
 		if(!sessionStatus.isComplete()) {
-			loginstatus.remove(session.getId());
 			sessionStatus.setComplete();
 		}
-		System.out.println("로그아웃후============================"+loginstatus+"=========================================");
 		return "redirect:/";
 	}
 	

@@ -50,6 +50,9 @@ public interface ProductService {
 	List<Map<String, String>> loadProductReportCategory();
 	int insertProductReport(Map<String, String> param);
 	List<Map<String, String>> selectProductByProductNo(int productNo);
+	int delImg(String delImgName);
+	int deleteOldImgName(Map<String, String> param);
+	int insertNewImg(Map<String, String> param);
 	//========================== 주영 끝
 		
 	//현규 시작 ==========================

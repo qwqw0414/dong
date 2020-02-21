@@ -128,6 +128,18 @@ public class ProductDAOImpl implements ProductDAO{
 	public List<Map<String, String>> selectProductByProductNo(int productNo) {
 		return sst.selectList("product.selectProductByProductNo", productNo);
 	}
+	@Override
+	public int delImg(String delImgName) {
+		return sst.delete("product.delImg", delImgName);
+	}
+	@Override
+	public int deleteOldImgName(Map<String, String> param) {
+		return sst.delete("product.deleteOldImgName", param);
+	}
+	@Override
+	public int insertNewImg(Map<String, String> param) {
+		return sst.insert("product.insertNewImg", param);
+	}
 	//========================== 주영 끝
 		
 	//현규 시작 ==========================

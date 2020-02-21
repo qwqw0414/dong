@@ -20,6 +20,7 @@ public class ResearchDAOImpl implements ResearchDAO{
 	}
 
 	@Override
+
 	public int insertHallOfFame(Map<String, String> param) {
 		return sst.insert("research.insertHallOfFame", param);
 	}
@@ -33,6 +34,10 @@ public class ResearchDAOImpl implements ResearchDAO{
 	public List<Map<String, String>> loadHallOfFame(int cPage, int numPerPage) {
 		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
 		return sst.selectList("research.loadHallOfFame", null, rowBounds);
+	}
+	public int getThermometer(int shopNo) {
+		return sst.selectOne("research.getThermometer", shopNo);
+
 	}
 	
 }

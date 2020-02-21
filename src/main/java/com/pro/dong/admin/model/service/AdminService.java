@@ -38,6 +38,8 @@ public interface AdminService {
 	List<Map<String, String>> selectMemberPointList(int cPage, int numPerPage, Map<String, String> param);
 	int selectMemberOrderTotal(Map<String, String> param);
 	List<Map<String, String>> selectMemberOrderList(int cPage, int numPerPage, Map<String, String> param);
+	int selectMemberPointOutTotal(Map<String, String> param);
+	List<Map<String, String>> selectMemberPointOutList(int cPage, int numPerPage, Map<String, String> param);
 	// ========================== 지은 끝
 
 	// 예찬 시작 ==========================
@@ -54,6 +56,8 @@ public interface AdminService {
 	Map<String, String> selectOneProductReport(int boardNo);
 	int updateReportStatus(int reportNo);
 	// ========================== 주영 끝
+	
+	
 	
 
 	// 현규 시작 ==========================

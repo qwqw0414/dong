@@ -589,8 +589,11 @@ $(()=>{
 
         // 색 변경
         if(level == 't') $msg.addClass("text-success");
-        else if(level == 'f') $msg.addClass("text-danger");
-        else $msg.addClass("text-primary");
+        else if(level == 'f') $msg.addClass("text-danger animated shake");
+        else {
+        	$msg.addClass("text-primary");
+        	$msg.removeClass("animated shake");
+        }
 
         //메세지 변경
         switch (type) {

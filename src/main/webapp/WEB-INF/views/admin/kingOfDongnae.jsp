@@ -59,6 +59,7 @@ $(()=>{
             },
             dataType:"json",
             success:data=>{
+
             	console.log(data);
                 let html = '';
 				html += "<span id='goldSido'>"+data[0].SIDO+"</span>&nbsp;<span id='goldSigungu'>"+data[0].SIGUNGU+"</span>&nbsp;<span id='goldDong'>"+data[0].DONG+"</span>&nbsp;<small>("+data[0].CNT+"건)</small>";

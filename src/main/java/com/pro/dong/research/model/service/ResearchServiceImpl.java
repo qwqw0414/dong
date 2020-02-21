@@ -19,6 +19,7 @@ public class ResearchServiceImpl implements ResearchService{
 	}
 
 	@Override
+
 	public int insertHallOfFame(Map<String, String> param) {
 		return rd.insertHallOfFame(param);
 	}
@@ -31,5 +32,9 @@ public class ResearchServiceImpl implements ResearchService{
 	@Override
 	public List<Map<String, String>> loadHallOfFame(int cPage, int numPerPage) {
 		return rd.loadHallOfFame(cPage,numPerPage);
+	}
+	public int getThermometer(int shopNo) {
+		return rd.getThermometer(shopNo);
+
 	}
 }

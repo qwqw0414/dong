@@ -70,7 +70,7 @@ function showchargingDetails(cPage){
 			for(var i=0; i<data.list.length; i++){
 				html+="<th scope='row'>"+(i+1+((cPage-1)*10))+"</th>";				
 				html+="<td>"+data.list[i].REG_DATE+"</td>";
-				html+="<td>"+data.list[i].POINT_AMOUNT+"원</td>";
+				html+="<td>"+numberComma(data.list[i].POINT_AMOUNT)+"원</td>";
 				if(data.list[i].STATUS=='I'){
 				html+="<td>충전</td>";
 				}
@@ -148,7 +148,7 @@ function selectByOption(cPage){
 			for(var i=0; i<data.list.length; i++){
 				html+="<th scope='row'>"+(i+1+((cPage-1)*10))+"</th>";				
 				html+="<td>"+data.list[i].REG_DATE+"</td>";
-				html+="<td>"+data.list[i].POINT_AMOUNT+"원</td>";
+				html+="<td>"+numberComma(data.list[i].POINT_AMOUNT)+"원</td>";
 				if(data.list[i].STATUS=='I'){
 				html+="<td>충전</td>";
 				}
@@ -179,7 +179,11 @@ function selectByOption(cPage){
 };//end of function
 
 	
-	
+//숫자 컴마 함수
+function numberComma(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
 	
 	
 	

@@ -225,12 +225,12 @@ public class AdminController {
 		param.put("searchType", searchType);
 		param.put("searchKeyword", searchKeyword);
 
-		int totalPoint = as.selectMemberPointTotal(param);
-		List<Map<String, String>> list = as.selectMemberPointList(cPage, numPerPage, param);
-		String pageBar = new Utils().getOneClickPageBar(totalPoint, cPage, numPerPage);
+		int totalPointOut = as.selectMemberPointOutTotal(param);
+		List<Map<String, String>> list = as.selectMemberPointOutList(cPage, numPerPage, param);
+		String pageBar = new Utils().getOneClickPageBar(totalPointOut, cPage, numPerPage);
 
 		result.put("list", list);
-		result.put("totalPoint", totalPoint);
+		result.put("totalPointOut", totalPointOut);
 		result.put("cPage", cPage);
 		result.put("numPerPage", numPerPage);
 		result.put("pageBar", pageBar);
@@ -246,13 +246,14 @@ public class AdminController {
 	
 	@RequestMapping("/memberOrderListEnd")
 	@ResponseBody
-	public Map<String,Object> memberOrderListEnd(HttpSession session, @RequestParam("start") String start, @RequestParam("end") String end,@RequestParam(value="sido", defaultValue="")String sido, @RequestParam(value="sigungu", defaultValue="")String sigungu, @RequestParam(value="dong", defaultValue="")String dong,
+	public Map<String,Object> memberOrderListEnd(HttpSession session, @RequestParam("start") String start, @RequestParam("end") String end,
+			@RequestParam(value="sido", defaultValue="")String sido, @RequestParam(value="sigungu", defaultValue="")String sigungu, @RequestParam(value="dong", defaultValue="")String dong,
 			@RequestParam(value="searchType", defaultValue="")String searchType, @RequestParam(value="searchKeyword",defaultValue="") String searchKeyword,@RequestParam(value="type",defaultValue="") String type,
 			@RequestParam(value="cPage",defaultValue="1") int cPage){
 		final int numPerPage = 10;
 		Map<String, Object> result = new HashMap<>();
 		Map<String, String> param = new HashMap<>();
-		param.put("end", end);
+		param.put("end", end+"235959");
 		param.put("start", start);
 		param.put("sido", sido);
 		param.put("sigungu", sigungu);
