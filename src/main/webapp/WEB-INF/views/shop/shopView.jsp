@@ -377,6 +377,18 @@
 	</style>
 	
 	<script>
+	function lastDate(date){
+	    var regDate = new Date(date);
+	    var now = new Date();
+
+	    var diffHour = Math.ceil((now.getTime() - regDate.getTime())/60000/60);
+
+	    if(diffHour > 23){
+	      return Math.floor(diffHour/24)+"일 전";
+	    }
+
+	    return diffHour+"시간 전";
+	}
 	/***********하진 시작*/
 	$(()=>{
 		
