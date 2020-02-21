@@ -10,9 +10,7 @@ $(() => {
 	loadMemberOrderList(1);
 	
 	$("#searchMemberOrder").click(function (){
-		
 		loadMemberOrderList(1);
-		
 	});
 	
 	$("#memberOrderAll").click(function (){
@@ -29,7 +27,6 @@ function loadMemberOrderList(cPage){
 	var start = $("#startDate").val();
 	var end = $("#endDate").val();
 	
-	
 	$.ajax({
 		url : "${pageContext.request.contextPath}/admin/memberOrderListEnd",
 		type : "GET",
@@ -43,8 +40,6 @@ function loadMemberOrderList(cPage){
 			sigungu: sigungu,
 			dong:dong
 		}, 
-		dataType:"json",
-		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 		success: data => {
 			console.log("memberOrderList@ajax 진행!");
 			let header = "<tr><th>주문번호</th><th>회원아이디</th><th>주문내역</th><th>주소(동)</th><th>상품가격</th><th>주문날짜</th></tr>";
@@ -52,7 +47,7 @@ function loadMemberOrderList(cPage){
 			$table.html("");
 			let html = "";
 			data.list.forEach(cate => {
-				html += "<tr><td>"+cate.ORDER_NO+"</td><td>"+cate.MEMBER_ID+"</td><td>"+cate.PRODUCT_NO+"</td><td>"+cate.DONG+"</td><td>"+cate.PRICE+"</td><td>"+cate.DATE+"</td></tr>";
+				html += "<tr><td>"+cate.ORDER_NO+"</td><td>"+cate.MEMBER_ID+"</td><td>"+cate.PRODUCT_NO+"</td><td>"+cate.DONG+"</td><td>"+numberComma(cate.PRICE)+"</td><td>"+cate.DATE+"</td></tr>";
 			});
 			$table.append(header+html);
 			$("#pageBar").html(data.pageBar);
@@ -60,12 +55,12 @@ function loadMemberOrderList(cPage){
 			
 		},error: (x,s,e) => {
 			console.log("memberOrderList@ajax 실패실패!!");
-		},complete: (data) => {
-			$("#pageBar").click((e) => {
+		},complete: () => {
+			$("#pageBar a").click((e) => {
 				loadMemberOrderList($(e.target).siblings("input").val());
 			});
 		}
-	});
+	}); /* end of ajax */
 	}/* end of loadMemberOrderList */
 	
 	$.ajax({
@@ -145,7 +140,9 @@ function loadMemberOrderList(cPage){
 	
 }); //end of (()=>)
 	
-
+function numberComma(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 </script>
 
 <h1>회원 거래내역 관리</h1>
@@ -153,10 +150,13 @@ function loadMemberOrderList(cPage){
 <div class="wrapper">
   <div class="input-group">	
   <select  aria-label="First name" class="form-control" id="sido" >
+  <option value=''>전체</option>
   </select>
   <select  aria-label="First name" class="form-control" id="sigungu" >
+  <option value=''>전체</option>
   </select>
   <select  aria-label="First name" class="form-control" id="dong" >
+  <option value=''>전체</option>
   </select>
   </div>
 </div>

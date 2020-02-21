@@ -33,11 +33,14 @@ $(()=>{
             },
             dataType:"json",
             success:data=>{
+
+                console.log(data);
+
                 let html = '';
-                data.forEach(list => {
+                data.addr.forEach(list => {
                     html += '<li>';
                     html += list.SIDO +' '+ list.SIGUNGU +' '+ list.DONG;
-                    html += ' ('+list.CNT+'건)'
+                    html += ' ('+list.CNT+'/'+list.ALL_CNT+' '+list.AVG+'%)'
                     html += '</li>'
                 });
 

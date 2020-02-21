@@ -82,7 +82,7 @@ public class ProductController {
 		String loc = "/";
 		
 		int result = ps.deleteProduct(productNo);
-		log.debug("@@@@@@@@@@@@@@@={}",productNo);
+		
 		if(result<0) {
 			msg="상품삭제를 실패했습니다.";
 			loc="/";

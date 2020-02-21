@@ -17,4 +17,9 @@ public class ResearchServiceImpl implements ResearchService{
 	public List<Map<String, String>> selectTopAddr(Map<String, String> param) {
 		return rd.selectTopAddr(param);
 	}
+
+	@Override
+	public int getThermometer(int shopNo) {
+		return rd.getThermometer(shopNo);
+	}
 }
