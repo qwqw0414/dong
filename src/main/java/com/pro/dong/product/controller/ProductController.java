@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -17,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -424,6 +426,43 @@ public class ProductController {
 		return result+"";
 	}
 	
+	@RequestMapping("/productUpdateEnd")
+	@ResponseBody
+	public String productUpdateEnd(@RequestParam(value = "title") String title, @RequestParam(value = "categoryId") String categoryId,
+								   @RequestParam(value = "sido") String sido, @RequestParam(value = "sigungu") String sigungu,
+								   @RequestParam(value = "dong") String dong, @RequestParam(value = "status") String status,
+								   @RequestParam(value = "isTrade") String isTrade, @RequestParam(value = "info") String info,
+								   @RequestParam(value = "price") String price, @RequestParam(value = "shipping") String shipping,
+								   @RequestParam(value = "haggle") String haggle, @RequestParam(value = "productNo") String productNo) {
+		if(shipping == "true") 
+			shipping = "Y";
+		else 
+			shipping = "N";
+		
+		if(haggle == "true") 
+			haggle = "Y";
+		else 
+			haggle = "N";
+		
+		Map<String, String> param = new HashMap<>();
+		param.put("title", title);
+		param.put("categoryId", categoryId);
+		param.put("sido", sido);
+		param.put("sigungu", sigungu);
+		param.put("dong", dong);
+		param.put("status", status);
+		param.put("isTrade", isTrade);
+		param.put("info", info);
+		param.put("price", price);
+		param.put("shipping", shipping);
+		param.put("haggle", haggle);
+		param.put("productNo", productNo);
+		
+		int result = ps.productUpdateEnd(param);
+		
+		return result+"";
+	}
+	
 	//========================== 주영 끝
 		
 	//현규 시작 ==========================
@@ -434,8 +473,6 @@ public class ProductController {
 			pc.setContents(pc.getContents().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\\n", "<br/>"));
 			int result = ps.insertProductComment(pc);
 			System.out.println(result);
-			
-			
 			
 			return gson.toJson(result)+"";
 		}
@@ -452,8 +489,6 @@ public class ProductController {
 			list = ps.selectProductCommentList(productNo,cPage,numPerPage);
 			log.debug("DB에서 가져온 리스트={}",list);
 			
-			
-			
 			int totalContents = ps.countComment(productNo);
 			String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
 			
@@ -461,13 +496,8 @@ public class ProductController {
 			result.put("list", list);
 			result.put("pageBar", pageBar);
 			
-			
-			
 			return gson.toJson(result)+"";
 		}
-		
-		
-		
 		
 		//댓글 지우기
 		@ResponseBody
@@ -485,7 +515,6 @@ public class ProductController {
 //			if (result>0) {
 //				list = bs.selectBoardCommentList(productNo);
 //			}
-			
 			
 			return gson.toJson(result)+"";
 		}

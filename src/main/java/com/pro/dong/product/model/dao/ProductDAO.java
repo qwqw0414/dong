@@ -55,6 +55,7 @@ public interface ProductDAO {
 	int delImg(String delImgName);
 	int deleteOldImgName(Map<String, String> param);
 	int insertNewImg(Map<String, String> param);
+	int productUpdateEnd(Map<String, String> param);
 	//========================== 주영 끝
 		
 	//현규 시작 ==========================

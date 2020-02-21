@@ -140,6 +140,10 @@ public class ProductDAOImpl implements ProductDAO{
 	public int insertNewImg(Map<String, String> param) {
 		return sst.insert("product.insertNewImg", param);
 	}
+	@Override
+	public int productUpdateEnd(Map<String, String> param) {
+		return sst.update("product.productUpdateEnd", param);
+	}
 	//========================== 주영 끝
 		
 	//현규 시작 ==========================
@@ -165,5 +169,4 @@ public class ProductDAOImpl implements ProductDAO{
 		return sst.delete("product.deleteLevel2",commentNo);
 	}
 	//========================== 현규 끝
-	
 }

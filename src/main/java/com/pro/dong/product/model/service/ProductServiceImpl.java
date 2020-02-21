@@ -151,6 +151,10 @@ public class ProductServiceImpl implements ProductService{
 	public int insertNewImg(Map<String, String> param) {
 		return pd.insertNewImg(param);
 	}
+	@Override
+	public int productUpdateEnd(Map<String, String> param) {
+		return pd.productUpdateEnd(param);
+	}
 	//========================== 주영 끝
 		
 	//현규 시작 ==========================

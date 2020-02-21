@@ -217,12 +217,14 @@
 	</delete>
 	
 	<insert id="insertNewImg">
-		insert into product_attachment values (seq_product_attachment.nextval, #{productNo}, #{fileName}
-		<if test="isThum != null and isThum != ''">
-			, #{isThum}
-		</if>
-		)
+		insert into product_attachment values (seq_product_attachment.nextval, #{productNo}, #{fileName}, #{isThum})
 	</insert>
+	
+	<update id="productUpdateEnd">
+		update product set category_id = #{categoryId}, title = #{title}, price = #{price}, shipping = #{shipping}, 
+		haggle = #{haggle}, info = #{info}, sido = #{sido}, sigungu = #{sigungu}, dong = #{dong}, 
+		status = #{status}, is_trade = #{isTrade} where product_no = #{productNo}
+	</update>
 	<!-- ==========================  주영 끝 -->
 	
 	<!-- 현규 시작 ========================== -->

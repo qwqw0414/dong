@@ -4,8 +4,6 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <%
 	Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
-	String productNo = (String)request.getAttribute("productNo");
-	System.out.println("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"+productNo);
 %>
 <style>
 #productReg{/* font-family: "MapoPeacefull" sans-serif; */ width: 1000px; margin: auto;}
@@ -18,6 +16,11 @@
 #productReg #category-check{top: 275px; width: 800px;}
 #productReg .images img{width: auto; height: auto; max-width: 190px; height: 190px;}
 #productReg .images {float: right; width: 200px;}
+.kjSbMl {
+    background-image : url("${pageContext.request.contextPath}/resources/images/imgX.png");
+    width: 20px;
+    height: 20px;
+}
 </style>
 <div id="productReg" style="font-family: 'MapoPeacefull';">
 <h1>상품 수정</h1>${list }
@@ -29,13 +32,13 @@
             <div class="images" id="images4">
 	                <input type="file" class="product-photo" id="file-4" name="upFile">
                 <br>
-                <c:if test="${list[0] ne null}">
+                <c:if test="${list[3] ne null}">
 	                <div>
-	                <input class="delImgBtn" type="button" value="삭제" onclick="delImg(this);">
-	                <input type="hidden" value="${list[3].PHOTO}" >
+	                	<button type="button" onclick="delImg(this);" class="sc-fepxGN kjSbMl"></button>
+	                	<input type="hidden" value="${list[3].PHOTO}" >
 	                </div>
                 </c:if>
-                <img src="" class="realProImg" id="img-4">
+                <img src="" class="realProImg" id="img_4">
                 <c:if test="${list[3] ne null}">
                 	<img src="${pageContext.request.contextPath}/resources/upload/product/${list[3].PHOTO}" class="proImg" id="img-4">
                 </c:if>
@@ -46,7 +49,9 @@
 	                <input type="file" class="product-photo" id="file-3" name="upFile">
                 <br>
 	                <div>
-	                <input class="delImgBtn" type="button" value="삭제" onclick="delImg(this);">
+	                <c:if test="${list[2] ne null}">
+		                <button type="button" onclick="delImg(this);" class="sc-fepxGN kjSbMl"></button>
+	                </c:if>
 	                <input type="hidden" value="${list[2].PHOTO}" >
 	                </div>
                 <img src="" class="realProImg" id="img-3">
@@ -60,9 +65,9 @@
 	                <input type="file" class="product-photo" id="file-2" name="upFile">
 	                <input type="hidden" value="${list[1].PHOTO}" >
                 <br>
-                <c:if test="${list[0] ne null}">
+                <c:if test="${list[1] ne null}">
 	                <div>
-	                	<input class="delImgBtn" type="button" value="삭제" onclick="delImg(this);" >
+	                	<button type="button" onclick="delImg(this);" class="sc-fepxGN kjSbMl"></button>
 	                </div>
                 </c:if>
                 <img src="" class="realProImg" id="img-2">
@@ -77,8 +82,8 @@
                 <br>
                 <c:if test="${list[0] ne null}">
 	                <div>
-	                	<input class="delImgBtn" type="button" value="삭제" onclick="delImg(this);">
-	                	<input type="hidden" value="${list[0].PHOTO}" >
+					<button type="button" onclick="delImg(this);" class="sc-fepxGN kjSbMl"></button>
+                	<input type="hidden" value="${list[0].PHOTO}" >
 	                </div>
                 </c:if>
                 <img src="" class="realProImg" id="img-1">
@@ -97,105 +102,102 @@
     </div>
 </div>
 <hr>
-<div class="input-area" style="height: 80px;">
-    <div class="product-tag">제목</div>
-    <div class="product-insert">
-        <input type="text" id="title" maxlength="40" value="${list[0].TITLE}">
-    </div>
-</div>
-<hr>
-<div class="input-area" style="height: 320px;">
-    <div class="product-tag">카테고리</div>
-    <div class="product-insert">
-        <select id="sel-cate-pre" size="10">
-        </select>
-        <select id="sel-cate-end" size="10" style="left: 299px;">
-        </select>
-        <br>
-        <div class="text-danger" id="category-check">
-            선택한 카테고리 :
-            <span id="selectedCategory"></span>
-        </div>
-    </div>
-</div>
-<hr>
-<div class="input-area" style="height: 140px;">
-    <div class="product-tag">거래지역</div>
-    <div class="product-insert">
-        <button id="btn-myLoaction">내 위치</button> <button>주소 검색</button> <br>
-        <input type="text" id="address" value="${list[0].SIDO} ${list[0].SIGUNGU} ${list[0].DONG}" readonly>
-    </div>
-</div>
-<hr>
-<div class="input-area">
-    <div class="product-tag">상태</div>
-    <div class="product-insert">
-        <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="status-o" name="status" ${list[0].STATUS eq 'O' ? "checked" : ""} class="custom-control-input" value="O">
-            <label class="custom-control-label" for="status-o">중고상품</label>
-        </div>
-        <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="status-n" name="status" ${list[0].STATUS eq 'N' ? "checked" : ""} class="custom-control-input" value="N">
-            <label class="custom-control-label" for="status-n">새상품</label>
-        </div>
-    </div>
-</div>
-<hr>
-<div class="input-area">
-    <div class="product-tag">교환</div>
-    <div class="product-insert">
-        <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="isTrade-y" name="isTrade" ${list[0].IS_TRADE eq 'Y' ? "checked" : ""} class="custom-control-input" value="Y">
-            <label class="custom-control-label" for="isTrade-y">교환가능</label>
-        </div>
-        <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="isTrade-n" name="isTrade" ${list[0].IS_TRADE eq 'N' ? "checked" : ""} class="custom-control-input" value="N">
-            <label class="custom-control-label" for="isTrade-n">교환불가</label>
-        </div>
-    </div>
-</div>
-<hr>
-<div class="input-area">
-    <div class="product-tag">가격</div class="product-tag">
-    <div class="product-insert">
-        <input type="text" id="price" value="${list[0].PRICE}">
-        <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" ${list[0].SHIPPING eq 'Y' ? "checked" : ""} id="shipping">
-            <label class="custom-control-label" for="shipping">무료 배송</label>
-        </div>
-        <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" ${list[0].HAGGLE eq 'Y' ? "checked" : ""} id="haggle">
-            <label class="custom-control-label" for="haggle">가격협의 가능</label>
-        </div>
-    </div>
-</div>
-<hr>
-<div class="input-area">
-    <div class="product-tag">설명</div class="product-tag">
-    <div class="product-insert">
-        <textarea name="" id="info" cols="30" rows="10" class="form-control"></textarea>
-    </div>
-</div>
-<hr>
-<button id="btn-reg">수정하기</button>
-
+	<div class="input-area" style="height: 80px;">
+	    <div class="product-tag">제목</div>
+	    <div class="product-insert">
+	        <input type="text" name="title" id="title" maxlength="40" value="${list[0].TITLE}">
+	    </div>
+	</div>
+	<hr>
+	<div class="input-area" style="height: 320px;">
+	    <div class="product-tag">카테고리</div>
+	    <div class="product-insert">
+	        <select id="sel-cate-pre" size="10">
+	        </select>
+	        <select id="sel-cate-end" size="10" style="left: 299px;">
+	        </select>
+	        <br>
+	        <div class="text-danger" id="category-check">
+	            선택한 카테고리 :
+	            <span id="selectedCategory"></span>
+	        </div>
+	    </div>
+	</div>
+	<hr>
+	<div class="input-area" style="height: 140px;">
+	    <div class="product-tag">거래지역</div>
+	    <div class="product-insert">
+	        <button id="btn-myLoaction">내 위치</button> <button>주소 검색</button> <br>
+	        <input type="text" id="address" value="${list[0].SIDO} ${list[0].SIGUNGU} ${list[0].DONG}" readonly>
+	    </div>
+	</div>
+	<hr>
+	<div class="input-area">
+	    <div class="product-tag">상태</div>
+	    <div class="product-insert">
+	        <div class="custom-control custom-radio custom-control-inline">
+	            <input type="radio" id="status-o" name="status" ${list[0].STATUS eq 'O' ? "checked" : ""} class="custom-control-input" value="O">
+	            <label class="custom-control-label" for="status-o">중고상품</label>
+	        </div>
+	        <div class="custom-control custom-radio custom-control-inline">
+	            <input type="radio" id="status-n" name="status" ${list[0].STATUS eq 'N' ? "checked" : ""} class="custom-control-input" value="N">
+	            <label class="custom-control-label" for="status-n">새상품</label>
+	        </div>
+	    </div>
+	</div>
+	<hr>
+	<div class="input-area">
+	    <div class="product-tag">교환</div>
+	    <div class="product-insert">
+	        <div class="custom-control custom-radio custom-control-inline">
+	            <input type="radio" id="isTrade-y" name="isTrade" ${list[0].IS_TRADE eq 'Y' ? "checked" : ""} class="custom-control-input" value="Y">
+	            <label class="custom-control-label" for="isTrade-y">교환가능</label>
+	        </div>
+	        <div class="custom-control custom-radio custom-control-inline">
+	            <input type="radio" id="isTrade-n" name="isTrade" ${list[0].IS_TRADE eq 'N' ? "checked" : ""} class="custom-control-input" value="N">
+	            <label class="custom-control-label" for="isTrade-n">교환불가</label>
+	        </div>
+	    </div>
+	</div>
+	<hr>
+	<div class="input-area">
+	    <div class="product-tag">가격</div>
+	    <div class="product-insert">
+	        <input type="text" id="price" value="${list[0].PRICE}">
+	        <div class="custom-control custom-checkbox">
+	            <input type="checkbox" class="custom-control-input" ${list[0].SHIPPING eq 'Y' ? "checked" : ""} id="shipping">
+	            <label class="custom-control-label" for="shipping">무료 배송</label>
+	        </div>
+	        <div class="custom-control custom-checkbox">
+	            <input type="checkbox" class="custom-control-input" ${list[0].HAGGLE eq 'Y' ? "checked" : ""} id="haggle">
+	            <label class="custom-control-label" for="haggle">가격협의 가능</label>
+	        </div>
+	    </div>
+	</div>
+	<hr>
+	<div class="input-area">
+	    <div class="product-tag">설명</div>
+	    <div class="product-insert">
+	        <textarea name="" id="info" cols="30" rows="10" class="form-control"></textarea>
+	    </div>
+	</div>
+	<hr>
+	<button id="btn-reg" >수정하기</button>
 </div>
 
 <script>
-/* function imgChk(e){
-	var img = $(e).parent().siblings(".proImg");
-	console.log("img=");
-	console.log(img);
-	
-	if($(e).is(":checked")){
-		img.remove();
-		$(e).parent().html("<input type='file' class='product-photo' id='file-1' name='upFile'>");
-	}
-} */
-
 function delImg(e){
 	var delImgName = $(e).siblings("input").val();
+	console.log("delImgName의 val은");
+	console.log(delImgName);
 	var img = $(e).parent().siblings(".proImg");
+	console.log("proImg의 img는");
+	console.log(img);
+	if(img == ''){
+		img =  $(e).parent().siblings(".realProImg");
+		console.log("realProImg의 img는");
+		console.log(img);
+	}
 	$.ajax({
 		url: "${pageContext.request.contextPath}/product/delImg",
 		data:{delImgName : delImgName},
@@ -212,7 +214,7 @@ function delImg(e){
 		complete: (data)=>{
       	}
 	});//end of ajax
-}
+} //end function
 
 
 $(".product-photo").change(function(e){
@@ -229,6 +231,9 @@ $(".product-photo").change(function(e){
     }
     console.log("$oldImgName");
 	formData.append("oldImgName", oldImgName);
+	console.log("files를 찍어봅니다.");
+	console.log($file[0].files[0]);
+	formData.append("files", $file[0].files[0]);
 	
 	var $form = $("#productReg #formData");
 	
@@ -236,12 +241,14 @@ $(".product-photo").change(function(e){
 	var $ffile = $("input[type=file]");
 	var $thumImg = $ffile[3].files[0];
 	var isThum = "";
-	
+	console.log("썸네일이랑 같은 이미지라고 생각하는 애");
+	console.log($file[0].files[0]);
 	if($thumImg != $file[0].files[0])
-		isThum = "Y";
+		isThum = "N";
 	else
-		isThum = "";
+		isThum = "Y";
 	
+	console.log("isThum은?", isThum);
 	formData.append("isThum", isThum);
 	formData.append("productNo", ${list[0].PRODUCT_NO});
     $.ajax({
@@ -260,116 +267,7 @@ $(".product-photo").change(function(e){
 
     return result;
 	
-});
-	
-$(()=>{
-var $selectPre = $("#productReg #sel-cate-pre");
-var $selectEnd = $("#productReg #sel-cate-end");
-var $selectedCategory = $("#productReg #selectedCategory");
-var ref = "";
-var $file1 = $("#productReg #file-1");
-var $file2 = $("#productReg #file-2");
-var $file3 = $("#productReg #file-3");
-var $file4 = $("#productReg #file-4");
-var $title = $("#productReg #title");
-var $address = $("#productReg #address");
-var $price = $("#productReg #price");
-var $info = $("#productReg #info");
-
-$("#info").text("${list[0].INFO}");
-
-// 상품 등록
-$("#productReg #btn-reg").click(()=>{
-
-    if( $title.val() == null || $title.val().length == 0){
-        alert("제목을 입력해주세요.");
-        $title.focus();
-        return;
-    }
-
-    if($selectPre.val() == null || $selectEnd.val() == null){
-        alert("카테고리를 선택해주세요.");
-        $selectPre.focus();
-        return;
-    }
-
-    if($address.val() == null || $address.val().length == 0){
-        alert("주소를 입력해주세요.");
-        $address.focus();
-        return;
-    }
-
-
-    if($("#productReg [name=status]:checked").val() == null){
-        alert("상태를 선택해주세요.");
-        $("#productReg #status-o").focus();
-        return;
-    }
-
-    if($("#productReg [name=isTrade]:checked").val() == null){
-        alert("교환 여부를 선택해주세요.");
-        $("#productReg #isTrade-y").focus();
-        return;
-    }
-
-    if($price.val() == null || $price.val().length == 0){
-        alert("가격을 입력해주세요.");
-        $price.focus();
-        return;
-    }
-
-    var regex= /[^0-9]/g
-    if(regex.test($price.val())){
-        alert("숫자만 입력해주세요.");
-        $price.focus();
-        return;
-    }
-
-    var addrArr = ($address.val()).split(" ");
-
-    var $form = $("#productReg #formData");
-
-    var formData = new FormData();
-	
-    formData.append("title",$title.val());
-    formData.append("categoryId",$selectEnd.val());
-    formData.append("sido",addrArr[0]);
-    formData.append("sigungu",addrArr[1]);
-    formData.append("dong",addrArr[2]);
-    formData.append("status",$("#productReg [name=status]:checked").val());
-    formData.append("isTrade",$("#productReg [name=isTrade]:checked").val());
-    formData.append("info",$info.val());
-    formData.append("price",$price.val());
-    formData.append("shipping",$("#productReg #shipping").prop("checked"));
-    formData.append("haggle",$("#productReg #haggle").prop("checked"));
-    formData.append("memberId",'<%=memberLoggedIn.getMemberId()%>');
-    formData.append("files", $file1[0].files[0]);
-    formData.append("files", $file2[0].files[0]);
-    formData.append("files", $file3[0].files[0]);
-    formData.append("files", $file4[0].files[0]);
-    
-    console.log("formData를 찍습니다.=");
-    console.log(formData);
-	
-    $.ajax({
-        url: "${pageContext.request.contextPath}/product/productUpdate",
-        data: formData,
-        dataType: "json",
-        type: "post",
-        contentType: false,
-        processData: false,
-        success: data =>{
-            if(data == 1){
-                alert("등록 성공");
-            }else{
-                alert("실패");
-            }
-        },
-        error: (x, s, e) => {
-            console.log("실패", x, s, e);
-        }
-    });
-});
+}); //end function
 
 //첨부파일 등록
 function upload(){
@@ -397,7 +295,7 @@ function upload(){
     })
 
     return result;
-}
+} //end function
 
 
 // 첨부파일 사진 미리보기
@@ -415,14 +313,124 @@ function imagePreview(input){
     }else{
         $(input).siblings(".realProImg").attr('src','');
     }
-}
+} //end function
 
 
+$(()=>{
+var $selectPre = $("#productReg #sel-cate-pre");
+var $selectEnd = $("#productReg #sel-cate-end");
+var $selectedCategory = $("#productReg #selectedCategory");
+console.log("카테고리=");
+console.log($selectPre);
+console.log($selectEnd);
+console.log($selectedCategory);
+var ref = "";
+var $file1 = $("#productReg #file-1");
+var $file2 = $("#productReg #file-2");
+var $file3 = $("#productReg #file-3");
+var $file4 = $("#productReg #file-4");
+var $title = $("#productReg #title");
+console.log($title.val());
+var $address = $("#productReg #address");
+var $price = $("#productReg #price");
+var $info = $("#productReg #info");
+var addrArr = ($address.val()).split(" ");
+
+$("#info").text("${list[0].INFO}");
+
+// 상품 수정
+$("#productReg #btn-reg").click(()=>{
+	console.log($title.val());
+    if( $title.val() == null || $title.val().length == 0){
+        alert("제목을 입력해주세요.");
+        $title.focus();
+        return false;
+    }
+
+    if($selectPre.val() == null || $selectEnd.val() == null){
+        alert("카테고리를 선택해주세요.");
+        $selectPre.focus();
+        return false;
+    }
+
+    if($address.val() == null || $address.val().length == 0){
+        alert("주소를 입력해주세요.");
+        $address.focus();
+        return false;
+    }
+
+
+    if($("#productReg [name=status]:checked").val() == null){
+        alert("상태를 선택해주세요.");
+        $("#productReg #status-o").focus();
+        return false;
+    }
+
+    if($("#productReg [name=isTrade]:checked").val() == null){
+        alert("교환 여부를 선택해주세요.");
+        $("#productReg #isTrade-y").focus();
+        return false;
+    }
+
+    if($price.val() == null || $price.val().length == 0){
+        alert("가격을 입력해주세요.");
+        $price.focus();
+        return false;
+    }
+
+    var regex= /[^0-9]/g
+    if(regex.test($price.val())){
+        alert("숫자만 입력해주세요.");
+        $price.focus();
+        return false;
+    }
+
+    /* var addrArr = ($address.val()).split(" ");
+	
+    formData.append("sido",addrArr[0]);
+    formData.append("sigungu",addrArr[1]);
+    formData.append("dong",addrArr[2]); */
+
+
+$.ajax({
+    url: "${pageContext.request.contextPath}/product/productUpdateEnd",
+    type: "post",
+    data: {title : $title.val(),
+    	   categoryId : $selectEnd.val(),
+    	   sido : addrArr[0],
+    	   sigungu : addrArr[1],
+    	   dong : addrArr[2],
+    	   status : $("#productReg [name=status]:checked").val(),
+    	   isTrade : $("#productReg [name=isTrade]:checked").val(),
+    	   info : $info.val(),
+    	   price : $price.val(),
+    	   shipping : $("#productReg #shipping").prop("checked"),
+    	   haggle : $("#productReg #haggle").prop("checked"),
+    	   productNo : ${list[0].PRODUCT_NO}},
+    success: data=>{
+        console.log(data);
+        if(data > 0){
+        	location.href="${pageContext.request.contextPath}/product/productView.do?productNo="+${list[0].PRODUCT_NO};
+        }
+        else{
+        	alert("상품 정보 수정 변경 실패");
+        }
+    },
+    error: (x, s, e) => {
+        console.log("실패", x, s, e);
+    }
+})
+
+});
+
+console.log("asdasd");
 //대분류 카테고리 가져오기
 $.ajax({
     url: "${pageContext.request.contextPath}/product/categoryList",
     dataType: "json",
     success: data=>{
+    	console.log("카테고리");
+    	console.log(data);
         let option = "";
         data.forEach(category => {
             option += "<option value='"+category.categoryId+"'>" + category.categoryName + "</option>";
@@ -468,7 +476,6 @@ function selectedCategory(){
     $selectedCategory.html(html);
 }
 
-});
 
 $("#productReg #btn-myLoaction").click(()=>{
     $.ajax({
@@ -488,6 +495,8 @@ $("#productReg #btn-myLoaction").click(()=>{
         }
     });
 });
+
+}); //end onload
 
 </script>
 
