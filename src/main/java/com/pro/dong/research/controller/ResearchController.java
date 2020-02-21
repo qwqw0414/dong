@@ -29,14 +29,26 @@ public class ResearchController {
 	public String selectTop(String rank, String year, String month) {
 		
 		Map<String, String> param = new HashMap<>();
-		param.put("rank", 3+"");
-		param.put("year", 2020+"");
-		param.put("month", 1+"");
+		param.put("rank", rank);
+		param.put("year", year);
+		param.put("month",month);
 		
+		//주소, 총 상품, 거래 수, 거래 비 조회
 		List<Map<String,String>> addr = rs.selectTopAddr(param);
 		
+		Map<String,List<Map<String,String>>> result = new HashMap<>();
+		result.put("addr", addr);
 		
-		
-		return gson.toJson(addr);
+		return gson.toJson(result);
 	}
+	
+	@RequestMapping("/thermometer")
+	@ResponseBody
+	public String thermometer(int shopNo) {
+
+		int result = rs.getThermometer(shopNo);
+		
+		return result+"";
+	}
+	
 }

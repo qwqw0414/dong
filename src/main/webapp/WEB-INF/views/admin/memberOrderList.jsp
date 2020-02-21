@@ -10,14 +10,7 @@ $(() => {
 	loadMemberOrderList(1);
 	
 	$("#searchMemberOrder").click(function (){
-		var cPage = $("#cPage").val();
-		var searchType = $("#searchType").val();
-		var searchKeyword = $("#searchKeyword").val();
-		var start = $("#startDate").val();
-		var end = $("#endDate").val();
-		
-		loadMemberOrderList(cPage);
-		
+		loadMemberOrderList(1);
 	});
 	
 	$("#memberOrderAll").click(function (){
@@ -26,26 +19,27 @@ $(() => {
 
 
 function loadMemberOrderList(cPage){
+	var sido = $("#sido").val();
+	var sigungu = $("#sigungu").val();
+	var dong = $("#dong").val();
 	var searchType = $("#searchType").val();
 	var searchKeyword = $("#searchKeyword").val();
-	var cPage = $("#cPage").val();
 	var start = $("#startDate").val();
 	var end = $("#endDate").val();
-	
-	$("#cPage").val(cPage);
 	
 	$.ajax({
 		url : "${pageContext.request.contextPath}/admin/memberOrderListEnd",
 		type : "GET",
 		data: {
+			cPage: cPage,
 			searchType: searchType,
 			searchKeyword: searchKeyword,
-			cPage: cPage,
 			start: start,
-			end: end
+			end: end,
+			sido: sido,
+			sigungu: sigungu,
+			dong:dong
 		}, 
-		dataType:"json",
-		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 		success: data => {
 			console.log("memberOrderList@ajax 진행!");
 			let header = "<tr><th>주문번호</th><th>회원아이디</th><th>주문내역</th><th>주소(동)</th><th>상품가격</th><th>주문날짜</th></tr>";
@@ -61,8 +55,13 @@ function loadMemberOrderList(cPage){
 			
 		},error: (x,s,e) => {
 			console.log("memberOrderList@ajax 실패실패!!");
+		},complete: () => {
+			$("#pageBar a").click((e) => {
+				loadMemberOrderList($(e.target).siblings("input").val());
+			});
 		}
-	});
+	}); /* end of ajax */
+	}/* end of loadMemberOrderList */
 	
 	$.ajax({
 		url: "${pageContext.request.contextPath}/admin/loadSidoList",
@@ -78,7 +77,8 @@ function loadMemberOrderList(cPage){
 		},
 		error: (x,s,e)=>{
 			console.log("실패",x,s,e);
-		}
+		},complete: (data)=>{
+      	}
 		
 	});//end of ajax
 
@@ -106,9 +106,10 @@ function loadMemberOrderList(cPage){
 		},
 		error: (x,s,e)=>{
 			console.log("실패",x,s,e);
-		}
+		},complete: (data)=>{
+      	}
 	});//end of ajax
-	}//end of loadSigunguList
+}//end of loadSigunguList
 
 	$("#sigungu").on("change", function(){
 		var sigungu = $("#sigungu").val();
@@ -117,28 +118,27 @@ function loadMemberOrderList(cPage){
 	});
 
 	function loadDongList(sigungu){
-	var sigungu = sigungu;
-	$.ajax({
-		url: "${pageContext.request.contextPath}/admin/loadDongList",
-		data:{sigungu:sigungu},
-		dataType: "json",
-		type: "GET",
-		success: data=>{
-			console.log(data);
-			let html = "<option value=''>전체</option>";
-			$.each(data, function(index, data){
-				html += "<option value='"+data+"'>"+data+"</option>";				
-			});//end of forEach
-			$("#dong").html(html);
-		},
-		error: (x,s,e)=>{
-			console.log("실패",x,s,e);
-		}
-	});//end of ajax
-}//end of loadDongList
-}
+		var sigungu = sigungu;
+		$.ajax({
+			url: "${pageContext.request.contextPath}/admin/loadDongList",
+			data:{sigungu:sigungu},
+			dataType: "json",
+			type: "GET",
+			success: data=>{
+				console.log(data);
+				let html = "<option value=''>전체</option>";
+				$.each(data, function(index, data){
+					html += "<option value='"+data+"'>"+data+"</option>";				
+				});//end of forEach
+				$("#dong").html(html);
+			},
+			error: (x,s,e)=>{
+				console.log("실패",x,s,e);
+			}
+		});//end of ajax
+	}//end of loadDongList
 	
-});
+}); //end of (()=>)
 	
 
 </script>
@@ -148,10 +148,13 @@ function loadMemberOrderList(cPage){
 <div class="wrapper">
   <div class="input-group">	
   <select  aria-label="First name" class="form-control" id="sido" >
+  <option value=''>전체</option>
   </select>
   <select  aria-label="First name" class="form-control" id="sigungu" >
+  <option value=''>전체</option>
   </select>
   <select  aria-label="First name" class="form-control" id="dong" >
+  <option value=''>전체</option>
   </select>
   </div>
 </div>
@@ -184,7 +187,6 @@ function loadMemberOrderList(cPage){
 <div id="pageBar">
 	
 </div>
-<input type="hidden" name="cPage" id="cPage"/>
 
 
 <!-- 달력 스크립트 -->

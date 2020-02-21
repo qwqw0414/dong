@@ -17,5 +17,10 @@ public class ResearchDAOImpl implements ResearchDAO{
 	public List<Map<String, String>> selectTopAddr(Map<String, String> param) {
 		return sst.selectList("research.selectTopAddr", param);
 	}
+
+	@Override
+	public int getThermometer(int shopNo) {
+		return sst.selectOne("research.getThermometer", shopNo);
+	}
 	
 }

@@ -4,7 +4,7 @@
 <%@page import="java.util.List"%>
 <%@page import="com.pro.dong.product.model.vo.Product"%>
 <%@page import="com.pro.dong.member.model.vo.Member"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -12,7 +12,11 @@
 <%
 	Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
 %>
-<h1>상품 상세보기</h1>
+
+<h1>
+	상품 상세보기
+	<button type="button" class="btn btn-danger" id="productDeleteBtn">상품삭제</button>
+</h1>
 <hr>
 <style>
 .product-info{margin-left: 100px;}
@@ -37,6 +41,15 @@
 #productReportCategory{
 	margin-left: 10px;
 }
+#priceSpan{
+	font-size: 35px;
+}
+.status{display:inline; position: relative; color: rgb(153, 153, 153);}
+.ss{display:inline; margin-left: 11px;}
+.sss{display:inline;  margin-left: 20px;}
+.ssss{display:inline; color: rgb(110, 71, 238);  margin-left: 34px;}
+#locationPNG{margin-bottom: 4px;}
+
 </style>
 <%
  	Map<String,Object> map = (Map<String,Object>)request.getAttribute("map");
@@ -62,9 +75,19 @@
 %>
 <!--하진시작-->
 <script>
+$(function(){
+	$("#productDeleteBtn").click(function(){
+		var productNo = $("#productNo").val();
+		
+		var confirmflag = confirm("상품을 삭제하시겠습니까?");
+		
+		if(confirmflag){
+			location.href="${pageContext.request.contextPath}/product/productDelete.do?productNo="+productNo;
+		}
+	});
+});
+
 $(()=>{
-	
-	
 	
 	var productNo = $("#productNo").val();
 	console.log(productNo);
@@ -86,7 +109,6 @@ $(()=>{
 						alert("판매완료된 상품입니다. 판매자에게 문의해주세요.");
 						btn.attr('disabled',true);
 					});
-					
 				}
 				else if(data.list[i].IS_SALE==="I"){
 					$("#purchaseByPoint").click((e)=>{
@@ -95,15 +117,11 @@ $(()=>{
 					});
 				}
 			}
-			
-			
 		},
 		error:(x,s,e)=>{
 			console.log("실패",x,s,e);
 		}
-		
 	});
-	
 });
 </script>
 <!--하진끝-->
@@ -138,22 +156,37 @@ $(()=>{
                 <div class="product-info">
                     <h3>${map.product.title }</h3>
                     <br>
-                    <p>좋아요/조회수:${map.product.incount }/등록일:${map.product.regDate }</p>
-                    <span>가격:${map.product.price }원</span>
+                    <p>
+                    	<img class='png png' src="${pageContext.request.contextPath}/resources/images/zzim.PNG"/> 2&nbsp;
+                    	<img class='png png' src="${pageContext.request.contextPath}/resources/images/see.PNG"/> 49&nbsp;
+                    	<img class='png png' src="${pageContext.request.contextPath}/resources/images/date.PNG"/> ${map.product.regDate}
+                    </p>
+                    
+                    <span id="priceSpan">
+	                    ${map.product.price}원
+                    </span>
+                    
                     <hr>
                     <dl>
                     <dt>상세정보</dt>
                     <br>
-                    <dd>${map.product.info }</dd>
-				    <dd>상품 상태:${map.product.status }</dd>
-				    <dd>교환 여부:${map.product.isTrade }</dd>
-				    <dd>배송여부:${map.product.shipping }</dd>
-				    <dd>거래지역:${map.product.sido } ${map.product.sigungu } ${map.product.dong }</dd>
+                    <dd>${map.product.info}</dd>
+                    <br />
+				    <dd><div class="pro status">상품상태-</div><div class="pro sss">${map.product.status=='O'?'중고상품':'새상품'}</div></dd>
+				    <dd><div class="pro status">교환여부-</div><div class="pro sss">${map.product.isTrade=='Y'?'교환가능':'교환불가능'}</div></dd>
+				    <dd><div class="pro status">배송비-</div><div class="pro ssss">${map.product.shipping=='Y'?'무료배송':'배송비 별도'}</div></dd>
+				    <dd>
+				    	<div class="pro status">거래지역-</div>
+				    	<div class="pro ss"> 
+				    		<img id='locationPNG' src="${pageContext.request.contextPath}/resources/images/location.PNG"/>   
+				    		${map.product.sido} ${map.product.sigungu} ${map.product.dong}
+				    	</div>
+				    </dd>
                 
                 </dl>
                     <hr>
                     <br />
-                    <span>판매자 정보:${map.product.shopNo }</span> <hr><br>
+                    <span>판매자 정보:${map.product.shopNo}</span> <hr><br>
                 </div>
                     
                 <div class="something-btn">
@@ -163,7 +196,7 @@ $(()=>{
                     <c:if test="${map.likeCnt ne '0'}">
                         <button class="btn btn-warning" id="btn-like">찜취소</button>
                     </c:if>                        
-                    <button class="btn btn-danger" id="connect" data-toggle="modal" data-target="#connectModal">연락하기</button>
+                    <button class="btn btn-success" id="connect" data-toggle="modal" data-target="#connectModal">연락하기</button>
                     <button class="btn btn-info"  id="purchaseByPoint" data-toggle="modal" data-target="#purchaseModal">구매하기</button>
                 </div>
 			</div>

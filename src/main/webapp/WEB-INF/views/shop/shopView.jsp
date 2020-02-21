@@ -40,6 +40,7 @@
 .img-thumbnail{
 	border: 2px solid lightgray !important;
 } 
+#thermometer{position: absolute; right: 0; top: -40px;width: 55px; height: 55px;}
 #shopDetailInfoDiv{
 	display: inline-block;
 	position: absolute;
@@ -73,6 +74,8 @@
 #shopNameSpan{
 	font-weight: bold;
 }
+#thermometer img{width: 100%; height: 100%;}
+#thermometer span{font-weight: bold;}
 </style>
 
 
@@ -120,6 +123,10 @@
 			
 			<!-- <img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-dell@2x.png" width="14" height="13">택배발송 2회<hr /> -->
 			<div id="shopInfoSpanDiv">
+				<div id="thermometer" class="text-center">
+					<img src="${pageContext.request.contextPath}/resources/images/thermometer.png"/>
+					<span></span>
+				</div>
 				<img id="shopIcon" src="${pageContext.request.contextPath}/resources/images/shopInfoIcon.png" />
 				<span id="shopInfoDetail">${map.SHOP_INFO}</span> &nbsp;&nbsp;&nbsp;
 <c:if test="${memberLoggedIn.memberId eq map.MEMBER_ID }">
@@ -134,7 +141,57 @@
 			</div>
 		</div>
 	</div>
-	
+<script>
+
+//온도
+$(()=>{
+	var $temp = $("#thermometer");
+	var $num = $("#thermometer span");
+	var $img = $("#thermometer img");
+	var index = '${pageContext.request.contextPath}';
+	var addr = "/resources/images/thermometer";
+
+	$.ajax({
+		url:"${pageContext.request.contextPath}/research/thermometer",
+		data:{
+			shopNo:'${map.SHOP_NO}'
+		},
+		dataType:"json",
+		success:data=>{
+
+			$num.html(data+'℃');
+
+			if(data >= 80){
+				$num.css("color","#FF0000");
+				$img.attr("src",index+addr+100+".png");
+			}
+			else if(data >= 60){
+				$num.css("color","#FF5E00");
+				$img.attr("src",index+addr+80+".png");
+			}	
+			else if(data >= 40){
+				$num.css("color","#FFBB00");
+				$img.attr("src",index+addr+60+".png");
+			}	
+			else if(data >= 20){
+				$num.css("color","#0054FF");
+				$img.attr("src",index+addr+40+".png");
+			}	
+			else if(data > 0){
+				$num.css("color","#0100FF");
+				$img.attr("src",index+addr+20+".png");
+			}
+			else{
+				$num.css("color","black");
+			}
+		},
+		error: (a,b,c)=>{
+			console.log(a,b,c);
+		}
+	})
+
+});
+</script>
 	<!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
@@ -372,11 +429,23 @@
 		display:block;
 		margin-top: 300px; 
 	}
-
+	
 	/* 주영 끝 */
 	</style>
 	
 	<script>
+	function lastDate(date){
+	    var regDate = new Date(date);
+	    var now = new Date();
+
+	    var diffHour = Math.ceil((now.getTime() - regDate.getTime())/60000/60);
+
+	    if(diffHour > 23){
+	      return Math.floor(diffHour/24)+"일 전";
+	    }
+
+	    return diffHour+"시간 전";
+	}
 	/***********하진 시작*/
 	$(()=>{
 		
@@ -497,7 +566,9 @@
 				
 			<div id="nav-review">
 				<h1>상점 후기</h1>
-				<div id="shopReview-wrapper"></div>
+				<div>
+					<div id="shopReview-wrapper"></div>				
+				</div>
 				<br>
 				<div id="shopReviewPageBar"></div>
 			</div>
@@ -1145,13 +1216,18 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 					} else{
 						cardClass = "card border-danger mb-3";
 					}
-					html += "<div class='"+cardClass+"' style='max-width: 18rem;'>";
-					html += "<div class='card-header'>"+data.shopReviewList[i].MEMBER_ID+"님의 후기</div>";
-					html += "<div class='card-body'><h5 class='card-title'>"+data.shopReviewList[i].PRODUCT_NO+"</h5><span>";
-					html += "<p class='card-text'>"+data.shopReviewList[i].CONTENTS+"</p><br>";
-					for(var j=0; j<score; j++){
-						html += "<img src='/dong/resources/images/star.png'>";
+					html += "<div class='card card-wrapper' style='max-width: 18rem;'>";
+					html += "<div class='card-header text-secondary'>구매자:"+data.shopReviewList[i].MEMBER_ID+" <br> 구매상품:"+data.shopReviewList[i].TITLE+"</div>";
+					html += "<div class='card-body'><h5 class='card-title'>";
+					for(var j=0; j<5; j++){
+						if(j<score){
+						html += "<img src='/dong/resources/images/star.png'>";							
+						} else {
+							html += "<img src='/dong/resources/images/empty-star.png'>";
+						}
 					}
+					html += "</h5><small class='text-secondary'>"+life(data.shopReviewList[i].WRITE_DATE)+"</small><span>";
+					html += "<p class='card-text'>"+data.shopReviewList[i].CONTENTS+"</p><br>";
 					html += "</span></div></div>";
 				}
 				console.log(html);
@@ -1168,6 +1244,19 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 	      	}
 		});//end of ajax
 	}//end of loadShopReview
+	
+	function life(date){
+		var preDate = new Date(date);
+
+		var year = preDate.getFullYear();
+		var month = preDate.getMonth()+1;
+		var date = preDate.getDate();
+
+		if(month < 10) month = "0"+month;
+		if(date < 10) date = "0"+date;
+
+		return year+"/"+month+"/"+date;
+	}
 });
 
 
