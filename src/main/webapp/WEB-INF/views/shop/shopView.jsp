@@ -372,28 +372,7 @@
 		display:block;
 		margin-top: 300px; 
 	}
-	#shopReview-wrapper{
-		display:inline-block;
-	}
-	#shopReview-wrapper .card{
-		display:inline-block;
-		float: left;
-    	margin: 10px 8px 10px 8px;
-	}
-	#shopReview-wrapper .card-wrapper{
-		width: 200px;
-		height: 280px;
-		/* overflow:auto; */
-	}
-	#shopReview-wrapper .card-header{
-		margin: 0px 0px 0px 0px;
-		width: 100%;
-	}
-	 #shopReview-wrapper .card-body{
-	 	width:200px;
-	 	height:200px;
-		overflow:auto;
-	} 
+	
 	/* 주영 끝 */
 	</style>
 	
