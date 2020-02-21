@@ -102,6 +102,15 @@ public class AdminDAOImpl implements AdminDAO {
 		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage,numPerPage);
 		return sst.selectList("admin.selectMemberOrderList", param,rowBounds);
 	}
+	@Override
+	public int selectMemberPointOutTotal(Map<String, String> param) {
+		return sst.selectOne("admin.selectMemberPointOutTotal", param);
+	}
+	@Override
+	public List<Map<String, String>> selectMemberPointOutList(int cPage, int numPerPage, Map<String, String> param) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return sst.selectList("admin.selectMemberPointOutList", param,rowBounds);
+	}
 	
 	// ========================== 지은 끝
 
@@ -149,6 +158,7 @@ public class AdminDAOImpl implements AdminDAO {
 		return sst.update("admin.updateReportStatus", reportNo);
 	}
 	// ========================== 주영 끝
+	
 
 	
 	
