@@ -25,31 +25,63 @@
     <div class="text-primary product-insert">
         <form enctype="multipart/form-data" id="formData" method="post">
             <div id="images">
-                <input type="file" class="product-photo" id="file-4" name="upFile">
-                <br>
-                <c:if test="${list[3] ne null}">
-                	<img src="${pageContext.request.contextPath}/resources/upload/product/${list[3].PHOTO}" id="img-4">
+            	<c:if test="${list[3] eq null}">
+	                <input type="file" class="product-photo" id="file-4" name="upFile">
                 </c:if>
-            </div>
-            <div id="images">
-                <input type="file" class="product-photo" id="file-3" name="upFile">
-                <br>
-                <c:if test="${list[2] ne null}">
-                	<img src="${pageContext.request.contextPath}/resources/upload/product/${list[2].PHOTO}" id="img-2">
-                </c:if>
-            </div>
-            <div id="images">
-                <input type="file" class="product-photo" id="file-2" name="upFile">
-                <br>
-                <c:if test="${list[1] ne null}">
-                	<img src="${pageContext.request.contextPath}/resources/upload/product/${list[1].PHOTO}" id="img-3">
-                </c:if>
-            </div>
-            <div id="images">
-                <input type="file" class="product-photo" id="file-1" name="upFile">
                 <br>
                 <c:if test="${list[0] ne null}">
-                	<img src="${pageContext.request.contextPath}/resources/upload/product/${list[0].PHOTO}" id="img-1">
+	                <div>
+	                <input class="imgChk" type="checkbox" value="${list[3].PHOTO}" onchange='imgChk(this);'>
+	                </div>
+                </c:if>
+                <img src="" class="realProImg" id="img-4">
+                <c:if test="${list[3] ne null}">
+                	<img src="${pageContext.request.contextPath}/resources/upload/product/${list[3].PHOTO}" class="proImg" id="img-4">
+                </c:if>
+            </div>
+            <div id="images">
+            	<c:if test="${list[2] eq null}">
+	                <input type="file" class="product-photo" id="file-3" name="upFile">
+                </c:if>
+                <br>
+                <c:if test="${list[0] ne null}">
+	                <div>
+	                <input class="imgChk" type="checkbox" value="${list[2].PHOTO}" onchange='imgChk(this);'>
+	                </div>
+                </c:if>
+                <img src="" class="realProImg" id="img-3">
+                <c:if test="${list[2] ne null}">
+                	<img src="${pageContext.request.contextPath}/resources/upload/product/${list[2].PHOTO}" class="proImg" id="img-3">
+                </c:if>
+            </div>
+            <div id="images">
+            	<c:if test="${list[1] eq null}">
+	                <input type="file" class="product-photo" id="file-2" name="upFile">
+                </c:if>
+                <br>
+                <c:if test="${list[0] ne null}">
+	                <div>
+	                <input class="imgChk" type="checkbox" value="${list[1].PHOTO}" onchange='imgChk(this);'>
+	                </div>
+                </c:if>
+                <img src="" class="realProImg" id="img-2">
+                <c:if test="${list[1] ne null}">
+                	<img src="${pageContext.request.contextPath}/resources/upload/product/${list[1].PHOTO}" class="proImg" id="img-2">
+                </c:if>
+            </div>
+            <div id="images">
+            	<c:if test="${list[0] eq null}">
+	                <input type="file" class="product-photo" id="file-1" name="upFile">
+                </c:if>
+                <br>
+                <c:if test="${list[0] ne null}">
+	                <div>
+	                <input class="imgChk" type="checkbox" value="${list[0].PHOTO}" onchange='imgChk(this);'>
+	                </div>
+                </c:if>
+                <img src="" class="realProImg" id="img-1">
+                <c:if test="${list[0] ne null}">
+                	<img src="${pageContext.request.contextPath}/resources/upload/product/${list[0].PHOTO}" class="proImg" id="img-1">
                 </c:if>
             </div>
         </form>
@@ -148,7 +180,19 @@
 </div>
 
 <script>
+function imgChk(e){
+	var img = $(e).parent().siblings(".proImg");
+	console.log("img=");
+	console.log(img);
+	
+	if($(e).is(":checked")){
+		img.remove();
+		$(e).parent().html("<input type='file' class='product-photo' id='file-1' name='upFile'>");
+	}
+}
+
 $(()=>{
+	
 var $selectPre = $("#productReg #sel-cate-pre");
 var $selectEnd = $("#productReg #sel-cate-end");
 var $selectedCategory = $("#productReg #selectedCategory");
@@ -287,20 +331,26 @@ function upload(){
 
 
 // 첨부파일 사진 미리보기
-$("#productReg .product-photo").change((e)=>{
+$(document).on("change", "#productReg .product-photo", function(e){
     imagePreview(e.target);
 });
 
 function imagePreview(input){
-
+	console.log("미리보기 찍어본다=");
+	console.log(input.files[0]);
     if((input.files[0] != undefined)&&(input.files && input.files[0])){
         var filerdr = new FileReader();
         filerdr.onload = function(e){
-            $(input).siblings("img").attr('src',e.target.result);
+			console.log("e.target.result=");
+			console.log(e.target.result);
+			console.log("$(input)=");
+			console.log($(input));
+			console.log($(input).parent().siblings(".realProImg"));
+            $(input).parent().siblings(".realProImg").attr('src',e.target.result);
         }
         filerdr.readAsDataURL(input.files[0]);
     }else{
-        $(input).siblings("img").attr('src','');
+        $(input).siblings(".realProImg").attr('src','');
     }
 }
 

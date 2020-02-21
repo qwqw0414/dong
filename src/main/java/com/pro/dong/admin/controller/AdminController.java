@@ -137,7 +137,6 @@ public class AdminController {
 		// 페이징바 작업
 		int totalContents = as.selectBoardReportTotalContent(param);
 		List<BoardReport> list = as.selectOneMember(cPage, numPerPage, param);
-		log.debug("신고 카ㅌ테고리 @@@@@@@@@@@={}",list);
 		
 		mav.addObject("list",list);
 		mav.addObject("m",m);
@@ -146,7 +145,6 @@ public class AdminController {
 		mav.addObject("totalContents",totalContents);
 		mav.setViewName("admin/memberView");
 		return mav;
-		
 	}
 	
 	@RequestMapping("/memberDelete.do")

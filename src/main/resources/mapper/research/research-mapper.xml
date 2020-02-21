@@ -11,6 +11,7 @@
 		        from product p join product_status s using(product_no) 
 		        where is_sale = 'Y' and to_char(s.reg_date,'yyyy') = ${year} and to_char(s.reg_date,'mm') = ${month})
 		    group by(sido,sigungu,dong)
+		    order by cnt desc
 		    )
 		where rownum <![CDATA[ <= ]]> ${rank}
 	</select>

@@ -85,6 +85,7 @@ footer .line{border: 1px rgb(95, 95, 95) solid; width: 100%;}
 #saleList-wrapper .saleListContent{text-align:center; padding-top:20px;}
 .reviewBtnTxt{font-size: 1rem;}
 #reviewContent{resize:none; width:400px;}
+.card-header{font-size:6px;}
 /* ==========================민호 끝 */
 	
 /* 하진 시작 ========================== */

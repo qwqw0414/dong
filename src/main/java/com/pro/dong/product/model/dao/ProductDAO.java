@@ -20,7 +20,7 @@ public interface ProductDAO {
 		
 	//하진 시작 ==========================
 	List<Map<String, String>> productStatus(Map<String, String> param);
-
+	int deleteProduct(int productNo);
 	//========================== 하진 끝
 		
 	//근호 시작 ==========================
