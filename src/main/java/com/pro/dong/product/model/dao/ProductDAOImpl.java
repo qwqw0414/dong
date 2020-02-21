@@ -39,6 +39,10 @@ public class ProductDAOImpl implements ProductDAO{
 	public List<Map<String, String>> productStatus(Map<String, String> param) {
 		return sst.selectList("product.productStatus",param);
 	}
+	@Override
+	public int deleteProduct(int productNo) {
+		return sst.delete("product.deleteProduct",productNo);
+	}
 	//========================== 하진 끝
 		
 	//근호 시작 ==========================
