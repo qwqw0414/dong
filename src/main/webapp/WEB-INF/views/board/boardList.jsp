@@ -21,8 +21,6 @@
 <script>
 $(()=>{
 	
-	
-	
 	loadBoardList(1);
 	
 	function loadBoardList(cPage){

@@ -3,6 +3,20 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
 <script>
+
+function life(date){
+	var preDate = new Date(date);
+
+	var year = preDate.getFullYear();
+	var month = preDate.getMonth()+1;
+	var date = preDate.getDate();
+
+	if(month < 10) month = "0"+month;
+	if(date < 10) date = "0"+date;
+
+	return year+"/"+month+"/"+date;
+}
+
 $(function(){
 	loadMemberList();
 	
@@ -58,14 +72,11 @@ function loadMemberList(searchType, searchKeyword, cPage){
 	    		html += "<td>"+data.list[i].PHONE+"</td>";
 	    		html += "<td>"+data.list[i].SIDO+' &nbsp; '+data.list[i].SIGUNGU+' &nbsp; '+data.list[i].DONG+"</td>";
 	    		html += "<td>"+data.list[i].EMAIL+"</td>";
-	    		html += "<td>"+data.list[i].ENROLL_DATE+"</td>";
+	    		html += "<td>"+life(data.list[i].ENROLL_DATE)+"</td>";
 	    		html += "</tr>";
 	    	}
 	    	$table.append(header+html);
-	    	$("#totalContents").text("총 "+data.totalContents+"명의 회원");
 			$("#pageBar").html(data.pageBar);
-	    	
-	    	
 		},
 		error : (x, s, e) => {
 			console.log("ajax 요청 실패!",x,s,e);

@@ -75,6 +75,28 @@ public class ProductController {
 		result.put("list", list);
 		return result;
 	}
+	@RequestMapping("/productDelete.do")
+	public ModelAndView deleteProduct(ModelAndView mav, @RequestParam(value="productNo") int productNo) {
+		
+		String msg = "";
+		String loc = "/";
+		
+		int result = ps.deleteProduct(productNo);
+		
+		if(result<0) {
+			msg="상품삭제를 실패했습니다.";
+			loc="/";
+		}
+		else {
+			msg="정상적으로 상품삭제가 완료되었습니다.";
+			loc="/";
+		}
+		mav.addObject("msg", msg);
+		mav.addObject("loc", loc);
+		mav.setViewName("common/msg");
+		
+		return mav;
+	}
 	
 	//========================== 하진 끝
 		

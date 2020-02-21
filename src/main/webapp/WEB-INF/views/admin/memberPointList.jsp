@@ -14,10 +14,7 @@
 
 <div class="input-group mb-3">
   <div class="input-group-prepend">
-     <!-- <select class="custom-select" id="searchType" required>
-	    <option value="member_id">아이디</option>
-	    <option value="status" id="inout">충전/사용</option>
-	 </select> -->
+
 	</div>
   <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="검색할 아이디를 입력해 주세요" id="searchKeyword">
 		<div class="col col-lg-2">
@@ -31,13 +28,7 @@
    <button class="btn btn-outline-secondary" id="memberPointAll">전체</button>	
    <br />
 </div>
-<!-- 충전/사용 라디오버튼 -->
-<!-- <div id="search-status">
-	<input type="hidden" name="searchType" value="status" /> 
-	<input type="radio" id="inputRadio" name="searchKeyword" value="I" checked />충전내역
-	&nbsp;&nbsp; 
-	<input type="radio" id="outputRadio" name="searchKeyword" value="O" />사용내역
-</div> -->
+
 
 
 <div class="table-responsive">
@@ -65,15 +56,21 @@ $(() => {
 		}
 	});
 
-	$("#searchMemberPoint").click(function (){
+	$("#searchMemberPoint").on("click", function (){
 		var searchType = $("#searchType").val();
 		var searchKeyword = $("#searchKeyword").val();
-		var cPage = $("#cPage").val();
 		var start = $("#startDate").val();
 		var end = $("#endDate").val();
+		var checked = $("#customSwitch1").prop("checked");
 		
-		loadMemberPointList(cPage);
-
+		if(checked == false){
+			loadMemberPointList(1);
+		}
+		else{
+			loadMemberPointOutList(1);
+		}
+		$("#searchKeyword").val('');
+		
 	});	
 	
 	$("#memberPointAll").click(function (){
@@ -84,11 +81,9 @@ $(() => {
 	function loadMemberPointList(cPage){
 		var searchType = $("#searchType").val();
 		var searchKeyword = $("#searchKeyword").val();
-		var cPage = $("#cPage").val();
 		var start = $("#startDate").val();
 		var end = $("#endDate").val();
 
-		$("#cPage").val(cPage);
 		
 		$.ajax({
 			url: "${pageContext.request.contextPath}/admin/memberPointListEnd",
@@ -109,7 +104,7 @@ $(() => {
 				$table.html("");
 				let html = "";
 				data.list.forEach(cate => {
-					if(cate.STATUS == 'I'){
+					if(cate.STATUS === "I"){
 						html += "<tr><td>"+cate.MEMBER_ID+"</td><td>"+cate.POINT_AMOUNT+"</td><td>"+cate.DATE+"</td><td>"+cate.POINT+"</td><td>"+"충전"+"</td></tr>";
 					}
 				});
@@ -120,6 +115,10 @@ $(() => {
 				
 			},error : (x,s,e) => {
 				console.log("memberPointList@ajax 실패실패!!!");
+			},complete: () => {
+				$("#pageBar a").click((e) => {
+					loadMemberPointList($(e.target).siblings("input").val());
+				});
 			}
 		});/* end of ajax */
 	}/* end of loadMemberPointList */
@@ -128,11 +127,9 @@ $(() => {
 	function loadMemberPointOutList(cPage){
 		var searchType = $("#searchType").val();
 		var searchKeyword = $("#searchKeyword").val();
-		var cPage = $("#cPage").val();
 		var start = $("#startDate").val();
 		var end = $("#endDate").val();
 
-		$("#cPage").val(cPage);
 		
 		$.ajax({
 			url: "${pageContext.request.contextPath}/admin/memberPointOutListEnd",
@@ -153,7 +150,7 @@ $(() => {
 				$table.html("");
 				let html = "";
 				data.list.forEach(cate => {
-					if(cate.STATUS == 'O'){
+					if(cate.STATUS !== "I"){
 						html += "<tr><td>"+cate.MEMBER_ID+"</td><td>"+cate.POINT_AMOUNT+"</td><td>"+cate.DATE+"</td><td>"+cate.POINT+"</td><td>"+"사용"+"</td></tr>";
 					}
 				});
@@ -164,9 +161,13 @@ $(() => {
 				
 			},error : (x,s,e) => {
 				console.log("memberPointOutList@ajax 실패실패!!!");
+			},complete: () => {
+				$("#pageBar a").click((e) => {
+					loadMemberPointOutList($(e.target).siblings("input").val());
+				});
 			}
 		});/* end of ajax */
-	}/* end of loadMemberPointList */
+	}/* end of loadMemberPointOutList */
 	
 });
 </script>

@@ -137,7 +137,6 @@ public class AdminController {
 		// 페이징바 작업
 		int totalContents = as.selectBoardReportTotalContent(param);
 		List<BoardReport> list = as.selectOneMember(cPage, numPerPage, param);
-		log.debug("신고 카ㅌ테고리 @@@@@@@@@@@={}",list);
 		
 		mav.addObject("list",list);
 		mav.addObject("m",m);
@@ -146,7 +145,6 @@ public class AdminController {
 		mav.addObject("totalContents",totalContents);
 		mav.setViewName("admin/memberView");
 		return mav;
-		
 	}
 	
 	@RequestMapping("/memberDelete.do")
@@ -194,15 +192,14 @@ public class AdminController {
 		final int numPerPage = 10;
 		Map<String,Object> result = new HashMap<>();
 		Map<String, String> param = new HashMap<>();
-		param.put("end", end);
+		param.put("end", end+"235959");
 		param.put("start", start);
 		param.put("searchType", searchType);
 		param.put("searchKeyword", searchKeyword);
 		
 		int totalPoint = as.selectMemberPointTotal(param);
 		List<Map<String,String>> list = as.selectMemberPointList(cPage, numPerPage, param);
-		String function = "loadMemberPointList('"+searchType+"','"+searchKeyword+"',";
-		String pageBar = Utils.getAjaxPageBar(totalPoint, cPage, numPerPage, function);
+		String pageBar = new Utils().getOneClickPageBar(totalPoint, cPage, numPerPage);
 		
 		result.put("list",list);
 		result.put("totalPoint", totalPoint);
@@ -223,15 +220,14 @@ public class AdminController {
 		final int numPerPage = 10;
 		Map<String, Object> result = new HashMap<>();
 		Map<String, String> param = new HashMap<>();
-		param.put("end", end);
+		param.put("end", end+"235959");
 		param.put("start", start);
 		param.put("searchType", searchType);
 		param.put("searchKeyword", searchKeyword);
 
 		int totalPoint = as.selectMemberPointTotal(param);
 		List<Map<String, String>> list = as.selectMemberPointList(cPage, numPerPage, param);
-		String function = "loadMemberPointOutList('"+searchType+"','"+searchKeyword+"',";
-		String pageBar = Utils.getAjaxPageBar(totalPoint, cPage, numPerPage, function);
+		String pageBar = new Utils().getOneClickPageBar(totalPoint, cPage, numPerPage);
 
 		result.put("list", list);
 		result.put("totalPoint", totalPoint);
@@ -267,8 +263,7 @@ public class AdminController {
 		
 		int totalOrder = as.selectMemberOrderTotal(param);
 		List<Map<String,String>> list = as.selectMemberOrderList(cPage,numPerPage,param);
-		String function = "loadMemberOrderList('"+searchType+"','"+searchKeyword+"',";
-		String pageBar = Utils.getAjaxPageBar(totalOrder, cPage, numPerPage, function);
+		String pageBar = new Utils().getOneClickPageBar(totalOrder, cPage, numPerPage);
 		
 		result.put("list", list);
 		result.put("totalOrder", totalOrder);
