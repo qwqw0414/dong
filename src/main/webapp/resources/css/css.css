@@ -85,7 +85,12 @@ footer .line{border: 1px rgb(95, 95, 95) solid; width: 100%;}
 #saleList-wrapper .saleListContent{text-align:center; padding-top:20px;}
 .reviewBtnTxt{font-size: 1rem;}
 #reviewContent{resize:none; width:400px;}
-.card-header{font-size:6px;}
+#shopReview-wrapper{display:inline-block;}
+#shopReview-wrapper .card{display:inline-block;float: left;margin: 10px 8px 10px 8px;}
+#shopReview-wrapper .card-wrapper{width: 200px;height: 280px;}
+#shopReview-wrapper .card-header{margin: 0px 0px 0px 0px;width: 100%;}
+#shopReview-wrapper .card-body{width:200px;height:200px;overflow:auto;} 
+#shopReview-wrapper .card-body img{width:16px;}
 /* ==========================민호 끝 */
 	
 /* 하진 시작 ========================== */
