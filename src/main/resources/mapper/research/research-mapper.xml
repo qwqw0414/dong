@@ -28,4 +28,9 @@
 	where rownum <![CDATA[ <= ]]> ${rank}
 	</select>
 	
+	<select id="getThermometer" resultType="_int" parameterType="_int">
+		select nvl(round(AVG(score)*20),0) avg
+		from shop_review join review_grade using(grade_id)
+		where shop_no = #{shopNo}
+	</select>
 </mapper>

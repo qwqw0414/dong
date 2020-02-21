@@ -40,6 +40,7 @@
 .img-thumbnail{
 	border: 2px solid lightgray !important;
 } 
+#thermometer{position: absolute; right: 0; top: -40px;width: 55px; height: 55px;}
 #shopDetailInfoDiv{
 	display: inline-block;
 	position: absolute;
@@ -73,6 +74,8 @@
 #shopNameSpan{
 	font-weight: bold;
 }
+#thermometer img{width: 100%; height: 100%;}
+#thermometer span{font-weight: bold;}
 </style>
 
 
@@ -120,6 +123,10 @@
 			
 			<!-- <img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-dell@2x.png" width="14" height="13">택배발송 2회<hr /> -->
 			<div id="shopInfoSpanDiv">
+				<div id="thermometer" class="text-center">
+					<img src="${pageContext.request.contextPath}/resources/images/thermometer.png"/>
+					<span></span>
+				</div>
 				<img id="shopIcon" src="${pageContext.request.contextPath}/resources/images/shopInfoIcon.png" />
 				<span id="shopInfoDetail">${map.SHOP_INFO}</span> &nbsp;&nbsp;&nbsp;
 <c:if test="${memberLoggedIn.memberId eq map.MEMBER_ID }">
@@ -134,7 +141,57 @@
 			</div>
 		</div>
 	</div>
-	
+<script>
+
+//온도
+$(()=>{
+	var $temp = $("#thermometer");
+	var $num = $("#thermometer span");
+	var $img = $("#thermometer img");
+	var index = '${pageContext.request.contextPath}';
+	var addr = "/resources/images/thermometer";
+
+	$.ajax({
+		url:"${pageContext.request.contextPath}/research/thermometer",
+		data:{
+			shopNo:'${map.SHOP_NO}'
+		},
+		dataType:"json",
+		success:data=>{
+
+			$num.html(data+'℃');
+
+			if(data >= 80){
+				$num.css("color","#FF0000");
+				$img.attr("src",index+addr+100+".png");
+			}
+			else if(data >= 60){
+				$num.css("color","#FF5E00");
+				$img.attr("src",index+addr+80+".png");
+			}	
+			else if(data >= 40){
+				$num.css("color","#FFBB00");
+				$img.attr("src",index+addr+60+".png");
+			}	
+			else if(data >= 20){
+				$num.css("color","#0054FF");
+				$img.attr("src",index+addr+40+".png");
+			}	
+			else if(data > 0){
+				$num.css("color","#0100FF");
+				$img.attr("src",index+addr+20+".png");
+			}
+			else{
+				$num.css("color","black");
+			}
+		},
+		error: (a,b,c)=>{
+			console.log(a,b,c);
+		}
+	})
+
+});
+</script>
 	<!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">

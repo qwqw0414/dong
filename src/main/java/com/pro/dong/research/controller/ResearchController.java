@@ -41,4 +41,14 @@ public class ResearchController {
 		
 		return gson.toJson(result);
 	}
+	
+	@RequestMapping("/thermometer")
+	@ResponseBody
+	public String thermometer(int shopNo) {
+
+		int result = rs.getThermometer(shopNo);
+		
+		return result+"";
+	}
+	
 }

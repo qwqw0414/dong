@@ -7,4 +7,6 @@ public interface ResearchDAO {
 
 	List<Map<String, String>> selectTopAddr(Map<String, String> param);
 
+	int getThermometer(int shopNo);
+
 }
