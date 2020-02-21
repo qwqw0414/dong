@@ -1148,10 +1148,14 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 						cardClass = "card border-danger mb-3";
 					}
 					html += "<div class='card card-wrapper' style='max-width: 18rem;'>";
-					html += "<div class='card-header '>구매자:"+data.shopReviewList[i].MEMBER_ID+" <br> 구매상품:"+data.shopReviewList[i].TITLE+"</div>";
+					html += "<div class='card-header text-secondary'>구매자:"+data.shopReviewList[i].MEMBER_ID+" <br> 구매상품:"+data.shopReviewList[i].TITLE+"</div>";
 					html += "<div class='card-body'><h5 class='card-title'>";
-					for(var j=0; j<score; j++){
-						html += "<img src='/dong/resources/images/star.png'>";
+					for(var j=0; j<5; j++){
+						if(j<score){
+						html += "<img src='/dong/resources/images/star.png'>";							
+						} else {
+							html += "<img src='/dong/resources/images/empty-star.png'>";
+						}
 					}
 					html += "</h5><small class='text-secondary'>"+life(data.shopReviewList[i].WRITE_DATE)+"</small><span>";
 					html += "<p class='card-text'>"+data.shopReviewList[i].CONTENTS+"</p><br>";
