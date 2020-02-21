@@ -3,17 +3,29 @@
 <mapper namespace="research">
 
 	<select id="selectTopAddr" resultType="map" parameterType="map">
-		select * 
-		from (
-		    select sido, sigungu, dong, count(*) cnt
-		    from(
-		        select sido, sigungu, dong, is_sale, s.reg_date 
-		        from product p join product_status s using(product_no) 
-		        where is_sale = 'Y' and to_char(s.reg_date,'yyyy') = ${year} and to_char(s.reg_date,'mm') = ${month})
-		    group by(sido,sigungu,dong)
-		    order by cnt desc
-		    )
-		where rownum <![CDATA[ <= ]]> ${rank}
+	select * from (
+	    select sido, sigungu, dong, cnt, all_cnt, round(cnt/all_cnt*100,2) avg
+	    from (
+	        select sido, sigungu, dong, count(*) cnt
+	        from(
+	            select sido, sigungu, dong, is_sale, s.reg_date 
+	            from product p join product_status s using(product_no) 
+	            where is_sale = 'Y' and to_char(s.reg_date,'yyyy') = ${year} and to_char(s.reg_date,'mm') = ${month})
+	        group by(sido,sigungu,dong)
+	        )
+	        join
+	        (
+	        select sido, sigungu, dong, count(*) all_cnt
+	        from(
+	            select sido, sigungu, dong, is_sale, s.reg_date 
+	            from product p join product_status s using(product_no) 
+	            where to_char(s.reg_date,'yyyy') = ${year} and to_char(s.reg_date,'mm') = ${month})
+	        group by(sido,sigungu,dong)
+	        )
+	        using (sido,sigungu,dong)
+	    order by avg desc
+	    )
+	where rownum <![CDATA[ <= ]]> ${rank}
 	</select>
-
+	
 </mapper>
