@@ -51,7 +51,9 @@
 	</select>
 	<select id="loadShopReview" resultType="map" parameterType="map">
 		select * from shop_review sr join review_grade rg
-		on sr.grade_id = rg.grade_id where sr.shop_no = #{shopNo}
+		on sr.grade_id = rg.grade_id
+        join product p
+        on sr.product_no = p.product_no where sr.shop_no = #{shopNo}
 	</select>
 	<!-- ==========================  민호 끝 -->
 	
