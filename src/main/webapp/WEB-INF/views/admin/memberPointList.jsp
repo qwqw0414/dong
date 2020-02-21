@@ -115,8 +115,8 @@ $(() => {
 				
 			},error : (x,s,e) => {
 				console.log("memberPointList@ajax 실패실패!!!");
-			},complete: (data) => {
-				$("#pageBar").click((e) => {
+			},complete: () => {
+				$("#pageBar a").click((e) => {
 					loadMemberPointList($(e.target).siblings("input").val());
 				});
 			}
@@ -162,7 +162,7 @@ $(() => {
 			},error : (x,s,e) => {
 				console.log("memberPointOutList@ajax 실패실패!!!");
 			},complete: () => {
-				$("#pageBar").click((e) => {
+				$("#pageBar a").click((e) => {
 					loadMemberPointOutList($(e.target).siblings("input").val());
 				});
 			}

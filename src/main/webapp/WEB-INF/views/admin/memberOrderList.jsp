@@ -60,8 +60,8 @@ function loadMemberOrderList(cPage){
 			
 		},error: (x,s,e) => {
 			console.log("memberOrderList@ajax 실패실패!!");
-		},complete: (data) => {
-			$("#pageBar").click((e) => {
+		},complete: () => {
+			$("#pageBar a").click((e) => {
 				loadMemberOrderList($(e.target).siblings("input").val());
 			});
 		}
@@ -103,7 +103,7 @@ function loadMemberOrderList(cPage){
 		type: "GET",
 		success: data=>{
 			console.log(data);
-			let html = "<option value=''>전체</option>";
+			let html = "";
 			$.each(data, function(index, data){
 				html += "<option value='"+data+"'>"+data+"</option>";				
 			});//end of forEach
@@ -131,7 +131,7 @@ function loadMemberOrderList(cPage){
 			type: "GET",
 			success: data=>{
 				console.log(data);
-				let html = "<option value=''>전체</option>";
+				let html = "";
 				$.each(data, function(index, data){
 					html += "<option value='"+data+"'>"+data+"</option>";				
 				});//end of forEach
@@ -153,10 +153,13 @@ function loadMemberOrderList(cPage){
 <div class="wrapper">
   <div class="input-group">	
   <select  aria-label="First name" class="form-control" id="sido" >
+  <option value=''>전체</option>
   </select>
   <select  aria-label="First name" class="form-control" id="sigungu" >
+  <option value=''>전체</option>
   </select>
   <select  aria-label="First name" class="form-control" id="dong" >
+  <option value=''>전체</option>
   </select>
   </div>
 </div>

@@ -192,7 +192,7 @@ public class AdminController {
 		final int numPerPage = 10;
 		Map<String,Object> result = new HashMap<>();
 		Map<String, String> param = new HashMap<>();
-		param.put("end", end);
+		param.put("end", end+"235959");
 		param.put("start", start);
 		param.put("searchType", searchType);
 		param.put("searchKeyword", searchKeyword);
@@ -220,7 +220,7 @@ public class AdminController {
 		final int numPerPage = 10;
 		Map<String, Object> result = new HashMap<>();
 		Map<String, String> param = new HashMap<>();
-		param.put("end", end);
+		param.put("end", end+"235959");
 		param.put("start", start);
 		param.put("searchType", searchType);
 		param.put("searchKeyword", searchKeyword);
