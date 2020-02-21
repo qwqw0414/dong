@@ -91,6 +91,17 @@ footer .line{border: 1px rgb(95, 95, 95) solid; width: 100%;}
 #shopReview-wrapper .card-header{margin: 0px 0px 0px 0px;width: 100%;}
 #shopReview-wrapper .card-body{width:200px;height:200px;overflow:auto;} 
 #shopReview-wrapper .card-body img{width:16px;}
+
+/* 동네왕 css */
+#kingOfDongnae-wrapper .card-deck img{width:50%; margin-left:95px;}
+#kingOfDongnae-wrapper .card-deck .card{border:0px;}
+#kingOfDongnae-wrapper .card-deck #silverCard{margin-top: 50px;}
+#kingOfDongnae-wrapper .card-deck #bronzeCard{margin-top: 100px;}
+
+
+#hallOfFameCard{border:0px;}
+#hallOfFameCard #hallOfFameHeaderImg{width:300px; margin-left:450px;}
+.badgeTypeImg{width:15px; height:15px;}
 /* ==========================민호 끝 */
 	
 /* 하진 시작 ========================== */

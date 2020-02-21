@@ -15,5 +15,14 @@
 		    )
 		where rownum <![CDATA[ <= ]]> ${rank}
 	</select>
-
+	<insert id="insertHallOfFame" parameterType="map">
+		insert into hall_of_fame values
+		(seq_hall_of_fame.nextval, #{badgeType},#{sido},#{sigungu},#{dong},default,'Y')
+	</insert>
+	<select id="HallOfFameTotalContents" resultType="_int">
+		select count(*) from hall_of_fame
+	</select>
+	<select id="loadHallOfFame" resultType="map">
+		select * from hall_of_fame
+	</select>
 </mapper>

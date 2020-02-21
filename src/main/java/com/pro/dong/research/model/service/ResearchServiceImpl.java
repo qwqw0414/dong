@@ -17,4 +17,19 @@ public class ResearchServiceImpl implements ResearchService{
 	public List<Map<String, String>> selectTopAddr(Map<String, String> param) {
 		return rd.selectTopAddr(param);
 	}
+
+	@Override
+	public int insertHallOfFame(Map<String, String> param) {
+		return rd.insertHallOfFame(param);
+	}
+
+	@Override
+	public int HallOfFameTotalContents() {
+		return rd.HallOfFameTotalContents();
+	}
+
+	@Override
+	public List<Map<String, String>> loadHallOfFame(int cPage, int numPerPage) {
+		return rd.loadHallOfFame(cPage,numPerPage);
+	}
 }

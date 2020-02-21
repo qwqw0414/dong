@@ -10,9 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.pro.dong.common.util.Utils;
 import com.pro.dong.research.model.service.ResearchService;
 
 @Controller
@@ -38,5 +40,55 @@ public class ResearchController {
 		
 		
 		return gson.toJson(addr);
+	}
+	
+	@RequestMapping("/insertHallOfFame")
+	@ResponseBody
+	public Map<String, Object> insertHallOfFame(@RequestParam("goldSido")String goldSido,@RequestParam("goldSigungu")String goldSigungu,@RequestParam("goldDong")String goldDong,
+			@RequestParam("silverSido")String silverSido,@RequestParam("silverSigungu")String silverSigungu,@RequestParam("silverDong")String silverDong,
+			@RequestParam("bronzeSido")String bronzeSido,@RequestParam("bronzeSigungu")String bronzeSigungu,@RequestParam("bronzeDong")String bronzeDong){
+		Map<String, Object> resultMap = new HashMap<>();
+		Map<String, String> param = new HashMap<>();
+		String badgeType = "G";
+		
+		param.put("badgeType", badgeType);
+		param.put("sido", goldSido);
+		param.put("sigungu", goldSigungu);
+		param.put("dong", goldDong);
+		int result = rs.insertHallOfFame(param);
+		resultMap.put("goldResult", result);
+		if(result>0) {
+			badgeType = "S";
+			param.put("badgeType", badgeType);
+			param.put("sido", silverSido);
+			param.put("sigungu", silverSigungu);
+			param.put("dong", silverDong);
+			result = rs.insertHallOfFame(param);
+			resultMap.put("silverResult", result);
+			if(result>0) {
+				badgeType = "B";
+				param.put("badgeType", badgeType);
+				param.put("sido", bronzeSido);
+				param.put("sigungu", bronzeSigungu);
+				param.put("dong", bronzeDong);
+				result = rs.insertHallOfFame(param);
+				resultMap.put("bronzeResult", result);
+			}
+		}
+		return resultMap;
+	}
+	
+	@RequestMapping("/loadHallOfFame")
+	@ResponseBody
+	public Map<String, Object> loadHallOfFame(@RequestParam(value="cPage", defaultValue="1")int cPage){
+		Map<String, Object> resultMap = new HashMap<>();
+		int numPerPage = 36;
+		List<Map<String, String>> HallOfFameList = rs.loadHallOfFame(cPage,numPerPage);
+		int totalContents = rs.HallOfFameTotalContents();
+		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
+		resultMap.put("HallOfFameList", HallOfFameList);
+		resultMap.put("pageBar", pageBar);
+		
+		return resultMap;
 	}
 }
