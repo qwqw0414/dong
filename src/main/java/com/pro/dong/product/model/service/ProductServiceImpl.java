@@ -45,6 +45,10 @@ public class ProductServiceImpl implements ProductService{
 	public List<Map<String, String>> productStatus(Map<String, String> param) {
 		return pd.productStatus(param);
 	}
+	@Override
+	public int deleteProduct(int productNo) {
+		return pd.deleteProduct(productNo);
+	}
 	
 	//========================== 하진 끝
 		
