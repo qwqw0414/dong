@@ -103,7 +103,7 @@ $(() => {
 				$table.html("");
 				let html = "";
 				data.list.forEach(cate => {
-					html += "<tr><td>"+cate.MEMBER_ID+"</td><td>"+cate.POINT_AMOUNT+"</td><td>"+cate.DATE+"</td><td>"+cate.POINT+"</td><td>"+"충전"+"</td></tr>";
+					html += "<tr><td>"+cate.MEMBER_ID+"</td><td>"+numberComma(cate.POINT_AMOUNT)+"</td><td>"+cate.DATE+"</td><td>"+numberComma(cate.POINT)+"</td><td>"+"충전"+"</td></tr>";
 				});
 				$table.append(header+html);
 				
@@ -147,7 +147,7 @@ $(() => {
 				$table.html("");
 				let html = "";
 				data.list.forEach(cate => {
-					html += "<tr><td>"+cate.MEMBER_ID+"</td><td>"+cate.POINT_AMOUNT+"</td><td>"+cate.DATE+"</td><td>"+cate.POINT+"</td><td>"+"사용"+"</td></tr>";
+					html += "<tr><td>"+cate.MEMBER_ID+"</td><td>"+numberComma(cate.POINT_AMOUNT)+"</td><td>"+cate.DATE+"</td><td>"+numberComma(cate.POINT)+"</td><td>"+"사용"+"</td></tr>";
 				});
 				$table.append(header+html);
 				
@@ -165,6 +165,10 @@ $(() => {
 	}/* end of loadMemberPointOutList */
 	
 });
+
+function numberComma(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 </script>
 
 
