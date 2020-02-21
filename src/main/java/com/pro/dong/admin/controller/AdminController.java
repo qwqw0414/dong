@@ -201,8 +201,10 @@ public class AdminController {
 		
 		int totalPoint = as.selectMemberPointTotal(param);
 		List<Map<String,String>> list = as.selectMemberPointList(cPage, numPerPage, param);
-		String function = "loadMemberPointList('"+searchType+"','"+searchKeyword+"',";
-		String pageBar = Utils.getAjaxPageBar(totalPoint, cPage, numPerPage, function);
+		//String function = "loadMemberPointList('"+searchType+"','"+searchKeyword+"',";
+		//String function = "loadMemberPointList("+searchKeyword+"";
+		//String pageBar = Utils.getAjaxPageBar(totalPoint, cPage, numPerPage,function);
+		String pageBar = new Utils().getOneClickPageBar(totalPoint, cPage, numPerPage);
 		
 		result.put("list",list);
 		result.put("totalPoint", totalPoint);
@@ -230,8 +232,8 @@ public class AdminController {
 
 		int totalPoint = as.selectMemberPointTotal(param);
 		List<Map<String, String>> list = as.selectMemberPointList(cPage, numPerPage, param);
-		String function = "loadMemberPointOutList('"+searchType+"','"+searchKeyword+"',";
-		String pageBar = Utils.getAjaxPageBar(totalPoint, cPage, numPerPage, function);
+		//String function = "loadMemberPointOutList('"+searchType+"','"+searchKeyword+"',";
+		String pageBar = new Utils().getOneClickPageBar(totalPoint, cPage, numPerPage);
 
 		result.put("list", list);
 		result.put("totalPoint", totalPoint);

@@ -15,8 +15,9 @@ $(() => {
 		var searchKeyword = $("#searchKeyword").val();
 		var start = $("#startDate").val();
 		var end = $("#endDate").val();
+		var sigungu = $("#sigungu").val();
 		
-		loadMemberOrderList(cPage);
+		loadMemberOrderList(1);
 		
 	});
 	
@@ -26,11 +27,14 @@ $(() => {
 
 
 function loadMemberOrderList(cPage){
+	var cPage = $("#cPage").val();
 	var searchType = $("#searchType").val();
 	var searchKeyword = $("#searchKeyword").val();
-	var cPage = $("#cPage").val();
 	var start = $("#startDate").val();
 	var end = $("#endDate").val();
+	var sido = $("#sido").val();
+	var sigungu = $("#sigungu").val();
+	var dong = $("#dong").val();
 	
 	$("#cPage").val(cPage);
 	
@@ -42,7 +46,10 @@ function loadMemberOrderList(cPage){
 			searchKeyword: searchKeyword,
 			cPage: cPage,
 			start: start,
-			end: end
+			end: end,
+			sido: sido,
+			sigungu: sugungu,
+			dong:dong
 		}, 
 		dataType:"json",
 		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
@@ -135,7 +142,7 @@ function loadMemberOrderList(cPage){
 			console.log("실패",x,s,e);
 		}
 	});//end of ajax
-}//end of loadDongList
+	}//end of loadDongList
 }
 	
 });
