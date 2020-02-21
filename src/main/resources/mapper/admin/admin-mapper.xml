@@ -110,9 +110,11 @@
 		from (member M left join point_status P on M.member_id = P.member_id) order by P.DATE
 	</select>
 	
+	<!-- 입력 포인트 조회용 -->
 	<select id="selectMemberPointTotal" parameterType="map" resultType="_int">
-		select count(*) from member M left join point_status P on M.member_id = P.member_id
+		select count(*) from (member M left join point_status P on M.member_id = P.member_id)
 		<where>
+		P.status = 'I'
 			<if test="searchKeyword != null and searchKeyword!=''">
 			 and P.member_id like '%${searchKeyword}%'		
 			</if>
@@ -124,7 +126,36 @@
 	
 	<select id="selectMemberPointList" parameterType="map" resultType="map">
 		select A.*, to_char(A.reg_date,'yyyy-mm-dd') "DATE" 
-		from (select * from member left join point_status using(member_id)) A
+		from (select * from member left join point_status using(member_id) where status = 'I') A
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+				and A.member_id like '%${searchKeyword}%'	
+			</if>
+			
+			<if test="start!=null and start !='' and end != null and end != ''">
+			and A.reg_date between to_date(#{start}, 'yyyymmdd') and to_date(#{end},'yyyymmddhh24miss') 
+			</if>
+			
+		</where>
+	</select>
+	
+	<!-- 출력 포인트 조회용 -->
+	<select id="selectMemberPointOutTotal" parameterType="map" resultType="_int">
+		select count(*) from (member M left join point_status P on M.member_id = P.member_id)
+		<where>
+		P.status = 'O'
+			<if test="searchKeyword != null and searchKeyword!=''">
+			 and P.member_id like '%${searchKeyword}%'		
+			</if>
+			<if test="start!=null and start !='' and end != null and end != ''">
+			and P.reg_date between to_date(#{start}, 'yyyymmdd') and to_date(#{end},'yyyymmddhh24miss') 
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectMemberPointOutList" parameterType="map" resultType="map">
+		select A.*, to_char(A.reg_date,'yyyy-mm-dd') "DATE" 
+		from (select * from member left join point_status using(member_id) where status='O') A
 		<where>
 			<if test="searchKeyword!=null and searchKeyword!=''">
 				and A.member_id like '%${searchKeyword}%'	
@@ -138,29 +169,29 @@
 	</select>
 	
 	<select id="selectMemberOrderTotal" parameterType="map" resultType="_int">
-	select count(*) from order_list O left join product P on O.dong = P.dong
+	select count(*) from order_list
 		<where>
 			<if test="searchKeyword!=null and searchKeyword!=''">
-				and O.${searchType} like '%${searchKeyword}%'
+				and ${searchType} like '%${searchKeyword}%'
 			</if>
 			<if test="sido!=null and sido!=''">
-				and O.sido like #{sido}
+				and sido like #{sido}
 			</if>
 			<if test="sigungu!=null and sigungu!=''">
-				and O.sigungu like #{sigungu}
+				and sigungu like #{sigungu}
 			</if>
 			<if test="dong!=null and dong!=''">
-				and O.dong like #{dong}
+				and dong like #{dong}
 			</if>
 			<if test="start!=null and start !='' and end != null and end != ''">
-			and O.reg_date between to_date(#{start}, 'yyyymmdd') and to_date(#{end},'yyyymmddhh24miss') 
+			and order_date between to_date(#{start}, 'yyyymmdd') and to_date(#{end},'yyyymmddhh24miss') 
 			</if>
 		</where>
 	</select>
 	
 	<select id="selectMemberOrderList" parameterType="map" resultType="map">
-	select A. *, to_char(A.reg_date,'yyyy-mm-dd') "DATE" 
-	from (select * from order_list O left join product P on O.dong = P.dong) A
+	select A. *, to_char(A.order_date,'yyyy-mm-dd') "DATE" 
+	from (select * from order_list) A
 		<where>
 			<if test="searchKeyword!=null and searchKeyword!=''">
 				and A.${searchType} like '%${searchKeyword}%'
@@ -175,7 +206,7 @@
 				and A.dong like #{dong}
 			</if>
 			<if test="start!=null and start !='' and end != null and end != ''">
-			and A.reg_date between to_date(#{start}, 'yyyymmdd') and to_date(#{end},'yyyymmddhh24miss') 
+			and A.order_date between to_date(#{start}, 'yyyymmdd') and to_date(#{end},'yyyymmddhh24miss') 
 			</if>
 		</where>
 	order by order_no

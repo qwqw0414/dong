@@ -9,7 +9,7 @@
 <h1 style='display: inline-block;'>회원포인트 관리</h1>
 <div style='display: inline;' class="custom-control custom-switch">
   <input type="checkbox" class="custom-control-input" id="customSwitch1">
-  <label class="custom-control-label" for="customSwitch1">충전내역 보기</label>
+  <label class="custom-control-label" for="customSwitch1">사용내역 보기</label>
 </div>
 
 <div class="input-group mb-3">
@@ -47,11 +47,11 @@ $(() => {
 		$("#customSwitch1").change(function(){
 		var checked = $(this).prop("checked");
 		if(checked == false){
-			$(this).next().html("충전내역 보기");
+			$(this).next().html("사용내역 보기");
 			loadMemberPointList(1);
 		}	
 		else if(checked == true){
-			$(this).next().html("사용내역 보기");
+			$(this).next().html("충전내역 보기");
 			loadMemberPointOutList(1);
 		}
 	});
@@ -64,10 +64,10 @@ $(() => {
 		var checked = $("#customSwitch1").prop("checked");
 		
 		if(checked == false){
-			loadMemberPointList(1);
+			loadMemberPointOutList(1);
 		}
 		else{
-			loadMemberPointOutList(1);
+			loadMemberPointList(1);
 		}
 		$("#searchKeyword").val('');
 		
@@ -83,7 +83,6 @@ $(() => {
 		var searchKeyword = $("#searchKeyword").val();
 		var start = $("#startDate").val();
 		var end = $("#endDate").val();
-
 		
 		$.ajax({
 			url: "${pageContext.request.contextPath}/admin/memberPointListEnd",
@@ -104,9 +103,7 @@ $(() => {
 				$table.html("");
 				let html = "";
 				data.list.forEach(cate => {
-					if(cate.STATUS === "I"){
-						html += "<tr><td>"+cate.MEMBER_ID+"</td><td>"+cate.POINT_AMOUNT+"</td><td>"+cate.DATE+"</td><td>"+cate.POINT+"</td><td>"+"충전"+"</td></tr>";
-					}
+					html += "<tr><td>"+cate.MEMBER_ID+"</td><td>"+cate.POINT_AMOUNT+"</td><td>"+cate.DATE+"</td><td>"+cate.POINT+"</td><td>"+"충전"+"</td></tr>";
 				});
 				$table.append(header+html);
 				
@@ -150,14 +147,12 @@ $(() => {
 				$table.html("");
 				let html = "";
 				data.list.forEach(cate => {
-					if(cate.STATUS !== "I"){
-						html += "<tr><td>"+cate.MEMBER_ID+"</td><td>"+cate.POINT_AMOUNT+"</td><td>"+cate.DATE+"</td><td>"+cate.POINT+"</td><td>"+"사용"+"</td></tr>";
-					}
+					html += "<tr><td>"+cate.MEMBER_ID+"</td><td>"+cate.POINT_AMOUNT+"</td><td>"+cate.DATE+"</td><td>"+cate.POINT+"</td><td>"+"사용"+"</td></tr>";
 				});
 				$table.append(header+html);
 				
 				$("#pageBar").html(data.pageBar);
-				$("#totalPoint").text(data.totalPoint);
+				$("#totalPointOut").text(data.totalPointOut);
 				
 			},error : (x,s,e) => {
 				console.log("memberPointOutList@ajax 실패실패!!!");
