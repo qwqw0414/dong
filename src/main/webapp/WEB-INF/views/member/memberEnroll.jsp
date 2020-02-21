@@ -589,10 +589,10 @@ $(()=>{
 
         // 색 변경
         if(level == 't') $msg.addClass("text-success");
-        else if(level == 'f') $msg.addClass("text-danger animated tada");
+        else if(level == 'f') $msg.addClass("text-danger animated shake");
         else {
         	$msg.addClass("text-primary");
-        	$msg.removeClass("animated tada");
+        	$msg.removeClass("animated shake");
         }
 
         //메세지 변경
