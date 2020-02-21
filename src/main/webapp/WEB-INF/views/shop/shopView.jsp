@@ -372,32 +372,23 @@
 		display:block;
 		margin-top: 300px; 
 	}
-	#shopReview-wrapper{
-		display:inline-block;
-	}
-	#shopReview-wrapper .card{
-		display:inline-block;
-		float: left;
-    	margin: 10px 8px 10px 8px;
-	}
-	#shopReview-wrapper .card-wrapper{
-		width: 200px;
-		height: 280px;
-		/* overflow:auto; */
-	}
-	#shopReview-wrapper .card-header{
-		margin: 0px 0px 0px 0px;
-		width: 100%;
-	}
-	 #shopReview-wrapper .card-body{
-	 	width:200px;
-	 	height:200px;
-		overflow:auto;
-	} 
+	
 	/* 주영 끝 */
 	</style>
 	
 	<script>
+	function lastDate(date){
+	    var regDate = new Date(date);
+	    var now = new Date();
+
+	    var diffHour = Math.ceil((now.getTime() - regDate.getTime())/60000/60);
+
+	    if(diffHour > 23){
+	      return Math.floor(diffHour/24)+"일 전";
+	    }
+
+	    return diffHour+"시간 전";
+	}
 	/***********하진 시작*/
 	$(()=>{
 		
@@ -1169,10 +1160,14 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 						cardClass = "card border-danger mb-3";
 					}
 					html += "<div class='card card-wrapper' style='max-width: 18rem;'>";
-					html += "<div class='card-header '>구매자:"+data.shopReviewList[i].MEMBER_ID+" <br> 구매상품:"+data.shopReviewList[i].TITLE+"</div>";
+					html += "<div class='card-header text-secondary'>구매자:"+data.shopReviewList[i].MEMBER_ID+" <br> 구매상품:"+data.shopReviewList[i].TITLE+"</div>";
 					html += "<div class='card-body'><h5 class='card-title'>";
-					for(var j=0; j<score; j++){
-						html += "<img src='/dong/resources/images/star.png'>";
+					for(var j=0; j<5; j++){
+						if(j<score){
+						html += "<img src='/dong/resources/images/star.png'>";							
+						} else {
+							html += "<img src='/dong/resources/images/empty-star.png'>";
+						}
 					}
 					html += "</h5><small class='text-secondary'>"+life(data.shopReviewList[i].WRITE_DATE)+"</small><span>";
 					html += "<p class='card-text'>"+data.shopReviewList[i].CONTENTS+"</p><br>";
