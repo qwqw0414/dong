@@ -38,7 +38,6 @@
 	</table>
 </div>
 <div id="pageBar"></div>
-<input type="hidden" name="cPage" id="cPage"/>
 
 <script>
 $(() => {
@@ -60,7 +59,6 @@ $(() => {
 	$("#searchMemberPoint").on("click", function (){
 		var searchType = $("#searchType").val();
 		var searchKeyword = $("#searchKeyword").val();
-		var cPage = $("#cPage").val();
 		var start = $("#startDate").val();
 		var end = $("#endDate").val();
 		var checked = $("#customSwitch1").prop("checked");
@@ -83,11 +81,9 @@ $(() => {
 	function loadMemberPointList(cPage){
 		var searchType = $("#searchType").val();
 		var searchKeyword = $("#searchKeyword").val();
-		var cPage = $("#cPage").val();
 		var start = $("#startDate").val();
 		var end = $("#endDate").val();
 
-		$("#cPage").val(cPage);
 		
 		$.ajax({
 			url: "${pageContext.request.contextPath}/admin/memberPointListEnd",
@@ -131,11 +127,9 @@ $(() => {
 	function loadMemberPointOutList(cPage){
 		var searchType = $("#searchType").val();
 		var searchKeyword = $("#searchKeyword").val();
-		var cPage = $("#cPage").val();
 		var start = $("#startDate").val();
 		var end = $("#endDate").val();
 
-		$("#cPage").val(cPage);
 		
 		$.ajax({
 			url: "${pageContext.request.contextPath}/admin/memberPointOutListEnd",
@@ -156,7 +150,7 @@ $(() => {
 				$table.html("");
 				let html = "";
 				data.list.forEach(cate => {
-					if(cate.STATUS === "O"){
+					if(cate.STATUS !== "I"){
 						html += "<tr><td>"+cate.MEMBER_ID+"</td><td>"+cate.POINT_AMOUNT+"</td><td>"+cate.DATE+"</td><td>"+cate.POINT+"</td><td>"+"사용"+"</td></tr>";
 					}
 				});

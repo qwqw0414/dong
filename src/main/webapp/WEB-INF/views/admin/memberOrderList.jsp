@@ -10,12 +10,6 @@ $(() => {
 	loadMemberOrderList(1);
 	
 	$("#searchMemberOrder").click(function (){
-		var cPage = $("#cPage").val();
-		var searchType = $("#searchType").val();
-		var searchKeyword = $("#searchKeyword").val();
-		var start = $("#startDate").val();
-		var end = $("#endDate").val();
-		var sigungu = $("#sigungu").val();
 		
 		loadMemberOrderList(1);
 		
@@ -27,28 +21,26 @@ $(() => {
 
 
 function loadMemberOrderList(cPage){
-	var cPage = $("#cPage").val();
+	var sido = $("#sido").val();
+	var sigungu = $("#sigungu").val();
+	var dong = $("#dong").val();
 	var searchType = $("#searchType").val();
 	var searchKeyword = $("#searchKeyword").val();
 	var start = $("#startDate").val();
 	var end = $("#endDate").val();
-	var sido = $("#sido").val();
-	var sigungu = $("#sigungu").val();
-	var dong = $("#dong").val();
 	
-	$("#cPage").val(cPage);
 	
 	$.ajax({
 		url : "${pageContext.request.contextPath}/admin/memberOrderListEnd",
 		type : "GET",
 		data: {
+			cPage: cPage,
 			searchType: searchType,
 			searchKeyword: searchKeyword,
-			cPage: cPage,
 			start: start,
 			end: end,
 			sido: sido,
-			sigungu: sugungu,
+			sigungu: sigungu,
 			dong:dong
 		}, 
 		dataType:"json",
@@ -68,8 +60,13 @@ function loadMemberOrderList(cPage){
 			
 		},error: (x,s,e) => {
 			console.log("memberOrderList@ajax 실패실패!!");
+		},complete: (data) => {
+			$("#pageBar").click((e) => {
+				loadMemberOrderList($(e.target).siblings("input").val());
+			});
 		}
 	});
+	}/* end of loadMemberOrderList */
 	
 	$.ajax({
 		url: "${pageContext.request.contextPath}/admin/loadSidoList",
@@ -85,7 +82,8 @@ function loadMemberOrderList(cPage){
 		},
 		error: (x,s,e)=>{
 			console.log("실패",x,s,e);
-		}
+		},complete: (data)=>{
+      	}
 		
 	});//end of ajax
 
@@ -113,9 +111,10 @@ function loadMemberOrderList(cPage){
 		},
 		error: (x,s,e)=>{
 			console.log("실패",x,s,e);
-		}
+		},complete: (data)=>{
+      	}
 	});//end of ajax
-	}//end of loadSigunguList
+}//end of loadSigunguList
 
 	$("#sigungu").on("change", function(){
 		var sigungu = $("#sigungu").val();
@@ -124,28 +123,27 @@ function loadMemberOrderList(cPage){
 	});
 
 	function loadDongList(sigungu){
-	var sigungu = sigungu;
-	$.ajax({
-		url: "${pageContext.request.contextPath}/admin/loadDongList",
-		data:{sigungu:sigungu},
-		dataType: "json",
-		type: "GET",
-		success: data=>{
-			console.log(data);
-			let html = "<option value=''>전체</option>";
-			$.each(data, function(index, data){
-				html += "<option value='"+data+"'>"+data+"</option>";				
-			});//end of forEach
-			$("#dong").html(html);
-		},
-		error: (x,s,e)=>{
-			console.log("실패",x,s,e);
-		}
-	});//end of ajax
+		var sigungu = sigungu;
+		$.ajax({
+			url: "${pageContext.request.contextPath}/admin/loadDongList",
+			data:{sigungu:sigungu},
+			dataType: "json",
+			type: "GET",
+			success: data=>{
+				console.log(data);
+				let html = "<option value=''>전체</option>";
+				$.each(data, function(index, data){
+					html += "<option value='"+data+"'>"+data+"</option>";				
+				});//end of forEach
+				$("#dong").html(html);
+			},
+			error: (x,s,e)=>{
+				console.log("실패",x,s,e);
+			}
+		});//end of ajax
 	}//end of loadDongList
-}
 	
-});
+}); //end of (()=>)
 	
 
 </script>
@@ -191,7 +189,6 @@ function loadMemberOrderList(cPage){
 <div id="pageBar">
 	
 </div>
-<input type="hidden" name="cPage" id="cPage"/>
 
 
 <!-- 달력 스크립트 -->
