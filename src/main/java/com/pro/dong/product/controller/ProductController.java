@@ -363,6 +363,67 @@ public class ProductController {
 		return map;
 	}
 	
+	@RequestMapping("/delImg")
+	@ResponseBody
+	public String delImg(@RequestParam("delImgName") String delImgName) {
+		
+		int result = ps.delImg(delImgName);
+		return result+"";
+	}
+	
+	@RequestMapping("/addFile")
+	@ResponseBody
+	public String addFile(@RequestParam(value = "files", required = false) MultipartFile upFile,
+						 @RequestParam(value = "productNo", required = false) int productNo, 
+						 @RequestParam(value = "isThum", required = false) String isThum,
+						 @RequestParam(value = "oldImgName", required = false) String oldImgName, HttpServletRequest request) {
+		Map<String, String> param = new HashMap<>();
+		log.info("지우는 사진 이름은?={}", oldImgName);
+		
+		param.put("oldImgName", oldImgName);
+		param.put("productNo", productNo+"");
+		
+		int result = ps.deleteOldImgName(param);
+		log.info("사진 한장 지우는거야={}", result);
+		
+		//새로운 첨부파일 저장 
+		if(upFile != null) {
+			
+			String saveDirectory = request.getServletContext().getRealPath("/resources/upload/product");
+			
+			//동적으로 directory 생성
+			File dir = new File(saveDirectory);
+			if (dir.exists() == false)
+				dir.mkdir();
+			
+			//MultipartFile객체 파일업로드 처리
+			MultipartFile f = upFile;
+			if (!f.isEmpty()) {
+				//파일명 재생성
+				String originalFileName = f.getOriginalFilename();
+				String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
+				int rndNum = (int) (Math.random() * 1000);
+				String renamedFileName = sdf.format(new Date()) + "_" + rndNum + ext;
+				
+				//서버컴퓨터에 파일저장
+				try {
+					f.transferTo(new File(saveDirectory + "/" + renamedFileName));
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				param.put("fileName", renamedFileName);
+				param.put("isThum", isThum);
+				
+				result = ps.insertNewImg(param);
+				log.info("사진 한장 넣는거야={}", result);
+			}
+		}
+		return result+"";
+	}
+	
 	//========================== 주영 끝
 		
 	//현규 시작 ==========================

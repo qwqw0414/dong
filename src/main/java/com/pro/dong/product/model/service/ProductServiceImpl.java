@@ -139,6 +139,18 @@ public class ProductServiceImpl implements ProductService{
 	public List<Map<String, String>> selectProductByProductNo(int productNo) {
 		return pd.selectProductByProductNo(productNo);
 	}
+	@Override
+	public int delImg(String delImgName) {
+		return pd.delImg(delImgName);
+	}
+	@Override
+	public int deleteOldImgName(Map<String, String> param) {
+		return pd.deleteOldImgName(param);
+	}
+	@Override
+	public int insertNewImg(Map<String, String> param) {
+		return pd.insertNewImg(param);
+	}
 	//========================== 주영 끝
 		
 	//현규 시작 ==========================
@@ -163,5 +175,4 @@ public class ProductServiceImpl implements ProductService{
 		return pd.deleteLevel2(commentNo);
 	}
 	//========================== 현규 끝
-	
 }

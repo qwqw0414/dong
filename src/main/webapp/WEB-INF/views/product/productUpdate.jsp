@@ -4,6 +4,8 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <%
 	Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
+	String productNo = (String)request.getAttribute("productNo");
+	System.out.println("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"+productNo);
 %>
 <style>
 #productReg{/* font-family: "MapoPeacefull" sans-serif; */ width: 1000px; margin: auto;}
@@ -14,24 +16,23 @@
 #productReg .product-photo{width: 100px;}
 #productReg select {font-size: 1.2em; width: 300px;}
 #productReg #category-check{top: 275px; width: 800px;}
-#productReg #images img{width: auto; height: auto; max-width: 190px; height: 190px;}
-#productReg #images {float: right; width: 200px;}
+#productReg .images img{width: auto; height: auto; max-width: 190px; height: 190px;}
+#productReg .images {float: right; width: 200px;}
 </style>
 <div id="productReg" style="font-family: 'MapoPeacefull';">
-<h1>상품 수정</h1>
+<h1>상품 수정</h1>${list }
 <hr>
 <div class="input-area" style="height: 350px;">
     <div class="product-tag" style="height: 200px;">상품이미지</div>
     <div class="text-primary product-insert">
-        <form enctype="multipart/form-data" id="formData" method="post">
-            <div id="images">
-            	<c:if test="${list[3] eq null}">
+        <form enctype="multipart/form-data" id="formData4" method="post">
+            <div class="images" id="images4">
 	                <input type="file" class="product-photo" id="file-4" name="upFile">
-                </c:if>
                 <br>
                 <c:if test="${list[0] ne null}">
 	                <div>
-	                <input class="imgChk" type="checkbox" value="${list[3].PHOTO}" onchange='imgChk(this);'>
+	                <input class="delImgBtn" type="button" value="삭제" onclick="delImg(this);">
+	                <input type="hidden" value="${list[3].PHOTO}" >
 	                </div>
                 </c:if>
                 <img src="" class="realProImg" id="img-4">
@@ -39,29 +40,29 @@
                 	<img src="${pageContext.request.contextPath}/resources/upload/product/${list[3].PHOTO}" class="proImg" id="img-4">
                 </c:if>
             </div>
-            <div id="images">
-            	<c:if test="${list[2] eq null}">
+         </form>
+         <form enctype="multipart/form-data" id="formData3" method="post">
+            <div class="images" id="images3">
 	                <input type="file" class="product-photo" id="file-3" name="upFile">
-                </c:if>
                 <br>
-                <c:if test="${list[0] ne null}">
 	                <div>
-	                <input class="imgChk" type="checkbox" value="${list[2].PHOTO}" onchange='imgChk(this);'>
+	                <input class="delImgBtn" type="button" value="삭제" onclick="delImg(this);">
+	                <input type="hidden" value="${list[2].PHOTO}" >
 	                </div>
-                </c:if>
                 <img src="" class="realProImg" id="img-3">
                 <c:if test="${list[2] ne null}">
                 	<img src="${pageContext.request.contextPath}/resources/upload/product/${list[2].PHOTO}" class="proImg" id="img-3">
                 </c:if>
             </div>
-            <div id="images">
-            	<c:if test="${list[1] eq null}">
+         </form>
+         <form enctype="multipart/form-data" id="formData2" method="post">
+            <div class="images" id="images2">
 	                <input type="file" class="product-photo" id="file-2" name="upFile">
-                </c:if>
+	                <input type="hidden" value="${list[1].PHOTO}" >
                 <br>
                 <c:if test="${list[0] ne null}">
 	                <div>
-	                <input class="imgChk" type="checkbox" value="${list[1].PHOTO}" onchange='imgChk(this);'>
+	                	<input class="delImgBtn" type="button" value="삭제" onclick="delImg(this);" >
 	                </div>
                 </c:if>
                 <img src="" class="realProImg" id="img-2">
@@ -69,14 +70,15 @@
                 	<img src="${pageContext.request.contextPath}/resources/upload/product/${list[1].PHOTO}" class="proImg" id="img-2">
                 </c:if>
             </div>
-            <div id="images">
-            	<c:if test="${list[0] eq null}">
+          </form>
+          <form enctype="multipart/form-data" id="formData1" method="post">
+            <div class="images" id="images1">
 	                <input type="file" class="product-photo" id="file-1" name="upFile">
-                </c:if>
                 <br>
                 <c:if test="${list[0] ne null}">
 	                <div>
-	                <input class="imgChk" type="checkbox" value="${list[0].PHOTO}" onchange='imgChk(this);'>
+	                	<input class="delImgBtn" type="button" value="삭제" onclick="delImg(this);">
+	                	<input type="hidden" value="${list[0].PHOTO}" >
 	                </div>
                 </c:if>
                 <img src="" class="realProImg" id="img-1">
@@ -180,7 +182,7 @@
 </div>
 
 <script>
-function imgChk(e){
+/* function imgChk(e){
 	var img = $(e).parent().siblings(".proImg");
 	console.log("img=");
 	console.log(img);
@@ -189,10 +191,78 @@ function imgChk(e){
 		img.remove();
 		$(e).parent().html("<input type='file' class='product-photo' id='file-1' name='upFile'>");
 	}
+} */
+
+function delImg(e){
+	var delImgName = $(e).siblings("input").val();
+	var img = $(e).parent().siblings(".proImg");
+	$.ajax({
+		url: "${pageContext.request.contextPath}/product/delImg",
+		data:{delImgName : delImgName},
+		success: data => {
+			console.log(data);
+			if(data == "1"){
+				img.remove();
+				$(e).remove();
+			}
+		},
+		error: (x, s, e) => {
+			console.log("ajax 요청 실패!",x,s,e);
+		},
+		complete: (data)=>{
+      	}
+	});//end of ajax
 }
 
-$(()=>{
+
+$(".product-photo").change(function(e){
+    var formData = new FormData();
+	var $target = $(e.target).val();
+	var $file = $(e.target);
+	var result = 0;
+    var form = $(e.target).parent().parent();
+	var oldImgName = "";
+	console.log($file.siblings("input[type=hidden]").val());
+    if($file.parent().children(".proImg").attr("src") != null){
+		oldImgName = $file.parent().children(".proImg").attr("src").substring("31");
+	    console.log(oldImgName);
+    }
+    console.log("$oldImgName");
+	formData.append("oldImgName", oldImgName);
 	
+	var $form = $("#productReg #formData");
+	
+		
+	var $ffile = $("input[type=file]");
+	var $thumImg = $ffile[3].files[0];
+	var isThum = "";
+	
+	if($thumImg != $file[0].files[0])
+		isThum = "Y";
+	else
+		isThum = "";
+	
+	formData.append("isThum", isThum);
+	formData.append("productNo", ${list[0].PRODUCT_NO});
+    $.ajax({
+        url: "${pageContext.request.contextPath}/product/addFile",
+        type: "post",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: data=>{
+            console.log(data);
+        },
+        error: (x, s, e) => {
+            console.log("실패", x, s, e);
+        }
+    })
+
+    return result;
+	
+});
+	
+$(()=>{
 var $selectPre = $("#productReg #sel-cate-pre");
 var $selectEnd = $("#productReg #sel-cate-end");
 var $selectedCategory = $("#productReg #selectedCategory");
@@ -336,17 +406,10 @@ $(document).on("change", "#productReg .product-photo", function(e){
 });
 
 function imagePreview(input){
-	console.log("미리보기 찍어본다=");
-	console.log(input.files[0]);
     if((input.files[0] != undefined)&&(input.files && input.files[0])){
         var filerdr = new FileReader();
         filerdr.onload = function(e){
-			console.log("e.target.result=");
-			console.log(e.target.result);
-			console.log("$(input)=");
-			console.log($(input));
-			console.log($(input).parent().siblings(".realProImg"));
-            $(input).parent().siblings(".realProImg").attr('src',e.target.result);
+            $(input).siblings("img").attr('src',e.target.result);
         }
         filerdr.readAsDataURL(input.files[0]);
     }else{

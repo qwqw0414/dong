@@ -207,6 +207,22 @@
 		left join product_attachment A on p.product_no = a.product_no
 		where p.product_no = #{productNo}
 	</select>
+	
+	<delete id="delImg">
+		delete from product_attachment where photo = #{delImgName}
+	</delete>
+	
+	<delete id="deleteOldImgName">
+		delete from product_attachment where photo = #{oldImgName} and product_no = #{productNo}
+	</delete>
+	
+	<insert id="insertNewImg">
+		insert into product_attachment values (seq_product_attachment.nextval, #{productNo}, #{fileName}
+		<if test="isThum != null and isThum != ''">
+			, #{isThum}
+		</if>
+		)
+	</insert>
 	<!-- ==========================  주영 끝 -->
 	
 	<!-- 현규 시작 ========================== -->
