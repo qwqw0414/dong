@@ -24,6 +24,10 @@
 	<select id="productStatus" resultType="map">
 		select * from product p left join product_status s on p.product_no=s.product_no  where p.product_no = #{shopNo}
 	</select>
+	
+	<delete id="deleteProduct">
+		delete from product where product_no = #{productNo}
+	</delete>
 	<!-- ==========================  하진 끝 -->
 	
 	<!-- 근호 시작 ========================== -->

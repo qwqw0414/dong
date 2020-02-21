@@ -12,7 +12,23 @@
 <%
 	Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
 %>
-<h1>상품 상세보기</h1>
+<script>
+$(function(){
+	$("#productDeleteBtn").click(function(){
+		var productNo = $("#productNo").val();
+		
+		var confirmflag = confirm("상품을 삭제하시겠습니까?");
+		
+		if(confirmflag){
+			location.href="${pageContext.request.contextPath}/product/productDelete.do?productNo="+productNo;
+		}
+	});
+});
+</script>
+<h1>
+	상품 상세보기
+	<button type="button" class="btn btn-danger" id="productDeleteBtn">상품삭제</button>
+</h1>
 <hr>
 <style>
 .product-info{margin-left: 100px;}
@@ -163,7 +179,7 @@ $(()=>{
                     <c:if test="${map.likeCnt ne '0'}">
                         <button class="btn btn-warning" id="btn-like">찜취소</button>
                     </c:if>                        
-                    <button class="btn btn-danger" id="connect" data-toggle="modal" data-target="#connectModal">연락하기</button>
+                    <button class="btn btn-success" id="connect" data-toggle="modal" data-target="#connectModal">연락하기</button>
                     <button class="btn btn-info"  id="purchaseByPoint" data-toggle="modal" data-target="#purchaseModal">구매하기</button>
                 </div>
 			</div>
