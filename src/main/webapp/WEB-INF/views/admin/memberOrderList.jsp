@@ -47,7 +47,7 @@ function loadMemberOrderList(cPage){
 			$table.html("");
 			let html = "";
 			data.list.forEach(cate => {
-				html += "<tr><td>"+cate.ORDER_NO+"</td><td>"+cate.MEMBER_ID+"</td><td>"+cate.PRODUCT_NO+"</td><td>"+cate.DONG+"</td><td>"+cate.PRICE+"</td><td>"+cate.DATE+"</td></tr>";
+				html += "<tr><td>"+cate.ORDER_NO+"</td><td>"+cate.MEMBER_ID+"</td><td>"+cate.PRODUCT_NO+"</td><td>"+cate.DONG+"</td><td>"+numberComma(cate.PRICE)+"</td><td>"+cate.DATE+"</td></tr>";
 			});
 			$table.append(header+html);
 			$("#pageBar").html(data.pageBar);
@@ -140,7 +140,9 @@ function loadMemberOrderList(cPage){
 	
 }); //end of (()=>)
 	
-
+function numberComma(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 </script>
 
 <h1>회원 거래내역 관리</h1>
