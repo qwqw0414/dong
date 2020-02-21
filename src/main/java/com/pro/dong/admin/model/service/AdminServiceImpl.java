@@ -98,6 +98,14 @@ public class AdminServiceImpl implements AdminService {
 	public List<Map<String, String>> selectMemberOrderList(int cPage, int numPerPage, Map<String, String> param) {
 		return ad.selectMemberOrderList(cPage,numPerPage,param);
 	}
+	@Override
+	public int selectMemberPointOutTotal(Map<String, String> param) {
+		return ad.selectMemberPointOutTotal(param);
+	}
+	@Override
+	public List<Map<String, String>> selectMemberPointOutList(int cPage, int numPerPage, Map<String, String> param) {
+		return ad.selectMemberPointOutList(cPage,numPerPage,param);
+	}
 	// ========================== 지은 끝
 
 	// 예찬 시작 ==========================
@@ -148,6 +156,7 @@ public class AdminServiceImpl implements AdminService {
 		return ad.updateReportStatus(reportNo);
 	}
 	// ========================== 주영 끝
+	
 
 	
 	
