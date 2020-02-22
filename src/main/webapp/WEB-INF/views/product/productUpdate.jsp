@@ -23,7 +23,7 @@
 }
 </style>
 <div id="productReg" style="font-family: 'MapoPeacefull';">
-<h1>상품 수정</h1>${list }
+<h1>상품 수정</h1>
 <hr>
 <div class="input-area" style="height: 350px;">
     <div class="product-tag" style="height: 200px;">상품이미지</div>
@@ -38,6 +38,9 @@
 	                	<input type="hidden" value="${list[3].PHOTO}" >
 	                </div>
                 </c:if>
+                <c:if test="${list[3] eq null}">
+                	<input type="hidden" value="" >
+                </c:if>
                 <img src="" class="realProImg" id="img_4">
                 <c:if test="${list[3] ne null}">
                 	<img src="${pageContext.request.contextPath}/resources/upload/product/${list[3].PHOTO}" class="proImg" id="img-4">
@@ -48,12 +51,17 @@
             <div class="images" id="images3">
 	                <input type="file" class="product-photo" id="file-3" name="upFile">
                 <br>
-	                <div>
 	                <c:if test="${list[2] ne null}">
-		                <button type="button" onclick="delImg(this);" class="sc-fepxGN kjSbMl"></button>
+	                	<div>
+		                	<button type="button" onclick="delImg(this);" class="sc-fepxGN kjSbMl"></button>
+	                		<input type="hidden" value="${list[2].PHOTO}" >
+	                	</div>
 	                </c:if>
-	                <input type="hidden" value="${list[2].PHOTO}" >
-	                </div>
+	            <c:if test="${list[2] eq null}">   
+	            	<div>
+		        		<input type="hidden" value="" >
+                	</div>
+	            </c:if>
                 <img src="" class="realProImg" id="img-3">
                 <c:if test="${list[2] ne null}">
                 	<img src="${pageContext.request.contextPath}/resources/upload/product/${list[2].PHOTO}" class="proImg" id="img-3">
@@ -68,7 +76,13 @@
                 <c:if test="${list[1] ne null}">
 	                <div>
 	                	<button type="button" onclick="delImg(this);" class="sc-fepxGN kjSbMl"></button>
+	                	<input type="hidden" value="${list[1].PHOTO}" >
 	                </div>
+                </c:if>
+                <c:if test="${list[1] eq null}">
+                	<div>
+		        		<input type="hidden" value="" >
+                	</div>
                 </c:if>
                 <img src="" class="realProImg" id="img-2">
                 <c:if test="${list[1] ne null}">
@@ -82,11 +96,16 @@
                 <br>
                 <c:if test="${list[0] ne null}">
 	                <div>
-					<button type="button" onclick="delImg(this);" class="sc-fepxGN kjSbMl"></button>
-                	<input type="hidden" value="${list[0].PHOTO}" >
+						<button type="button" onclick="delImg(this);" class="sc-fepxGN kjSbMl"></button>
+		                <input type="hidden" value="${list[0].PHOTO}" >
 	                </div>
                 </c:if>
-                <img src="" class="realProImg" id="img-1">
+                <c:if test="${list[0] eq null}">
+                	<div>
+		        		<input type="hidden" value="" >
+                	</div>
+                </c:if>
+                <img src="" class="realProImg" id="img_1">
                 <c:if test="${list[0] ne null}">
                 	<img src="${pageContext.request.contextPath}/resources/upload/product/${list[0].PHOTO}" class="proImg" id="img-1">
                 </c:if>
@@ -188,8 +207,11 @@
 <script>
 function delImg(e){
 	var delImgName = $(e).siblings("input").val();
+	var delImgTag = $(e).siblings("input");
+	console.log($(e).siblings("input"));
 	console.log("delImgName의 val은");
 	console.log(delImgName);
+	
 	var img = $(e).parent().siblings(".proImg");
 	console.log("proImg의 img는");
 	console.log(img);
@@ -218,13 +240,17 @@ function delImg(e){
 
 
 $(".product-photo").change(function(e){
+	
+	//변화가 생길시 있던 사진이 있으면 지우기
+	console.log("있던 사진 이름은?");
+	console.log($(e.target).next().next().children().val());
+	
     var formData = new FormData();
 	var $target = $(e.target).val();
 	var $file = $(e.target);
 	var result = 0;
     var form = $(e.target).parent().parent();
 	var oldImgName = "";
-	console.log($file.siblings("input[type=hidden]").val());
     if($file.parent().children(".proImg").attr("src") != null){
 		oldImgName = $file.parent().children(".proImg").attr("src").substring("31");
 	    console.log(oldImgName);
@@ -238,8 +264,8 @@ $(".product-photo").change(function(e){
 	var $form = $("#productReg #formData");
 	
 		
-	var $ffile = $("input[type=file]");
-	var $thumImg = $ffile[3].files[0];
+	var $productFile = $("input[type=file]");
+	var $thumImg = $productFile[3].files[0];
 	var isThum = "";
 	console.log("썸네일이랑 같은 이미지라고 생각하는 애");
 	console.log($file[0].files[0]);
@@ -258,7 +284,11 @@ $(".product-photo").change(function(e){
         contentType: false,
         processData: false,
         success: data=>{
+        	console.log("리네임 파일 이름은?");
             console.log(data);
+            console.log($file.siblings("input[type=hidden]"));
+            $file.siblings("input[type=hidden]").val(data);
+            console.log($file.siblings("input[type=hidden]").val());
         },
         error: (x, s, e) => {
             console.log("실패", x, s, e);
@@ -273,7 +303,7 @@ $(".product-photo").change(function(e){
 function upload(){
     var result = 0;
     var $form = $("#productReg #formData");
-
+	console.log("여기서 하는 일 있어 너?");
     var formData = new FormData();
     formData.append("files", $file1[0].files[0]);
     formData.append("files", $file2[0].files[0]);
@@ -384,42 +414,37 @@ $("#productReg #btn-reg").click(()=>{
         $price.focus();
         return false;
     }
-
-    /* var addrArr = ($address.val()).split(" ");
-	
-    formData.append("sido",addrArr[0]);
-    formData.append("sigungu",addrArr[1]);
-    formData.append("dong",addrArr[2]); */
-
-
-$.ajax({
-    url: "${pageContext.request.contextPath}/product/productUpdateEnd",
-    type: "post",
-    data: {title : $title.val(),
-    	   categoryId : $selectEnd.val(),
-    	   sido : addrArr[0],
-    	   sigungu : addrArr[1],
-    	   dong : addrArr[2],
-    	   status : $("#productReg [name=status]:checked").val(),
-    	   isTrade : $("#productReg [name=isTrade]:checked").val(),
-    	   info : $info.val(),
-    	   price : $price.val(),
-    	   shipping : $("#productReg #shipping").prop("checked"),
-    	   haggle : $("#productReg #haggle").prop("checked"),
-    	   productNo : ${list[0].PRODUCT_NO}},
-    success: data=>{
-        console.log(data);
-        if(data > 0){
-        	location.href="${pageContext.request.contextPath}/product/productView.do?productNo="+${list[0].PRODUCT_NO};
-        }
-        else{
-        	alert("상품 정보 수정 변경 실패");
-        }
-    },
-    error: (x, s, e) => {
-        console.log("실패", x, s, e);
+    
+    else{
+		$.ajax({
+		    url: "${pageContext.request.contextPath}/product/productUpdateEnd",
+		    type: "post",
+		    data: {title : $title.val(),
+		    	   categoryId : $selectEnd.val(),
+		    	   sido : addrArr[0],
+		    	   sigungu : addrArr[1],
+		    	   dong : addrArr[2],
+		    	   status : $("#productReg [name=status]:checked").val(),
+		    	   isTrade : $("#productReg [name=isTrade]:checked").val(),
+		    	   info : $info.val(),
+		    	   price : $price.val(),
+		    	   shipping : $("#productReg #shipping").prop("checked"),
+		    	   haggle : $("#productReg #haggle").prop("checked"),
+		    	   productNo : ${list[0].PRODUCT_NO}},
+		    success: data=>{
+		        console.log(data);
+		        if(data > 0){
+		        	location.href="${pageContext.request.contextPath}/product/productView.do?productNo="+${list[0].PRODUCT_NO};
+		        }
+		        else{
+		        	alert("상품 정보 수정 변경 실패");
+		        }
+		    },
+		    error: (x, s, e) => {
+		        console.log("실패", x, s, e);
+		    }
+		});
     }
-})
 
 });
 

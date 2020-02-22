@@ -396,6 +396,8 @@ public class ProductController {
 		int result = ps.deleteOldImgName(param);
 		log.info("사진 한장 지우는거야={}", result);
 		
+		String renamedFileName =  "";
+		
 		//새로운 첨부파일 저장 
 		if(upFile != null) {
 			
@@ -414,7 +416,7 @@ public class ProductController {
 				String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
 				int rndNum = (int) (Math.random() * 1000);
-				String renamedFileName = sdf.format(new Date()) + "_" + rndNum + ext;
+				renamedFileName = sdf.format(new Date()) + "_" + rndNum + ext;
 				
 				//서버컴퓨터에 파일저장
 				try {
@@ -431,7 +433,7 @@ public class ProductController {
 				log.info("사진 한장 넣는거야={}", result);
 			}
 		}
-		return result+"";
+		return renamedFileName+"";
 	}
 	
 	@RequestMapping("/productUpdateEnd")
