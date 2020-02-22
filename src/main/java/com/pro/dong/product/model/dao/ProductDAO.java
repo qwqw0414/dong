@@ -3,6 +3,7 @@ package com.pro.dong.product.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.pro.dong.member.model.vo.Member;
 import com.pro.dong.product.model.vo.Category;
 import com.pro.dong.product.model.vo.Like;
 import com.pro.dong.product.model.vo.OrderList;
@@ -46,6 +47,7 @@ public interface ProductDAO {
 	int insertLike(Like like);
 	int deleteLike(Like like);
 	int insertStatus(Product product);
+	List<Map<String, String>> selectAd(Member member);
 	//========================== 예찬 끝
 
 	//주영 시작 ==========================

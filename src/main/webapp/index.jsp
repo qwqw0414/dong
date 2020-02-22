@@ -14,6 +14,13 @@
 
 
 <div id="main-page">
+  <div id="product-ad">
+    <div class="productList">
+      <h2>추천 상품</h2>
+      <div class="product" style="height: 310px;"></div>
+    </div>
+    <hr>
+  </div>
 
   <div id="productList-category">
 
@@ -111,6 +118,51 @@ $(()=>{
   var $mainPage = $("#main-page");
   var categoryId;
   var cateArr = {};
+  var sido = '${memberLoggedIn.sido}';
+  var sigungu = '${memberLoggedIn.sigungu}';
+  var dong = '${memberLoggedIn.dong}';
+
+  showAd();
+  // 추천상품
+  function showAd(){
+    $.ajax({
+      url: "${pageContext.request.contextPath}/product/adList",
+      data:{
+        sido: sido,
+        sigungu: sigungu,
+        dong: dong
+      },
+      dataType:"json",
+      success: data=>{
+        console.log(data);
+
+        let html = "";
+
+        data.forEach(product => {
+
+          let preTitle = product.TITLE;
+
+          if(preTitle.length > 12) 
+            preTitle = preTitle.substring(0,12)+"..."
+
+          html += "<div class='card'>";
+          html += "<input type='hidden' class='productNo' value='"+product.PRODUCT_NO+"'>";
+          html += "<img src='${pageContext.request.contextPath}/resources/upload/product/" + product.PHOTO + "' class='card-img-top'>";
+          html += '<div class="card-body">';
+          html += '<p class="card-title">' + preTitle + '</p>';
+          html += '<p class="card-text"><span>' + numberComma(product.PRICE) + '<small>원</small></span></p>';
+          html += '<div class="regDate">'+lastDate(product.REG_DATE)+'</div>';
+          html += '</div></div>'
+        });
+
+        $("#main-page #product-ad .product").html(html);
+      },
+      error: (a,b,c)=>{
+        console.log(a,b,c);
+      }
+
+    })
+  }
 
   for(var i = 0; i < $mainPage.find(".productList").length; i++){
     categoryId = $mainPage.find(".productList").eq(i).attr("id");

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pro.dong.member.model.vo.Member;
 import com.pro.dong.product.model.dao.ProductDAO;
 import com.pro.dong.product.model.vo.Category;
 import com.pro.dong.product.model.vo.Like;
@@ -123,6 +124,10 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public int deleteLike(Like like) {
 		return pd.deleteLike(like);
+	}
+	@Override
+	public List<Map<String, String>> selectAd(Member member) {
+		return pd.selectAd(member);
 	}
 	//========================== 예찬 끝
 

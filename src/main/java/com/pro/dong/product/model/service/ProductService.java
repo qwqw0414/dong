@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.pro.dong.board.model.vo.BoardComment;
+import com.pro.dong.member.model.vo.Member;
 import com.pro.dong.product.model.vo.Category;
 import com.pro.dong.product.model.vo.Like;
 import com.pro.dong.product.model.vo.OrderList;
@@ -44,6 +45,7 @@ public interface ProductService {
 	int countLike(Like like);
 	int insertLike(Like like);
 	int deleteLike(Like like);
+	List<Map<String, String>> selectAd(Member member);
 	//========================== 예찬 끝
 
 	//주영 시작 ==========================
@@ -63,5 +65,6 @@ public interface ProductService {
 	int countComment(int boardNo);
 	int deleteLevel2(int commentNo);
 	//========================== 현규 끝
+
 	
 }

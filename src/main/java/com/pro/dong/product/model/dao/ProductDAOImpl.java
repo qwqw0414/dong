@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.pro.dong.board.model.vo.Attachment;
+import com.pro.dong.member.model.vo.Member;
 import com.pro.dong.product.model.vo.Category;
 import com.pro.dong.product.model.vo.Like;
 import com.pro.dong.product.model.vo.OrderList;
@@ -112,6 +113,11 @@ public class ProductDAOImpl implements ProductDAO{
 	@Override
 	public int insertStatus(Product product) {
 		return sst.insert("product.insertStatus", product);
+	}
+	@Override
+	public List<Map<String, String>> selectAd(Member member) {
+		RowBounds rowBounds = new RowBounds(0, 5);
+		return sst.selectList("product.selectAd", member,rowBounds);
 	}
 	//========================== 예찬 끝
 

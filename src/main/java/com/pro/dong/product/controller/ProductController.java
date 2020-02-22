@@ -117,6 +117,14 @@ public class ProductController {
 		}
 		
 		@ResponseBody
+		@RequestMapping(value="/adList", produces="text/plain;charset=UTF-8")
+		public String adList(Member member) {
+			
+			List<Map<String,String>> list = ps.selectAd(member);
+			return gson.toJson(list);
+		}
+		
+		@ResponseBody
 		@RequestMapping(value="/categoryList", produces="text/plain;charset=UTF-8")
 		public String categoryList(Category category) {
 			List<Category> list = ps.selectCategory(category);

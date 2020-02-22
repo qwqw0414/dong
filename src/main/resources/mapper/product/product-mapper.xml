@@ -97,7 +97,6 @@
 		order by incount desc, reg_date desc
 		)
 		where category = #{category_id}
-		
 	</select>
 	
 	<select id="selectProduct" resultMap="selectProductMap" parameterType="map">
@@ -159,6 +158,32 @@
 	</select>
 	<select id="selectAttachment" parameterType="_int" resultType="productAttachment">
 		select * from product_attachment where product_no = #{productNo}
+	</select>
+	
+	<select id="selectAd" resultType="map" parameterType="member">
+	select *
+	from(
+	    select * 
+	    from product join 
+	            (select product_no, photo from product_attachment where thumbnail = 'Y') 
+	            using(product_no)
+	            join ( select shop_no, avg(score) score
+	                    from shop
+	                            join shop_review 
+	                            using(shop_no)
+	                            join review_grade using(grade_id)
+	                    GROUP by(shop_no)
+	                    ) using(shop_no)
+	        )
+	<where>
+		<if test="sido != null and sido != ''">
+		sido = #{sido} and 
+		sigungu = #{sigungu} and 
+		dong = #{dong}
+		</if>
+	</where> 
+	order by reg_date desc
+	
 	</select>
 	
 	<resultMap type="map" id="selectProductMap">
