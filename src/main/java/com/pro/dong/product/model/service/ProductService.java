@@ -56,6 +56,8 @@ public interface ProductService {
 	int deleteOldImgName(Map<String, String> param);
 	int insertNewImg(Map<String, String> param);
 	int productUpdateEnd(Map<String, String> param);
+	List<Map<String, String>> selectProductCategory(int productNo);
+	List<Category> selectCategoryRef(String categoryRef);
 	//========================== 주영 끝
 		
 	//현규 시작 ==========================

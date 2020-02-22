@@ -369,6 +369,8 @@ public class ProductController {
 		Map<String, Object> map = new HashMap<>();
 		List<Map<String, String>> list = ps.selectProductByProductNo(productNo);
 		map.put("list", list);
+		List<Map<String, String>> category = ps.selectProductCategory(productNo);
+		map.put("category", category);
 		
 		return map;
 	}
@@ -471,6 +473,14 @@ public class ProductController {
 		int result = ps.productUpdateEnd(param);
 		
 		return result+"";
+	}
+	
+	@RequestMapping("/categoryRefList")
+	@ResponseBody
+	public List<Category> categoryRefList(@RequestParam(value = "categoryRef") String categoryRef){
+		
+		List<Category> categoryList = ps.selectCategoryRef(categoryRef);
+		return categoryList;
 	}
 	
 	//========================== 주영 끝

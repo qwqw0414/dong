@@ -250,6 +250,14 @@
 		haggle = #{haggle}, info = #{info}, sido = #{sido}, sigungu = #{sigungu}, dong = #{dong}, 
 		status = #{status}, is_trade = #{isTrade} where product_no = #{productNo}
 	</update>
+	
+	<select id="selectProductCategory" parameterType="_int" resultType="map">
+		select * from product P left join product_category C on p.category_id = c.category_id where p.product_no = #{productNo}
+	</select>
+	
+	<select id="selectCategoryRef" resultType="category">
+		select * from product_category where category_level = 2 and category_ref = #{categoryRef}
+	</select>
 	<!-- ==========================  주영 끝 -->
 	
 	<!-- 현규 시작 ========================== -->

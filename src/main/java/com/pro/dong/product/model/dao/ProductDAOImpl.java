@@ -150,6 +150,14 @@ public class ProductDAOImpl implements ProductDAO{
 	public int productUpdateEnd(Map<String, String> param) {
 		return sst.update("product.productUpdateEnd", param);
 	}
+	@Override
+	public List<Map<String, String>> selectProductCategory(int productNo) {
+		return sst.selectList("product.selectProductCategory", productNo);
+	}
+	@Override
+	public List<Category> selectCategoryRef(String categoryRef) {
+		return sst.selectList("product.selectCategoryRef", categoryRef);
+	}
 	//========================== 주영 끝
 		
 	//현규 시작 ==========================

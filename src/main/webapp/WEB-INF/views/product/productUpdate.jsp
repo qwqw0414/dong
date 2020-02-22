@@ -205,7 +205,8 @@
 </div>
 
 <script>
-function delImg(e){
+/* 여기가 제가 한 사진 관련 스크립트문입니다... */
+/* function delImg(e){
 	var delImgName = $(e).siblings("input").val();
 	var delImgTag = $(e).siblings("input");
 	console.log($(e).siblings("input"));
@@ -343,7 +344,7 @@ function imagePreview(input){
     }else{
         $(input).siblings(".realProImg").attr('src','');
     }
-} //end function
+} //end function */
 
 
 $(()=>{
@@ -367,6 +368,10 @@ var $info = $("#productReg #info");
 var addrArr = ($address.val()).split(" ");
 
 $("#info").text("${list[0].INFO}");
+/* console.log("zzzzz");
+console.log($selectPre.val()); */
+/* $("#productReg #sel-cate-pre").val("${category[0].CATEGORY_REF}").attr("selected", "selected");
+$("#productReg #sel-cate-pre").val("A04").attr("selected", "selected"); */
 
 // 상품 수정
 $("#productReg #btn-reg").click(()=>{
@@ -382,7 +387,9 @@ $("#productReg #btn-reg").click(()=>{
         $selectPre.focus();
         return false;
     }
+    
 
+    
     if($address.val() == null || $address.val().length == 0){
         alert("주소를 입력해주세요.");
         $address.focus();
@@ -448,7 +455,6 @@ $("#productReg #btn-reg").click(()=>{
 
 });
 
-console.log("asdasd");
 //대분류 카테고리 가져오기
 $.ajax({
     url: "${pageContext.request.contextPath}/product/categoryList",
@@ -460,35 +466,47 @@ $.ajax({
         data.forEach(category => {
             option += "<option value='"+category.categoryId+"'>" + category.categoryName + "</option>";
         });
-
         $selectPre.html(option);
     },
     error : (x,s,e) =>{
         console.log("실패",x,s,e);
-    }
+    },
+	complete: (data)=>{
+		$selectPre.val("${category[0].CATEGORY_REF}").attr("selected","selected");
+		selectedCategory();
+  	}
 });
-$selectEnd.click(()=>{selectedCategory();});
+/* $selectEnd.click(()=>{selectedCategory();}); */
 
 //소분류 카테고리 가져오기
-$selectPre.click(()=>{
+/* $selectPre.click(()=>{ */
+	var categoryRef = "${category[0].CATEGORY_REF}";
+	console.log("categoryRef");
+	console.log(categoryRef);
     $.ajax({
-        url: "${pageContext.request.contextPath}/product/categoryList",
-        data: {categoryRef: $selectPre.val()},
+        url: "${pageContext.request.contextPath}/product/categoryRefList",
+        data: {categoryRef: categoryRef},
         dataType: "json",
         success: data => {
+        	console.log("소분류B");
+        	console.log(data);
             let option = "";
             data.forEach(category => {
                 option += "<option value='" + category.categoryId + "'>" + category.categoryName + "</option>";
             });
 
             $selectEnd.html(option);
-            selectedCategory();
+           /*  selectedCategory(); */
         },
         error: (x, s, e) => {
             console.log("실패", x, s, e);
-        }
+        },
+    	complete: (data)=>{
+    		$selectEnd.val("${category[0].CATEGORY_ID}").attr("selected","selected");
+    		selectedCategory();
+      	}
     });
-});
+/* }); */
 
 // 선택한 카테고리 동기화
 function selectedCategory(){
@@ -520,7 +538,8 @@ $("#productReg #btn-myLoaction").click(()=>{
         }
     });
 });
-
+console.log("zzzzz");
+console.log($selectPre.val());
 }); //end onload
 
 </script>

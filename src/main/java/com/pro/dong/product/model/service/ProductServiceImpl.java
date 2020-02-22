@@ -160,6 +160,14 @@ public class ProductServiceImpl implements ProductService{
 	public int productUpdateEnd(Map<String, String> param) {
 		return pd.productUpdateEnd(param);
 	}
+	@Override
+	public List<Map<String, String>> selectProductCategory(int productNo) {
+		return pd.selectProductCategory(productNo);
+	}
+	@Override
+	public List<Category> selectCategoryRef(String categoryRef) {
+		return pd.selectCategoryRef(categoryRef);
+	}
 	//========================== 주영 끝
 		
 	//현규 시작 ==========================
