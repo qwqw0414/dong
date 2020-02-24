@@ -62,13 +62,13 @@ $(()=>{
 
             	console.log(data);
                 let html = '';
-				html += "<span id='goldSido'>"+data[0].SIDO+"</span>&nbsp;<span id='goldSigungu'>"+data[0].SIGUNGU+"</span>&nbsp;<span id='goldDong'>"+data[0].DONG+"</span>&nbsp;<small>("+data[0].CNT+"건)</small>";
+				html += "<span id='goldSido'>"+data.addr[0].SIDO+"</span>&nbsp;<span id='goldSigungu'>"+data.addr[0].SIGUNGU+"</span>&nbsp;<span id='goldDong'>"+data.addr[0].DONG+"</span>&nbsp;<small>("+data.addr[0].CNT+"건)</small>";
 				$("#goldTitle").html(html);
 				html = "";
-				html += "<span id='silverSido'>"+data[1].SIDO+"</span>&nbsp;<span id='silverSigungu'>"+data[1].SIGUNGU+"</span>&nbsp;<span id='silverDong'>"+data[1].DONG+"</span>&nbsp;<small>("+data[1].CNT+"건)</small>";
+				html += "<span id='silverSido'>"+data.addr[1].SIDO+"</span>&nbsp;<span id='silverSigungu'>"+data.addr[1].SIGUNGU+"</span>&nbsp;<span id='silverDong'>"+data.addr[1].DONG+"</span>&nbsp;<small>("+data.addr[1].CNT+"건)</small>";
 				$("#silverTitle").html(html);
 				html = "";
-				html += "<span id='bronzeSido'>"+data[2].SIDO+"</span>&nbsp;<span id='bronzeSigungu'>"+data[2].SIGUNGU+"</span>&nbsp;<span id='bronzeDong'>"+data[2].DONG+"</span>&nbsp;<small>("+data[2].CNT+"건)</small>";
+				html += "<span id='bronzeSido'>"+data.addr[2].SIDO+"</span>&nbsp;<span id='bronzeSigungu'>"+data.addr[2].SIGUNGU+"</span>&nbsp;<span id='bronzeDong'>"+data.addr[2].DONG+"</span>&nbsp;<small>("+data.addr[2].CNT+"건)</small>";
 				$("#bronzeTitle").html(html);
                 $("#kingOfDongnae-wrapper #isMonth").text(month);
             },
@@ -90,16 +90,18 @@ $(()=>{
 				console.log(data);
 				let html = "";
 				html += "<div class='card' style='width: 18rem;'>";
-				html += " <div class='card-body'><h5 class='card-title'>"+yearAndMonth(data.HallOfFameList[0].AWARD_DATE)+"</h5>";
 				for(var i=0; i<data.HallOfFameList.length;i++){
-				html += "<span>"+data.HallOfFameList[i].SIDO+"</span>&nbsp;<span>"+data.HallOfFameList[i].SIGUNGU+"</span>&nbsp;<span>"+data.HallOfFameList[i].DONG+"</span>&nbsp;<small>";
-				if("G"==(data.HallOfFameList[i].BADGE_TYPE)){
-				html += "<img class='badgeTypeImg' src='/dong/resources/images/goldMedal.png'></small><br>";					
-				} else if("S"==(data.HallOfFameList[i].BADGE_TYPE)){
-					html += "<img class='badgeTypeImg' src='/dong/resources/images/silverMedal.png'></small><br>";					
-				} else {
-					html += "<img class='badgeTypeImg' src='/dong/resources/images/bronzeMedal.png'></small><br>";
-				}
+					if(i%3==0){
+					html += " <div class='card-body'><h5 class='card-title'>"+yearAndMonth(data.HallOfFameList[i].AWARD_DATE)+"</h5>";
+					}
+					html += "<span>"+data.HallOfFameList[i].SIDO+"</span>&nbsp;<span>"+data.HallOfFameList[i].SIGUNGU+"</span>&nbsp;<span>"+data.HallOfFameList[i].DONG+"</span>&nbsp;<small>";
+					if("G"==(data.HallOfFameList[i].BADGE_TYPE)){
+					html += "<img class='badgeTypeImg' src='/dong/resources/images/goldMedal.png'></small><br>";					
+					} else if("S"==(data.HallOfFameList[i].BADGE_TYPE)){
+						html += "<img class='badgeTypeImg' src='/dong/resources/images/silverMedal.png'></small><br>";					
+					} else {
+						html += "<img class='badgeTypeImg' src='/dong/resources/images/bronzeMedal.png'></small><br>";
+					}
 				}
 				html+="</div></div>";
 				

@@ -40,33 +40,39 @@
 
 
                     </div>
-                    <div id="mypage_point" class="mypage_con shadow p-3 mb-5 bg-white rounded">
-                        <h4>내 포인트</h4><br>
-                        <div class="ms_content">
-                        보유 포인트 : <span id="memberPoint">${member.POINT}</span>P
-                          
-<div class="row">
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-body">
-      
+					<div id="mypage_point"
+						class="mypage_con shadow p-3 mb-5 bg-white rounded">
+						<h4>내 포인트</h4>
+						<br>
+						<div class="ms_content">
+							보유 포인트 : <span id="memberPoint">${member.POINT}</span>P
 
-        <input type="number" name="pointAmount" id="pointAmount" min="0" max="100000"/>&nbsp;<button class="btn btn-outline-success btn-sm" onclick="chargePoint();">충전하기</button>
-      </div>
-    </div>
-</div>
-<input type="button" class="btn_val btn btn-outline-success btn-sm" value="내역보기" onclick="location.href='${pageContext.request.contextPath}/member/memberChargingDetails.do'">
-<button class="btn btn-outline-success btn-sm"onclick="test1();">포인트 충전 실험</button>
- </div>
-                            <div class="mypage_btn">
-                               
-                            </div>
-                        </div>
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="card">
+										<div class="card-body">
 
 
-                    </div>
+											<input type="number" name="pointAmount" id="pointAmount"
+												min="0" max="100000" />&nbsp;
+											<button class="btn btn-outline-success btn-sm"
+												onclick="chargePoint();">충전하기</button>
+										</div>
+									</div>
+								</div>
+								<input type="button"
+									class="btn_val btn btn-outline-success btn-sm" value="내역보기"
+									onclick="location.href='${pageContext.request.contextPath}/member/memberChargingDetails.do'">
+								<button class="btn btn-outline-success btn-sm"
+									onclick="test1();">포인트 충전 실험</button>
+							</div>
+							<div class="mypage_btn"></div>
+						</div>
 
-                </div>
+
+					</div>
+
+				</div>
             </div>
 
 
@@ -188,11 +194,11 @@ function test1(){
     	type: "POST",
     	success: data=>{
     		console.log(data);
-    		var pointUpdated = data.POINT;
+    		var pointUpdated = data.resultMap.POINT;
     		$("#memberPoint").text(pointUpdated);
     	},
     	error : (x, s, e) => {
-			console.log("ajax 요청 실패!");
+			console.log("ajax 요청 실패!",x,s,e);
 		}
     });//end of ajax
 }
@@ -202,8 +208,7 @@ function chargePoint(){
     IMP.init('imp29966768'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
     var msg;
     var pointAmount = $("#pointAmount").val();
-    var email = "testing1@naver.com";
-    var email = "testing1@naver.com";
+    var email = "${member.EMAIL}";
     var name = "${member.MEMBER_NAME}";
     var phone = "${member.PHONE}";
     var addr = "${member.SIDO}"+"${member.SIGUNGU}"+"${member.DONG}";
@@ -247,7 +252,7 @@ if ( rsp.success ) {
             msg += '카드 승인번호 : ' + rsp.apply_num;
 
             alert(msg);
-            
+            test1();
         } else {
         }
     });

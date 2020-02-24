@@ -60,7 +60,7 @@ public class MemberController {
 // 민호 시작 ==========================
 	@RequestMapping("/updatePoint")
 	@ResponseBody
-	public Map<String, String> updatePoint(ModelAndView mav, @RequestParam("pointAmount") int pointAmount, @RequestParam("memberId") String memberId, HttpServletRequest request) {
+	public Map<String, Object> updatePoint(ModelAndView mav, @RequestParam("pointAmount") int pointAmount, @RequestParam("memberId") String memberId, HttpServletRequest request) {
 		log.debug("pointAmount={}",pointAmount);
 		log.debug("memberId={}",memberId);
 		Map<String, String> map = new HashMap<>();
@@ -74,7 +74,9 @@ public class MemberController {
 			memberInfo = ms.selectMemberPoints(memberLoggedIn);
 		} 
 		log.debug("memberInfo={}",memberInfo);
-		return memberInfo;
+		Map<String,Object> resultMap = new HashMap<>();
+		resultMap.put("resultMap", memberInfo);
+		return resultMap;
 	}
 	@RequestMapping("/orderListView.do")
 	public void orderListView() {

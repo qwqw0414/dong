@@ -36,16 +36,16 @@ public class ShopServiceImpl implements ShopService{
 		return sd.shopUnfollow(param);
 	}
 	@Override
-	public int selectselectFollowListCount(String follow) {
-		return sd.selectselectFollowListCount(follow);
+	public int selectFollowListCount(String follow) {
+		return sd.selectFollowListCount(follow);
 	}
 	@Override
 	public List<Map<String, String>> selectFollowList(String follow, int cPage, int numPerPage) {
 		return sd.selectFollowList(follow,cPage,numPerPage);
 	}
 	@Override
-	public int selectselectFollowerListCount(String follower) {
-		return sd.selectselectFollowerListCount(follower);
+	public int selectFollowerListCount(String follower) {
+		return sd.selectFollowerListCount(follower);
 	}
 	@Override
 	public List<Map<String, String>> selectFollowerList(String follower, int cPage, int numPerPage) {

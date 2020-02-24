@@ -12,9 +12,9 @@ public interface ShopService {
 	int shopFollow(Map<String, String> param);
 	int isFollowing(Map<String, String> param);
 	int shopUnfollow(Map<String, String> param);
-	int selectselectFollowListCount(String follow);
+	int selectFollowListCount(String follow);
 	List<Map<String, String>> selectFollowList(String follow, int cPage, int numPerPage);
-	int selectselectFollowerListCount(String follower);
+	int selectFollowerListCount(String follower);
 	List<Map<String, String>> selectFollowerList(String follower, int cPage, int numPerPage);
 	List<Map<String, String>> loadReviewGrade();
 	Shop selectOneShopByShopName(String shopName);

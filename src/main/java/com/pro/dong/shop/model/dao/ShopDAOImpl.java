@@ -37,8 +37,8 @@ public class ShopDAOImpl implements ShopDAO{
 		return sst.insert("shop.shopfollow", param);
 	}
 	@Override
-	public int selectselectFollowListCount(String follow) {
-		return sst.selectOne("shop.selectselectFollowListCount",follow);
+	public int selectFollowListCount(String follow) {
+		return sst.selectOne("shop.selectFollowListCount",follow);
 	}
 	@Override
 	public List<Map<String, String>> selectFollowList(String follow, int cPage, int numPerPage) {
@@ -46,8 +46,8 @@ public class ShopDAOImpl implements ShopDAO{
 		return sst.selectList("shop.selectFollowList", follow, rowBounds);
 	}
 	@Override
-	public int selectselectFollowerListCount(String follower) {
-		return sst.selectOne("shop.selectselectFollowerListCount", follower);
+	public int selectFollowerListCount(String follower) {
+		return sst.selectOne("shop.selectFollowerListCount", follower);
 	}
 	@Override
 	public List<Map<String, String>> selectFollowerList(String follower, int cPage, int numPerPage) {

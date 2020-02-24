@@ -71,10 +71,8 @@ $(()=>{
 		    		html += "</tr>";
 		    	}
 		    	$table.append(header+html);
-		    	$("#totalContents").text("총 "+data.totalContents+"건의 게시글이 있습니다");
 				$("#pageBar").html(data.pageBar);
 
-				
 		    	},
 		    	error : (x, s, e) => {
 					console.log("ajax 요청 실패!",x,s,e);
@@ -167,27 +165,30 @@ $(()=>{
 			<br /><br /><br />
 		</div>
 	</div>
-<div class="col-md-6 ">
-	    <div class="input-group">
-		  <label for="boardCategory" class="sr-only">카테고리</label>
-		  <select class="custom-select" id="boardCategory" required>
-	     	<%=option %>
-	      </select>
-	      <label for="searchKeyword" class="sr-only">검색</label>
-		  <select class="custom-select" id="searchType" required>
-	     	<option value="member_id" selected>아이디</option>
-	     	<option value="board_title">글제목</option>
-	      </select>
-		  <input style="margin-left: 20px;" type="text" size="30" id="searchKeyword" placeholder="검색어를 입력하세요">
-		  <div class="input-group-append">
-	      <button style="margin-left: 20px;" class="btn btn-primary btn-sm" id="searchBoard">검색하기</button> 
-          </div>
-	    </div>
-    </div>
+	<div class="col-md-12 ">
+		<div class="col-md-8">
+			<div class="input-group">
+				<label for="boardCategory" class="sr-only">카테고리</label> <select
+					class="custom-select" id="boardCategory" required>
+					<%=option%>
+				</select> <label for="searchKeyword" class="sr-only">검색</label> <select
+					class="custom-select" id="searchType" required>
+					<option value="member_id" selected>아이디</option>
+					<option value="board_title">글제목</option>
+				</select> <input style="margin-left: 20px;" type="text" size="40"
+					id="searchKeyword" placeholder="검색어를 입력하세요">
+				<div class="input-group-append">
+					<button style="margin-left: 20px;" class="btn btn-primary sub-btn"
+						id="searchBoard">검색하기</button>
+				<input type="button" value="글쓰기" id="btn-add"
+					class="btn btn-outline-success main-btn"
+					onclick="fn_goWriteBoard();" />
+				</div>
+			</div>
+		</div>
+	</div>
+	<br />
 
-	<p id="totalContents"></p>
-	<input type="button" value="글쓰기" id="btn-add" class="btn btn-outline-success" onclick="fn_goWriteBoard();"/>
-	
 	<table id="tbl-board" class="table table-hover">
 		
 	</table>

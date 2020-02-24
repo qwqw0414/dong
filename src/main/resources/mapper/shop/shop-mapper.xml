@@ -16,7 +16,7 @@
 		insert into shop_follow
 		values (seq_follow_no.nextval, #{follow}, #{follower}, default)
 	</insert>
-	<select id="selectselectFollowListCount" parameterType="string" resultType="_int">
+	<select id="selectFollowListCount" parameterType="string" resultType="_int">
 		select count(*) from shop s left join shop_follow sf
 		on s.shop_no = sf.follow
 		where sf.follower = #{follow}
@@ -26,7 +26,7 @@
 		on s.shop_no = sf.follow
 		where sf.follower = #{follow}
 	</select>
-	<select id="selectselectFollowerListCount" parameterType="string" resultType="_int">
+	<select id="selectFollowerListCount" parameterType="string" resultType="_int">
 		select count(*) from shop s left join shop_follow sf
 		on s.shop_no = sf.follower
 		where sf.follow = #{follower}
