@@ -59,7 +59,7 @@ public class ProductServiceImpl implements ProductService{
 		
 	//지은 시작 ==========================
 	@Override
-	public String selectShopMember(int productNo) {
+	public Member selectShopMember(int productNo) {
 		return pd.selectShopMember(productNo);
 	}
 	//========================== 지은 끝

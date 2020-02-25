@@ -247,7 +247,7 @@ public class ProductController {
 		public ModelAndView productView(ModelAndView mav, int productNo,HttpServletRequest request) {
 			
 			Map<String, Object> map = ps.selectOneProduct(productNo);
-			String result = ps.selectShopMember(productNo);
+			Member result = ps.selectShopMember(productNo);
 			
 			HttpSession session = request.getSession();
 			Member member = (Member) session.getAttribute("memberLoggedIn");

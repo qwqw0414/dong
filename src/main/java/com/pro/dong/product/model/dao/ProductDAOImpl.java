@@ -52,7 +52,7 @@ public class ProductDAOImpl implements ProductDAO{
 		
 	//지은 시작 ==========================
 	@Override
-	public String selectShopMember(int productNo) {
+	public Member selectShopMember(int productNo) {
 		return sst.selectOne("product.selectShopMember", productNo);
 	}
 
