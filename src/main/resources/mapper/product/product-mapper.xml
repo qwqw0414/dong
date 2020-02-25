@@ -99,15 +99,15 @@
 		    )
 		where category = #{category_id}
 		) join product_status using(product_no)
-		where is_sale = 'Y'
+		where is_sale = 'N'
 	</select>
 	
 	<select id="selectProduct" resultMap="selectProductMap" parameterType="map">
-		select *
+		select p.*, ps.is_sale
 		from(select p.*, 
 		    (select category_ref from product_category where category_id=p.category_id) ref,
 		    (select photo from product_attachment where product_no = p.product_no and thumbnail = 'Y') photo
-		     from product p)
+		     from product p) p join product_status ps on p.product_no = ps.product_no
 		<where>
 			(
 			<if test="sido != null and sido != ''">
@@ -126,6 +126,7 @@
 			<if test="categoryId != null and categoryId != ''">
 				and (category_id = #{categoryId} or ref=#{categoryId})
 			</if>
+				and is_sale = 'N'
 		</where>
 	</select>
 	
@@ -134,7 +135,7 @@
 		from(select p.*, 
 		    (select category_ref from product_category where category_id=p.category_id) ref,
 		    (select photo from product_attachment where product_no = p.product_no and thumbnail = 'Y') photo
-		     from product p)
+		     from product p) join (select product_no, is_sale from product_status) using(product_no)
 		<where>
 			(
 			<if test="sido != null and sido != ''">
@@ -153,6 +154,7 @@
 			<if test="categoryId != null and categoryId != ''">
 				and (category_id = #{categoryId} or ref=#{categoryId})
 			</if>
+				and is_sale = 'N'
 		</where>
 	</select>
 	
@@ -177,13 +179,14 @@
 	                            join review_grade using(grade_id)
 	                    GROUP by(shop_no)
 	                    ) using(shop_no)
-	        )
+	        ) join (select product_no, is_sale from product_status) using(product_no)
 	<where>
 		<if test="sido != null and sido != ''">
 		sido = #{sido} and 
 		sigungu = #{sigungu} and 
 		dong = #{dong}
 		</if>
+		and is_sale = 'N'
 	</where> 
 	order by reg_date desc
 	
