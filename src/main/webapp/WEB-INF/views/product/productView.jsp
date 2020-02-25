@@ -15,7 +15,9 @@
 
 <h1>
 	상품 상세보기
-	<button type="button" class="btn btn-danger" id="productDeleteBtn">상품삭제</button>
+	<c:if test="${map.result.memberId eq map.memberLoggedIn.memberId }">
+		<button type="button" class="btn btn-danger" id="productDeleteBtn">상품삭제</button>	
+	</c:if>
 </h1>
 <hr>
 <style>
