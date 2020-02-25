@@ -30,7 +30,7 @@ public interface ProductService {
 	//========================== 근호 끝
 		
 	//지은 시작 ==========================
-	String selectShopMember(int productNo);
+	Member selectShopMember(int productNo);
 
 	//========================== 지은 끝
 		
