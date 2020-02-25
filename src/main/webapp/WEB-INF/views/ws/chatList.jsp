@@ -14,17 +14,11 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/animation.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
-<title>동네톡1</title>
+<title>동네톡</title>
 </head>
 <body>
     <h2>동네톡</h2>
     <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">아이디</th>
-          <th scope="col">메세지</th>
-        </tr>
-      </thead>
       <tbody>
         <c:forEach items="${recentList }" var="m" varStatus="vs">
           <tr chatNo='<c:out value="${m.CHATID}.${m.MEMBERID}"/>' /><%-- el의 문자열 더하기 연산대신 jstl out태그 사용 --%>
