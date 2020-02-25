@@ -42,7 +42,7 @@
 		select count(*) from hall_of_fame
 	</select>
 	<select id="loadHallOfFame" resultType="map">
-		select * from hall_of_fame
+		select * from hall_of_fame order by award_date, fame_no
 	</select>
 
 

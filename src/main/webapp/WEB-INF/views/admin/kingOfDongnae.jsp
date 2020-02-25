@@ -38,7 +38,7 @@
 			alt="..." id="hallOfFameHeaderImg">
 		<div class="card-body">
 			<h5 class="card-title text-center" id="hallOfFameTitle">명예의 전당</h5>
-			<div id="hallOfFameBody"></div>
+			<div id="hallOfFameBody" class="float-left"></div>
 		</div>
 		<div id="hallOfFamePageBar"></div>
 	</div>
@@ -86,25 +86,26 @@ $(()=>{
     	$.ajax({
     		url: "${pageContext.request.contextPath}/research/loadHallOfFame",
     		type: "GET",
+    		data:{cPage:cPage},
     		success:data=>{
 				console.log(data);
-				let html = "";
-				html += "<div class='card' style='width: 18rem;'>";
-				for(var i=0; i<data.HallOfFameList.length;i++){
-					if(i%3==0){
-					html += " <div class='card-body'><h5 class='card-title'>"+yearAndMonth(data.HallOfFameList[i].AWARD_DATE)+"</h5>";
-					}
-					html += "<span>"+data.HallOfFameList[i].SIDO+"</span>&nbsp;<span>"+data.HallOfFameList[i].SIGUNGU+"</span>&nbsp;<span>"+data.HallOfFameList[i].DONG+"</span>&nbsp;<small>";
-					if("G"==(data.HallOfFameList[i].BADGE_TYPE)){
-					html += "<img class='badgeTypeImg' src='/dong/resources/images/goldMedal.png'></small><br>";					
-					} else if("S"==(data.HallOfFameList[i].BADGE_TYPE)){
-						html += "<img class='badgeTypeImg' src='/dong/resources/images/silverMedal.png'></small><br>";					
-					} else {
-						html += "<img class='badgeTypeImg' src='/dong/resources/images/bronzeMedal.png'></small><br>";
-					}
-				}
-				html+="</div></div>";
-				
+			    let html = "";
+			    for(var i=0; i<data.HallOfFameList.length;i++){
+			        	if(i==0||i%3==0){
+			            html += "<div class='card hof-each' style='width: 18rem;'><div class='card-body'><h5 class='card-title'>"+yearAndMonth(data.HallOfFameList[i].AWARD_DATE)+"</h5>";  
+			        	}
+			       		html += "<span>"+data.HallOfFameList[i].SIDO+"</span>&nbsp;<span>"+data.HallOfFameList[i].SIGUNGU+"</span>&nbsp;<span>"+data.HallOfFameList[i].DONG+"</span>&nbsp;<small>";
+				        	if("G"==(data.HallOfFameList[i].BADGE_TYPE)){
+				        	html += "<img class='badgeTypeImg' src='/dong/resources/images/goldMedal.png'></small><br>";					
+				        	} else if("S"==(data.HallOfFameList[i].BADGE_TYPE)){
+				        	html += "<img class='badgeTypeImg' src='/dong/resources/images/silverMedal.png'></small><br>";					
+				        	} else {
+				        	html += "<img class='badgeTypeImg' src='/dong/resources/images/bronzeMedal.png'></small><br>";
+				        	}
+			        	if(i==2||i%3==2){
+			        	html += "</div></div>";  
+			        	}            
+			    	}
 				$("#hallOfFameBody").html(html);
 				$("#hallOfFamePageBar").html(data.pageBar);
 			},
@@ -112,7 +113,7 @@ $(()=>{
 	            console.log(a,b,c);
 	        },
 	        complete: ()=>{
-	    		 $("#pageBar a").click((e)=>{
+	    		 $("#hallOfFamePageBar a").click((e)=>{
 	    			 loadHallOfFame($(e.target).siblings("input").val());
 	    		});
 	    	 }
@@ -152,7 +153,7 @@ $(()=>{
     	var preDate = new Date(date);
 
     	var year = preDate.getFullYear();
-    	var month = preDate.getMonth();
+    	var month = preDate.getMonth()+1;
     	var date = preDate.getDate();
 
     	if(month < 10) month = "0"+month;
@@ -163,5 +164,4 @@ $(()=>{
 });
 
 </script>
-
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

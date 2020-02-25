@@ -102,6 +102,7 @@ footer .line{border: 1px rgb(95, 95, 95) solid; width: 100%;}
 #hallOfFameCard{border:0px;}
 #hallOfFameCard #hallOfFameHeaderImg{width:300px; margin-left:450px;}
 .badgeTypeImg{width:15px; height:15px;}
+#hallOfFameBody .hof-each{position:relative; display:inline-block;}
 /* ==========================민호 끝 */
 	
 /* 하진 시작 ========================== */
