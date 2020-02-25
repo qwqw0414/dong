@@ -44,7 +44,7 @@ public class ShopController {
 	// 민호 시작 ==========================
 	@RequestMapping("/shopFollow")
 	@ResponseBody
-	public String shopFollow(@RequestParam("follow")String follow, @RequestParam("follower")String follower, @RequestParam("isFollowing")int isFollowing) {
+	public String shopFollow(@RequestParam("follow")String follow, @RequestParam("follower")String follower) {
 		log.debug("follow={}",follow);
 		
 		Map<String, String> param = new HashMap<>();
@@ -52,7 +52,7 @@ public class ShopController {
 		
 		param.put("follow",follow);
 		param.put("follower",follower);
-
+		int isFollowing = ss.isFollowing(param);
 		int result = 0;
 		if(isFollowing>0) {
 			result = ss.shopUnfollow(param);
@@ -60,7 +60,7 @@ public class ShopController {
 			result = ss.shopFollow(param);
 		}
 		resultMap.put("result", result);
-		
+		resultMap.put("isFollowing", isFollowing);
 		return gson.toJson(resultMap);
 	}
 	

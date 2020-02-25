@@ -87,7 +87,6 @@
 	<div id="shopDiv">
 		<div id="shopImgDiv">
 			<div id="follow"></div>
-			<input type="hidden" name="isFollowing" id="isFollowing" value="" />
 			<input type="hidden" name="memberLoggedInShopNo" id="memberLoggedInShopNo" value="" />
 			<c:if test="${map.IMAGE == null}">
 				<img id="shopImg1" class="img-thumbnail" src="${pageContext.request.contextPath}/resources/upload/shopImage/shopping-store.png" alt="" />
@@ -1062,14 +1061,13 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 			type: "POST",
 			success: data => {
 					console.log(data);
-			if(data.isFollowing ==1){
+			if(data.isFollowing >0){
 				console.log("팔로우 중");
 				followDiv.html("<img id ='followIcon' src='${pageContext.request.contextPath}/resources/images/like.png' class='animation-img-heartbeat'/>");
 			}else {
 				console.log("팔로우 중이 아님");
 				followDiv.html("<img id ='followIcon' src='${pageContext.request.contextPath}/resources/images/dislike.png'/>");	
 			}
-				$("#isFollowing").val(data.isFollowing);
 				$("#memberLoggedInShopNo").val(data.follower);
 			},
 			error: (x, s, e) => {
@@ -1082,15 +1080,12 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 		var img = $("#followIcon");
 		var follower = $("#memberLoggedInShopNo").val();
 		var follow = '${map.SHOP_NO}';
-		var isFollowing = $("#isFollowing").val();
-		console.log("isFollowing:"+isFollowing);
 		console.log(follower);
 		console.log(follow);
 		 $.ajax({
 			url: "${pageContext.request.contextPath}/shop/shopFollow",
 			data:{follow:follow,
-				follower:follower,
-				isFollowing:isFollowing},
+				follower:follower},
 			success: data => {
 				console.log(data);
 			},
