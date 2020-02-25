@@ -77,20 +77,30 @@ footer .line{border: 1px rgb(95, 95, 95) solid; width: 100%;}
 
 #orderList-wrapper{width:100%;}
 #orderList-wrapper img{width:64px; height:64px;}
-#orderList-wrapper .orderListTitle{font-wight:bold;}
+#orderList-wrapper .orderListTitle{font-size:1.3rem;}
 #orderList-wrapper .orderListContent{text-align:center; padding-top:20px;}
+#orderList-wrapper .orderListImg{width:418px;height:66px;}
+#orderList-wrapper .orderListTitle th{border-bottom: 1px solid #996633; padding-bottom:20px;}
 #saleList-wrapper{width:100%;}
 #saleList-wrapper img{width:64px; height:64px;}
-#saleList-wrapper .saleListTitle{font-wight:bold;}
+#saleList-wrapper .saleListTitle{font-size:1.3rem;}
 #saleList-wrapper .saleListContent{text-align:center; padding-top:20px;}
+#saleList-wrapper .btn-send{width:90px; height:38px;}
+#saleList-wrapper .saleListImg{width:418px;height:66px;}
+#saleList-wrapper .badge{heigth:66px;}
+#saleList-wrapper .saleListTitle th{border-bottom: 1px solid #996633; padding-bottom:20px;}
+
 .reviewBtnTxt{font-size: 1rem;}
 #reviewContent{resize:none; width:400px;}
+
 #shopReview-wrapper{display:inline-block;}
 #shopReview-wrapper .card{display:inline-block;float: left;margin: 10px 8px 10px 8px;}
 #shopReview-wrapper .card-wrapper{width: 200px;height: 280px;}
 #shopReview-wrapper .card-header{margin: 0px 0px 0px 0px;width: 100%;}
 #shopReview-wrapper .card-body{width:200px;height:200px;overflow:auto;} 
 #shopReview-wrapper .card-body img{width:16px;}
+
+
 
 /* 동네왕 css */
 #kingOfDongnae-wrapper .card-deck img{width:50%; margin-left:95px;}
