@@ -348,6 +348,9 @@ function imagePreview(input){
 
 
 $(()=>{
+/* 소분류카테고리가져오기 */	
+selectRefCategory();
+	
 var $selectPre = $("#productReg #sel-cate-pre");
 var $selectEnd = $("#productReg #sel-cate-end");
 var $selectedCategory = $("#productReg #selectedCategory");
@@ -476,16 +479,14 @@ $.ajax({
 		selectedCategory();
   	}
 });
-/* $selectEnd.click(()=>{selectedCategory();}); */
 
-//소분류 카테고리 가져오기
-/* $selectPre.click(()=>{ */
-	var categoryRef = "${category[0].CATEGORY_REF}";
-	console.log("categoryRef");
-	console.log(categoryRef);
+$selectEnd.click(()=>{selectedCategory();});
+
+//소분류 카테고리 새로 가져오기
+$selectPre.click(()=>{
     $.ajax({
         url: "${pageContext.request.contextPath}/product/categoryRefList",
-        data: {categoryRef: categoryRef},
+        data: {categoryRef: $selectPre.val()},
         dataType: "json",
         success: data => {
         	console.log("소분류B");
@@ -506,7 +507,35 @@ $.ajax({
     		selectedCategory();
       	}
     });
-/* }); */
+});
+
+
+function selectRefCategory(){
+	var categoryRef = "${category[0].CATEGORY_REF}";
+	console.log("categoryRef");
+	console.log(categoryRef);
+    $.ajax({
+        url: "${pageContext.request.contextPath}/product/categoryRefList",
+        dataType: "json",
+        data: {categoryRef : categoryRef},
+        success: data => {
+        	console.log("소분류B");
+        	console.log(data);
+            let option = "";
+            data.forEach(category => {
+                option += "<option value='" + category.categoryId + "'>" + category.categoryName + "</option>";
+            });
+            $selectEnd.html(option);
+        },
+        error: (x, s, e) => {
+            console.log("실패", x, s, e);
+        },
+    	complete: (data)=>{
+    		$selectEnd.val("${category[0].CATEGORY_ID}").attr("selected","selected");
+    		selectedCategory();
+      	}
+    });
+}
 
 // 선택한 카테고리 동기화
 function selectedCategory(){
