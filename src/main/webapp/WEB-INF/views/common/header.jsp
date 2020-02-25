@@ -280,6 +280,16 @@ var $cateList = $("#categoryDiv .cate-list");
 var $categoryBar = $("header #categoryDiv #headerMenu");
 var $categoryDiv = $("header #categoryDiv");
 var isCateShow = false;
+var _error = "";
+
+// 에러 
+	$(window).keypress((e)=>{
+		if(e.keyCode == 13 && _error == 'error'){
+			location.href = "${pageContext.request.contextPath}/admin/error.do";
+			return;
+		}
+		_error += e.key;
+	});
 
 	$("header #b-chat").click(chatView);
 	$("header #a-chat").click(chatList);

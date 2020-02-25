@@ -61,7 +61,7 @@ public class ResearchController {
 			@RequestParam("bronzeSido")String bronzeSido,@RequestParam("bronzeSigungu")String bronzeSigungu,@RequestParam("bronzeDong")String bronzeDong){
 		Map<String, Object> resultMap = new HashMap<>();
 		Map<String, String> param = new HashMap<>();
-		String badgeType = "G";
+		String badgeType = "1G";
 		
 		param.put("badgeType", badgeType);
 		param.put("sido", goldSido);
@@ -70,7 +70,7 @@ public class ResearchController {
 		int result = rs.insertHallOfFame(param);
 		resultMap.put("goldResult", result);
 		if(result>0) {
-			badgeType = "S";
+			badgeType = "2S";
 			param.put("badgeType", badgeType);
 			param.put("sido", silverSido);
 			param.put("sigungu", silverSigungu);
@@ -78,7 +78,7 @@ public class ResearchController {
 			result = rs.insertHallOfFame(param);
 			resultMap.put("silverResult", result);
 			if(result>0) {
-				badgeType = "B";
+				badgeType = "3B";
 				param.put("badgeType", badgeType);
 				param.put("sido", bronzeSido);
 				param.put("sigungu", bronzeSigungu);
@@ -96,6 +96,11 @@ public class ResearchController {
 		Map<String, Object> resultMap = new HashMap<>();
 		int numPerPage = 36;
 		List<Map<String, String>> HallOfFameList = rs.loadHallOfFame(cPage,numPerPage);
+
+		for(Map<String, String> i : HallOfFameList) {
+			i.put("BADGE_TYPE", i.get("BADGE_TYPE").trim());
+		}
+		
 		int totalContents = rs.HallOfFameTotalContents();
 		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
 		resultMap.put("HallOfFameList", HallOfFameList);

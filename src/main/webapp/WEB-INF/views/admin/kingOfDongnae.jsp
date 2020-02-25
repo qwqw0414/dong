@@ -3,6 +3,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
 <style>
+/* #hallOfFame-wrapper .addr-gold{text-shadow: rgb(156, 156, 156) 0 0 5px; color: gold;} */
 </style>
 
 
@@ -112,14 +113,14 @@ $(()=>{
 			        	if(i==0||i%3==0){
 			            html += "<div class='card hof-each' style='width: 18rem;'><div class='card-body'><h5 class='card-title'>"+yearAndMonth(data.HallOfFameList[i].AWARD_DATE)+"</h5>";  
 			        	}
-			       		html += "<span>"+data.HallOfFameList[i].SIDO+"</span>&nbsp;<span>"+data.HallOfFameList[i].SIGUNGU+"</span>&nbsp;<span>"+data.HallOfFameList[i].DONG+"</span>&nbsp;<small>";
-				        	if("G"==(data.HallOfFameList[i].BADGE_TYPE)){
-				        	html += "<img class='badgeTypeImg' src='/dong/resources/images/goldMedal.png'></small><br>";					
-				        	} else if("S"==(data.HallOfFameList[i].BADGE_TYPE)){
-				        	html += "<img class='badgeTypeImg' src='/dong/resources/images/silverMedal.png'></small><br>";					
+				        	if('1G'===data.HallOfFameList[i].BADGE_TYPE){
+				        	html += "<small><img class='badgeTypeImg' src='/dong/resources/images/goldMedal.png'></small>";					
+				        	} else if('2S'===(data.HallOfFameList[i].BADGE_TYPE)){
+				        	html += "<small><img class='badgeTypeImg' src='/dong/resources/images/silverMedal.png'></small>";					
 				        	} else {
-				        	html += "<img class='badgeTypeImg' src='/dong/resources/images/bronzeMedal.png'></small><br>";
+				        	html += "<small><img class='badgeTypeImg' src='/dong/resources/images/bronzeMedal.png'></small>";
 				        	}
+			       		html += "<span class='addr-gold'>"+data.HallOfFameList[i].SIDO+"</span>&nbsp;<span class='addr-gold'>"+data.HallOfFameList[i].SIGUNGU+"</span>&nbsp;<span class='addr-gold'>"+data.HallOfFameList[i].DONG+"</span><br>";			       		
 			        	if(i==2||i%3==2){
 			        	html += "</div></div>";  
 			        	}            
@@ -169,11 +170,14 @@ $(()=>{
     
     function yearAndMonth(date){
     	var preDate = new Date(date);
-
     	var year = preDate.getFullYear();
-    	var month = preDate.getMonth()+1;
+    	var month = preDate.getMonth();
     	var date = preDate.getDate();
-
+    	
+		if(month==0){
+			year--;
+			month = 12;
+		}
     	if(month < 10) month = "0"+month;
     	if(date < 10) date = "0"+date;
 
