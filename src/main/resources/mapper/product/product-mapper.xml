@@ -89,14 +89,17 @@
 	</insert>
 	
 	<select id="selectProductListTop10" parameterType="product" resultMap="product1:1AttachMap">
-		select * from(
-		select p.*, pa.photo,
-		(select category_ref from product_category where category_id = p.category_id) category
-		from product p join product_attachment pa on p.product_no = pa.product_no
-		where pa.thumbnail = 'Y'
-		order by incount desc, reg_date desc
-		)
+		select * from (
+		select * from (
+		    select p.*, pa.photo,
+		    (select category_ref from product_category where category_id = p.category_id) category
+		    from product p join product_attachment pa on p.product_no = pa.product_no
+		    where pa.thumbnail = 'Y'
+		    order by reg_date desc
+		    )
 		where category = #{category_id}
+		) join product_status using(product_no)
+		where is_sale = 'Y'
 	</select>
 	
 	<select id="selectProduct" resultMap="selectProductMap" parameterType="map">
