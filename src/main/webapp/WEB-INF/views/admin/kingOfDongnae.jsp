@@ -45,11 +45,29 @@
 </div>
 <script>
 $(()=>{
+	var year;
+	var month;
 
-    listLoad(3,2020,1);
+	now();
+
+	function now(){
+		var now = new Date();
+		year = now.getFullYear();
+		month = now.getMonth() + 1;
+
+		if(month == 1){
+			month = 12;
+			year--;
+		}
+		else{
+			month--;
+		}
+	}
+
+    listLoad(3,year,month);
     loadHallOfFame(1);
     function listLoad(rank,year,month){
-
+		console.log(rank, year, month);
         $.ajax({
             url:"${pageContext.request.contextPath}/research/selectTop",
             data:{
