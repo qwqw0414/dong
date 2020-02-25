@@ -85,28 +85,28 @@
                             <div id="change_con">
                                 <div class="ms_change">
                                     <div class="before before_change1" style="display: block;">
-                                        이름:<span id="curname">${member.MEMBER_NAME}</span> <input type="button"
-                                            id="change_btn1" class="btn btn-outline-success btn-sm" value="수정" />
+                                        <small>이름: </small><span id="curname">${member.MEMBER_NAME}</span><input type="button"
+                                            id="change_btn1" class="" value="수정"  style="font-size:4px; padding:0; background-color: transparent; border:0; color:gray; margin-left:100px"/>
                                     </div>
                                     <div class="after after_change1" style="display: none;">
-                                        <input type="text" id="username" placeholder="변경할 이름">
+                                        <small>이름: </small><input type="text" id="username" placeholder="변경할 이름" style="width:120px;font-size:10px">
                                         <button type="button" class="btn btn-outline-success btn-sm" id="button-addon1"
-                                            class="btn btn-outline-success btn-sm">확인</button>
+                                            class="" style="font-size:4px; padding:0; background-color: transparent; border:0; color:gray;; margin-left:24px">확인</button>
                                     </div>
                                 </div>
 
                                 <div id="ms_change">
 
                                     <div class="before before_change2" style="display: block;">
-                                        연락처:<span id="curphone">${member.PHONE}</span> <input type="button"
-                                            id="change_btn2" value="수정" class="btn btn-outline-success btn-sm" />
+                                        <small>연락처: </small><span id="curphone">${member.PHONE}</span> <input type="button"
+                                            id="change_btn2" value="수정" class="" style="font-size:4px; padding:0; background-color: transparent; border:0; color:gray; margin-left:36px"  />
                                     </div>
 
                                     <div class="after after_change2" style="display: none;">
-                                        <input type="text" id="userphone" maxlength="11"
-                                            placeholder=" 변경할 연락처 (-제외)">
-                                        <button type="button" class="btn btn-outline-success btn-sm"
-                                            id="button-addon2">확인</button>
+                                        <small>연락처: </small><input type="text" id="userphone" maxlength="11"
+                                            placeholder=" 변경할 연락처 (-제외)" style="font-size:8px">
+                                        <button type="button" class=""
+                                            id="button-addon2" style="font-size:10px; padding:0; background-color: transparent; border:0; color:gray; margin-left:14px">확인</button>
                                     </div>
 
                                 </div>
@@ -115,22 +115,22 @@
 
                                 <div class="ms_change">
                                     <div class="before before_change3" style="display: block;">
-                                        이메일:<span id="curemail">${member.EMAIL}</span> <input type="button"
-                                            id="change_btn3" class="btn btn-outline-success btn-sm" value="수정" />
+                                        <small>이메일: </small><span id="curemail">${member.EMAIL}</span> <input type="button"
+                                            id="change_btn3" class="btn btn-outline-success btn-sm" value="수정" style="font-size:10px; padding:0; background-color: transparent; border:0; color:gray; " />
                                     </div>
 
                                     <div class="after after_change3" style="display: none;">
                                     	<input type="hidden" id="valid-email" value="0">
-                                        <input type="email" id="useremail" name="useremail" placeholder="변경할 이메일">
+                                        <small>이메일: </small><input type="email" id="useremail" name="useremail" placeholder="변경할 이메일" style="font-size:8px ">
                                         <button type="button" class="btn btn-outline-success btn-sm"
-                                            id="button-addon3">인증하기</button>
+                                            id="button-addon3" style="font-size:10px; padding:0; background-color: transparent; border:0; color:gray; ">인증하기</button>
                                             
                                     </div>
                                     <div class="email_authKey" style="display: none">
                                     	<input type="text" name="authKey" id="authKey" placeholder="인증번호를 입력해주세요."/>
                                     	<button type="button" class="btn btn-outline-success btn-sm" id="authCode-btn">확인</button>
                                     </div>
-                                    <div class="emailMsg"></div>
+                                    <div class="emailMsg" style="font-size:10px"></div>
                                 </div>
                             </div>
 
@@ -272,6 +272,9 @@ if ( rsp.success ) {
 
     $(() => {
 
+    	
+    	$()
+    	
         //수정 버튼 누를시 태그변환
         $("#memberView #change_btn1").on('click', function () {
             $("#memberView .before_change1").css("display", "none");
@@ -286,6 +289,11 @@ if ( rsp.success ) {
             $("#memberView .after_change3").css("display", "block")
         });
 
+        
+        
+        
+        
+        
         //이름 변경
         $("#memberView #button-addon1").on('click', function () {
             var afterName = $("#username").val();
