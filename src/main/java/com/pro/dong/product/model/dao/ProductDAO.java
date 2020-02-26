@@ -48,6 +48,10 @@ public interface ProductDAO {
 	int deleteLike(Like like);
 	int insertStatus(Product product);
 	List<Map<String, String>> selectAd(Member member);
+	int insertAttachment(Map<String, String> param);
+	int updateAttachment(Map<String, String> param);
+	int deleteAttachment(Map<String, String> param);
+	int deleteAttachment(String fileName);
 	//========================== 예찬 끝
 
 	//주영 시작 ==========================
@@ -69,6 +73,4 @@ public interface ProductDAO {
 	int countComment(int boardNo);
 	int deleteLevel2(int commentNo);
 	//========================== 현규 끝
-	
-	
 }

@@ -66,6 +66,10 @@ public class ProductServiceImpl implements ProductService{
 		
 	//예찬 시작 ==========================
 	@Override
+	public int deleteAttachment(String fileName) {
+		return pd.deleteAttachment(fileName);
+	}
+	@Override
 	public List<Category> selectCategory(Category category) {
 		return pd.selectCategory(category);
 	}	
@@ -128,6 +132,22 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public List<Map<String, String>> selectAd(Member member) {
 		return pd.selectAd(member);
+	}
+	@Override
+	public int filesUpdate(Map<String, String> param, String type) {
+		int result = 0;
+		
+		if(type.equals("insert")) {
+			result = pd.insertAttachment(param);
+		}
+		else if(type.equals("update")) {
+			result = pd.updateAttachment(param);
+		}
+		else if(type.equals("delete")) {
+			result = pd.deleteAttachment(param);
+		}
+		
+		return result;
 	}
 	//========================== 예찬 끝
 
@@ -192,4 +212,5 @@ public class ProductServiceImpl implements ProductService{
 		return pd.deleteLevel2(commentNo);
 	}
 	//========================== 현규 끝
+
 }

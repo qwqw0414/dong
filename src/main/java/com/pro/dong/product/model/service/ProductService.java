@@ -46,6 +46,8 @@ public interface ProductService {
 	int insertLike(Like like);
 	int deleteLike(Like like);
 	List<Map<String, String>> selectAd(Member member);
+	int filesUpdate(Map<String, String> param, String type);
+	int deleteAttachment(String fileName);
 	//========================== 예찬 끝
 
 	//주영 시작 ==========================
@@ -67,6 +69,5 @@ public interface ProductService {
 	int countComment(int boardNo);
 	int deleteLevel2(int commentNo);
 	//========================== 현규 끝
-
 	
 }

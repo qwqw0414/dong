@@ -119,6 +119,22 @@ public class ProductDAOImpl implements ProductDAO{
 		RowBounds rowBounds = new RowBounds(0, 5);
 		return sst.selectList("product.selectAd", member,rowBounds);
 	}
+	@Override
+	public int insertAttachment(Map<String, String> param) {
+		return sst.insert("product.insertAttachmentMap", param);
+	}
+	@Override
+	public int updateAttachment(Map<String, String> param) {
+		return sst.update("product.updateAttachment", param);
+	}
+	@Override
+	public int deleteAttachment(Map<String, String> param) {
+		return sst.delete("product.deleteAttachment", param);
+	}
+	@Override
+	public int deleteAttachment(String fileName) {
+		return sst.delete("product.deleteAttachment1", fileName);
+	}
 	//========================== 예찬 끝
 
 	//주영 시작 ==========================

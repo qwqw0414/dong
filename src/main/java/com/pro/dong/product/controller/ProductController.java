@@ -110,186 +110,243 @@ public class ProductController {
 
 	//========================== 지은 끝
 		
-	//예찬 시작 ==========================
-		@RequestMapping("/productReg.do")
-		public void productReg() {
+	// 예찬 시작 ==========================
+	@ResponseBody
+	@RequestMapping("/deleteFile")
+	public String deleteFile(String fileName, HttpServletRequest request) {
+		
+		int result = ps.deleteAttachment(fileName);
+		
+//		파일제거
+		if(result > 0) {
+			String saveDirectory = request.getSession().getServletContext().getRealPath("/resources/upload/product/");
 			
+			File file = new File(saveDirectory + fileName); 
+			file.delete();
 		}
 		
-		@ResponseBody
-		@RequestMapping(value="/adList", produces="text/plain;charset=UTF-8")
-		public String adList(Member member) {
-			
-			List<Map<String,String>> list = ps.selectAd(member);
-			return gson.toJson(list);
-		}
-		
-		@ResponseBody
-		@RequestMapping(value="/categoryList", produces="text/plain;charset=UTF-8")
-		public String categoryList(Category category) {
-			List<Category> list = ps.selectCategory(category);
-			return gson.toJson(list);
-		}
-		
-		@ResponseBody
-		@RequestMapping(value="/productReg", produces="text/plain;charset=UTF-8")
-		public String productReg(Product product, String memberId, MultipartFile[] files, HttpServletRequest request) {
-			
-			int result = 0;
-			
+		return String.valueOf(result);
+	}
+
+	@ResponseBody
+	@RequestMapping("/filesUpdate")
+	public String filesUpdate(MultipartFile files, String thumnail, String oldFileName, String type, int productNo,
+			HttpServletRequest request) {
+
+		String renamedFileName = null;
+
+		if (!type.equals("delete")) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
+			String saveDirectory = request.getSession().getServletContext().getRealPath("/resources/upload/product");
+			String originalFileName = null;
+			String ext = null;
+
+			originalFileName = files.getOriginalFilename();
+			ext = originalFileName.substring(originalFileName.lastIndexOf("."));
+			int rndNum = (int) (Math.random() * 1000);
+			renamedFileName = sdf.format(new Date()) + "_" + rndNum + ext;
+
 			try {
-				if(product.getShipping().equals("true"))
-					product.setShipping("Y");
-				else
-					product.setShipping("N");
-				
-				if(product.getHaggle().equals("true"))
-					product.setHaggle("Y");
-				else
-					product.setHaggle("N");
-				
-				Shop shop = ps.selectOneShop(memberId);
-				product.setShopNo(shop.getShopNo());
-				
-				product.setTitle(product.getTitle().replaceAll("<", "&lt;").replaceAll(">", "&gt;"));
-				product.setInfo(product.getInfo().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\\n", "<br/>"));
-			
-				String saveDirectory = request.getSession().getServletContext().getRealPath("/resources/upload/product");
-				List<ProductAttachment> attachList = new ArrayList<>();
-				
-				File dir = new File(saveDirectory);
-				if(dir.exists() == false) dir.mkdir();
-				
-				for(MultipartFile f : files) {
-					if(!f.isEmpty()) {
-						String originalFileName = f.getOriginalFilename();
-						String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
-						SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
-						int rndNum = (int)(Math.random()*1000);
-						String renamedFileName = sdf.format(new Date())+"_"+rndNum+ext;
-						
-						try {
-							f.transferTo(new File(saveDirectory+"/"+renamedFileName));
-						} catch (IllegalStateException e) {
-							e.printStackTrace();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-						
-						ProductAttachment attach = new ProductAttachment();
-						attach.setPhoto(renamedFileName);
-						attachList.add(attach);
+				files.transferTo(new File(saveDirectory + "/" + renamedFileName));
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		Map<String, String> param = new HashMap<>();
+		param.put("photo", renamedFileName);
+		param.put("thumbnail", thumnail.equals("Y") ? "Y" : "N");
+		param.put("productNo", String.valueOf(productNo));
+		param.put("oldName", oldFileName);
+
+		int result = ps.filesUpdate(param, type);
+
+		Map<String, String> map = new HashMap<>();
+		map.put("result", String.valueOf(result));
+		map.put("newName", renamedFileName);
+
+		return gson.toJson(map);
+	}
+
+	@RequestMapping("/productReg.do")
+	public void productReg() {
+
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/adList", produces = "text/plain;charset=UTF-8")
+	public String adList(Member member) {
+
+		List<Map<String, String>> list = ps.selectAd(member);
+		return gson.toJson(list);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/categoryList", produces = "text/plain;charset=UTF-8")
+	public String categoryList(Category category) {
+		List<Category> list = ps.selectCategory(category);
+		return gson.toJson(list);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/productReg", produces = "text/plain;charset=UTF-8")
+	public String productReg(Product product, String memberId, MultipartFile[] files, HttpServletRequest request) {
+
+		int result = 0;
+
+		try {
+			if (product.getShipping().equals("true"))
+				product.setShipping("Y");
+			else
+				product.setShipping("N");
+
+			if (product.getHaggle().equals("true"))
+				product.setHaggle("Y");
+			else
+				product.setHaggle("N");
+
+			Shop shop = ps.selectOneShop(memberId);
+			product.setShopNo(shop.getShopNo());
+
+			product.setTitle(product.getTitle().replaceAll("<", "&lt;").replaceAll(">", "&gt;"));
+			product.setInfo(
+					product.getInfo().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\\n", "<br/>"));
+
+			String saveDirectory = request.getSession().getServletContext().getRealPath("/resources/upload/product");
+			List<ProductAttachment> attachList = new ArrayList<>();
+
+			File dir = new File(saveDirectory);
+			if (dir.exists() == false)
+				dir.mkdir();
+
+			for (MultipartFile f : files) {
+				if (!f.isEmpty()) {
+					String originalFileName = f.getOriginalFilename();
+					String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
+					int rndNum = (int) (Math.random() * 1000);
+					String renamedFileName = sdf.format(new Date()) + "_" + rndNum + ext;
+
+					try {
+						f.transferTo(new File(saveDirectory + "/" + renamedFileName));
+					} catch (IllegalStateException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
 					}
+
+					ProductAttachment attach = new ProductAttachment();
+					attach.setPhoto(renamedFileName);
+					attachList.add(attach);
 				}
-				
-				result = ps.insertProduct(product, attachList);
-				
-			}catch(Exception e) {
-				e.printStackTrace();
 			}
-			
-			
-			return ""+result;
+
+			result = ps.insertProduct(product, attachList);
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		
-		@ResponseBody
-		@RequestMapping(value="/selectProductListTop10", produces="text/plain;charset=UTF-8")
-		public String selectProductListTop10(String categoryId) {
-			
-			List<Map<String, String>> list = null;
-			
-			try {
-				list = ps.selectProductListTop10(categoryId);
-				
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
-			
-			return gson.toJson(list);
+
+		return "" + result;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/selectProductListTop10", produces = "text/plain;charset=UTF-8")
+	public String selectProductListTop10(String categoryId) {
+
+		List<Map<String, String>> list = null;
+
+		try {
+			list = ps.selectProductListTop10(categoryId);
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		
-		@RequestMapping("/productList.do")
-		public ModelAndView productList(ModelAndView mav, String categoryId, String keyword) {
-			
-			mav.addObject("categoryId", categoryId);
-			mav.addObject("keyword", keyword);
-			return mav;
+
+		return gson.toJson(list);
+	}
+
+	@RequestMapping("/productList.do")
+	public ModelAndView productList(ModelAndView mav, String categoryId, String keyword) {
+
+		mav.addObject("categoryId", categoryId);
+		mav.addObject("keyword", keyword);
+		return mav;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/searchProduct", produces = "text/plain;charset=UTF-8")
+	public String searchProduct(int cPage, Product product, String keyword) {
+
+		int numPerPage = 40;
+		Map<String, String> param = new HashMap<>();
+		param.put("categoryId", product.getCategoryId());
+		param.put("keyword", keyword);
+		param.put("sido", product.getSido());
+		param.put("sigungu", product.getSigungu());
+		param.put("dong", product.getDong());
+
+		List<Map<String, String>> list = ps.selectProduct(cPage, numPerPage, param);
+
+		int totalContents = ps.countProduct(param);
+		String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
+
+		Map<String, Object> result = new HashMap<>();
+		result.put("product", list);
+		result.put("pageBar", pageBar);
+
+		log.debug(pageBar);
+
+		return gson.toJson(result);
+	}
+
+	@RequestMapping("/productView.do")
+	public ModelAndView productView(ModelAndView mav, int productNo, HttpServletRequest request) {
+
+		Map<String, Object> map = ps.selectOneProduct(productNo);
+		Member result = ps.selectShopMember(productNo);
+
+		HttpSession session = request.getSession();
+		Member member = (Member) session.getAttribute("memberLoggedIn");
+		log.info("member={}", member);
+		Like like = new Like();
+		like.setMemberId(member.getMemberId());
+		like.setProductNo(productNo);
+
+		int likeCnt = ps.countLike(like);
+		log.info("result={}", result);
+
+		map.put("result", result);
+		map.put("likeCnt", likeCnt + "");
+		map.put("memberLoggedIn", member);
+		mav.addObject("map", map);
+
+		return mav;
+	}
+
+	@RequestMapping(value = "/productLike", produces = "text/plain;charset=UTF-8")
+	@ResponseBody
+	public String productLike(Like like) {
+
+		Map<String, String> map = new HashMap<>();
+		int likeCnt = ps.countLike(like);
+		int result;
+
+		if (likeCnt == 0) {
+			result = ps.insertLike(like);
+			map.put("type", "I");
+		} else {
+			result = ps.deleteLike(like);
+			map.put("type", "O");
 		}
-		
-		@ResponseBody
-		@RequestMapping(value="/searchProduct", produces="text/plain;charset=UTF-8")
-		public String searchProduct(int cPage, Product product, String keyword) {
-			
-			
-			int numPerPage = 40;
-			Map<String, String> param = new HashMap<>();
-			param.put("categoryId", product.getCategoryId());
-			param.put("keyword", keyword);
-			param.put("sido", product.getSido());
-			param.put("sigungu", product.getSigungu());
-			param.put("dong", product.getDong());
-			
-			List<Map<String, String>> list = ps.selectProduct(cPage,numPerPage,param);
-			
-			int totalContents = ps.countProduct(param);
-			String pageBar = new Utils().getOneClickPageBar(totalContents, cPage, numPerPage);
-			
-			Map<String,Object> result = new HashMap<>();
-			result.put("product", list);
-			result.put("pageBar", pageBar);
-			
-			log.debug(pageBar);
-			
-			return gson.toJson(result);
-		}
-		
-		@RequestMapping("/productView.do")
-		public ModelAndView productView(ModelAndView mav, int productNo,HttpServletRequest request) {
-			
-			Map<String, Object> map = ps.selectOneProduct(productNo);
-			Member result = ps.selectShopMember(productNo);
-			
-			HttpSession session = request.getSession();
-			Member member = (Member) session.getAttribute("memberLoggedIn");
-			log.info("member={}",member);
-			Like like = new Like();
-			like.setMemberId(member.getMemberId());
-			like.setProductNo(productNo);
-			
-			int likeCnt = ps.countLike(like);
-			log.info("result={}",result);
-			
-			map.put("result", result);
-			map.put("likeCnt", likeCnt+"");
-			map.put("memberLoggedIn", member);
-			mav.addObject("map",map);
-			
-			return mav;
-		}
-		
-		
-		@RequestMapping(value="/productLike", produces="text/plain;charset=UTF-8")
-		@ResponseBody
-		public String productLike(Like like) {
-			
-			Map<String, String> map = new HashMap<>();
-			int likeCnt = ps.countLike(like);
-			int result;
-			
-			if(likeCnt == 0) {
-				result = ps.insertLike(like);
-				map.put("type", "I");
-			}
-			else {
-				result = ps.deleteLike(like);
-				map.put("type", "O");
-			}
-			
-			map.put("result", result+"");
-			
-			return gson.toJson(map);
-		}
-	//========================== 예찬 끝
+
+		map.put("result", result + "");
+
+		return gson.toJson(map);
+	}
+	// ========================== 예찬 끝
 		
 	//주영 시작 ==========================
 	@RequestMapping(value="/loadProductReportCategory", produces="text/plain;charset=UTF-8")
@@ -371,6 +428,7 @@ public class ProductController {
 		map.put("list", list);
 		List<Map<String, String>> category = ps.selectProductCategory(productNo);
 		map.put("category", category);
+		map.put("productNo", productNo);
 		
 		return map;
 	}

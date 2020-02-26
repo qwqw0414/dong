@@ -42,6 +42,21 @@
 	<!-- ==========================  지은 끝 -->
 	
 	<!-- 예찬 시작 ========================== -->
+	<insert id="insertAttachmentMap" parameterType="map">
+		insert into product_attachment values(seq_product_attachment.nextval, #{productNo}, #{photo}, #{thumbnail})
+	</insert>
+	
+	<update id="updateAttachment" parameterType="map">
+		update product_attachment set photo = #{photo} where photo = #{oldName}
+	</update>
+	
+	<delete id="deleteAttachment" parameterType="map">
+		delete from product_attachment where photo = #{oldName}
+	</delete>
+	<delete id="deleteAttachment1" parameterType="string">
+		delete from product_attachment where photo = #{fileName}
+	</delete>
+	
 	<select id="countLike" parameterType="like" resultType="_int">
 		select count(*) from product_like where member_id = #{memberId} and product_no = #{productNo}
 	</select>
