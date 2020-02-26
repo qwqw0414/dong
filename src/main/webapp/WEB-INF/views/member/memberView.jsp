@@ -1,71 +1,89 @@
 <%@page import="java.util.Map"%>
 <%@page import="com.pro.dong.member.model.vo.Member"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <%
 	Member memberLoggedIn = (Member) request.getSession().getAttribute("memberLoggedIn");
 	Map<String, Object> map = (Map<String, Object>) request.getAttribute("member");
-	System.out.println("memberView@map="+map);
+	System.out.println("memberView@map=" + map);
 %>
 
-
-<h1 style="text-align: center;">마이페이지</h1><br>
+<h1 style="text-align: center;">마이페이지</h1>
+<br>
 <hr>
 <br>
 
 
 <div id="memberView">
-    <div class="mv_content">
-        <div class="row row-cols-2">
+	<div class="mv_content">
+		<div class="row row-cols-2">
 
-            <div class="col" id="col_left">
-                <div class="mypage_shop">
-                    <div id="mypage_shop" class="mypage_con shadow p-3 mb-5 bg-white rounded">
-                        <h4>내 상점</h4><br>
-                        <div class="ms_content">
-                            <div class="row">
-                                <div class="col-sm-4"><img id="shopImg1" class="img-thumbnail" src="${pageContext.request.contextPath}/resources/upload/shopImage/${member.IMAGE}" alt="" /></div>
-                                <div class="col-sm-8">
-                                    <label for="">${member.MEMBER_ID }</label>님의 상점
-                                    <br>
-                                    상점이름 : ${member.SHOP_NAME} <br />
-                                    개설날짜 : ${member.OPEN_DATE} 
-                                <input type="button" class="btn_val btn btn-outline-success btn-sm" value="내상점 가기" style="margin-left:200px;"  onclick="location.href='${pageContext.request.contextPath}/shop/shopView.do?memberId=<%=memberLoggedIn != null ? memberLoggedIn.getMemberId() : ""%>'">
-                            </div>
-                            </div>
-                        </div>
-
-
-
-
-
-                    </div>
-					<div id="mypage_point"
+			<div class="col" id="col_left">
+				<div class="mypage_shop">
+					<div id="mypage_shop"
 						class="mypage_con shadow p-3 mb-5 bg-white rounded">
-						<h4>내 포인트</h4>
+						<h4>내 상점 	<img class="imgsrcs"
+														src="${pageContext.request.contextPath}/resources/images/mysp.png" /> </h4>
 						<br>
 						<div class="ms_content">
-							보유 포인트 : <span id="memberPoint">${member.POINT}</span>P
+							<div class="row">
+								<div class="col-sm-4">
+									<img id="shopImg1" class="img-thumbnail"
+										src="${pageContext.request.contextPath}/resources/upload/shopImage/${member.IMAGE}"
+										alt="" />
+								</div>
+								<div class="col-sm-8">
+									<label for="">${member.MEMBER_ID }</label>님의 상점 <br> 상점이름
+									: ${member.SHOP_NAME} <br /> 개설날짜 : ${member.OPEN_DATE} <input
+										type="button" class="btn_val btn btn-outline-success btn-sm"
+										value="내상점 가기" style="margin-left: 200px;"
+										onclick="location.href='${pageContext.request.contextPath}/shop/shopView.do?memberId=<%=memberLoggedIn != null ? memberLoggedIn.getMemberId() : ""%>'">
+								</div>
+							</div>
+						</div>
+
+
+
+
+
+					</div>
+					<div id="mypage_point"
+						class="mypage_con shadow p-3 mb-5 bg-white rounded">
+						<h4>내 포인트 <span><input type="button"
+								class="" value="상세보기"
+								id="godetails" style="font-size: 10px; padding: 0; background-color: transparent; border: 0; color: green; margin-left: 14px;	"
+								onclick="location.href='${pageContext.request.contextPath}/member/memberChargingDetails.do'">
+								</span>	</h4>
+						
+						<br>
+						<div class="ms_content">
 
 							<div class="row">
-								<div class="col-sm-6">
+								<div class="col-sm-6" id="mypntdiv">
 									<div class="card">
 										<div class="card-body">
-
-
-											<input type="number" name="pointAmount" id="pointAmount"
-												min="0" max="100000" />&nbsp;
-											<button class="btn btn-outline-success btn-sm"
-												onclick="chargePoint();">충전하기</button>
+											<div>
+												<small>보유 포인트 : </small><span id="memberPoint">${member.POINT}</span>P
+											</div>
+											<div id="chrgdiv">
+												<input type="number" name="pointAmount" id="pointAmount"
+													step="1000" min="5000" max="1000000" />&nbsp;
+												<button class="btn btn-outline-warning btn-sm" id="chrgBtn"
+													style="font-color: black;" onclick="chargePoint();">
+													<img class="imgsrcs"
+														src="${pageContext.request.contextPath}/resources/images/kkopay.png" />충전
+												</button>
+											</div>
 										</div>
 									</div>
+
 								</div>
-								<input type="button"
-									class="btn_val btn btn-outline-success btn-sm" value="내역보기"
-									onclick="location.href='${pageContext.request.contextPath}/member/memberChargingDetails.do'">
-								<button class="btn btn-outline-success btn-sm"
-									onclick="test1();">포인트 충전 실험</button>
+								<!-- 								<button class="btn btn-outline-success btn-sm" -->
+								<!-- 									onclick="test1();">포인트 충전 실험</button> -->
 							</div>
+							
 							<div class="mypage_btn"></div>
 						</div>
 
@@ -73,112 +91,133 @@
 					</div>
 
 				</div>
-            </div>
+			</div>
 
 
-            <div class="col" id="col_right">
-                <div id="mypage_info" class="mypage_con shadow p-3 mb-5 bg-white rounded">
-                    <h4>내정보</h4><br>
-                    <div class="ms_content">
-                        <div class="row row-cols-2">
+			<div class="col" id="col_right">
+				<div id="mypage_info"
+					class="mypage_con shadow p-3 mb-5 bg-white rounded">
+					<h4>내정보 <img class="imgsrcs"
+														src="${pageContext.request.contextPath}/resources/images/profile.png" /></h4>
+					<br>
+					<div class="ms_content">
+						<div class="row row-cols-2">
 
-                            <div id="change_con">
-                                <div class="ms_change">
-                                    <div class="before before_change1" style="display: block;">
-                                        <small>이름: </small><span id="curname">${member.MEMBER_NAME}</span><input type="button"
-                                            id="change_btn1" class="" value="수정"  style="font-size:4px; padding:0; background-color: transparent; border:0; color:gray; margin-left:100px"/>
-                                    </div>
-                                    <div class="after after_change1" style="display: none;">
-                                        <small>이름: </small><input type="text" id="username" placeholder="변경할 이름" style="width:120px;font-size:10px">
-                                        <button type="button" class="btn btn-outline-success btn-sm" id="button-addon1"
-                                            class="" style="font-size:4px; padding:0; background-color: transparent; border:0; color:gray;; margin-left:24px">확인</button>
-                                    </div>
-                                </div>
+							<div id="change_con">
+								<div class="ms_change">
+									<div class="before before_change1" style="display: block;">
+										<small>이름: </small><span id="curname">${member.MEMBER_NAME}</span><input
+											type="button" id="change_btn1" class="" value="수정"
+											style="font-size: 4px; padding: 0; background-color: transparent; border: 0; color: gray; margin-left: 100px" />
+									</div>
+									<div class="after after_change1" style="display: none;">
+										<small>이름: </small><input type="text" id="username"
+											placeholder="변경할 이름" style="width: 120px; font-size: 10px">
+										<button type="button" class="btn btn-outline-success btn-sm"
+											id="button-addon1" class=""
+											style="font-size: 4px; padding: 0; background-color: transparent; border: 0; color: gray;; margin-left: 24px">확인</button>
+									</div>
+								</div>
 
-                                <div id="ms_change">
+								<div id="ms_change">
 
-                                    <div class="before before_change2" style="display: block;">
-                                        <small>연락처: </small><span id="curphone">${member.PHONE}</span> <input type="button"
-                                            id="change_btn2" value="수정" class="" style="font-size:4px; padding:0; background-color: transparent; border:0; color:gray; margin-left:36px"  />
-                                    </div>
+									<div class="before before_change2" style="display: block;">
+										<small>연락처: </small><span id="curphone">${member.PHONE}</span>
+										<input type="button" id="change_btn2" value="수정" class=""
+											style="font-size: 4px; padding: 0; background-color: transparent; border: 0; color: gray; margin-left: 36px" />
+									</div>
 
-                                    <div class="after after_change2" style="display: none;">
-                                        <small>연락처: </small><input type="text" id="userphone" maxlength="11"
-                                            placeholder=" 변경할 연락처 (-제외)" style="font-size:8px">
-                                        <button type="button" class=""
-                                            id="button-addon2" style="font-size:10px; padding:0; background-color: transparent; border:0; color:gray; margin-left:14px">확인</button>
-                                    </div>
+									<div class="after after_change2" style="display: none;">
+										<small>연락처: </small><input type="text" id="userphone"
+											maxlength="11" placeholder=" 변경할 연락처 (-제외)"
+											style="font-size: 8px">
+										<button type="button" class="" id="button-addon2"
+											style="font-size: 10px; padding: 0; background-color: transparent; border: 0; color: gray; margin-left: 14px">확인</button>
+									</div>
 
-                                </div>
-
-
-
-                                <div class="ms_change">
-                                    <div class="before before_change3" style="display: block;">
-                                        <small>이메일: </small><span id="curemail">${member.EMAIL}</span> <input type="button"
-                                            id="change_btn3" class="btn btn-outline-success btn-sm" value="수정" style="font-size:10px; padding:0; background-color: transparent; border:0; color:gray; " />
-                                    </div>
-
-                                    <div class="after after_change3" style="display: none;">
-                                    	<input type="hidden" id="valid-email" value="0">
-                                        <small>이메일: </small><input type="email" id="useremail" name="useremail" placeholder="변경할 이메일" style="font-size:8px ">
-                                        <button type="button" class="btn btn-outline-success btn-sm"
-                                            id="button-addon3" style="font-size:10px; padding:0; background-color: transparent; border:0; color:gray; ">인증하기</button>
-                                            
-                                    </div>
-                                    <div class="email_authKey" style="display: none">
-                                    	<input type="text" name="authKey" id="authKey" placeholder="인증번호를 입력해주세요."/>
-                                    	<button type="button" class="btn btn-outline-success btn-sm" id="authCode-btn">확인</button>
-                                    </div>
-                                    <div class="emailMsg" style="font-size:10px"></div>
-                                </div>
-                            </div>
+								</div>
 
 
 
+								<div class="ms_change">
+									<div class="before before_change3" style="display: block;">
+										<small>이메일: </small><span id="curemail">${member.EMAIL}</span>
+										<input type="button" id="change_btn3"
+											class="btn btn-outline-success btn-sm" value="수정"
+											style="font-size: 10px; padding: 0; background-color: transparent; border: 0; color: gray;" />
+									</div>
+
+									<div class="after after_change3" style="display: none;">
+										<input type="hidden" id="valid-email" value="0"> <small>이메일:
+										</small><input type="email" id="useremail" name="useremail"
+											placeholder="변경할 이메일" style="font-size: 8px">
+										<button type="button" class="btn btn-outline-success btn-sm"
+											id="button-addon3"
+											style="font-size: 10px; padding: 0; background-color: transparent; border: 0; color: gray;">인증하기</button>
+
+									</div>
+									<div class="email_authKey" style="display: none">
+										<input type="text" name="authKey" id="authKey"
+											placeholder="인증번호를 입력해주세요." />
+										<button type="button" class="btn btn-outline-success btn-sm"
+											id="authCode-btn">확인</button>
+									</div>
+									<div class="emailMsg" style="font-size: 10px"></div>
+								</div>
+							</div>
 
 
 
 
 
-                            <div class="col">
-                                <p>성별 : ${member.GENDER=='M'?'남자':'여자' }</p>
-                                <p>생년월일: ${member.BIRTH }</p>
-                            </div>
-                        </div>
 
 
 
-                    </div>
+							<div class="col">
+								<p>성별 : ${member.GENDER=='M'?'남자':'여자' }</p>
+								<p>생년월일: ${member.BIRTH }</p>
+							</div>
+						</div>
 
-                </div>
 
-                <div id="mypage_location" class="mypage_con shadow p-3 mb-5 bg-white rounded">
-                    <h4>우리 동네</h4><br>
-                    <div class="ms_content">
-                        <p id="cureEmail">내 동네 : ${member.SIDO } ${member.SIGUNGU} ${member.DONG}</p>
+
+					</div>
+
+				</div>
+
+				<div id="mypage_location"
+					class="mypage_con shadow p-3 mb-5 bg-white rounded">
+					<h4>우리 동네 <img class="imgsrcs"
+														src="${pageContext.request.contextPath}/resources/images/pin.png" /></h4>
+					<br>
+					<div class="ms_content">
+						<p id="cureEmail">내 동네 : ${member.SIDO } ${member.SIGUNGU}
+							${member.DONG}</p>
 
 						<div class="mypage_btn_more">
-                            <!-- <input type="button" value="수정 바로가기" class="btn_val btn btn-outline-success btn-sm"> -->
-                            <button class="btn btn-outline-success btn-sm" id="updateAddress" data-toggle="modal" data-target="#addressModal">수정 바로가기</button>
-                        </div>
+							<!-- <input type="button" value="수정 바로가기" class="btn_val btn btn-outline-success btn-sm"> -->
+							<button class="btn btn-outline-success btn-sm" id="updateAddress"
+								data-toggle="modal" data-target="#addressModal">수정 바로가기</button>
+						</div>
 
-                    </div>
-                </div>
+					</div>
+				</div>
 
-            </div>
+			</div>
 
-        </div>
+		</div>
 
-	<span class="byement">더이상 동네한바퀴를 이용하고 싶지 않다면 <a class="byelink"href="${pageContext.request.contextPath}/member/memberBye.do">회원탈퇴<small>▶</small> </a></span>
-    </div>
+		<span class="byement">더이상 동네한바퀴를 이용하고 싶지 않다면 <a class="byelink"
+			href="${pageContext.request.contextPath}/member/memberBye.do">회원탈퇴<small>▶</small>
+		</a></span>
+	</div>
 </div>
 
-	<div id="addressModel-wrapper">
-		<div class="modal-body" id="AddressPage">
-			<jsp:include page="/WEB-INF/views/member/updateAddress.jsp"/>
-		</div>
+<div id="addressModel-wrapper">
+	<div class="modal-body" id="AddressPage">
+		<jsp:include page="/WEB-INF/views/member/updateAddress.jsp" />
 	</div>
+</div>
 
 
 <script>
@@ -434,95 +473,115 @@ if ( rsp.success ) {
 
 
 <style>
-	
-	#memberView .byement{
+@import
+	url('https://fonts.googleapis.com/css?family=Single+Day&display=swap&subset=korean')
+	;
+
+#memberView .byement {
 	font-size: 10px;
 	margin-left: 900px;
-	}
-	#memberView .byelink{
+}
+
+#memberView .byelink {
 	color: green;
 	font-size: 10px;
-	}
-    #memberView .mypage_btn_more {
-        margin-left: 380px;
-    }
+}
 
-    #memberView .mypage_btn {
-        margin-left: 300px;
-    }
+#memberView .mypage_btn_more {
+	margin-left: 380px;
+}
 
-    #memberView .after {
-        padding-top: 15px;
-        padding-bottom: 15px;
-    }
+#memberView .mypage_btn {
+	margin-left: 300px;
+}
 
-    #memberView .before {
-        padding-top: 15px;
-        padding-bottom: 15px;
-    }
+#memberView .after {
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
 
-    #memberView .after_change1 {
-        width: 280px;
-        height: 30px;
-    }
-	
-	#memberView .before_change3 {
-		padding-top: 5px !important;
-		padding-bottom: 5px !important ;
-	}
-	
-	#memberView .after_change3 {
-		padding-top: 5px !important;
-		padding-bottom: 5px !important ;
-	}
+#memberView .before {
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
 
+#memberView .after_change1 {
+	width: 280px;
+	height: 30px;
+}
 
+#memberView .before_change3 {
+	padding-top: 5px !important;
+	padding-bottom: 5px !important;
+}
 
-    .mypage_con {
-        background: #f3f3f3;
-        border: 1px solid #dedede;
-        width: 540px;
-        height: 250px;
-        margin-top: 30px;
-        margin-bottom: 120px;
-        padding: 15px;
-        box-shadow: 0px 0px 1px 0 rgba(0, 0, 0, 0.2);
-        position: relative;
-        box-sizing: border-box;
-    }
+#memberView .after_change3 {
+	padding-top: 5px !important;
+	padding-bottom: 5px !important;
+}
 
- 
+#memberView .imgsrcs {
+	width: 20px;
+	height: 20px;
+}
 
+#memberView .mypage_con {
+	background: #f3f3f3;
+	border: 1px solid #dedede;
+	width: 540px;
+	height: 250px;
+	margin-top: 30px;
+	margin-bottom: 120px;
+	padding: 15px;
+	box-shadow: 0px 0px 1px 0 rgba(0, 0, 0, 0.2);
+	position: relative;
+	box-sizing: border-box;
+}
 
+#memberView #godetails {
+	margin-top: 15px;
+	margin-left: 380px;
+}
 
+#memberView .btn_val {
+	margin-top: 30px;
+}
 
+#memberView .btn_val_update {
+	margin-top: 20px;
+}
 
-    .btn_val {
-        margin-top: 30px;
-    }
+#memberView .col {
+	width: 560px;
+}
 
-    .btn_val_update {
-        margin-top: 20px;
-    }
+#memberView #col_right {
+	padding-left: 30px;
+}
 
-    .col {
-        width: 560px;
-    }
+#memberView .ms_change {
+	width: 280px;
+	height: 30px;
+	display: inline-block;
+}
 
-    #col_right {
-        padding-left: 30px;
-    }
+#memberView #change_con {
+	padding-left: 20px;
+}
 
-    .ms_change {
-        width: 280px;
-        height: 30px;
-        display: inline-block;
+#memberView #mypntdiv {
+	margin-left: 120px;
+}
 
-    }
-
-    #change_con {
-        padding-left: 20px;
-    }
+#memberView #chrgdiv {
+	margin-top: 15px;
+}
+#memberView #chrgBtn{
+	margin-left: 15px;
+}
+#memberView #cureEmail{
+	margin-top:30px;
+}
 </style>
 
 
