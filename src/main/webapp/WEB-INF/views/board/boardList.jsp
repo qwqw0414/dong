@@ -18,7 +18,97 @@
 	}
 %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
+
+<style>
+/*  .cube {
+  margin: 50px auto;
+  width: 1000px;
+  height: 600px;
+  border-left: 15px solid #3EC8AC;
+  border-right: 15px solid #4E90A4;
+  border-radius: 5px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background-position: 0 0, 0 100%;
+  background-repeat: no-repeat;
+  -webkit-background-size: 100% 20px;
+  -moz-background-size: 100% 20px;
+  background-size: 100% 20px;
+  background-image: -webkit-linear-gradient(left, #3EC8AC 0%, #4E90A4 100%), -webkit-linear-gradient(left, #3EC8AC 0%, #4E90A4 100%);
+  background-image: -moz-linear-gradient(left, #3EC8AC 0%, #4E90A4 100%), -moz-linear-gradient(left, #3EC8AC 0%, #4E90A4 100%);
+  background-image: -o-linear-gradient(left, #3EC8AC 0%, #4E90A4 100%), -o-linear-gradient(left, #3EC8AC 0%, #4E90A4 100%);
+  background-image: linear-gradient(to right, #3EC8AC 0%, #4E90A4 100%), linear-gradient(to right, #3EC8AC 0%, #4E90A4 100%);
+}  */
+/* body {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+          align-items: center;
+  height: 100vh;
+} */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+@-webkit-keyframes rotate {
+  100% {
+    -webkit-transform: rotate(1turn);
+            transform: rotate(1turn);
+  }
+}
+
+@keyframes rotate {
+  100% {
+    -webkit-transform: rotate(1turn);
+            transform: rotate(1turn);
+  }
+}
+.rainbow {
+  position: relative;
+  z-index: 0;
+  width: 1000px;
+  height: 600px;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 2rem;
+}
+.rainbow::before {
+  content: '';
+  position: absolute;
+  z-index: -2;
+  left: -50%;
+  top: -50%;
+  width: 200%;
+  height: 200%;
+  background-color: #399953;
+  background-repeat: no-repeat;
+  background-size: 50% 50%, 50% 50%;
+  background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#399953), to(#399953)), -webkit-gradient(linear, left top, left bottom, from(#fbb300), to(#fbb300)), -webkit-gradient(linear, left top, left bottom, from(#d53e33), to(#d53e33)), -webkit-gradient(linear, left top, left bottom, from(#377af5), to(#377af5));
+  background-image: linear-gradient(#399953, #399953), linear-gradient(#fbb300, #fbb300), linear-gradient(#d53e33, #d53e33), linear-gradient(#377af5, #377af5);
+  -webkit-animation: rotate 4s linear infinite;
+          animation: rotate 4s linear infinite;
+}
+.rainbow::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 6px;
+  top: 6px;
+  width: calc(100% - 12px);
+  height: calc(100% - 12px);
+  background: white;
+  border-radius: 5px;
+}
+
+</style>
+
 <script>
+
 $(()=>{
 	
 	loadBoardList(1);
@@ -123,16 +213,23 @@ $(()=>{
 	}
 });
 </script>
- <h1>커뮤니티 게시판</h1>
+<!--  <h1>커뮤니티 게시판</h1> -->
  <script>
  
  
  </script>
+ 
+ 
+ 
+
+ 
 <section id="board-container" class="container">
+   <!-- <div class="cube">  -->
+<div class="rainbow">
 	<div class="row">
 		<div class="col-md-12">
 		<br /><br />
-		<h4>인기글</h4>
+		<h4><img id="iconbox" src="${pageContext.request.contextPath}/resources/images/fire.png" width="20px" height="20px"/>우리동네 인기글</h4>
 			<table id="po-board" class="table table-hover">
 				<tr>
 					<th>글번호</th>
@@ -165,6 +262,8 @@ $(()=>{
 			<br /><br /><br />
 		</div>
 	</div>
+	</div>
+		<br /><br /><br />
 	<div class="col-md-12 ">
 		<div class="col-md-8">
 			<div class="input-group">
