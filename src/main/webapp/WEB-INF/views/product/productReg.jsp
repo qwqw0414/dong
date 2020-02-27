@@ -242,6 +242,9 @@ $("#productReg #btn-reg").click(()=>{
         },
         error: (x, s, e) => {
             console.log("실패", x, s, e);
+        },
+        complete: ()=>{
+        	location.href = '${pageContext.request.contextPath}/';
         }
     });
 
