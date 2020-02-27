@@ -188,7 +188,7 @@ $(()=>{
                 </dl>
                     <hr>
                     <br />
-                    <span>판매자 정보:${map.product.shopNo}</span> <hr><br>
+                    <span><a href="${pageContext.request.contextPath }/shop/shopView.do?shopNo=${map.product.shopNo}">판매자 상점으로 이동하기</a></span> <hr><br>
                 </div>
                     
                 <div class="something-btn">
@@ -297,7 +297,7 @@ $(()=>{
       <div class="modal-body">
 				<form>
 				<span class="smallTitle">판매자 전화번호</span><br /><br />
-				<label for="">${map.result}</label>
+				<label for="">${map.result.phone}</label>
 				<hr class="divide-m" />
 					<span class="smallTitle">동네톡으로 연락하기</span><br /><br />
 					<button type="button" class="btn btn-secondary" id="btnTalk">연락하기</button>
