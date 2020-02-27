@@ -207,9 +207,39 @@
 
 		</div>
 
-		<span class="byement">더이상 동네한바퀴를 이용하고 싶지 않다면 <a class="byelink"
-			href="${pageContext.request.contextPath}/member/memberBye.do">회원탈퇴<small>▶</small>
-		</a></span>
+		<span class="byement">더이상 동네한바퀴를 이용하고 싶지 않다면 
+			<a class="byelink" href="#" data-toggle="modal" data-target="#myModal">회원탈퇴<small>▶</small></a>
+		</span>
+		<div class="modal fade" id="myModal" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<!--모달헤더 시작-->
+					<div class="modal-header">
+						<h5 class="modal-title">회원탈퇴</h5>
+						<button type="button" class="close" data-dismiss="modal">×</button>
+					</div>
+					<!--모달헤더 끝-->
+					<!--모달바디시작-->
+					<div class="modal-body">
+						<div class="container">
+							<div style="text-align: center;" class="form-group">
+								<form action="${pageContext.request.contextPath}/member/memberByeForm.do" method="post">
+									<div class="bye-form">
+        								<input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요." class="form-control form-control-lg">
+        								<input type="hidden" id="memberId" name="memberId" value="${memberLoggedIn.memberId}">
+    								</div>
+									<div class="modal-footer">
+										<button type="submit" class="btn btn-danger btn-sm">탈퇴</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<!--모달바디끝-->
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 
