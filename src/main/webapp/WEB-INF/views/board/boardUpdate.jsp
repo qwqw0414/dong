@@ -182,13 +182,8 @@ span{
             </div>
         </div>
 
-        <div class="btnBox">
-            <button id="likeBtn">좋아요</button>
-            <button >신고</button>
-        </div>
-       
         <!-- 댓글 -->
-        <div class="commentBox"> 댓글
+        <div class="commentBox"> 
 <%--==================현규시작================ --%>
 <hr />
 
