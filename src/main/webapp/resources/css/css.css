@@ -127,6 +127,24 @@ header #categoryDiv .cate-list{border: rgb(233, 233, 233) 1px solid; position: a
 header #categoryDiv .cate-list-content{width: 220px; margin: 20px 0 5px 0; float: left;}
 header #categoryDiv .cate-text{margin: 10px;}
 header #categoryDiv #category-list-end{border-left: rgb(255, 30, 60) 1px solid;}
+/*내 상점 상품뿌리기*/
+#nav-product .myProductList{margin-left:-33px;}
+#nav-product #myProduct .card {display:inline-block; width:201px; height:280px; cursor: pointer;}
+#nav-product #myProduct .card img{width: 200px; height: 200px; border: none;}
+#nav-product #myProduct .card{float: left; margin: 10px 8px 10px 8px}
+#nav-product #myProduct {width: 1200px; display: inline-block; margin: auto; position:static; margin-left:50px; /* height: 620px; */ }
+#nav-product #shop-contents {width: 1300px;}
+#nav-product #shop-contents .myProductList{width: 100%;}
+#nav-product .myProductList .card-body{padding: 10px 0 0px 8px;}
+#nav-product .myProductList .regDate{font-size: 0.9em; position: absolute; right: 10px; bottom: 10px;}
+/*상품관리*/
+#myProductManageDiv td{padding-top: 75px !important;}
+#myProductManageDiv #img-td{padding-top: 8px !important;}
+#myProductManageDiv #btn-td{padding-top:39px !important;}
+#myProductManageDiv select{width: 110px !important;}
+#myProductManageDiv a:link {color: white; text-decoration: none;}
+#myProductManageDiv a:visited {color: white; text-decoration: none;}
+#myProductManageDiv a:hover {color: white; text-decoration: underline;}
 /* ========================== 하진 끝 */
 	
 /* 근호 시작 ========================== */

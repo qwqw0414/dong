@@ -4,26 +4,7 @@
 <%
 	Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
 %>
-<style>
-td{
-	padding-top: 75px !important;
-}
-#img-td{
-	padding-top: 8px !important;
-	
-}
-#btn-td{
-	padding-top:39px !important;
-}
-select{
-    width: 110px !important;
-}
-a:link {color: white; text-decoration: none;}
-a:visited {color: white; text-decoration: none;}
-a:hover {color: white; text-decoration: underline;}
 
-
-</style>
 <script>
 $(()=>{
 	
@@ -156,7 +137,7 @@ $(()=>{
 				
 				if(data==1){
 					alert("끌어올리기 성공");
-					location.reload();
+					loadMyProductList(1);
 				}
 				else{
 					alert("끌어올리기 실패");
@@ -191,7 +172,7 @@ $(()=>{
 				
 				if(data==1){
 					alert("상품이 정상적으로 삭제되었습니다.");
-					location.reload();
+					loadMyProductList(1);
 				}
 				else{
 					alert("상품삭제를 실패하였습니다.");
@@ -223,7 +204,7 @@ $(()=>{
 					
 					if(data==1){
 						alert("상품 판매상태가 정상적으로 변경되었습니다.");
-						location.reload();
+						loadMyProductList(1);
 					}
 					else{
 						alert("상품 판매상태 변경이 실패하였습니다.");
@@ -239,7 +220,7 @@ $(()=>{
 </script>
 
 <h1>상품관리</h1>
-
+<div id="myProductManageDiv">
 	<div class="col-md-6">
 		<div class="input-group">
 	      <select class="custom-select" id="saleCategory" required>
@@ -260,7 +241,7 @@ $(()=>{
  
      
 </table>
-
+</div>
 <div id="pageBar"></div>
 
 

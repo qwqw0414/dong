@@ -8,16 +8,6 @@
 	Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
 %>
 <style>
-.myProductList{margin-left:-33px;}
-#myProduct .card {display:inline-block; width:201px; height:280px; cursor: pointer;}
-#myProduct .card img{width: 200px; height: 200px; border: none;}
-#myProduct .card{float: left; margin: 10px 8px 10px 8px}
-#myProduct {width: 1200px; display: inline-block; margin: auto; position:static; margin-left:50px; /* height: 620px; */ }
-#shop-contents {width: 1300px;}
-#shop-contents .myProductList{width: 100%;}
-.myProductList .card-body{padding: 10px 0 0px 8px;}
-.myProductList .regDate{font-size: 0.9em; position: absolute; right: 10px; bottom: 10px;}
-
 #shopView{	
 	width: 1100px;
 }
@@ -506,13 +496,8 @@ $(()=>{
 		            	loadMyProduct($(e.target).siblings("input").val());
 		            });
 			      }
-				
-				
 			});
-			
 		}
-		
-		
 	});
 	/*하진 끝***********/
 	</script>
