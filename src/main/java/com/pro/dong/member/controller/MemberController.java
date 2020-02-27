@@ -215,7 +215,7 @@ public class MemberController {
 			}
 			else {
 				msg="비밀번호가 틀렸습니다.";
-				loc="/member/memberBye.do";
+				loc="/member/memberView.do";
 			}
 			mav.addObject("msg", msg);
 			mav.addObject("loc", loc);
