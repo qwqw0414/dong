@@ -27,9 +27,6 @@ div#board-container label.custom-file-label {
 	text-align: left;
 }
 
-input {
-	border: 0px;
-}
 
 .head_inflow {
 	padding-top: 50px;
@@ -50,9 +47,9 @@ input {
 /* .profileWriter{
     color: #999;
 } */
-span {
+#span {
 	color: #999;
-}
+}  
 
 #writedate {
 	float: right;
@@ -222,11 +219,11 @@ $(function(){
 			</div>
 		</div>
 		<div class="profileWriter">
-			<span><img id="iconbox"
+			<span id="span"><img id="iconbox"
 				src="${pageContext.request.contextPath}/resources/images/writer.png" />&nbsp;${board.memberId}</span>
-			&nbsp; <span><img id="iconbox"
+			&nbsp; <span id="span"><img id="iconbox"
 				src="${pageContext.request.contextPath}/resources/images/text.png" />&nbsp;${board.readCount}</span>
-			<br /> <span><img id="iconbox"
+			<br /> <span id="span"><img id="iconbox"
 				src="${pageContext.request.contextPath}/resources/images/clock.png" />&nbsp;${board.writeDate}</span>
 		</div>
 	</div>
@@ -253,7 +250,7 @@ $(function(){
 
 			<!-- 이미지 -->
 			<div class="img">
-				<span class="line">
+				<span class="line" id="span">
 					<%-- <img src="${pageContext.request.contextPath}/resources/images/clock.png" /> --%>
 				</span>
 			</div>

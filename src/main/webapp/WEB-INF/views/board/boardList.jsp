@@ -20,90 +20,73 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
 <style>
-/*  .cube {
-  margin: 50px auto;
+#popular{
+	margin: 2em 8em;
+}
+#boardText{
+	margin: 2em 5em;
+	inline-size: inherit;
+}
+#searchDiv{
+	margin: auto;
+}
+
+
+.box1
+{
   width: 1000px;
   height: 600px;
-  border-left: 15px solid #3EC8AC;
-  border-right: 15px solid #4E90A4;
-  border-radius: 5px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  background-position: 0 0, 0 100%;
+  margin: 0 auto;
+  padding: 2px;
+  background-color: #eaab00; /* gold */
+  /* Single pixel data uri image http://jsfiddle.net/LPxrT/ 
+  /* background-image: gold, gold, white */
+  background-image: url('data:image/gif;base64,R0lGODlhAQABAPAAAOqrAP///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='),  url('data:image/gif;base64,R0lGODlhAQABAPAAAOqrAP///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='),
+url('data:image/gif;base64,R0lGODlhAQABAPAAAP///////yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==');
   background-repeat: no-repeat;
-  -webkit-background-size: 100% 20px;
-  -moz-background-size: 100% 20px;
-  background-size: 100% 20px;
-  background-image: -webkit-linear-gradient(left, #3EC8AC 0%, #4E90A4 100%), -webkit-linear-gradient(left, #3EC8AC 0%, #4E90A4 100%);
-  background-image: -moz-linear-gradient(left, #3EC8AC 0%, #4E90A4 100%), -moz-linear-gradient(left, #3EC8AC 0%, #4E90A4 100%);
-  background-image: -o-linear-gradient(left, #3EC8AC 0%, #4E90A4 100%), -o-linear-gradient(left, #3EC8AC 0%, #4E90A4 100%);
-  background-image: linear-gradient(to right, #3EC8AC 0%, #4E90A4 100%), linear-gradient(to right, #3EC8AC 0%, #4E90A4 100%);
-}  */
-/* body {
-  display: -webkit-box;
-  display: flex;
-  -webkit-box-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-          align-items: center;
-  height: 100vh;
-} */
-
-*, *::before, *::after {
-  box-sizing: border-box;
+  background-size: 0 2px, 0 100%, 0% 2px;
+  background-position: top center, top center, bottom center;
+  -webkit-animation: drawBorderFromCenter 4s;
 }
 
-@-webkit-keyframes rotate {
-  100% {
-    -webkit-transform: rotate(1turn);
-            transform: rotate(1turn);
-  }
-}
-
-@keyframes rotate {
-  100% {
-    -webkit-transform: rotate(1turn);
-            transform: rotate(1turn);
-  }
-}
-.rainbow {
-  position: relative;
-  z-index: 0;
+.box2
+{
   width: 1000px;
-  height: 600px;
-  border-radius: 10px;
-  overflow: hidden;
-  padding: 2rem;
+  height:900px;
+  margin: 0 auto;
+  padding:20px 20px;
+  border: 2px solid lightgray;
 }
-.rainbow::before {
-  content: '';
-  position: absolute;
-  z-index: -2;
-  left: -50%;
-  top: -50%;
-  width: 200%;
-  height: 200%;
-  background-color: #399953;
-  background-repeat: no-repeat;
-  background-size: 50% 50%, 50% 50%;
-  background-position: 0 0, 100% 0, 100% 100%, 0 100%;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#399953), to(#399953)), -webkit-gradient(linear, left top, left bottom, from(#fbb300), to(#fbb300)), -webkit-gradient(linear, left top, left bottom, from(#d53e33), to(#d53e33)), -webkit-gradient(linear, left top, left bottom, from(#377af5), to(#377af5));
-  background-image: linear-gradient(#399953, #399953), linear-gradient(#fbb300, #fbb300), linear-gradient(#d53e33, #d53e33), linear-gradient(#377af5, #377af5);
-  -webkit-animation: rotate 4s linear infinite;
-          animation: rotate 4s linear infinite;
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes drawBorderFromCenter {
+    0% {
+      background-size: 0 2px, 0 0, 100% 100%;
+    }
+    20% {
+      background-size: 100% 2px, 100% 0, 100% 100%;
+    }
+    66%
+    {
+      background-size: 100% 2px, 100% 98%, 100% 100%;
+    }
+    99%
+    {
+      background-size: 100% 2px, 100% 98%, 0 2px;
+    }
 }
-.rainbow::after {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  left: 6px;
-  top: 6px;
-  width: calc(100% - 12px);
-  height: calc(100% - 12px);
+
+
+
+.content
+{
   background: white;
-  border-radius: 5px;
+  padding: 0.1em 2.0em;
+  text-align: center;
+  text-transform: uppercase;
 }
+
+
 
 </style>
 
@@ -213,23 +196,16 @@ $(()=>{
 	}
 });
 </script>
-<!--  <h1>커뮤니티 게시판</h1> -->
- <script>
- 
- 
- </script>
- 
- 
- 
 
  
-<section id="board-container" class="container">
-   <!-- <div class="cube">  -->
-<div class="rainbow">
+<div id="popular"><h4><img id="iconbox" src="${pageContext.request.contextPath}/resources/images/fire.png" width="20px" height="20px"/><strong>우리동네 인기글</strong></h4></div>
+
+ <div class="box1">
+  <div class="content">
 	<div class="row">
 		<div class="col-md-12">
 		<br /><br />
-		<h4><img id="iconbox" src="${pageContext.request.contextPath}/resources/images/fire.png" width="20px" height="20px"/>우리동네 인기글</h4>
+		<br />
 			<table id="po-board" class="table table-hover">
 				<tr>
 					<th>글번호</th>
@@ -262,40 +238,54 @@ $(()=>{
 			<br /><br /><br />
 		</div>
 	</div>
-	</div>
+  
+  </div>
+</div>
+
+ 
+<section id="board-container" class="container">
 		<br /><br /><br />
-	<div class="col-md-12 ">
-		<div class="col-md-8">
-			<div class="input-group">
-				<label for="boardCategory" class="sr-only">카테고리</label> <select
-					class="custom-select" id="boardCategory" required>
+		
+ 	<div class="col-md-10" id="searchDiv">
+	    <div class="input-group">
+				<label for="boardCategory" class="sr-only">카테고리</label> 
+				<select class="custom-select" id="boardCategory" required>
 					<%=option%>
-				</select> <label for="searchKeyword" class="sr-only">검색</label> <select
-					class="custom-select" id="searchType" required>
+				</select> 
+				<label for="searchKeyword" class="sr-only">검색</label> 
+				<select class="custom-select" id="searchType" required>
 					<option value="member_id" selected>아이디</option>
 					<option value="board_title">글제목</option>
-				</select> <input style="margin-left: 20px;" type="text" size="40"
-					id="searchKeyword" placeholder="검색어를 입력하세요">
-				<div class="input-group-append">
-					<button style="margin-left: 20px;" class="btn btn-primary sub-btn"
-						id="searchBoard">검색하기</button>
-				<input type="button" value="글쓰기" id="btn-add"
-					class="btn btn-outline-success main-btn"
-					onclick="fn_goWriteBoard();" />
-				</div>
-			</div>
+				</select> 
+		<input style="margin-left: 5px;" type="text" size="60" placeholder="검색어를 입력해 주세요" id="searchKeyword" placeholder="검색어를 입력하세요">
+		 <div class="input-group-append">
+			<button style="margin-left: 5px;" class="btn btn-primary sub-btn" id="searchBoard">검색하기</button>
+			<input type="button" value="글쓰기" id="btn-add" class="btn btn-outline-success main-btn" onclick="fn_goWriteBoard();" />
 		</div>
 	</div>
+</div>
 	<br />
 
+
+
+<div id="boardText"><h4><img id="iconbox" src="${pageContext.request.contextPath}/resources/images/notepad.png" width="20px" height="20px"/><strong>우리동네 게시글</strong></h4></div>
+ 
+ 
+ <div class="box2">
 	<table id="tbl-board" class="table table-hover">
 		
 	</table>
-	<!-- pageBar 출력 -->
+
 	<div id="pageBar">
 	
 	</div>
+	
+</div>
+  
+
 <script>
+
+
 function fn_goWriteBoard(){
 	location.href = "${pageContext.request.contextPath}/board/writeBoard.do";
 }

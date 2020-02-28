@@ -6,16 +6,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
-<style>
-#productList-category .cate-title{font-family: MapoPeacefull; font-size: 1.5em;}
-.productList .card {width: 201px; border-radius: 0; height: 280px;}
-.productList .card img{width: 200px; height: 200px; border: none;}
-.productList .product .card{float: left; margin: 10px 8px 10px 8px}
-.product {width: 1200px; display: block; margin: auto; height: 620px;}
-.productList{width: 100%;}
-.productList .card-body{padding: 10px 0 0px 8px;}
-.productList .regDate{font-size: 0.9em; position: absolute; right: 10px; bottom: 10px;}
-</style>
+
 <script>
 $(()=>{
 	loadProductList(1);
