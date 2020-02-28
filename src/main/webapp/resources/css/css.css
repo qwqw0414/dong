@@ -35,6 +35,7 @@ footer .line{border: 1px rgb(95, 95, 95) solid; width: 100%;}
 .animation-img-heartbeat{
 	animation: heartbeat 1.5s ease-in-out infinite both;
 }
+
 /* 팔로잉 css */
 #follow-wrapper .card {width: 201px; border-radius: 0; height: 280px;}
 #follow-wrapper .card img{padding-top:10px; margin:0 auto; width: 150px; height: 150px; border: none; border-radius: 50%}
@@ -47,6 +48,7 @@ footer .line{border: 1px rgb(95, 95, 95) solid; width: 100%;}
 #follow-wrapper .card-title{text-align:center; font-weight: bold; }
 #follow-wrapper .card-body a{color:black; text-decoration:none;}
 #follow-wrapper .card-body a:hover{color:black; text-decoration:none;}
+
 /* 팔로워 css */
 #follower-wrapper .card {width: 201px; border-radius: 0; height: 280px;}
 #follower-wrapper .card img{padding-top:10px; margin:0 auto; width: 150px; height: 150px; border: none; border-radius: 50%}
@@ -64,6 +66,7 @@ footer .line{border: 1px rgb(95, 95, 95) solid; width: 100%;}
 .divide-sub{border:0; height:1px; background:#996633; width:100%;}
 #wishCancel{text-shadow: 2px 2px 1px white;}
 
+/* 포인트로 구매하기 모달 css */
 #purchaseModal{font-family: 'MapoPeacefull';}
 #purchase-img img{width:64px;}
 .smallTitle{font-weight: bold;}
@@ -75,6 +78,7 @@ footer .line{border: 1px rgb(95, 95, 95) solid; width: 100%;}
 .main-btn-outline{background:white !important; color:#006600 !important;border-color:#006600 !important;}
 .main-btn-outline:hover{background:#006600 !important; color:white !important;border-color:none !important;}
 
+/* 구매내역&판매내역 css */
 #orderList-wrapper{width:100%;}
 #orderList-wrapper img{width:64px; height:64px;}
 #orderList-wrapper .orderListTitle{font-size:1.3rem;}
@@ -90,9 +94,9 @@ footer .line{border: 1px rgb(95, 95, 95) solid; width: 100%;}
 #saleList-wrapper .badge{heigth:66px;}
 #saleList-wrapper .saleListTitle th{border-bottom: 1px solid #996633; padding-bottom:20px;}
 
+/* 상점 후기 css */
 .reviewBtnTxt{font-size: 1rem;}
 #reviewContent{resize:none; width:400px;}
-
 #shopReview-wrapper{display:inline-block;}
 #shopReview-wrapper .card{display:inline-block;float: left;margin: 10px 8px 10px 8px;}
 #shopReview-wrapper .card-wrapper{width: 200px;height: 280px;}
@@ -100,21 +104,28 @@ footer .line{border: 1px rgb(95, 95, 95) solid; width: 100%;}
 #shopReview-wrapper .card-body{width:200px;height:200px;overflow:auto;} 
 #shopReview-wrapper .card-body img{width:16px;}
 
-
-
 /* 동네왕 css */
 #kingOfDongnae-wrapper .card-deck img{width:50%; margin-left:95px;}
 #kingOfDongnae-wrapper .card-deck .card{border:0px;}
 #kingOfDongnae-wrapper .card-deck #silverCard{margin-top: 50px;}
 #kingOfDongnae-wrapper .card-deck #bronzeCard{margin-top: 100px;}
-
-
 #hallOfFameCard{border:0px;}
 #hallOfFameCard #hallOfFameHeaderImg{width:300px; margin-left:450px;}
 .badgeTypeImg{width:15px; height:15px;}
 #hallOfFameBody .hof-each {position:relative; display:inline-block; color: rgb(246, 250, 20);}
 #hallOfFameBody .hof-each .card-title{background-color: #312110;}
 #hallOfFameBody .hof-each .card-body{background: #312110; border: 0 solid rgb(246, 250, 20); }
+
+/* 관리자 productList css */
+#productList-category .cate-title{font-family: MapoPeacefull; font-size: 1.5em;}
+.productList .card {width: 201px; border-radius: 0; height: 280px;}
+.productList .card img{width: 200px; height: 200px; border: none;}
+.productList .product .card{float: left; margin: 10px 8px 10px 8px}
+.product {width: 1200px; display: block; margin: auto; height: 620px;}
+.productList{width: 100%;}
+.productList .card-body{padding: 10px 0 0px 8px;}
+.productList .regDate{font-size: 0.9em; position: absolute; right: 10px; bottom: 10px;}
+
 /* ==========================민호 끝 */
 	
 /* 하진 시작 ========================== */

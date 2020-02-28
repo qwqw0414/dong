@@ -139,20 +139,7 @@ function useAllPoints(){
 	
 }
 function submitPurchase(){
-	/* var orderInfo = {
-			memberId: $("#purchase-memberId").val(),
-			memberName: $("#purchase-memberName").val(),
-			sido: $("#purchase-Sido").val(),
-			sigungu: $("#purchase-Sigungu").val(),
-			dong: $("#purchase-dong").val(),
-			addr: $("#purchase-addr").val(),
-			phone: $("#purchase-phone").val(),
-			productNo: $("#purchase-productNo").val(),
-			price: '${map.product.price}',
-			attachment: '${map.attachment}'
-	}
-	JSON.stringify(orderInfo);
-	console.log(orderInfo); */
+
 	$.ajax({
 		url: "${pageContext.request.contextPath}/product/submitPurchase",
 		data: {			
