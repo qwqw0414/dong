@@ -36,39 +36,6 @@
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 <!-- end of 달력 -->
 </head>
-<style>
-#headerImgDiv{
-	width: 100%;
-	text-align: center;
-	margin-bottom: 50px;
-}
-#bogiImg{
-	width:20px;
-	height: 20px;
-}
-#headerMenu{
-	width:30px;
-	height: 30px;
-}
-#saleImg{
-	width:35px;
-	height: 40px;
-    margin-left: 20px;
-}
-#shopImg{
-	width:35px;
-	height: 40px;
-	margin-left: 20px;
-}
-#chatImg{
-	width:38px;
-	height: 40px;
-	margin-left: 20px;
-}
-#button-addon2{
-    height: 38px;
-}
-</style>
 
 <body>
 
@@ -189,12 +156,13 @@ $(()=>{
 		</div>
 		
 		<!--메뉴-->
-		<div class="col-md text-left">
+		<div class="col-md text-left" id="header-iconMenu">
 			<a style="color:black; text-decoration: none;" href="${pageContext.request.contextPath}/product/productReg.do">
-				<img id="saleImg" src="${pageContext.request.contextPath}/resources/images/sale.PNG"/> 판매하기
+			<img id="saleImg" src="${pageContext.request.contextPath}/resources/images/sale.PNG"/> 판매하기
 			</a>
 			<a style="color:black; text-decoration: none;" href="${pageContext.request.contextPath}/shop/shopView.do?memberId=<%=memberLoggedIn != null ? memberLoggedIn.getMemberId() : ""%>"><img id="shopImg" src="${pageContext.request.contextPath}/resources/images/shop.PNG"/> 내 상점</a>
 			<a style="color:black; text-decoration: none;" id="a-chat"><img id="chatImg" src="${pageContext.request.contextPath}/resources/images/chat.PNG"/> 동네톡</a>
+			<a style="color:black; text-decoration: none;" href="${pageContext.request.contextPath}/member/hallOfFame.do"><img src="${pageContext.request.contextPath}/resources/images/king.png" id="kingImg"/>동네왕</a>
 		</div>
 	</div>
 

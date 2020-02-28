@@ -185,6 +185,10 @@ public class MemberController {
 	public String kingOfDongnae() {
 		return "member/kingOfDongnae";
 	}
+	@RequestMapping("/hallOfFame.do")
+	public String hallOfFame() {
+		return "member/hallOfFame";
+	}
 //==========================민호 끝
 	
 // 하진 시작 ==========================

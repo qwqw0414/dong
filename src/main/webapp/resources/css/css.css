@@ -8,7 +8,50 @@
 @font-face{font-family:'NanumSquare_acB';src: url('/dong/css/font/NanumSquare_acB.ttf');}
 
 /*헤더 css*/
-
+#headerImgDiv{
+	width: 100%;
+	text-align: center;
+	margin-bottom: 50px;
+}
+#bogiImg{
+	width:20px;
+	height: 20px;
+}
+#headerMenu{
+	width:30px;
+	height: 30px;
+}
+#saleImg{
+	width:35px;
+	height: 40px;
+    margin-left: 20px;
+}
+#shopImg{
+	width:35px;
+	height: 40px;
+	margin-left: 20px;
+}
+#chatImg{
+	width:38px;
+	height: 40px;
+	margin-left: 20px;
+}
+#kingImg{
+	max-width:38px;
+	min-height: 40px;
+	margin-left: 10px;
+	margin-right: 5px;
+}
+#button-addon2{
+    height: 38px;
+}
+#header-iconMenu{
+	padding-left:0px !important;
+}
+#header-iconMenu a{
+	width:128px;
+	height: 21px;
+}
 /*푸터 css*/
 footer{margin-top: 200px; height: 200px;}
 footer .line{border: 1px rgb(95, 95, 95) solid; width: 100%;}
