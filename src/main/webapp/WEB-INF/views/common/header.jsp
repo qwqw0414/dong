@@ -342,11 +342,23 @@ var _error = "";
 	function productView(productNo){
 		location.href = "${pageContext.request.contextPath}/product/productView.do?productNo="+productNo;
 	}
+	
 
 });
 </script>
 
-
+<c:if test="${memberLoggedIn != null}">
+<script>
+popupDongnaeKing();
+//동네왕 팝업
+function popupDongnaeKing(){
+	var url = "${pageContext.request.contextPath}/member/kingOfDongnae.do";
+	var name = "이달의 동네왕";
+	var option = "width = 1200, height = 500, top = 100, left = 200";
+	window.open(url, name, option);
+}
+</script>
+</c:if>
 
 
 <section>
