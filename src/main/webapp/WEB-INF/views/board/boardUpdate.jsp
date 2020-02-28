@@ -176,10 +176,13 @@ span{
             </div>
     
             <!-- 이미지 -->
-            <div class="img">
-                <img src="" alt="">
-                <span class="line"></span>
-            </div>
+            <c:if test="${attachment.attachmentNo != null}"> 
+			<div class="img" id="boardViewImg" style="margin:auto; width: 600px; height: 500px; overflow: hidden">
+				<img style="width: 600px; height: 500px;" src="${pageContext.request.contextPath}/resources/upload/board/${attachment.renamedFileName}"/>
+				<span class="line" id="span">
+				</span>
+			</div>
+		 </c:if>
         </div>
 
         <!-- 댓글 -->

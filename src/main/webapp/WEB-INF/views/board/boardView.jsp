@@ -1,4 +1,5 @@
 <%@page import="java.util.ArrayList"%>
+<%@page import="com.pro.dong.board.model.vo.Attachment"%>
 <%@page import="com.pro.dong.board.model.vo.BoardReportCategory"%>
 <%@page import="java.util.List"%>
 <%@page import="com.pro.dong.common.util.Utils"%>
@@ -186,6 +187,7 @@ div#board-container label.custom-file-label {
 #boardReportCategory {
 	margin-left: 10px;
 }
+
 </style>
 
 
@@ -249,13 +251,17 @@ $(function(){
 			<div class="contentsBox">${board.boardContents }</div>
 
 			<!-- 이미지 -->
-			<div class="img">
+		 <c:if test="${attachment.attachmentNo != null}"> 
+			<div class="img" id="boardViewImg" style="margin:auto; width: 600px; height: 500px; overflow: hidden">
+				<img style="width: 600px; height: 500px;" src="${pageContext.request.contextPath}/resources/upload/board/${attachment.renamedFileName}"/>
 				<span class="line" id="span">
-					<%-- <img src="${pageContext.request.contextPath}/resources/images/clock.png" /> --%>
 				</span>
 			</div>
+		 </c:if> 
 		</div>
 
+	<!-- 작성자는 본인 게시글 추천,신고불가 -->
+	<c:if test="${board.memberId != memberLoggedIn.memberId}">
 		<div class="btnBox">
 			<c:if test="${likeCntOne eq '0'}">
 				<button type="button" class="btn btn-outline-warning" id="likeBtn">추천하기</button>
@@ -266,6 +272,7 @@ $(function(){
 			<button type="button" class="btn btn-danger btn-sm"
 				data-toggle="modal" data-target="#myModal">신고</button>
 		</div>
+	</c:if>
 	</div>
 	<!-- 댓글 -->
 	<!--         <div class="commentBox"> 댓글</div> -->

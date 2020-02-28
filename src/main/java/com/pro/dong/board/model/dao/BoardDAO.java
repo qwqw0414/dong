@@ -34,7 +34,7 @@ public interface BoardDAO {
 	// 지은 시작 ==========================
 	Board selectOneBoard(int boardNo);
 	int boardInCount(int boardNo);
-	List<Attachment> selectAttachmentList(int boardNo);
+	Attachment selectAttachmentList(int boardNo);
 	int deleteBoard(int boardNo);
 	int boardUpdate(Board board);
 	int insertBoardReputation(Map<String, String> map);

@@ -223,36 +223,56 @@ public class BoardController {
 	// 지은 시작 ==========================
 	@RequestMapping("/boardView.do")
 	public ModelAndView boardView(ModelAndView mav, @RequestParam("boardNo") int boardNo, HttpSession session) {
-		
-		Board board = bs.selectOneBoard(boardNo);
-		//log.debug("boardNo="+boardNo);
-		List<Attachment> attachmentList = bs.selectAttachmentList(boardNo);
-		int readCount = bs.boardInCount(boardNo);
-		//log.debug("readCount="+readCount);
-		
 		String memberId = ((Member)(session.getAttribute("memberLoggedIn"))).getMemberId();
+		//Map<String,Object> map = bs.selectOneBoard(boardNo);
+		Board board = bs.selectOneBoard(boardNo);
+		Attachment attachment = bs.selectAttachmentList(boardNo);
+		//List<Attachment> attachmentList = bs.selectAttachmentList(boardNo);
+		int readCount = bs.boardInCount(boardNo);
 		
-		//log.debug(memberId);
 		
-		mav.addObject("board", board);
-		mav.addObject("attachmentList", attachmentList);
-		mav.addObject("memberId", board.getMemberId());
 		Map<String, String> param = new HashMap<>();
 		param.put("boardNo", boardNo+"");
 		param.put("memberId", memberId);
 		mav.addObject("likeCntOne", bs.selectBoardLikeByMemberId(param));
 		
-		return mav;
+		mav.addObject("board", board);
+		mav.addObject("attachment", attachment);
+		mav.addObject("memberId", board.getMemberId());
 		
+		
+		return mav;
 	}
+	
+/*	public Map<String,Object> boardView(@RequestParam("boardNo") int boardNo, HttpSession session){
+		Board board = bs.selectOneBoard(boardNo);
+		//List<Attachment> attachmentList = bs.selectAttachmentList(boardNo);
+		int readCount = bs.boardInCount(boardNo);
+		
+		String memberId = ((Member)(session.getAttribute("memberLoggedIn"))).getMemberId();
+		
+		Map<String, String> param = new HashMap<>();
+		param.put("boardNo", boardNo+"");
+		param.put("memberId", memberId);
+		mav.addObject("likeCntOne", bs.selectBoardLikeByMemberId(param));
+		
+		mav.addObject("board", board);
+		//mav.addObject("attachmentList", attachmentList);
+		mav.addObject("memberId", board.getMemberId());
+		return ;
+	}*/
 	
 	@RequestMapping("/boardUpdate.do")	
 	@ResponseBody
 	public ModelAndView boardUpdate( ModelAndView mav, int boardNo) {
+		Map<String, String> param = new HashMap<>();
+		param.put("boardNo", boardNo+"");
 		Board board = bs.selectOneBoard(boardNo);
+		Attachment attachment = bs.selectAttachmentList(boardNo);
 		
 		mav.addObject("board", board);
 		mav.addObject("memberId", board.getMemberId());
+		mav.addObject("attachment", attachment);
 		mav.addObject("loc", "/board/boardUpdate.do");
 		return mav;
 	}

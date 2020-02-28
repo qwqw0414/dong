@@ -134,7 +134,7 @@
 		update board set read_count = read_count + 1 where board_no = #{boardNo} 
 	</update>
 	
-	<select id="selectAttachmentList" resultType="_int">
+	<select id="selectAttachmentList"  resultType="attachment">
 		select * from board_attachment where board_no = #{boardNo}
 	</select>
 	
