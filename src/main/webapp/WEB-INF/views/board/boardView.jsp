@@ -522,42 +522,41 @@ $(function(){
 			let html="";
 			html+="<div id='listdiv'>";
 		for(var i=0; i<data.list.length;i++){
-				html+="<div class='testas'>";
-				if(data.list[i].COMMENT_LEVEL=="1"){
-				html+="<input type='hidden' value="+data.list[i].COMMENT_NO+" id='commentNo_'/>";
-				html+="<span style='margin-bottom:0px'><strong>"+data.list[i].MEMBER_ID+ "<small>[" + data.list[i].WRITE_DAY+"]</small> <br/></strong> "+data.list[i].CONTENTS+"</span>";
-				html+="<button id='showLevel2form' class='alcls' onclick='showLevel2form(this)'><img  src='https://assets.bunjang.co.kr/bunny_desktop/images/reply@2x.png' width='17' height='17'>답글</button>";
-					//내가쓴 level1댓글에만 삭제버튼 생성	
-					if($("[name=memberLoggedIn]").val()==data.list[i].MEMBER_ID){
-					html+="<button class='alcls3' id='deleteLevel1' onclick='deleteLevel1(this)'><img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='17'>삭제</button>";
-					}
-					//ㅋㅋㅋㅋㅋㅋㅋㅋㅋ
-					else{
-						html+="<button id='fakebutton'></button>";	
-					}
-					
-
+			html+="<div class='testas'>";
+			if(data.list[i].COMMENT_LEVEL=="1"){
+			html+="<input type='hidden' value="+data.list[i].COMMENT_NO+" id='commentNo_'/>";
+			html+="<span style='margin-bottom:0px'><strong>"+data.list[i].MEMBER_ID+ "<small>[" + data.list[i].WRITE_DAY+"]</small> <br/></strong> "+data.list[i].CONTENTS+"</span>";
+			html+="<button id='showLevel2form' class='alcls' onclick='showLevel2form(this)'><img  src='https://assets.bunjang.co.kr/bunny_desktop/images/reply@2x.png' width='17' height='17'>답글</button>";
+				//내가쓴 level1댓글에만 삭제버튼 생성	
+				if($("[name=memberLoggedIn]").val()==data.list[i].MEMBER_ID){
+				html+="<button class='alcls3' id='deleteLevel1' onclick='deleteLevel1(this)'><img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='17'>삭제</button>";
 				}
-				
+				//ㅋㅋㅋㅋㅋㅋㅋㅋㅋ
 				else{
-					
-					if($("[name=memberLoggedIn]").val()==data.list[i].MEMBER_ID){
-						html+="<div>"
-						html+="<input type='hidden' value="+data.list[i].COMMENT_NO+" id='commentNo_'/>"
-						html+="<img class='replyIcon' style='width:50px; height:50px;' src='${pageContext.request.contextPath}/resources/images/reply.PNG'/>"
-						html+="<span style='margin-bottom:0px; padding-left:30px'><strong>"+data.list[i].MEMBER_ID+ "</strong> <small>[ " +data.list[i].WRITE_DAY + "]</small>" + data.list[i].CONTENTS;
-						html+="<button class='alcls' onclick='deleteLevel2(this);'><img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='10' height='10'></button></span></div>";
-					}else{
-						html+="<div><img class='replyIcon' style='width:50px; height:50px;' src='${pageContext.request.contextPath}/resources/images/reply.PNG'/>"
-						html+="<span style='margin-bottom:0px; padding-left:30px'><strong>"+data.list[i].MEMBER_ID+ "</strong> <small>[ " +data.list[i].WRITE_DAY + "]</small>" + data.list[i].CONTENTS + "</span></div>";
-					}
+					html+="<button id='fakebutton'></button>";	
 				}
-				html+="<div id='level2Form'><hr/>";
-				html+="<input type='text' id='level2CommentContent' placeholder='대댓글을 입력하세요.'>";
-				html+="<button onclick='insertLevel2(this)' class='alcls'>등록</button><button class='alcls' onclick='hideLevel2form(this)'>취소</button><br>";
-				html+="</div>";
-				html+="</div>";
 				
+
+			}
+			
+			else{
+				
+				if($("[name=memberLoggedIn]").val()==data.list[i].MEMBER_ID){
+					html+="<div>"
+					html+="<input type='hidden' value="+data.list[i].COMMENT_NO+" id='commentNo_'/>"
+					html+="<img class='replyIcon' style='width:50px; height:50px;' src='${pageContext.request.contextPath}/resources/images/reply.PNG'/>"
+					html+="<span style='margin-bottom:0px; padding-left:30px'><strong>"+data.list[i].MEMBER_ID+ "</strong> <small>[ " +data.list[i].WRITE_DAY + "]</small>" + data.list[i].CONTENTS;
+					html+="<button class='alcls' onclick='deleteLevel2(this);'><img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='10' height='10'></button></span></div>";
+				}else{
+					html+="<div><img class='replyIcon' style='width:50px; height:50px;' src='${pageContext.request.contextPath}/resources/images/reply.PNG'/>"
+					html+="<span style='margin-bottom:0px; padding-left:30px'><strong>"+data.list[i].MEMBER_ID+ "</strong> <small>[ " +data.list[i].WRITE_DAY + "]</small>" + data.list[i].CONTENTS + "</span></div>";
+				}
+			}
+			html+="<div id='level2Form'><hr/>";
+			html+="<input type='text' id='level2CommentContent' style='font-size:15px;' placeholder='대댓글을 입력하세요.'>";
+			html+="<button onclick='insertLevel2(this)' class='alcls'>등록</button><button class='alcls' onclick='hideLevel2form(this)'>취소</button><br>";
+			html+="</div>";
+			html+="</div>";
 			};//end of forEach
 			html+="</div>";
 			$("#commentListView").html(html);
@@ -670,41 +669,7 @@ $(function(){
 		$(e).parent().css("display","none");
 	}
 </script>
-<style>
-#listdiv .alcls3 {
-	margin-left:5px;
-	font-size: 4px;
-	padding: 0;
-	background-color: transparent;
-	border: 0;
-	color: gray;
-}
 
-.alcls, alcls2 {
-	margin-left: 30px;
-	font-size: 4px;
-	padding: 0;
-	background-color: transparent;
-	border: 0;
-	color: gray;
-}
-
-#fakebutton {
-	visibility: hidden;
-}
-
-#commentListView #level2Form {
-	display: none;
-}
-
-#level2Form #level2CommentContent {
-	width: 1000px;
-}
-
-#listdiv .testas {
-	margin-bottom: 20px;
-}
-</style>
 
 
 <%--==================현규끝================ --%>

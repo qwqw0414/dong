@@ -340,5 +340,38 @@ header #categoryDiv #category-list-end{border-left: rgb(255, 30, 60) 1px solid;}
 /* ========================== 주영 끝 */
 	
 /* 현규 시작 ========================== */
+#listdiv .alcls3 {
+	margin-left:5px;
+	font-size: 4px;
+	padding: 0;
+	background-color: transparent;
+	border: 0;
+	color: gray;
+}
 
+.alcls, alcls2 {
+	margin-left: 30px;
+	font-size: 4px;
+	padding: 0;
+	background-color: transparent;
+	border: 0;
+	color: gray;
+}
+
+.alcls{ 
+ 	margin-left:30px;
+} 
+	
+#fakebutton{
+	visibility:hidden;
+}
+#commentListView #level2Form {
+	display: none;
+}
+#level2Form #level2CommentContent {
+	width:1000px;
+}
+#listdiv .testas{
+	margin-bottom:20px;
+}
 /* ========================== 현규 끝 */

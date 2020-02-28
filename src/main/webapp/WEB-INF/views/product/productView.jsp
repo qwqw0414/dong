@@ -221,6 +221,7 @@ $(()=>{
     
     <!-- 댓글 DIV-->
     <div class="pncontents">
+    <div id="cmtdiv"></div>
 	<input type="hidden" id="productNo" name="productNo" value="${map.product.productNo}" >
 	</div>
 	<input type="hidden" name="memberLoggedIn" value="<%= memberLoggedIn.getMemberId()%>"/>
@@ -241,7 +242,7 @@ $(()=>{
 	</div>
 	
 	<div id="pageBar"></div>
-
+</div>
 <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 신고하기 Modal @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -488,7 +489,7 @@ $("#report-btn").click(()=>{
 				}
 			}
 			html+="<div id='level2Form'><hr/>";
-			html+="<input type='text' id='level2CommentContent' placeholder='대댓글을 입력하세요.'>";
+			html+="<input type='text' id='level2CommentContent' style='font-size:15px;' placeholder='대댓글을 입력하세요.'>";
 			html+="<button onclick='insertLevel2(this)' class='alcls'>등록</button><button class='alcls' onclick='hideLevel2form(this)'>취소</button><br>";
 			html+="</div>";
 			html+="</div>";
@@ -597,43 +598,6 @@ $("#report-btn").click(()=>{
 	}
 </script>
 
-<style>
-
-#listdiv .alcls3 {
-	margin-left:5px;
-	font-size: 4px;
-	padding: 0;
-	background-color: transparent;
-	border: 0;
-	color: gray;
-}
-
-.alcls, alcls2 {
-	margin-left: 30px;
-	font-size: 4px;
-	padding: 0;
-	background-color: transparent;
-	border: 0;
-	color: gray;
-}
-
-.alcls{ 
- 	margin-left:30px;
-} 
-	
-#fakebutton{
-	visibility:hidden;
-}
-#commentListView #level2Form {
-	display: none;
-}
-#level2Form #level2CommentContent {
-	width:1000px;
-}
-#listdiv .testas{
-	margin-bottom:20px;
-}
-</style>
 
 <script>
 $(()=>{
