@@ -121,108 +121,37 @@ $(()=>{
 <%}%>
 
 <header>
-<nav class="navbar navbar-expand-md navbar-light bg-light">
-
-	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-		aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-		<span class="navbar-toggler-icon"></span>
-	</button>
-
-	<div class="collapse navbar-collapse" id="navbarSupportedContent">
-		<ul class="navbar-nav mr-auto">
-			<!-- 회원 -->
-			<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-					aria-haspopup="true" aria-expanded="false">
-					회원
-				</a>
-				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-					<a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberEnroll.do">회원가입</a>
-					<c:if test="${memberLoggedIn == null }">
-						<a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberLogin.do">로그인</a>
-					</c:if>
-					<c:if test="${memberLoggedIn != null }">
-						<a class="dropdown-item"
-							href="${pageContext.request.contextPath }/member/memberLogOut.do">로그아웃</a>
-					</c:if>
-					<a class="dropdown-item" href="${pageContext.request.contextPath}/member/findPassword.do">비밀번호
-						찾기</a>
-					<a class="dropdown-item" href="${pageContext.request.contextPath}/member/findId.do">아이디 찾기</a>
-					<a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberView.do">내 정보</a>
-					
-				</div>
-			</li>
-
-			<!-- 커뮤니티 -->
-			<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-					aria-haspopup="true" aria-expanded="false">
-					커뮤니티
-				</a>
-				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item" href="${pageContext.request.contextPath}/board/boardList.do">게시글</a>
-				</div>
-			</li>
-
-			<!-- 상품 -->
-			<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-					aria-haspopup="true" aria-expanded="false">
-					상품
-				</a>
-				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-					<a class="dropdown-item" href="${pageContext.request.contextPath}/product/productReg.do">상품 등록</a>
-
-				</div>
-			</li>
-			<!-- 상점 -->
-			<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-					aria-haspopup="true" aria-expanded="false">
-					상점
-				</a>
-				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-					<a class="dropdown-item" href="${pageContext.request.contextPath}/shop/shopView.do">내 상점</a>
-					<a class="dropdown-item" href="${pageContext.request.contextPath}/shop/myPoductManage.do">상품관리</a>
-
-				</div>
-			</li>
-			
-			<!-- 관리자 -->
-			<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-					aria-haspopup="true" aria-expanded="false">
-					관리자
-				</a>
-				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+<div style="width: 1100px; margin: auto;" class="text-dark">
+	<ul class="nav justify-content-end">
+		<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				${ memberLoggedIn == null ? "" : (memberLoggedIn.isAdmin == "Y" ? "관리자":memberLoggedIn.memberName)}${ memberLoggedIn == null ? "" : "님 환영합니다."}
+			</a>
+			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+				<!-- 관리자 -->
+				<c:if test='${memberLoggedIn != null && memberLoggedIn.isAdmin == "Y"}'>
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/memberList.do">회원관리</a>
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/memberPointList.do">회원포인트관리</a>
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/memberOrderList.do">회원거래내역관리</a>
+				<div class="dropdown-divider"></div>
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/productList.do">상품관리</a>
-					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/boardList.do">게시글관리</a>
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/productReportList.do">상품신고관리</a>
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/kingOfDongnae.do">동네왕</a>
-				</div>
-			</li>
-
-			<!-- 웹소켓 -->
-			<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-					aria-haspopup="true" aria-expanded="false">
-					웹소켓
-				</a>
-				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-			      <a class="nav-link" id="b-chat">qwqw0414채팅</a>
-				</div>
-			</li>
-			
-		</ul>
-	</div>
-</nav>
-
+				<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/boardList.do">게시글관리</a>
+				</c:if>
+				<!-- 회원 -->
+				<c:if test='${memberLoggedIn != null && memberLoggedIn.isAdmin == "N"}'>
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberView.do">내 정보 (포인트 충전)</a>
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/board/boardList.do">동네 게시판</a>
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/shop/myPoductManage.do">내 상품 관리</a>
+				</c:if>
+				<div class="dropdown-divider"></div>
+				<a class="dropdown-item" href="${pageContext.request.contextPath }/member/memberLogOut.do">로그아웃</a>
+			</div>
+		</li>
+	</ul>
+</div>
 <!-- 페이지 시작 -->
 <div class="container" style="width: 1400px;">
 	<div id="headerImgDiv" class="text-center">
@@ -291,23 +220,9 @@ var _error = "";
 		_error += e.key;
 	});
 
-	$("header #b-chat").click(chatView);
 	$("header #a-chat").click(chatList);
 
 // 채팅
-	function chatView(){
-		var width = 360;
-		var height = 660;
-		var top = (window.screen.height / 2) - (height / 2);
-		var left = (window.screen.width / 2) - (width / 2);
-		var memberId = '${memberLoggedIn.memberId}';
-		let url = "";
-
-		url = "${pageContext.request.contextPath}/ws/stomp.do?memberId="+'qwqw0414';
-
-		window.open(url,"chatView", "width="+width+",height="+height+", top="+top+", left="+left);
-	}
-
 	function chatList(){
 		var width = 360;
 		var height = 660;
