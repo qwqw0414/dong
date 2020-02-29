@@ -164,11 +164,14 @@ $(()=>{
 			$("#searchKeyword").val('');
 			loadBoardList(1);
 		});
+	
 		//검색어 입력
 		$("#searchKeyword").keyup((e)=>{if(e.keyCode == 13) search();});
-		$("#searchBoard").click(function search(){
+		
+		$("#searchBoard").click(function (){
 			search();
 		});
+		
 	function search(){
 		var cPage = $("#cPage").val();
 		var boardCategory = $("#boardCategory").val();
