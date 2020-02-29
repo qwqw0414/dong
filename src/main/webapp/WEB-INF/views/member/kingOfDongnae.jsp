@@ -82,13 +82,13 @@ $(()=>{
 
             	console.log(data);
                 let html = '';
-				html += "<span id='goldSido'>"+data.addr[0].SIDO+"</span>&nbsp;<span id='goldSigungu'>"+data.addr[0].SIGUNGU+"</span>&nbsp;<span id='goldDong'>"+data.addr[0].DONG+"</span>&nbsp;<small>("+data.addr[0].CNT+"건)</small>";
+				html += "<span id='goldSido'>"+data.addr[0].SIDO+"</span>&nbsp;<span id='goldSigungu'>"+data.addr[0].SIGUNGU+"</span>&nbsp;<span id='goldDong'>"+data.addr[0].DONG+"</span>&nbsp;<small>("+data.addr[0].AVG+"%)</small>";
 				$("#goldTitle").html(html);
 				html = "";
-				html += "<span id='silverSido'>"+data.addr[1].SIDO+"</span>&nbsp;<span id='silverSigungu'>"+data.addr[1].SIGUNGU+"</span>&nbsp;<span id='silverDong'>"+data.addr[1].DONG+"</span>&nbsp;<small>("+data.addr[1].CNT+"건)</small>";
+				html += "<span id='silverSido'>"+data.addr[1].SIDO+"</span>&nbsp;<span id='silverSigungu'>"+data.addr[1].SIGUNGU+"</span>&nbsp;<span id='silverDong'>"+data.addr[1].DONG+"</span>&nbsp;<small>("+data.addr[1].AVG+"%)</small>";
 				$("#silverTitle").html(html);
 				html = "";
-				html += "<span id='bronzeSido'>"+data.addr[2].SIDO+"</span>&nbsp;<span id='bronzeSigungu'>"+data.addr[2].SIGUNGU+"</span>&nbsp;<span id='bronzeDong'>"+data.addr[2].DONG+"</span>&nbsp;<small>("+data.addr[2].CNT+"건)</small>";
+				html += "<span id='bronzeSido'>"+data.addr[2].SIDO+"</span>&nbsp;<span id='bronzeSigungu'>"+data.addr[2].SIGUNGU+"</span>&nbsp;<span id='bronzeDong'>"+data.addr[2].DONG+"</span>&nbsp;<small>("+data.addr[2].AVG+"%)</small>";
 				$("#bronzeTitle").html(html);
                 $("#kingOfDongnae-wrapper #isMonth").text(month);
             },
@@ -102,6 +102,8 @@ $(()=>{
     $("#btn-close").on('click',function(){
     	close();
     });
+    
+ 
 });
 
 </script>
