@@ -8,13 +8,29 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-/* Board b = (Board)request.getAttribute("board"); 
+Board b = (Board)request.getAttribute("board"); 
 List<BoardCategory> list = new ArrayList<>();
-list = (List<BoardCategory>)request.getAttribute("boardCategoryList"); 
+list = (List<BoardCategory>)request.getAttribute("boardCategoryList");
+Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
+
+System.out.println("listt="+list);
+
 String option = "";
+option += "<option value=''/>전체</option>";
 for(BoardCategory bc: list){
-	option +=  "<option value=\""+bc.getCategoryId()+"\">"+bc.getCategoryName()+"</option>";
-}  */
+	if("Y".equals(memberLoggedIn.getIsAdmin())){
+		option += "<option value=\""+bc.getCategoryId()+"\">"+bc.getCategoryName()+"</option>";
+	}
+	else{
+		if(bc.getCategoryId().equals("A03")){
+			continue;
+		}
+		else{
+		option += "<option value=\""+bc.getCategoryId()+"\">"+bc.getCategoryName()+"</option>";
+			
+		}
+	} 
+}  
 %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <style>
@@ -158,7 +174,15 @@ div#board-container label.custom-file-label{text-align:left;}
 
         <div class="contents">
        	<input type="hidden" id="boardNo" value="${board.boardNo}" >
-
+       	<span id="changeSpan">카테고리 수정란 입니다.</span>
+  			 <div class="input-group mb-3">
+				 <div class="input-group-prepend">
+				    <label class="input-group-text" for="inputGroupSelect01">카테고리</label>
+				 </div>
+				 <select class="custom-select" id="boardCategory" name="boardCategory" required>
+				   <%=option%> 
+				 </select>
+				</div>
             <!-- 내용 -->
 			<%-- <div id="category">카테고리</div>
 			<select class="custom-select" id="boardCategory" name="boardCategory"><!-- </select> -->
@@ -183,8 +207,9 @@ div#board-container label.custom-file-label{text-align:left;}
 			</div>
 			<div class="custom-file">
 				    <input type="file" class="custom-file-input" name="upFile" id="upFile" >
-				    <label class="custom-file-label" for="upFile">파일을 선택하세요</label>
-				  </div>
+				    <label class="custom-file-label" for="upFile">수정할 파일을 선택하세요</label>
+			</div>
+			<div class="checks"> <input type="checkbox" id="ex_chk"> <label for="ex_chk">기존파일 삭제하기</label> </div>
 		 </c:if>
         </div>
 

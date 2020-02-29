@@ -264,12 +264,13 @@ public class BoardController {
 	
 	@RequestMapping("/boardUpdate.do")	
 	@ResponseBody
-	public ModelAndView boardUpdate( ModelAndView mav, int boardNo) {
+	public ModelAndView boardUpdate( ModelAndView mav, int boardNo,HttpSession session) {
 		Map<String, String> param = new HashMap<>();
 		param.put("boardNo", boardNo+"");
 		Board board = bs.selectOneBoard(boardNo);
 		Attachment attachment = bs.selectAttachmentList(boardNo);
-		
+		List<BoardCategory> boardCategoryList = bs.selectBoardCategory();
+		mav.addObject("boardCategoryList",boardCategoryList);
 		mav.addObject("board", board);
 		mav.addObject("memberId", board.getMemberId());
 		mav.addObject("attachment", attachment);
@@ -295,6 +296,83 @@ public class BoardController {
 		
 		return result+"";
 	}
+	
+	public Map<String,Object> boardUpdateEnd(Board board, @RequestParam("boardNo") int boardNo,@RequestParam(value="boardCategory") String boardCategory,
+			  @RequestParam(value="upFile", required=false) MultipartFile[] upFile, HttpServletRequest request){
+		Map<String, Object> map = new HashMap<>();
+		String saveDirectory = request.getServletContext().getRealPath("/resources/upload/board");
+		List<BoardCategory> boardCategoryList = bs.selectBoardCategory();
+		map.put("boardCategoryList", boardCategoryList);
+		List<Attachment> attachList = new ArrayList<>();
+		
+		log.debug("board={}", board);
+		board.setCategoryId(boardCategory);
+		//동적으로 directory 생성
+		File dir = new File(saveDirectory);
+		if(dir.exists() == false)
+			dir.mkdir();
+		
+		//MultipartFile객체 파일업로드 처리
+				for(MultipartFile f : upFile) {
+					if(!f.isEmpty()) {
+						//파일명 재생성
+						String originalFileName = f.getOriginalFilename();
+						String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
+						int rndNum = (int)(Math.random()*1000);
+						String renamedFileName = sdf.format(new Date())+"_"+rndNum+ext;
+						
+				         ///기존첨부파일이 없는 경우
+				         ///기존첨부파일 정보: 파일이 없는 경우 ""값이 넘어온다.
+				         //String oldOriginalFileName = f.get
+				         //String oldRenamedFileName = f.getParameter("oldRenamedFileName");
+						
+						
+			            ///신규첨부파일 O, 기존첨부파일 삭제
+			            if(f != null) {
+			               File delFile = new File(saveDirectory,originalFileName);
+			               boolean result = delFile.delete();
+			            }
+			            /*///신규첨부파일 X, 기존첨부파일 삭제
+			            else if(f.get!=null) {
+			               File delFile = new File(saveDirectory,originalFileName);
+			               boolean result = delFile.delete();
+			            }*/
+			            ///신규첨부파일 없는 경우: 기존파일 유지
+			            else {
+			               originalFileName = originalFileName;
+			               renamedFileName = renamedFileName;
+			            }
+						
+						//서버컴퓨터에 파일저장
+						try {
+							f.transferTo(new File(saveDirectory+"/"+renamedFileName));
+						} catch (IllegalStateException e) {
+							e.printStackTrace();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						
+						Attachment attach = new Attachment();
+						attach.setOriginalFileName(originalFileName);
+						attach.setRenamedFileName(renamedFileName);
+						attachList.add(attach);
+						
+					}
+				}
+		
+		return map;
+	}
+	
+	/*public Map<String,Object> boardUpdateEnd(Board board, @RequestParam(value="boardCategory") String boardCategory,
+			@RequestParam(value="upFile", required=false) MultipartFile[] upFile, HttpServletRequest request){
+		Map<String, Object> map = new HashMap<>();
+		List<BoardCategory> boardCategoryList = bs.selectBoardCategory();
+		mav.addObject("boardCategoryList",boardCategoryList);
+		List<Map<String,String>> category = bs.selectBoardCategory(boardNo);
+		
+		return map;
+	}*/
 	
 	@RequestMapping("/boardDelete")
 	@ResponseBody
