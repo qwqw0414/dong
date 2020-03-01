@@ -31,7 +31,7 @@ public interface BoardService {
 	// 지은 시작 ==========================
 	Board selectOneBoard(int boardNo);
 	int boardInCount(int boardNo);
-	List<Attachment> selectAttachmentList(int boardNo);
+	Attachment selectAttachmentList(int boardNo);
 	int deleteBoard(int boardNo);
 	Member getMemberByMemberId(String memberId);
 	int boardUpdate(Board board);

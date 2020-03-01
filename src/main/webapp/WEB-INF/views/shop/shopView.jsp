@@ -105,7 +105,7 @@
 			&nbsp;&nbsp;&nbsp;
 			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-user@2x.png" width="14" height="13">상점방문수 ${map.INCOUNT} 명
 			&nbsp;&nbsp;&nbsp;
-			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-sell@2x.png" width="14" height="13">상품판매 0회
+			<img src="https://assets.bunjang.co.kr/bunny_desktop/images/shop-sell@2x.png" width="14" height="13">상품판매 ${map.SALE}회
 			&nbsp;&nbsp;&nbsp;
 			<img src="${pageContext.request.contextPath }/resources/images/exchange.png" width="14" height="13"><a href="${pageContext.request.contextPath }/member/orderListView.do">내 거래내역</a>
 			&nbsp;&nbsp;&nbsp;

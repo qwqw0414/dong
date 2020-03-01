@@ -8,13 +8,13 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-/* 	Board b = (Board)request.getAttribute("board");
+/* Board b = (Board)request.getAttribute("board"); 
 List<BoardCategory> list = new ArrayList<>();
-list = (List<BoardCategory>)request.getAttribute("boardCategoryList");
+list = (List<BoardCategory>)request.getAttribute("boardCategoryList"); 
 String option = "";
 for(BoardCategory bc: list){
 	option +=  "<option value=\""+bc.getCategoryId()+"\">"+bc.getCategoryName()+"</option>";
-} */
+}  */
 %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <style>
@@ -23,13 +23,6 @@ div#board-container input,div#board-container button{margin-bottom:15px;}
 /* 부트스트랩 : 파일라벨명 정렬*/
 div#board-container label.custom-file-label{text-align:left;}
 
-div{
-    margin: 10px;
-    padding: 0;
-}
-input{
-	border: 0px;
-}
 .head_inflow{
     padding-top: 50px;
     padding-bottom: 34px;
@@ -49,9 +42,7 @@ input{
 /* .profileWriter{
     color: #999;
 } */
-span{
-	color: #999;
-}
+
 #writedate{
 	float: right;
 }
@@ -80,7 +71,6 @@ span{
     display: flex;
     position: relative;
     width: 100%;
-    padding-top: 50px;
     padding-bottom: 50px;
     vertical-align: top;
 
@@ -119,7 +109,6 @@ span{
     display: flex;
     position: relative;
     width: 100%;
-    padding-top: 50px;
     padding-bottom: 50px;
     border-bottom: 1px solid #f0f0f0;
     vertical-align: top;
@@ -137,20 +126,29 @@ span{
 	margin-top: 10px;
     float: right;
 }
-#likeBtn{
-	
+
+#iconbox {
+	width: 15px;
+	height: 15px;
+}
+#changeSpan{
+	color: #28A745;
 }
 </style>
 
 <div class="section">
     <!-- head -->
     <div class="head_inflow">
+    <span id="changeSpan">제목 수정란 입니다.</span>
         <div id="title"><strong><input type="text" class="form-control" id="inputtitle" value="${board.boardTitle}" required></strong></div>
-        <div class="profileWriter">
-            <span id="titleinput">${board.memberId}</span> &nbsp;
-            <span>조회수 : ${board.readCount}</span> <br />
-            <span>${board.writeDate}일 작성</span>
-        </div>
+        	<div class="profileWriter">
+			<span id="span"><img id="iconbox"
+				src="${pageContext.request.contextPath}/resources/images/writer.png" />&nbsp;${board.memberId}</span>
+			&nbsp; <span id="span"><img id="iconbox"
+				src="${pageContext.request.contextPath}/resources/images/text.png" />&nbsp;${board.readCount}</span>
+			<br /> <span id="span"><img id="iconbox"
+				src="${pageContext.request.contextPath}/resources/images/clock.png" />&nbsp;${board.writeDate}</span>
+		</div>
 		  
         <button type="button"  id="boardUpdateBtn" class="btn btn-outline-success btn-block" >확인</button>
     </div>
@@ -160,7 +158,7 @@ span{
 
         <div class="contents">
        	<input type="hidden" id="boardNo" value="${board.boardNo}" >
-        <%-- <span id="writedate">${board.writeDate}일 작성</span> --%>
+
             <!-- 내용 -->
 			<%-- <div id="category">카테고리</div>
 			<select class="custom-select" id="boardCategory" name="boardCategory"><!-- </select> -->
@@ -170,25 +168,28 @@ span{
                <option value="A02"><c:if test="${board.categoryId eq 'A02'?'selected':''}"></c:if>홍보</option>
                <option value="A04"><c:if test="${board.categoryId eq 'A04'?'selected':''}"></c:if>정보</option> 
             </select>  --%>
-            
+            <span id="changeSpan">내용 수정란 입니다.</span>
             <div class="contentsBox">
                 <textarea class="form-control" name="boardContent" id="boardContent" placeholder="내용" required>${board.boardContents }</textarea>
             </div>
     
             <!-- 이미지 -->
-            <div class="img">
-                <img src="" alt="">
-                <span class="line"></span>
-            </div>
+            <c:if test="${attachment.attachmentNo != null}"> 
+            <span id="changeSpan">첨부파일 수정란 입니다.</span>
+			<div class="img" id="boardViewImg" style="margin:auto; width: 600px; height: 500px; overflow: hidden">
+				<img style="width: 600px; height: 500px;" src="${pageContext.request.contextPath}/resources/upload/board/${attachment.renamedFileName}"/>
+				<span class="line" id="span">
+				</span>
+			</div>
+			<div class="custom-file">
+				    <input type="file" class="custom-file-input" name="upFile" id="upFile" >
+				    <label class="custom-file-label" for="upFile">파일을 선택하세요</label>
+				  </div>
+		 </c:if>
         </div>
 
-        <div class="btnBox">
-            <button id="likeBtn">좋아요</button>
-            <button >신고</button>
-        </div>
-       
         <!-- 댓글 -->
-        <div class="commentBox"> 댓글
+        <div class="commentBox"> 
 <%--==================현규시작================ --%>
 <hr />
 
@@ -197,7 +198,8 @@ span{
 <%--==================현규끝================ --%>
             
         </div>
-
+<br /><br />
+<span id="changeSpan">댓글란 입니다.</span>
     </div>
 
     

@@ -150,19 +150,32 @@
 	<!-- 주영 시작 ========================== -->
 	<resultMap type="map" id="shopMap">
 		<result column="since" property="since"/>
+		<result column="sale" property="sale"/>
 	</resultMap>
 	<select id="selectOneShop" resultType="map">
 		select 
-		S.member_id, s.shop_info, s.image, s.shop_name, s.shop_no, to_char(ceil(sysdate-s.open_date)) as since, s.incount
+		S.member_id, s.shop_info, s.image, s.shop_name, s.shop_no, to_char(ceil(sysdate-s.open_date)) as since, s.incount,
+        (select count(*) 
+            from product p left join product_status ps on p.product_no=ps.product_no 
+                    left join shop s on s.shop_no=p.shop_no
+                    left join member m on s.member_id=m.member_id
+            where ps.is_sale='Y'
+                and m.member_id=#{memberId}) sale
 		from member M left join shop S on M.member_id = S.member_id 
 		where M.member_id = #{memberId}
 	</select>
 	
 	<select id="selectShopByShopNo" resultType="map">
 		select 
-		S.member_id, s.shop_info, s.image, s.shop_name, s.shop_no, to_char(ceil(sysdate-s.open_date)) as since , s.incount
+		S.member_id, s.shop_info, s.image, s.shop_name, s.shop_no, to_char(ceil(sysdate-s.open_date)) as since , s.incount,
+     	(select count(*) 
+            from product p left join product_status ps on p.product_no=ps.product_no 
+                    left join shop s on s.shop_no=p.shop_no
+                    left join member m on s.member_id=m.member_id
+            where ps.is_sale='Y'
+                and s.shop_no=#{shopNo}) sale
 		from member M left join shop S on M.member_id = S.member_id 
-		where S.shop_no = #{shopNo}
+		where S.shop_no =#{shopNo}
 	</select>
 	
 	<update id="updateShopInfo">

@@ -46,12 +46,6 @@
 #priceSpan{
 	font-size: 35px;
 }
-.status{display:inline; position: relative; color: rgb(153, 153, 153);}
-.ss{display:inline; margin-left: 11px;}
-.sss{display:inline;  margin-left: 20px;}
-.ssss{display:inline; color: rgb(110, 71, 238);  margin-left: 34px;}
-#locationPNG{margin-bottom: 4px;}
-
 </style>
 <%
  	Map<String,Object> map = (Map<String,Object>)request.getAttribute("map");
@@ -101,7 +95,7 @@ $(()=>{
 			productNo:productNo
 		},
 		success:data=>{
-			
+			console.log("상품성공입니다.");
 			var btn = $("#purchaseByPoint");
 			console.log(data.list);
 			
@@ -128,7 +122,7 @@ $(()=>{
 </script>
 <!--하진끝-->
 <div class="card mb-3 border-light" id="productView">
-    <div class="row">
+    <div class="row" id="productDivHajin">
 
 					<div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="carousel" style="width: 320px; height: 320px;">
 					<div class="carousel-inner">
@@ -188,7 +182,7 @@ $(()=>{
                 </dl>
                     <hr>
                     <br />
-                    <span>판매자 정보:${map.product.shopNo}</span> <hr><br>
+                    <span><a href="${pageContext.request.contextPath }/shop/shopView.do?shopNo=${map.product.shopNo}">판매자 상점으로 이동하기</a></span> <hr><br>
                 </div>
                     
                 <div class="something-btn">
@@ -221,6 +215,7 @@ $(()=>{
     
     <!-- 댓글 DIV-->
     <div class="pncontents">
+    <div id="cmtdiv"></div>
 	<input type="hidden" id="productNo" name="productNo" value="${map.product.productNo}" >
 	</div>
 	<input type="hidden" name="memberLoggedIn" value="<%= memberLoggedIn.getMemberId()%>"/>
@@ -241,7 +236,7 @@ $(()=>{
 	</div>
 	
 	<div id="pageBar"></div>
-
+</div>
 <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 신고하기 Modal @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -297,7 +292,7 @@ $(()=>{
       <div class="modal-body">
 				<form>
 				<span class="smallTitle">판매자 전화번호</span><br /><br />
-				<label for="">${map.result}</label>
+				<label for="">${map.result.phone}</label>
 				<hr class="divide-m" />
 					<span class="smallTitle">동네톡으로 연락하기</span><br /><br />
 					<button type="button" class="btn btn-secondary" id="btnTalk">연락하기</button>
@@ -431,12 +426,7 @@ $("#report-btn").click(()=>{
 				type:"POST",
 				success:data=>{
 					console.log(data);
-						if(data=="1"){
-							alert("성공 니 댓글 맨뒤에~");
-						}
-						else{
-							alert("실패")
-						}
+					
 						$("#comments_product").val("");
 						showCommentList(1);
 				},
@@ -462,39 +452,41 @@ $("#report-btn").click(()=>{
 			let html="";
 			html+="<div id='listdiv'>";
 		for(var i=0; i<data.list.length;i++){
-				html+="<div class='testas'>";
-				if(data.list[i].COMMENT_LEVEL=="1"){
-				html+="<input type='hidden' value="+data.list[i].COMMENT_NO+" id='commentNo_'/>";
-				html+="<span style='margin-bottom:0px'><strong>"+data.list[i].MEMBER_ID+ ":</strong> "+data.list[i].CONTENTS+" <small>[" + data.list[i].WRITE_DAY+"]</small></span>";
-				html+="<button id='showLevel2form' class='alcls btn btn-outline-success btn-sm' onclick='showLevel2form(this)'><img  src='https://assets.bunjang.co.kr/bunny_desktop/images/reply@2x.png' width='17' height='17'>답글</button>";
-					//내가쓴 level1댓글에만 삭제버튼 생성	
-					if($("[name=memberLoggedIn]").val()==data.list[i].MEMBER_ID){
-					html+="<button class='btn btn-outline-success btn-sm' id='deleteLevel1' onclick='deleteLevel1(this)'><img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='17'></button>";
-					}
-					//ㅋㅋㅋㅋㅋㅋㅋㅋㅋ
-					else{
-						html+="<button id='fakebutton'>채우기용</button>";	
-					}
+			html+="<div class='testas'>";
+			if(data.list[i].COMMENT_LEVEL=="1"){
+			html+="<input type='hidden' value="+data.list[i].COMMENT_NO+" id='commentNo_'/>";
+			html+="<span style='margin-bottom:0px'><strong>"+data.list[i].MEMBER_ID+ "<small>[" + data.list[i].WRITE_DAY+"]</small> <br/></strong> "+data.list[i].CONTENTS+"</span>";
+			html+="<button id='showLevel2form' class='alcls' onclick='showLevel2form(this)'><img  src='https://assets.bunjang.co.kr/bunny_desktop/images/reply@2x.png' width='17' height='17'>답글</button>";
+				//내가쓴 level1댓글에만 삭제버튼 생성	
+				if($("[name=memberLoggedIn]").val()==data.list[i].MEMBER_ID){
+				html+="<button class='alcls3' id='deleteLevel1' onclick='deleteLevel1(this)'><img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='15' height='17'>삭제</button>";
+				}
+				//ㅋㅋㅋㅋㅋㅋㅋㅋㅋ
+				else{
+					html+="<button id='fakebutton'></button>";	
 				}
 				
-				else{
-					
-					if($("[name=memberLoggedIn]").val()==data.list[i].MEMBER_ID){
-						html+="<div>"
-						html+="<input type='hidden' value="+data.list[i].COMMENT_NO+" id='commentNo_'/>"
-						html+="<img class='replyIcon' style='width:50px; height:50px;' src='${pageContext.request.contextPath}/resources/images/reply.PNG'/>"
-						html+="<span style='margin-bottom:0px; padding-left:30px'><strong>"+data.list[i].MEMBER_ID+ "</strong> : " + data.list[i].CONTENTS + " <small>[ " +data.list[i].WRITE_DAY + "]</small>";
-						html+="<button class='alcls btn btn-outline-success btn-sm' onclick='deleteLevel2(this);'><img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='10' height='10'></button></span></div>";
-					}else{
-						html+="<div><img class='replyIcon' style='width:50px; height:50px;' src='${pageContext.request.contextPath}/resources/images/reply.PNG'/>"
-						html+="<span style='margin-bottom:0px; padding-left:30px'><strong>"+data.list[i].MEMBER_ID+ "</strong> : " + data.list[i].CONTENTS + " <small>[ " +data.list[i].WRITE_DAY + "]</small></span></div>";
-					}
+
+			}
+			
+			else{
+				
+				if($("[name=memberLoggedIn]").val()==data.list[i].MEMBER_ID){
+					html+="<div>"
+					html+="<input type='hidden' value="+data.list[i].COMMENT_NO+" id='commentNo_'/>"
+					html+="<img class='replyIcon' style='width:50px; height:50px;' src='${pageContext.request.contextPath}/resources/images/reply.PNG'/>"
+					html+="<span style='margin-bottom:0px; padding-left:30px'><strong>"+data.list[i].MEMBER_ID+ "</strong> <small>[ " +data.list[i].WRITE_DAY + "]</small>" + data.list[i].CONTENTS;
+					html+="<button class='alcls' onclick='deleteLevel2(this);'><img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='10' height='10'></button></span></div>";
+				}else{
+					html+="<div><img class='replyIcon' style='width:50px; height:50px;' src='${pageContext.request.contextPath}/resources/images/reply.PNG'/>"
+					html+="<span style='margin-bottom:0px; padding-left:30px'><strong>"+data.list[i].MEMBER_ID+ "</strong> <small>[ " +data.list[i].WRITE_DAY + "]</small>" + data.list[i].CONTENTS + "</span></div>";
 				}
-				html+="<div id='level2Form'>";
-				html+="<input type='text' id='level2CommentContent' placeholder='대댓글을 입력하세요.'>";
-				html+="<button onclick='insertLevel2(this)'>등록</button><button onclick='hideLevel2form(this)'>취소</button><br>";
-				html+="</div>";
-				html+="</div>";
+			}
+			html+="<div id='level2Form'><hr/>";
+			html+="<input type='text' id='level2CommentContent' style='font-size:15px;' placeholder='대댓글을 입력하세요.'>";
+			html+="<button onclick='insertLevel2(this)' class='alcls'>등록</button><button class='alcls' onclick='hideLevel2form(this)'>취소</button><br>";
+			html+="</div>";
+			html+="</div>";
 				
 			};//end of forEach
 			html+="</div>";
@@ -600,24 +592,6 @@ $("#report-btn").click(()=>{
 	}
 </script>
 
-<style>
-.alcls{ 
- 	margin-left:30px;
-} 
-	
-#fakebutton{
-	visibility:hidden;
-}
-#commentListView #level2Form {
-	display: none;
-}
-#level2Form #level2CommentContent {
-	width:1000px;
-}
-#listdiv .testas{
-	margin-bottom:20px;
-}
-</style>
 
 <script>
 $(()=>{

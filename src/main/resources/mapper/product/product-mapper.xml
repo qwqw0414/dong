@@ -7,7 +7,7 @@
 	<insert id="insertOrderList" parameterType="orderList">
 		insert into order_list values
 		(seq_order_no.nextval,#{productNo},#{memberId},#{sido},#{sigungu},#{dong},
-		#{address},#{price},'P','N','N',default)
+		#{address},#{price},'P','N','N',dproductStatusefault)
 	</insert>
 	<insert id="updateMemberPoint" parameterType="orderList">
 		insert into point_status values
@@ -22,7 +22,7 @@
 	</select>
 	
 	<select id="productStatus" resultType="map">
-		select * from product p left join product_status s on p.product_no=s.product_no  where p.product_no = #{shopNo}
+		select * from product p left join product_status s on p.product_no=s.product_no  where p.product_no = #{productNo}
 	</select>
 	
 	<delete id="deleteProduct">

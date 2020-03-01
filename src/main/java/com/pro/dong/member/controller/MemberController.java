@@ -181,6 +181,14 @@ public class MemberController {
 		resultMap.put("chargePoint", chargePoint);
 		return resultMap;
 	}
+	@RequestMapping("/kingOfDongnae.do")
+	public String kingOfDongnae() {
+		return "member/kingOfDongnae";
+	}
+	@RequestMapping("/hallOfFame.do")
+	public String hallOfFame() {
+		return "member/hallOfFame";
+	}
 //==========================민호 끝
 	
 // 하진 시작 ==========================

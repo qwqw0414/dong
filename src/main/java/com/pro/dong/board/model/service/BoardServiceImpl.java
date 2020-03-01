@@ -81,14 +81,22 @@ public class BoardServiceImpl implements BoardService {
 	public Board selectOneBoard(int boardNo) {
 		return bd.selectOneBoard(boardNo);
 	}
+	/*@Override
+	public Board selectOneBoard(Map<String, String> param) {
+		return bd.selectOneBoard(param);
+	}*/
 	@Override
 	public int boardInCount(int boardNo) {
 		return bd.boardInCount(boardNo);
 	}
 	@Override
-	public List<Attachment> selectAttachmentList(int boardNo) {
+	public Attachment selectAttachmentList(int boardNo) {
 		return bd.selectAttachmentList(boardNo);
 	}
+	/*@Override
+	public List<Attachment> selectAttachmentList(Map<String, String> param) {
+		return bd.selectAttachmentList(param);
+	}*/
 	@Override
 	public int deleteBoard(int boardNo) {
 		return bd.deleteBoard(boardNo);
@@ -153,4 +161,5 @@ public class BoardServiceImpl implements BoardService {
 	}
 	//========================== 현규 끝
 
+	
 }

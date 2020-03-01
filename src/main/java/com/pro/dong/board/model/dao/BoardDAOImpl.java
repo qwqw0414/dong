@@ -77,14 +77,23 @@ public class BoardDAOImpl implements BoardDAO {
 	public Board selectOneBoard(int boardNo) {
 		return sst.selectOne("board.selectOneBoard", boardNo);
 	}
+	/*@Override
+	public Board selectOneBoard(Map<String, String> param) {
+		return sst.selectOne("board.selectOneBoard", param);
+	}*/
 	@Override
 	public int boardInCount(int boardNo) {
 		return sst.update("board.boardInCount", boardNo);
 	}
 	@Override
-	public List<Attachment> selectAttachmentList(int boardNo) {
-		return sst.selectList("board.selectAttachmentList", boardNo);
+	public Attachment selectAttachmentList(int boardNo) {
+		return sst.selectOne("board.selectAttachmentList", boardNo);
 	}
+	/*@Override
+	public List<Attachment> selectAttachmentList(Map<String, String> param) {
+		return sst.selectList("board.selectAttachmentList", param);
+	}*/
+	
 	@Override
 	public int deleteBoard(int boardNo) {
 		return sst.delete("board.deleteBoard", boardNo);
@@ -149,5 +158,6 @@ public class BoardDAOImpl implements BoardDAO {
 		return sst.delete("board.deleteLevel2",commentNo);
 	}
 	//========================== 현규 끝
+
 
 }
