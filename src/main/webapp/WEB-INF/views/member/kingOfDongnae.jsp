@@ -42,7 +42,7 @@
 </div>
 <div class="float-right" id="kingOfDongnae-menu">
 
-<input type="checkbox" name="neverShow" id="neverShow" />
+<input type="checkbox" name="neverShow" id="neverShow"/>
 <label for="neverShow">다시 보지 않기</label>
 <button class="btn btn-secondary" id="btn-close">닫기</button>
 </div>
@@ -102,8 +102,26 @@ $(()=>{
     $("#btn-close").on('click',function(){
     	close();
     });
-    
  
 });
+//다시보지않음	
+$(function() {
+	   var closeToday = $('#neverShow');
+
+	   closeToday.click(function() {
+	      setCookie( "popup", "end" , 1);
+	      // 하루동안이므로 1을 설정
+	      window.close();
+	      // 현재 열려있는 팝업은 닫으면서 쿠키값을 저장
+	   });
+	});
+function setCookie(cname, value, expire) {
+	   // 오늘 날짜를 변수에 저장
+	   var todayValue = new Date();
+
+	   todayValue.setDate(todayValue.getDate() + expire);
+	   document.cookie = cname + "=" + encodeURI(value) + "; expires=" + todayValue.toGMTString() + "; path=/;";
+	   
+	}
 
 </script>
