@@ -5,18 +5,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
-
-<style>
-    #boardWrite-contant{
-        width: 600px;
-        height: 600px;
-        margin: 0 auto;
-        padding-top: 100px;
-    }
-    .col-auto{
-        padding: 0px;
-    }
-</style>
 <%
 	Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
 	List<BoardCategory> list = new ArrayList<>();
@@ -76,7 +64,7 @@ $(function(){
 		  enctype="multipart/form-data"
 		  onsubmit="return validate();">
         <div id="boardWrite-contant">
-                <div class="col-auto">
+                <div class="boardWrite-pad col-auto">
                         <label class="sr-only" for="inlineFormInputGroup">Username</label>
                         <div class="input-group mb-2">
                           <div class="input-group-prepend">
@@ -85,7 +73,7 @@ $(function(){
                           <input type="text" class="form-control" id="boardTitle" name="boardTitle" placeholder="제목을 입력하세요" required>
                         </div>
                       </div>
-                <div class="col-auto">
+                <div class="boardWrite-pad col-auto">
                     <label class="sr-only" for="inlineFormInputGroup">Username</label>
                     <div class="input-group mb-2">
                         <div class="input-group-prepend">

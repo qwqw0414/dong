@@ -41,6 +41,7 @@
 	min-height: 40px;
 	margin-left: 10px;
 	margin-right: 5px;
+	padding:5px;
 }
 #button-addon2{
     height: 38px;
@@ -199,6 +200,12 @@ header #categoryDiv #category-list-end{border-left: rgb(255, 30, 60) 1px solid;}
 #myProductManageDiv a:link {color: white; text-decoration: none;}
 #myProductManageDiv a:visited {color: white; text-decoration: none;}
 #myProductManageDiv a:hover {color: white; text-decoration: underline;}
+/*상품상세보기*/
+#productDivHajin .status{display:inline; position: relative; color: rgb(153, 153, 153);}
+#productDivHajin .ss{display:inline; margin-left: 11px;}
+#productDivHajin .sss{display:inline;  margin-left: 20px;}
+#productDivHajin .ssss{display:inline; color: rgb(110, 71, 238);  margin-left: 34px;}
+#productDivHajin #locationPNG{margin-bottom: 4px;}
 /* ========================== 하진 끝 */
 	
 /* 근호 시작 ========================== */
@@ -208,6 +215,15 @@ header #categoryDiv #category-list-end{border-left: rgb(255, 30, 60) 1px solid;}
 #memberLogin-content #password {width: 450px;margin: 0 auto;}
 #memberLogin-content .custom-checkbox {position: relative; left: -150px; top: 10px;}
 #login-bottom a{text-decoration: none;color: gray;}
+#boardWrite-contanier #boardWrite-contant{
+        width: 900px;
+        height: 600px;
+        margin: 0 auto;
+        padding-top: 100px;
+}
+.boardWrite-pad{
+        padding: 0px;
+}
 /* ========================== 근호 끝 */
 	
 /* 지은 시작 ========================== */

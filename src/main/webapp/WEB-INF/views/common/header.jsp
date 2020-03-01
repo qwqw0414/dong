@@ -318,13 +318,37 @@ var _error = "";
 <c:if test="${memberLoggedIn != null}">
 <script>
 popupDongnaeKing();
+//다시보지않음
+function getCookie(name) {
+	   var cookieName = name + "=";
+	   var x = 0;
+	   while ( x <= document.cookie.length ) {
+	      var y = (x+cookieName.length);
+	      if ( document.cookie.substring( x, y ) == cookieName) {
+	         if ((lastChrCookie=document.cookie.indexOf(";", y)) == -1)
+	            lastChrCookie = document.cookie.length;
+	         return decodeURI(document.cookie.substring(y, lastChrCookie));
+	      }
+	      x = document.cookie.indexOf(" ", x ) + 1;
+	      if ( x == 0 )
+	         break;
+	      }
+	   return "";
+	}
 //동네왕 팝업
 function popupDongnaeKing(){
 	var url = "${pageContext.request.contextPath}/member/kingOfDongnae.do";
 	var name = "이달의 동네왕";
 	var option = "width = 1200, height = 500, top = 100, left = 200";
+	var result = getCookie('popup');
+	if (result == 'end') {
+		   return false;
+		}
+	else {
 	window.open(url, name, option);
+	}
 }
+
 </script>
 </c:if>
 
