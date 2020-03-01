@@ -215,6 +215,15 @@ header #categoryDiv #category-list-end{border-left: rgb(255, 30, 60) 1px solid;}
 #memberLogin-content #password {width: 450px;margin: 0 auto;}
 #memberLogin-content .custom-checkbox {position: relative; left: -150px; top: 10px;}
 #login-bottom a{text-decoration: none;color: gray;}
+#boardWrite-contanier #boardWrite-contant{
+        width: 900px;
+        height: 600px;
+        margin: 0 auto;
+        padding-top: 100px;
+}
+.boardWrite-pad{
+        padding: 0px;
+}
 /* ========================== 근호 끝 */
 	
 /* 지은 시작 ========================== */
