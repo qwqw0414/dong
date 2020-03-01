@@ -46,12 +46,6 @@
 #priceSpan{
 	font-size: 35px;
 }
-.status{display:inline; position: relative; color: rgb(153, 153, 153);}
-.ss{display:inline; margin-left: 11px;}
-.sss{display:inline;  margin-left: 20px;}
-.ssss{display:inline; color: rgb(110, 71, 238);  margin-left: 34px;}
-#locationPNG{margin-bottom: 4px;}
-
 </style>
 <%
  	Map<String,Object> map = (Map<String,Object>)request.getAttribute("map");
@@ -101,7 +95,7 @@ $(()=>{
 			productNo:productNo
 		},
 		success:data=>{
-			
+			console.log("상품성공입니다.");
 			var btn = $("#purchaseByPoint");
 			console.log(data.list);
 			
@@ -128,7 +122,7 @@ $(()=>{
 </script>
 <!--하진끝-->
 <div class="card mb-3 border-light" id="productView">
-    <div class="row">
+    <div class="row" id="productDivHajin">
 
 					<div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="carousel" style="width: 320px; height: 320px;">
 					<div class="carousel-inner">

@@ -503,9 +503,7 @@ if ( rsp.success ) {
 
 
 <style>
-@import
-	url('https://fonts.googleapis.com/css?family=Single+Day&display=swap&subset=korean')
-	;
+
 
 #memberView .byement {
 	font-size: 10px;
@@ -517,7 +515,7 @@ if ( rsp.success ) {
 	font-size: 10px;
 }
 
-#memberView .mypage_btn_more {
+#memberView .mypage_btn_more {	
 	margin-left: 380px;
 }
 
