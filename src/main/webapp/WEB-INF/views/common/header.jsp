@@ -166,8 +166,6 @@ $(()=>{
 			<a style="color:black; text-decoration: none;" href="${pageContext.request.contextPath}/member/hallOfFame.do"><img src="${pageContext.request.contextPath}/resources/images/king.png" id="kingImg"/>동네왕</a>
 		</div>
 	</div>
-
-
 </header>
 
 <script>
