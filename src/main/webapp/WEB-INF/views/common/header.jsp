@@ -147,14 +147,15 @@ $(()=>{
 	
 		<!--검색창-->
 		<div class="input-group col-md-6">
-  			<input type="text" class="form-control" placeholder="상품명, 지역명, @상점명 입력" id="search-bar" aria-label="Recipient's username" aria-describedby="button-addon2">
+			<input type="text" class="form-control" placeholder="상품명, 지역명, @상점명 입력" id="search-bar" aria-label="Recipient's username" aria-describedby="button-addon2" autocomplete="off">
+			<div id="searchList" style="display: none;"></div>  
   			<div class="input-group-append">
     			<button class="btn btn-outline-secondary" type="button" id="btn-search">
     				<img id="bogiImg" src="${pageContext.request.contextPath}/resources/images/bogi.png"/>
     			</button>
  			</div>
 		</div>
-		
+
 		<!--메뉴-->
 		<div class="col-md text-left" id="header-iconMenu">
 			<a style="color:black; text-decoration: none;" href="${pageContext.request.contextPath}/product/productReg.do">
@@ -170,6 +171,166 @@ $(()=>{
 </header>
 
 <script>
+// 검색어 자동 완성
+$(()=>{
+	var $searchBar = $("header #search-bar");
+	var $searchList = $("header #searchList");
+	var test = "";
+
+	$searchBar.focusout(()=>{
+        $searchList.hide();
+    });
+
+	$searchBar.keydown((e)=>{
+        if(e.key == "ArrowDown" || e.key == "ArrowUp"){
+            e.preventDefault();
+        }
+    });
+
+	$searchBar.keyup((e)=>{
+        var keyword = $(e.target).val();
+        if(keyword == test) return;
+        test = keyword;
+
+        if(e.key == "ArrowDown" || e.key == "ArrowUp" || e.Key == "Enter"){
+            e.preventDefault();
+            return;
+        }
+
+        if($searchBar.val().replace("@","").length == 0){
+			$searchList.hide();
+			return;
+		}
+        $.ajax({
+            url: "${pageContext.request.contextPath}/product/autocomplete",
+            data: {
+                keyword:keyword,
+            },
+            dataType: "json",
+            success: data =>{
+                let html = "<ul>";
+
+                if(data !== null && data.length != 0){
+
+                    data.forEach(elmt => {
+                        html += "<li>";
+
+						if(keyword.substring(0,1)=="@"){
+							html += "<input type='hidden' value='@" + elmt.TITLE + "'>";
+                        	html += textMark(elmt.TITLE,keyword.replace("@","")); 
+						}
+						else{
+							html += "<input type='hidden' value='" + elmt.TITLE + "'>";
+							html += textMark(elmt.TITLE,keyword); 
+						}
+                        html += "</li>";
+                    });
+                    
+                    html += "</ul>";
+                    $searchList.html(html).show().scrollTop(0);
+                }
+            },
+            error: (a,b,c)=>{
+                console.log(a,b,c);
+            },
+            complete: ()=>{
+                var $li = $searchList.find("li");
+
+                $searchList.find("li").mousedown((e)=>{
+                    var $target = $(e.target).children("input");
+                    search($target.val());
+                });
+
+                $li.mouseenter((e)=>{
+                    $li.removeClass("sel");
+                    $(e.target).addClass("sel");
+                })
+            }
+        });
+    });
+
+	function textMark(text, mark) {
+		return replaceAll(text, mark, "<span class='text-danger'>" + mark + "</span>");
+	}
+	function replaceAll(str, searchStr, replaceStr) {
+		return str.split(searchStr).join(replaceStr);
+	}
+	$searchBar.keydown((e) => {
+
+		var $list = $("#searchList li");
+		var $sel = $("#searchList .sel");
+
+		if (e.key == 'ArrowUp') {
+
+			if ($sel.length == 0) {
+				$list.first().addClass("sel");
+			}
+			else if ($list.eq(0).hasClass("sel")) {
+				return;
+			}
+			else {
+				$sel.removeClass("sel").prev().addClass("sel");
+
+				try {
+					for (var i = 0; i < $list.length; i++) {
+						if ($list.eq(i).hasClass("sel") && $list.eq(i).position().top > -1) {
+							var height = $list.eq(0).position().top;
+							var margin = $list.eq(0).position().top - $list.eq(1).position().top;
+							$searchList.scrollTop($list.eq(i).position().top - height + margin * 4);
+						}
+					}
+				} catch (e) {
+
+				}
+			}
+		}
+		else if (e.key == 'ArrowDown') {
+
+			if ($sel.length == 0) {
+				$list.first().addClass("sel");
+			}
+			else if ($list.last().hasClass("sel")) {
+				return;
+			}
+			else {
+				$sel.removeClass("sel").next().addClass("sel");
+
+				try {
+					for (var i = 0; i < $list.length; i++) {
+						if ($list.eq(i).hasClass("sel") && $list.eq(i).position().top > -1) {
+							var height = $list.eq(9).position().top;
+							var margin = $list.eq(0).position().top - $list.eq(1).position().top;
+							$searchList.scrollTop($list.eq(i).position().top - height - margin * 4);
+						}
+					}
+				} catch (e) {
+
+				}
+			}
+		}
+	}).keyup((e) => {
+		var $sel = $("header #searchList .sel");
+		if (e.keyCode == 13 && $sel.length != 0) {
+			search($sel.children("input").val());
+			$searchList.hide();
+			$searchBar.val($sel.children("input").val())
+		}
+	});
+
+	function search(keyword){
+		if(keyword.length == 0) return;
+		
+		var reg = /^@/;		
+		if(reg.test(keyword)){
+			keyword = keyword.substring(1);
+			location.href = "${pageContext.request.contextPath}/shop/shopList.do?keyword="+keyword;
+		}
+		else{
+			location.href = "${pageContext.request.contextPath}/product/productList.do?keyword="+keyword+"&categoryId=";
+		}
+
+	}
+});
 $(()=>{
 var $preList = $("header #categoryDiv #category-list-pre");
 var $endList = $("header #categoryDiv #category-list-end");
