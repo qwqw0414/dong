@@ -209,7 +209,7 @@ public class MemberController {
 		String msg = "";
 		String loc = "/";
 		
-		try {
+		
 
 			Member m = ms.selectDeleteOne(memberId);
 
@@ -234,15 +234,8 @@ public class MemberController {
 				mav.setViewName("common/msg");
 			}
 			
-		} catch (Exception e) {
-			log.debug(e.getMessage(),e);
-			msg = "회원탈퇴에 실패하였습니다.";
-			loc = "/common/error.do";
-			mav.addObject("msg", msg);
-			mav.addObject("loc", loc);
-
-			mav.setViewName("common/msg");
-		}
+		
+		
 		return mav;
 	}
 	
