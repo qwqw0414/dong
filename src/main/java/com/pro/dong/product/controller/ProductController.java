@@ -111,6 +111,37 @@ public class ProductController {
 	//========================== 지은 끝
 		
 	// 예찬 시작 ==========================
+	
+	@ResponseBody
+	@RequestMapping(value="/autocomplete", produces = "text/plain;charset=UTF-8")
+	public String autocomplete(HttpSession session, String keyword) {
+		
+		Member member = (Member) session.getAttribute("memberLoggedIn");
+		
+		String sido = member.getSido();
+		String sigungu = member.getSigungu();
+		String dong = member.getDong();
+		
+		Map<String, String> param = new HashMap<>();
+		param.put("sido", sido);
+		param.put("sigungu", sigungu);
+		param.put("dong", dong);
+		param.put("keyword", keyword);
+
+		List<Map<String, String>> list = null;
+		
+		if("@".contains(keyword.substring(0, 1))) {
+			param.put("keyword", keyword.substring(1));
+			list = ps.autocomplete(param,0);
+		}
+		else{
+			list = ps.autocomplete(param,1);
+		}
+		
+		
+		return gson.toJson(list);
+	}
+	
 	@ResponseBody
 	@RequestMapping("/deleteFile")
 	public String deleteFile(String fileName, HttpServletRequest request) {

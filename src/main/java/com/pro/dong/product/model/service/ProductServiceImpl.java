@@ -149,6 +149,18 @@ public class ProductServiceImpl implements ProductService{
 		
 		return result;
 	}
+	@Override
+	public List<Map<String, String>> autocomplete(Map<String, String> param, int type) {
+		
+		List<Map<String, String>> list = null;
+		
+		if(type == 1)
+			list = pd.autocomplete(param);
+		else
+			list = pd.autocompleteShop(param);
+		
+		return list;
+	}
 	//========================== 예찬 끝
 
 	//주영 시작 ==========================

@@ -52,6 +52,8 @@ public interface ProductDAO {
 	int updateAttachment(Map<String, String> param);
 	int deleteAttachment(Map<String, String> param);
 	int deleteAttachment(String fileName);
+	List<Map<String, String>> autocomplete(Map<String, String> param);
+	List<Map<String, String>> autocompleteShop(Map<String, String> param);
 	//========================== 예찬 끝
 
 	//주영 시작 ==========================

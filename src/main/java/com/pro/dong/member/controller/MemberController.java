@@ -66,6 +66,7 @@ public class MemberController {
 		Map<String, String> map = new HashMap<>();
 		map.put("pointAmount", pointAmount+"");
 		map.put("memberId", memberId);
+		
 		int result = ms.updatePoint(map);
 		log.debug("result",result);
 		Map<String, String> memberInfo = null;
@@ -204,32 +205,36 @@ public class MemberController {
 									@RequestParam("password") String password,
 									ModelAndView mav,
 									SessionStatus sessionStatus) {
-	
+
 		String msg = "";
 		String loc = "/";
-	
-		Member m = ms.selectDeleteOne(memberId);
+		
+		
 
-		if(m != null) {
-			
-			//비밀번호에 따른 분기			사용자가 입력	db에 있는 비번
-			if(passwordEncoder.matches(password, m.getPassword())) {
-				int result = ms.byeMember(memberId);{
-					msg="회원 탈퇴 성공";
-					if(!sessionStatus.isComplete()) {
-						sessionStatus.setComplete();
+			Member m = ms.selectDeleteOne(memberId);
+
+			if (m != null) {
+
+				// 비밀번호에 따른 분기 사용자가 입력 db에 있는 비번
+				if (passwordEncoder.matches(password, m.getPassword())) {
+					int result = ms.byeMember(memberId);
+					{
+						msg = "회원 탈퇴 성공";
+						if (!sessionStatus.isComplete()) {
+							sessionStatus.setComplete();
+						}
 					}
+				} else {
+					msg = "비밀번호가 틀렸습니다.";
+					loc = "/member/memberView.do";
 				}
+				mav.addObject("msg", msg);
+				mav.addObject("loc", loc);
+
+				mav.setViewName("common/msg");
 			}
-			else {
-				msg="비밀번호가 틀렸습니다.";
-				loc="/member/memberView.do";
-			}
-			mav.addObject("msg", msg);
-			mav.addObject("loc", loc);
 			
-			mav.setViewName("common/msg");
-		}
+		
 		
 		return mav;
 	}

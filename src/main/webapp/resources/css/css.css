@@ -399,7 +399,33 @@ url('data:image/gif;base64,R0lGODlhAQABAPAAAP///////yH5BAAAAAAALAAAAAABAAEAAAICR
 /* ========================== 지은 끝 */
 	
 /* 예찬 시작 ========================== */
-	
+
+header #searchList{
+    position: absolute; 
+    top: 40px; 
+    background-color: rgba(255, 255, 255, 1);
+    border: gainsboro 1px solid;
+    box-shadow: 0 0 2px gainsboro;
+    border-radius: 5px;
+    width: 570px;
+    max-height: 300px;
+    text-align: left;
+	overflow-y: scroll;
+	z-index: 200;
+}
+header #searchList ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+header #searchList li{
+    padding: 3px 0 3px 10px;
+    cursor: pointer;
+}
+header #searchList li.sel{
+    background-color: gainsboro;
+}
+
 /* ========================== 예찬 끝 */
 	
 /* 주영 시작 ========================== */
