@@ -7,30 +7,10 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="" name="pageTitle"></jsp:param>
 </jsp:include>
-<style>
-#productReportDiv{
-	width: 1100px;
-}
-#reportImageDiv{
-	text-align: center;
-}
-#reportImage{
-	width: 400px;
-	height: 250px;
-	margin-bottom: 10px;
-}
-#reportContentDiv{
-	height: 170px;
-}
-#statusBtn{
-	outline: none;
-	border: 1px solid black;
-	background: white;
-}
-</style>
 
+<div id="productReportTotalDiv">
 <h1 style='display: inline-block;'>상품 신고 상세보기</h1>
-<button onclick="location.href ='${pageContext.request.contextPath}/admin/productReportList.do'">뒤로가기</button>
+<button id="backBtn" onclick="location.href ='${pageContext.request.contextPath}/admin/productReportList.do'">뒤로가기</button>
 <div id="productReportDiv">
 	<hr />
 	<span>
@@ -69,7 +49,7 @@
 	</div>
 	<hr />
 </div>
-
+</div>
 <script>
 $("#statusBtn").click(updateReportStatus);
 function updateReportStatus() {
