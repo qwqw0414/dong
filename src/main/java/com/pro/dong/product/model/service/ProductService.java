@@ -48,6 +48,7 @@ public interface ProductService {
 	List<Map<String, String>> selectAd(Member member);
 	int filesUpdate(Map<String, String> param, String type);
 	int deleteAttachment(String fileName);
+	List<Map<String, String>> autocomplete(Map<String, String> param, int type);
 	//========================== 예찬 끝
 
 	//주영 시작 ==========================

@@ -42,6 +42,14 @@
 	<!-- ==========================  지은 끝 -->
 	
 	<!-- 예찬 시작 ========================== -->
+	<select id="autocomplete" parameterType="map" resultType="map">
+		select title from product where title like '%${keyword}%' and sido = #{sido} and sigungu = #{sigungu} and dong =#{dong}
+	</select>
+	
+	<select id="autocompleteShop" parameterType="map" resultType="map">
+		select shop_name TITLE from shop where shop_name like '%${keyword}%'
+	</select>
+	
 	<insert id="insertAttachmentMap" parameterType="map">
 		insert into product_attachment values(seq_product_attachment.nextval, #{productNo}, #{photo}, #{thumbnail})
 	</insert>

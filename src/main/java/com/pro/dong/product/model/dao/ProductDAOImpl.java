@@ -135,6 +135,14 @@ public class ProductDAOImpl implements ProductDAO{
 	public int deleteAttachment(String fileName) {
 		return sst.delete("product.deleteAttachment1", fileName);
 	}
+	@Override
+	public List<Map<String, String>> autocomplete(Map<String, String> param) {
+		return sst.selectList("product.autocomplete", param);
+	}
+	@Override
+	public List<Map<String, String>> autocompleteShop(Map<String, String> param) {
+		return sst.selectList("product.autocompleteShop", param);
+	}
 	//========================== 예찬 끝
 
 	//주영 시작 ==========================
