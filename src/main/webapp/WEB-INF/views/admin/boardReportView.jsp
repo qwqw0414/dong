@@ -21,14 +21,6 @@
 					<th>작성일</th>
 					<th>처리상태</th>
 				</tr>
-				<!-- <tr>
-					<th>201</th>
-					<th>A001</th>
-					<th>larva223</th>
-					<th>신하진병신</th>
-					<th>2020/01/01</th>
-					<th><button>처리완료</button></th>
-				</tr> -->
 				</table>
 			</div>
 		</div>

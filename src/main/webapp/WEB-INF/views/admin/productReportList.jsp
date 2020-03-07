@@ -8,6 +8,7 @@
 	<jsp:param value="" name="pageTitle"></jsp:param>
 </jsp:include>
 
+
 <h1 style='display: inline-block;'>상품 신고 관리</h1>
 
 <div class="input-group mb-3">
