@@ -230,7 +230,6 @@ public class BoardController {
 		//List<Attachment> attachmentList = bs.selectAttachmentList(boardNo);
 		int readCount = bs.boardInCount(boardNo);
 		
-		
 		Map<String, String> param = new HashMap<>();
 		param.put("boardNo", boardNo+"");
 		param.put("memberId", memberId);
@@ -278,41 +277,48 @@ public class BoardController {
 		return mav;
 	}
 	
-	@RequestMapping("/boardUpdateEnd")
+	@RequestMapping("/deleteFile")
 	@ResponseBody
-	public String boardUpdateEnd(Board board,HttpServletRequest request) {
-		int result = bs.boardUpdate(board);
-		//log.debug("boardUpdate@board", board);
-		String msg = "";
-		String loc = "/";
-		if(result>0) {
-			//log.debug("게시글 수정성공!");
-			msg = "게시글 수정이 완료되었습니다.";
-			loc = "/board/boardList.do";
-		}else {
-			//log.debug("게시글 수정실패!");
-			msg = "게시글 수정에 실패하였습니다.";
+	public String deleteFile(String fileName, HttpServletRequest request) {
+		
+		int result = bs.deleteAttachment(fileName);
+		
+//		파일제거
+		if(result > 0) {
+			String saveDirectory = request.getSession().getServletContext().getRealPath("/resources/upload/product/");
+			
+			File file = new File(saveDirectory + fileName); 
+			file.delete();
 		}
 		
-		return result+"";
+		return String.valueOf(result);
 	}
 	
-	public Map<String,Object> boardUpdateEnd(Board board, @RequestParam("boardNo") int boardNo,@RequestParam(value="boardCategory") String boardCategory,
-			  @RequestParam(value="upFile", required=false) MultipartFile[] upFile, HttpServletRequest request){
-		Map<String, Object> map = new HashMap<>();
+	@RequestMapping("/updateFile")
+	@ResponseBody
+	public String updateFile(Board board, Attachment a, MultipartFile files, String oldFileName, String boardNo,HttpServletRequest request,@RequestParam(value="upFile", required=false) MultipartFile[] upFile) {
 		String saveDirectory = request.getServletContext().getRealPath("/resources/upload/board");
-		List<BoardCategory> boardCategoryList = bs.selectBoardCategory();
-		map.put("boardCategoryList", boardCategoryList);
 		List<Attachment> attachList = new ArrayList<>();
+		String renamedFileName = null;
+		log.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@renamedFileName={}", renamedFileName);
+		Map<String, String> param = new HashMap<>();
+		param.put("photo", renamedFileName);
+		param.put("boardNo", String.valueOf(boardNo));
+		param.put("oldName", oldFileName);
 		
-		log.debug("board={}", board);
-		board.setCategoryId(boardCategory);
+		Map<String, String> map = new HashMap<>();
+		//map.put("result", String.valueOf(result));
+		map.put("newName", renamedFileName);
+		
+		//int result = bs.updateAttachment(attachment,attachList,oldFileName,boardNo);
+		int result = bs.insertAttachment(a);
+		//int result = bs.updateAttachment(attachment,boardNo);
 		//동적으로 directory 생성
 		File dir = new File(saveDirectory);
 		if(dir.exists() == false)
-			dir.mkdir();
-		
-		//MultipartFile객체 파일업로드 처리
+		dir.mkdir();
+				
+				//MultipartFile객체 파일업로드 처리
 				for(MultipartFile f : upFile) {
 					if(!f.isEmpty()) {
 						//파일명 재생성
@@ -320,29 +326,7 @@ public class BoardController {
 						String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
 						SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
 						int rndNum = (int)(Math.random()*1000);
-						String renamedFileName = sdf.format(new Date())+"_"+rndNum+ext;
-						
-				         ///기존첨부파일이 없는 경우
-				         ///기존첨부파일 정보: 파일이 없는 경우 ""값이 넘어온다.
-				         //String oldOriginalFileName = f.get
-				         //String oldRenamedFileName = f.getParameter("oldRenamedFileName");
-						
-						
-			            ///신규첨부파일 O, 기존첨부파일 삭제
-			            if(f != null) {
-			               File delFile = new File(saveDirectory,originalFileName);
-			               boolean result = delFile.delete();
-			            }
-			            /*///신규첨부파일 X, 기존첨부파일 삭제
-			            else if(f.get!=null) {
-			               File delFile = new File(saveDirectory,originalFileName);
-			               boolean result = delFile.delete();
-			            }*/
-			            ///신규첨부파일 없는 경우: 기존파일 유지
-			            else {
-			               originalFileName = originalFileName;
-			               renamedFileName = renamedFileName;
-			            }
+						renamedFileName = sdf.format(new Date())+"_"+rndNum+ext;
 						
 						//서버컴퓨터에 파일저장
 						try {
@@ -361,19 +345,29 @@ public class BoardController {
 					}
 				}
 		
-		return map;
+		return gson.toJson(result)+"";
 	}
 	
-	/*public Map<String,Object> boardUpdateEnd(Board board, @RequestParam(value="boardCategory") String boardCategory,
-			@RequestParam(value="upFile", required=false) MultipartFile[] upFile, HttpServletRequest request){
-		Map<String, Object> map = new HashMap<>();
-		List<BoardCategory> boardCategoryList = bs.selectBoardCategory();
-		mav.addObject("boardCategoryList",boardCategoryList);
-		List<Map<String,String>> category = bs.selectBoardCategory(boardNo);
+	@RequestMapping("/boardUpdateEnd")
+	@ResponseBody
+	public String boardUpdateEnd(Board board,HttpServletRequest request,@RequestParam(value="upFile", required=false) MultipartFile[] upFile) {
 		
-		return map;
-	}*/
-	
+		int result = bs.boardUpdate(board);
+		String msg = "";
+		String loc = "/";
+		
+		if(result>0) {
+			msg = "게시글 수정이 완료되었습니다.";
+			loc = "/board/boardList.do";
+		
+		
+		}else {
+			msg = "게시글 수정에 실패하였습니다.";
+		}
+		
+		return result+"";
+	}
+		
 	@RequestMapping("/boardDelete")
 	@ResponseBody
 	public String boardDelete(@RequestParam("boardNo") int boardNo) {
@@ -393,25 +387,6 @@ public class BoardController {
 
 		return result+"";
 	}
-	
-/*	@RequestMapping("/boardLike")
-	@ResponseBody
-	public String insertBoardReputation (@RequestParam("boardNo") int boardNo, HttpSession session,HttpServletRequest request){
-		
-		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
-		String memberId = memberLoggedIn.getMemberId();
-		log.debug("memberId={}",memberId);
-		log.debug("boardNo={}",boardNo);
-		Map<String,String> map = new HashMap<>();
-		map.put("memberId", memberId);
-		map.put("boardNo", boardNo+"");
-		
-		int result = bs.insertBoardReputation(map);
-		 
-		log.debug(result+"");
-		
-		return result+"";
-	}*/
 	
 	@RequestMapping("/boardLikeCount")
 	@ResponseBody
