@@ -61,9 +61,21 @@ $(()=>{
 		    	let header = "<tr><th>No</th><th>카테고리</th><th>작성자</th><th>제목</th><th>작성일</th><th>조회수</th><th>누적신고수</th></tr>";
 		    	let	html = "";
 		    	for(var i=0; i<data.list.length;i++){
-		    		html += "<tr>";
-		    		html += "<td><a href='${pageContext.request.contextPath}/board/boardView.do?boardNo="+data.list[i].BOARD_NO+"'>"+data.list[i].BOARD_NO+"</a></td>";
-		    		html += "<td>"+data.list[i].CATEGORY_ID+"</td>";
+		    		html += "<tr style='cursor:pointer;' class='boardListATag'>";
+		    		html += "<input class='hiddenNo' type='hidden' value='"+data.list[i].BOARD_NO+"'>";
+		    		html += "<td>"+data.list[i].BOARD_NO+"</td>";
+		    		if(data.list[i].CATEGORY_ID == 'A01'){
+		    			html += "<td>자유</td>";
+		    		}
+		    		else if(data.list[i].CATEGORY_ID == 'A02'){
+		    			html += "<td>홍보</td>";
+		    		}
+		    		else if(data.list[i].CATEGORY_ID == 'A03'){
+		    			html += "<td>공지</td>";
+		    		}
+		    		else if(data.list[i].CATEGORY_ID == 'A04'){
+		    			html += "<td>정보</td>";
+		    		}
 		    		html += "<td>"+data.list[i].MEMBER_ID+"</td>";
 		    		html += "<td>"+data.list[i].BOARD_TITLE+"</td>";
 		    		html += "<td>"+life(data.list[i].WRITE_DATE)+"</td>";
@@ -129,8 +141,9 @@ $(()=>{
 		    	$table.html("");
 		    	var header = "<tr><th>No</th><th>카테고리</th><th>작성자</th><th>제목</th><th>작성일</th><th>조회수</th><th>누적신고수</th></tr>";
 		    	for(var i=0; i<data.list.length;i++){
-		    		html += "<tr>";
-		    		html += "<td><a href='${pageContext.request.contextPath}/board/boardView.do?boardNo="+data.list[i].BOARD_NO+"'>"+data.list[i].BOARD_NO+"</a></td>";
+		    		html += "<tr style='cursor:pointer;' class='boardListATag'>";
+		    		html += "<input class='hiddenNo' type='hidden' value='"+data.list[i].BOARD_NO+"'>";
+		    		html += "<td>"+data.list[i].BOARD_NO+"</td>";
 		    		html += "<td>"+data.list[i].CATEGORY_ID+"</td>";
 		    		html += "<td>"+data.list[i].MEMBER_ID+"</td>";
 		    		html += "<td>"+data.list[i].BOARD_TITLE+"</td>";
@@ -245,6 +258,13 @@ $(()=>{
 		}
 	});//end of ajax
 }//end of loadDongList
+
+$(document).on("click", ".boardListATag", function(e){
+	var no = $(e.target).siblings("[type=hidden]").val();
+	console.log("no=");
+	console.log(no);
+	location.href = "${pageContext.request.contextPath}/board/boardView.do?boardNo="+no;
+});
 
 
 }); //end of onload
