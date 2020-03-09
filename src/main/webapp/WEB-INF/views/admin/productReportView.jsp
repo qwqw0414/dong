@@ -9,14 +9,13 @@
 </jsp:include>
 
 <div id="productReportTotalDiv">
-<h1 style='display: inline-block;'>상품 신고 상세보기</h1>
-<button id="backBtn" onclick="location.href ='${pageContext.request.contextPath}/admin/productReportList.do'">뒤로가기</button>
+<h1 style='display: inline-block;'>상품 신고 상세보기</h1><button id="goProductView">상품보기</button>
 <div id="productReportDiv">
 	<hr />
 	<span>
 		<strong>신고접수번호</strong> : ${map.REPORT_NO} 
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-		<strong>접수일자</strong> : ${map.REPORT_DATE}
+		<strong>접수일자</strong> : <fmt:formatDate value="${map.REPORT_DATE}" pattern="yyyy-MM-dd"/>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<strong>작성자</strong> : ${map.MEMBER_ID}
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -51,6 +50,12 @@
 </div>
 </div>
 <script>
+$("#goProductView").on("click", function(){
+	
+	var productNo = ${map.PRODUCT_NO};
+	location.href = "${pageContext.request.contextPath}/product/productView.do?productNo="+productNo;
+});
+
 $("#statusBtn").click(updateReportStatus);
 function updateReportStatus() {
 	var reportNo = ${map.REPORT_NO};
@@ -69,6 +74,19 @@ function updateReportStatus() {
 			console.log("ajax 요청 실패!");
 		}
 	});
+}
+
+function life(date){
+	var preDate = new Date(date);
+
+	var year = preDate.getFullYear();
+	var month = preDate.getMonth()+1;
+	var date = preDate.getDate();
+
+	if(month < 10) month = "0"+month;
+	if(date < 10) date = "0"+date;
+
+	return year+"/"+month+"/"+date;
 }
 </script>
 
