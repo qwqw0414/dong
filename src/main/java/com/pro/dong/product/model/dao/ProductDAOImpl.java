@@ -100,7 +100,7 @@ public class ProductDAOImpl implements ProductDAO{
 	}
 	@Override
 	public int countLike(Like like) {
-		return sst.selectOne("product.countLike", like);
+		return sst.selectOne("product.countLike2", like);
 	}
 	@Override
 	public int insertLike(Like like) {
