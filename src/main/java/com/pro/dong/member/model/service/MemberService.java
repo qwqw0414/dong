@@ -23,6 +23,7 @@ public interface MemberService {
 	int checkOrderStatus(int orderNo);
 	int updateProductStatus(int productNo);
 	List<Map<String, String>> selectMemberIdByShopName(Map<String, String> param);
+	long selectPriceByproductNo(int productNo);
 	//==========================  민호 끝
 	
 	// 하진 시작 ==========================

@@ -75,6 +75,10 @@ public class MemberDAOImpl implements MemberDAO{
 	public List<Map<String, String>> selectMemberIdByShopName(Map<String, String> param) {
 		return sst.selectList("member.selectMemberIdByShopName", param);
 	}
+	@Override
+	public long selectPriceByproductNo(int productNo) {
+		return sst.selectOne("member.selectPriceByproductNo", productNo);
+	}
 	//==========================  민호 끝
 	
 	// 하진 시작 ==========================

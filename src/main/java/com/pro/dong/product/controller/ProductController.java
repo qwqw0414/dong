@@ -339,6 +339,9 @@ public class ProductController {
 		Map<String, Object> map = ps.selectOneProduct(productNo);
 		Member result = ps.selectShopMember(productNo);
 
+		Product p = new Product();
+		p.setProductNo(productNo);
+		
 		HttpSession session = request.getSession();
 		Member member = (Member) session.getAttribute("memberLoggedIn");
 		log.info("member={}", member);
@@ -347,8 +350,10 @@ public class ProductController {
 		like.setProductNo(productNo);
 
 		int likeCnt = ps.countLike(like);
+		int incount = ps.incount(productNo);
 		log.info("result={}", result);
-
+		log.debug(likeCnt+"");
+		log.debug("incount={}",incount);
 		map.put("result", result);
 		map.put("likeCnt", likeCnt + "");
 		map.put("memberLoggedIn", member);

@@ -26,6 +26,7 @@ public interface ProductService {
 	//========================== 하진 끝
 		
 	//근호 시작 ==========================
+	int incount(int productNo);
 
 	//========================== 근호 끝
 		

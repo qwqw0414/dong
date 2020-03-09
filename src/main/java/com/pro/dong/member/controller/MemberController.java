@@ -125,14 +125,14 @@ public class MemberController {
 	@RequestMapping("/updateReceive")
 	@ResponseBody
 	public Map<String, Object> updateReceive(@RequestParam("orderNo")int orderNo, @RequestParam("productNo")int productNo,
-			@RequestParam("price")int price, @RequestParam("shopName")String shopName){
+			 @RequestParam("shopName")String shopName){
 		
 		Map<String, String> param = new HashMap<>();
 		param.put("shopName", shopName);
 		List<Map<String, String>> list = ms.selectMemberIdByShopName(param);
 		log.debug("list={}",list);
 		String memberId = list.get(0).get("MEMBER_ID");
-		
+		long price = ms.selectPriceByproductNo(productNo);
 		log.debug("memberId={}",memberId);
 		Map<String, Object> resultMap = new HashMap<>();
 		int result = ms.updateReceive(orderNo);
@@ -158,9 +158,11 @@ public class MemberController {
 	@RequestMapping("/updateSend")
 	@ResponseBody
 	public Map<String, Object> updateSend(@RequestParam("orderNo")int orderNo, @RequestParam("productNo")int productNo,
-			@RequestParam("price")int price, HttpSession session){
+			HttpSession session){
 		Member memberLoggedIn = (Member) session.getAttribute("memberLoggedIn");
 		String memberId = memberLoggedIn.getMemberId();
+		
+		long price = ms.selectPriceByproductNo(productNo);
 		
 		Map<String, Object> resultMap = new HashMap<>();
 		Map<String, String> param = new HashMap<>();

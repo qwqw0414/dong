@@ -25,7 +25,6 @@
 			<input type="text" class='form-control' id="endDate" placeholder='종료날짜선택' readonly>
 		</div>
    <button class="btn btn-outline-secondary" id="searchMemberPoint">검색</button>
-   <button class="btn btn-outline-secondary" id="memberPointAll">전체</button>	
    <br />
 </div>
 

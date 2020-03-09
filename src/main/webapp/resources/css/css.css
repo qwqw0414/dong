@@ -156,9 +156,9 @@ footer .line{border: 1px rgb(95, 95, 95) solid; width: 100%;}
 #hallOfFameCard{border:0px;}
 #hallOfFameCard #hallOfFameHeaderImg{width:300px; margin-left:450px;}
 .badgeTypeImg{width:15px; height:15px;}
-#hallOfFameBody .hof-each {position:relative; display:inline-block; color: rgb(246, 250, 20);}
-#hallOfFameBody .hof-each .card-title{background-color: #312110;}
-#hallOfFameBody .hof-each .card-body{background: #312110; border: 0 solid rgb(246, 250, 20); }
+#hallOfFameBody .hof-each {position:relative; display:inline-block; color: black; border: 1px solid white;}
+#hallOfFameBody .hof-each .card-title{background-color: #E0EAFC;}
+#hallOfFameBody .hof-each .card-body{background: #E0EAFC; border: 0 solid black; }
 
 /* 관리자 productList css */
 #productList-category .cate-title{font-family: MapoPeacefull; font-size: 1.5em;}
@@ -246,6 +246,7 @@ url('data:image/gif;base64,R0lGODlhAQABAPAAAP///////yH5BAAAAAAALAAAAAABAAEAAAICR
   background-position: top center, top center, bottom center;
   -webkit-animation: drawBorderFromCenter 4s;
 }
+#boardList .col-md-12 {padding-bottom: 8px;}
 #boardList .box2{
   width: 1000px;
   height:900px;
@@ -273,7 +274,6 @@ url('data:image/gif;base64,R0lGODlhAQABAPAAAP///////yH5BAAAAAAALAAAAAABAAEAAAICR
   background: white;
   padding: 0.1em 2.0em;
   text-align: center;
-  text-transform: uppercase;
 }
 
 /* boardView */

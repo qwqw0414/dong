@@ -115,6 +115,7 @@ $(function() {
 	      // 현재 열려있는 팝업은 닫으면서 쿠키값을 저장
 	   });
 	});
+	
 function setCookie(cname, value, expire) {
 	   // 오늘 날짜를 변수에 저장
 	   var todayValue = new Date();
