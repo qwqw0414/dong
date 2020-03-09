@@ -543,17 +543,17 @@ $(function(){
 
 			}
 			
-			else{
+else{
 				
 				if($("[name=memberLoggedIn]").val()==data.list[i].MEMBER_ID){
 					html+="<div>"
 					html+="<input type='hidden' value="+data.list[i].COMMENT_NO+" id='commentNo_'/>"
 					html+="<img class='replyIcon' style='width:50px; height:50px;' src='${pageContext.request.contextPath}/resources/images/reply.PNG'/>"
-					html+="<span style='margin-bottom:0px; padding-left:30px'><strong>"+data.list[i].MEMBER_ID+ "</strong> <span style='font-size:3px; color:green;'>[ " +data.list[i].WRITE_DAY + "]</span> " + data.list[i].CONTENTS;
-					html+="<button class='alcls' onclick='deleteLevel2(this);'><img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='10' height='10'></button></span></div>";
+					html+="<span style='margin-bottom:0px; padding-left:30px'><strong>"+data.list[i].MEMBER_ID+ "</strong> <span style='font-size:3px; color:green'>[ " +data.list[i].WRITE_DAY + "]</span><div class='lev2con'>" + data.list[i].CONTENTS;
+					html+="<button class='alcls' onclick='deleteLevel2(this);'><img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='10' height='10' >삭제</button></span></div></div>";
 				}else{
 					html+="<div><img class='replyIcon' style='width:50px; height:50px;' src='${pageContext.request.contextPath}/resources/images/reply.PNG'/>"
-					html+="<span style='margin-bottom:0px; padding-left:30px'><strong>"+data.list[i].MEMBER_ID+ "</strong> <span style='font-size:3px; color:green;'>[ " +data.list[i].WRITE_DAY + "]</span> " + data.list[i].CONTENTS + "</span></div>";
+					html+="<span style='margin-bottom:0px; padding-left:30px'><strong>"+data.list[i].MEMBER_ID+ "</strong> <span style='font-size:3px; color:green'>[ " +data.list[i].WRITE_DAY + "]</span><div class='lev2con'>" + data.list[i].CONTENTS + "</span></div></div>";
 				}
 			}
 			html+="<div id='level2Form'><hr/>";
@@ -633,7 +633,7 @@ $(function(){
 	
 	//대댓삭제
 	function deleteLevel2(e){
-		var commentNo=$(e).parent().parent().children("input").val();
+		var commentNo=$(e).parent().parent().parent().children("input").val();
 		$.ajax({
 			url:"${pageContext.request.contextPath}/board/deleteLevel2",
 			data:{commentNo:commentNo},

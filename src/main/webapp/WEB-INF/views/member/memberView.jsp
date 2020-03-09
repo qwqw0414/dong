@@ -9,6 +9,12 @@
 	Map<String, Object> map = (Map<String, Object>) request.getAttribute("member");
 %>
 
+<style>
+#memberView #shopImg1{
+height:138px;
+width:138px;
+}
+</style>
 <h1 style="text-align: center;">마이페이지</h1>
 <br>
 <hr>
@@ -89,14 +95,14 @@
 									<div class="before before_change1" style="display: block;">
 										<small>이름: </small><span id="curname">${member.MEMBER_NAME}</span><input
 											type="button" id="change_btn1" class="" value="수정"
-											style="font-size: 4px; padding: 0; background-color: transparent; border: 0; color: gray; margin-left: 100px" />
+											style="font-size: 10px; padding: 0; background-color: transparent; border: 0; color: gray; margin-left: 100px" />
 									</div>
 									<div class="after after_change1" style="display: none;">
 										<small>이름: </small><input type="text" id="username"
 											placeholder="변경할 이름" style="width: 120px; font-size: 10px">
 										<button type="button" class="btn btn-outline-success btn-sm"
 											id="button-addon1" class=""
-											style="font-size: 4px; padding: 0; background-color: transparent; border: 0; color: gray;; margin-left: 24px">확인</button>
+											style="font-size: 10px; padding: 0; background-color: transparent; border: 0; color: gray;; margin-left: 24px">확인</button>
 									</div>
 								</div>
 								<div id="ms_change">
@@ -104,12 +110,12 @@
 									<div class="before before_change2" style="display: block;">
 										<small>연락처: </small><span id="curphone">${member.PHONE}</span>
 										<input type="button" id="change_btn2" value="수정" class=""
-											style="font-size: 4px; padding: 0; background-color: transparent; border: 0; color: gray; margin-left: 36px" />
+											style="font-size: 10px; padding: 0; background-color: transparent; border: 0; color: gray; margin-left: 36px" />
 									</div>
 									<div class="after after_change2" style="display: none;">
 										<small>연락처: </small><input type="text" id="userphone"
 											maxlength="11" placeholder=" 변경할 연락처 (-제외)"
-											style="font-size: 8px">
+											style="font-size: 10px">
 										<button type="button" class="" id="button-addon2"
 											style="font-size: 10px; padding: 0; background-color: transparent; border: 0; color: gray; margin-left: 14px">확인</button>
 									</div>
@@ -158,7 +164,7 @@
 						<div class="mypage_btn_more">
 							<!-- <input type="button" value="수정 바로가기" class="btn_val btn btn-outline-success btn-sm"> -->
 							<button class="btn btn-outline-success btn-sm" id="updateAddress"
-								data-toggle="modal" data-target="#addressModal">수정 바로가기</button>
+								data-toggle="modal" data-target="#addressModal" style='margin-left:50px;'>수정</button>
 						</div>
 
 					</div>
