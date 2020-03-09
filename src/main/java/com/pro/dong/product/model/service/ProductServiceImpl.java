@@ -54,7 +54,10 @@ public class ProductServiceImpl implements ProductService{
 	//========================== 하진 끝
 		
 	//근호 시작 ==========================
-
+	@Override
+	public int incount(int productNo) {
+		return pd.incount(productNo);
+	}
 	//========================== 근호 끝
 		
 	//지은 시작 ==========================
@@ -224,5 +227,6 @@ public class ProductServiceImpl implements ProductService{
 		return pd.deleteLevel2(commentNo);
 	}
 	//========================== 현규 끝
+	
 
 }

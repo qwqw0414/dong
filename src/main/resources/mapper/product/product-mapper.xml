@@ -31,6 +31,10 @@
 	<!-- ==========================  하진 끝 -->
 	
 	<!-- 근호 시작 ========================== -->
+	<update id="updateIncount">
+ 		update product set incount = incount+1
+ 		where product_no = #{productNo}
+	</update>
 	
 	<!-- ==========================  근호 끝 -->
 	
