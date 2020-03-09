@@ -39,6 +39,10 @@ public class ProductServiceImpl implements ProductService{
 	public int updateMemberPoint(OrderList orderList) {
 		return pd.updateMemberPoint(orderList);
 	}
+	@Override
+	public Member selectOneMember(String memberId) {
+		return pd.selectOneMember(memberId);
+	}
 	//==========================민호 끝
 		
 	//하진 시작 ==========================

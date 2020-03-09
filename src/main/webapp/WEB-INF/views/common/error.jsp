@@ -25,7 +25,7 @@ img{
 }
 .error-title h3{
 	color: rgb(49, 169, 190);
-	font-family: 'BMHANNAPro';
+	/* font-family: 'BMHANNAPro'; */
 }
 .error-title h6{
 	color:rgb(80, 80, 80);
@@ -33,7 +33,7 @@ img{
 }
 .error-title h4{
 	color:darkslategray;
-	font-family: 'NanumSquare_acB';
+	/* font-family: 'NanumSquare_acB'; */
 }
 
 .error-title button{

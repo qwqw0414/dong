@@ -15,7 +15,11 @@
 
 <h1>
 	상품 상세보기
-	<c:if test="${map.result.memberId eq map.memberLoggedIn.memberId }">
+	<c:if test="${map.result.memberId eq map.memberLoggedIn.memberId}">
+		<button type="button" class="btn btn-danger" id="productDeleteBtn">상품삭제</button>	
+	</c:if>
+	
+	<c:if test="${map.memberLoggedIn.isAdmin eq 'Y'}">
 		<button type="button" class="btn btn-danger" id="productDeleteBtn">상품삭제</button>	
 	</c:if>
 </h1>
@@ -150,7 +154,8 @@ $(()=>{
 					</button>
 				</div>
                 <div class="product-info">
-                    <h3>${map.product.title }</h3>
+            	    
+                    <h3>${map.product.title }</h3> 
                     <br>
                     <p>
                     	<img class='png png' src="${pageContext.request.contextPath}/resources/images/zzim.PNG"/> ${map.likeCnt}&nbsp;

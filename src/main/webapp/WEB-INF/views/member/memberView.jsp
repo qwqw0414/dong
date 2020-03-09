@@ -226,7 +226,9 @@ function insertPoint(){
     		console.log(data);
     		var pointUpdated = data.resultMap.POINT;
     		$("#memberPoint").text(pointUpdated);
-    		
+    		console.log($("#pointAmount").val());
+    		$("#pointAmount").val('0');
+    		console.log($("#pointAmount").val());
     	},
     	error : (x, s, e) => {
 			console.log("ajax 요청 실패!",x,s,e);

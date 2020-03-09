@@ -13,6 +13,9 @@
 		insert into point_status values
 		(seq_point_status.nextval,#{memberId},#{price},'O',default)
 	</insert>
+	<select id="selectOneMember" parameterType="string" resultType="member">
+		select * from member where member_id = #{memberId}
+	</select>
 	<!-- ==========================  민호 끝 -->
 	
 	<!-- 하진 시작 ========================== -->

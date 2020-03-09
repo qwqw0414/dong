@@ -141,7 +141,7 @@ footer .line{border: 1px rgb(95, 95, 95) solid; width: 100%;}
 /* 상점 후기 css */
 .reviewBtnTxt{font-size: 1rem;}
 #reviewContent{resize:none; width:400px;}
-#shopReview-wrapper{display:inline-block;}
+#shopReview-wrapper{width: 1200px; display: inline-block; margin: auto; position:static; margin-left:50px;}
 #shopReview-wrapper .card{display:inline-block;float: left;margin: 10px 8px 10px 8px;}
 #shopReview-wrapper .card-wrapper{width: 200px;height: 280px;}
 #shopReview-wrapper .card-header{margin: 0px 0px 0px 0px;width: 100%;}

@@ -348,7 +348,8 @@ public class ProductController {
 		Like like = new Like();
 		like.setMemberId(member.getMemberId());
 		like.setProductNo(productNo);
-
+		Member memberLoggedIn = ps.selectOneMember(member.getMemberId());
+		log.info("memberLoggedIn={}",memberLoggedIn);
 		int likeCnt = ps.countLike(like);
 		int incount = ps.incount(productNo);
 		log.info("result={}", result);
@@ -356,7 +357,7 @@ public class ProductController {
 		log.debug("incount={}",incount);
 		map.put("result", result);
 		map.put("likeCnt", likeCnt + "");
-		map.put("memberLoggedIn", member);
+		map.put("memberLoggedIn", memberLoggedIn);
 		mav.addObject("map", map);
 
 		return mav;
