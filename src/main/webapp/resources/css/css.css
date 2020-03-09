@@ -193,13 +193,13 @@ header #categoryDiv #category-list-end{border-left: rgb(255, 30, 60) 1px solid;}
 #nav-product .myProductList .card-body{padding: 10px 0 0px 8px;}
 #nav-product .myProductList .regDate{font-size: 0.9em; position: absolute; right: 10px; bottom: 10px;}
 /*상품관리*/
-#myProductManageDiv td{padding-top: 75px !important;}
+/* #myProductManageDiv td{padding-top: 75px !important;}
 #myProductManageDiv #img-td{padding-top: 8px !important;}
 #myProductManageDiv #btn-td{padding-top:39px !important;}
 #myProductManageDiv select{width: 110px !important;}
 #myProductManageDiv a:link {color: white; text-decoration: none;}
 #myProductManageDiv a:visited {color: white; text-decoration: none;}
-#myProductManageDiv a:hover {color: white; text-decoration: underline;}
+#myProductManageDiv a:hover {color: white; text-decoration: underline;} */
 /*상품상세보기*/
 #productDivHajin .status{display:inline; position: relative; color: rgb(153, 153, 153);}
 #productDivHajin .ss{display:inline; margin-left: 11px;}
