@@ -4,16 +4,7 @@
 <%
 	Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
 %>
-<style>
 
-#myProductManageDiv td{padding-top: 75px !important;}
-#myProductManageDiv .img-td{padding-top: 8px !important;}
-#myProductManageDiv .btn-td{padding-top:39px !important;}
-#myProductManageDiv select{width: 110px !important;}
-#myProductManageDiv a:link {color: white; text-decoration: none;}
-#myProductManageDiv a:visited {color: white; text-decoration: none;}
-#myProductManageDiv a:hover {color: white; text-decoration: underline;}
-</style>
 <script>
 $(()=>{
 	
@@ -47,7 +38,7 @@ $(()=>{
 	
 					html += "<tr>";
 					if(product.IS_SALE=='Y'){
-						html += "<td class='img-td'><div style:'position:relative;'><a href='${pageContext.request.contextPath}/product/productView.do?productNo="+product.PRODUCT_NO+"'><div style=' margin-left:30.5px; position:absolute; background-color:rgba(0, 0, 0, 0.65); z-index:10; height:152px; width:152px;'><p style='margin-top:64px;'>판매완료</p></div></a><img style='width:152px; height:152px; position:relative; z-index:1;' src='${pageContext.request.contextPath}/resources/upload/product/"+product.PHOTO+"'/></div></td>";
+						html += "<td class='img-td' style='width:235px;'><div style:'position:relative; width:211px; height:152px;'><a href='${pageContext.request.contextPath}/product/productView.do?productNo="+product.PRODUCT_NO+"'><div style=' margin-left:30.5px; position:absolute; background-color:rgba(0, 0, 0, 0.65); z-index:10; height:152px; width:152px;'><p style='margin-top:64px;'>판매완료</p></div></a><img style='width:152px; height:152px; position:relative; z-index:1;' src='${pageContext.request.contextPath}/resources/upload/product/"+product.PHOTO+"'/></div></td>";
 					}
 					else{
 						html += "<td class='img-td'><a href='${pageContext.request.contextPath}/product/productView.do?productNo="+product.PRODUCT_NO+"'><img style='width:152px; height:152px;' src='${pageContext.request.contextPath}/resources/upload/product/"+product.PHOTO+"'/></a></td>";

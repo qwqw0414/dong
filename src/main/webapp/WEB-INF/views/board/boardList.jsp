@@ -226,7 +226,7 @@ $(()=>{
 						<td id="popBoardNo" value="${list.BOARD_NO}">${list.BOARD_NO}</td>
 						<td><a href='${pageContext.request.contextPath}/board/boardView.do?boardNo=${list.BOARD_NO}'>${list.BOARD_TITLE}</a></td>
 						<td>${list.MEMBER_ID}</td>
-						<td>${list.WRITE_DATE}</td>
+						<td><fmt:formatDate value="${list.WRITE_DATE}" type="date" pattern="yyyy/MM/dd"/></td>
 						<td>${list.READ_COUNT}</td>
 						<td>${list.CNT}</td>
 					</tr>
