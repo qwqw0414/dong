@@ -10,6 +10,7 @@
 #main-page .productList{width: 100%;}
 .productList .card-body{padding: 10px 0 0px 8px;}
 .productList .regDate{font-size: 0.9em; position: absolute; right: 10px; bottom: 10px;}
+.productList .cate-link{cursor: pointer;}
 </style>
 
 
@@ -121,6 +122,16 @@ $(()=>{
   var sido = '${memberLoggedIn.sido}';
   var sigungu = '${memberLoggedIn.sigungu}';
   var dong = '${memberLoggedIn.dong}';
+
+  $(".productList .cate-link").click((e)=>{
+    
+    var cateId = $(e.target).parent(".productList").attr("id");
+
+    console.log(cateId);
+
+    location.href = "${pageContext.request.contextPath}/product/productList.do?keyword=&categoryId="+cateId;
+
+  });
 
   showAd();
   // 추천상품

@@ -348,7 +348,7 @@ public class ProductController {
 
 		int likeCnt = ps.countLike(like);
 		log.info("result={}", result);
-
+		log.debug(likeCnt+"");
 		map.put("result", result);
 		map.put("likeCnt", likeCnt + "");
 		map.put("memberLoggedIn", member);
