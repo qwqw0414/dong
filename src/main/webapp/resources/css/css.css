@@ -156,9 +156,9 @@ footer .line{border: 1px rgb(95, 95, 95) solid; width: 100%;}
 #hallOfFameCard{border:0px;}
 #hallOfFameCard #hallOfFameHeaderImg{width:300px; margin-left:450px;}
 .badgeTypeImg{width:15px; height:15px;}
-#hallOfFameBody .hof-each {position:relative; display:inline-block; color: black;}
-#hallOfFameBody .hof-each .card-title{background-color: white;}
-#hallOfFameBody .hof-each .card-body{background: white; border: 0 solid black; }
+#hallOfFameBody .hof-each {position:relative; display:inline-block; color: black; border: 1px solid white;}
+#hallOfFameBody .hof-each .card-title{background-color: #E0EAFC;}
+#hallOfFameBody .hof-each .card-body{background: #E0EAFC; border: 0 solid black; }
 
 /* 관리자 productList css */
 #productList-category .cate-title{font-family: MapoPeacefull; font-size: 1.5em;}
