@@ -141,7 +141,7 @@ footer .line{border: 1px rgb(95, 95, 95) solid; width: 100%;}
 /* 상점 후기 css */
 .reviewBtnTxt{font-size: 1rem;}
 #reviewContent{resize:none; width:400px;}
-#shopReview-wrapper{display:inline-block;}
+#shopReview-wrapper{width: 1200px; display: inline-block; margin: auto; position:static; margin-left:50px;}
 #shopReview-wrapper .card{display:inline-block;float: left;margin: 10px 8px 10px 8px;}
 #shopReview-wrapper .card-wrapper{width: 200px;height: 280px;}
 #shopReview-wrapper .card-header{margin: 0px 0px 0px 0px;width: 100%;}
@@ -156,9 +156,9 @@ footer .line{border: 1px rgb(95, 95, 95) solid; width: 100%;}
 #hallOfFameCard{border:0px;}
 #hallOfFameCard #hallOfFameHeaderImg{width:300px; margin-left:450px;}
 .badgeTypeImg{width:15px; height:15px;}
-#hallOfFameBody .hof-each {position:relative; display:inline-block; color: rgb(246, 250, 20);}
-#hallOfFameBody .hof-each .card-title{background-color: #312110;}
-#hallOfFameBody .hof-each .card-body{background: #312110; border: 0 solid rgb(246, 250, 20); }
+#hallOfFameBody .hof-each {position:relative; display:inline-block; color: black; border: 1px solid white;}
+#hallOfFameBody .hof-each .card-title{background-color: #E0EAFC;}
+#hallOfFameBody .hof-each .card-body{background: #E0EAFC; border: 0 solid black; }
 
 /* 관리자 productList css */
 #productList-category .cate-title{font-family: MapoPeacefull; font-size: 1.5em;}
@@ -246,6 +246,7 @@ url('data:image/gif;base64,R0lGODlhAQABAPAAAP///////yH5BAAAAAAALAAAAAABAAEAAAICR
   background-position: top center, top center, bottom center;
   -webkit-animation: drawBorderFromCenter 4s;
 }
+#boardList .col-md-12 {padding-bottom: 8px;}
 #boardList .box2{
   width: 1000px;
   height:900px;
@@ -273,7 +274,6 @@ url('data:image/gif;base64,R0lGODlhAQABAPAAAP///////yH5BAAAAAAALAAAAAABAAEAAAICR
   background: white;
   padding: 0.1em 2.0em;
   text-align: center;
-  text-transform: uppercase;
 }
 
 /* boardView */
@@ -395,6 +395,99 @@ url('data:image/gif;base64,R0lGODlhAQABAPAAAP///////yH5BAAAAAAALAAAAAABAAEAAAICR
 #boardView #thumbsUpCount {font-size: 42px;}
 #boardView #reportBtnImg {border: none; margin-bottom: 5px;}
 #boardView #boardReportCategory {margin-left: 10px;}
+
+/* boardUpdate */
+#boardUpdate div#board-container{width:400px; margin:0 auto; text-align:center;}
+#boardUpdate div#board-container input,div#board-container button{margin-bottom:15px;}
+#boardUpdate div#board-container label.custom-file-label{text-align:left;}
+#boardUpdate .head_inflow{
+    padding-top: 50px;
+    padding-bottom: 34px;
+    border-color: #000;
+
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    padding-top: 38px;
+    padding-bottom: 29px;
+    border-bottom: 1px solid #333333;
+    vertical-align: top;
+}
+#boardUpdate #title {font-size: 30px; }
+#boardUpdate #writedate {float: right;}
+#boardUpdate .cont_inflow{
+    margin-top: 3px;
+    font-size: 15px;
+    line-height: 25px;
+    width: 670px;
+    margin-top: 35px;
+    padding-right: 35px;
+    border-right: 1px solid #f0f0f0;
+}
+#boardUpdate #inputtitle {width: 400px;}
+#boardUpdate .contents {border-bottom: 1px solid #f0f0f0; }
+#boardUpdate .contentsBox{
+    overflow: hidden;
+    margin-top: 17px;
+    margin-bottom: -6px;
+    line-height: 22px;
+    word-break: break-all;
+    border-color: #000;
+    display: flex;
+    position: relative;
+    width: 100%;
+    padding-bottom: 50px;
+    vertical-align: top;
+
+}
+#boardUpdate .img{
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin-top: 8px;
+    margin-top: 13px;
+}
+#boardUpdate .line{
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: 1px solid #dcdcdc;
+}
+#boardUpdate .btnBox{
+    position: relative;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px; 
+    border-color: #000;
+    border-bottom: 1px solid #f0f0f0;
+}
+#boardUpdate .commentBox{
+    overflow: hidden;
+    margin-top: 17px;
+    margin-bottom: -6px;
+    line-height: 22px;
+    word-break: break-all;
+    border-color: #000;
+    display: flex;
+    position: relative;
+    width: 100%;
+    padding-bottom: 50px;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: top;
+}
+#boardUpdate .sideOther{
+    position: absolute;
+    right: 0;
+    width: 263px;
+    padding: 35px 0 0 35px;
+    background-color: #fff;
+}
+#boardUpdate #boardUpdateBtn {width: 90px; height: 40px; margin-top: 10px; float: right;}
+#boardUpdate #iconbox {width: 15px; height: 15px;}
+#boardUpdate #changeSpan {color: #28A745;}
 
 /* ========================== 지은 끝 */
 	

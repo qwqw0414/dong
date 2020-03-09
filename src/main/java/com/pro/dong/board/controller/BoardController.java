@@ -230,7 +230,6 @@ public class BoardController {
 		//List<Attachment> attachmentList = bs.selectAttachmentList(boardNo);
 		int readCount = bs.boardInCount(boardNo);
 		
-		
 		Map<String, String> param = new HashMap<>();
 		param.put("boardNo", boardNo+"");
 		param.put("memberId", memberId);
@@ -264,12 +263,13 @@ public class BoardController {
 	
 	@RequestMapping("/boardUpdate.do")	
 	@ResponseBody
-	public ModelAndView boardUpdate( ModelAndView mav, int boardNo) {
+	public ModelAndView boardUpdate( ModelAndView mav, int boardNo,HttpSession session) {
 		Map<String, String> param = new HashMap<>();
 		param.put("boardNo", boardNo+"");
 		Board board = bs.selectOneBoard(boardNo);
 		Attachment attachment = bs.selectAttachmentList(boardNo);
-		
+		List<BoardCategory> boardCategoryList = bs.selectBoardCategory();
+		mav.addObject("boardCategoryList",boardCategoryList);
 		mav.addObject("board", board);
 		mav.addObject("memberId", board.getMemberId());
 		mav.addObject("attachment", attachment);
@@ -277,25 +277,97 @@ public class BoardController {
 		return mav;
 	}
 	
+	@RequestMapping("/deleteFile")
+	@ResponseBody
+	public String deleteFile(String fileName, HttpServletRequest request) {
+		
+		int result = bs.deleteAttachment(fileName);
+		
+//		파일제거
+		if(result > 0) {
+			String saveDirectory = request.getSession().getServletContext().getRealPath("/resources/upload/product/");
+			
+			File file = new File(saveDirectory + fileName); 
+			file.delete();
+		}
+		
+		return String.valueOf(result);
+	}
+	
+	@RequestMapping("/updateFile")
+	@ResponseBody
+	public String updateFile(Board board, Attachment a, MultipartFile files, String oldFileName, String boardNo,HttpServletRequest request,@RequestParam(value="upFile", required=false) MultipartFile[] upFile) {
+		String saveDirectory = request.getServletContext().getRealPath("/resources/upload/board");
+		List<Attachment> attachList = new ArrayList<>();
+		String renamedFileName = null;
+		log.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@renamedFileName={}", renamedFileName);
+		Map<String, String> param = new HashMap<>();
+		param.put("photo", renamedFileName);
+		param.put("boardNo", String.valueOf(boardNo));
+		param.put("oldName", oldFileName);
+		
+		Map<String, String> map = new HashMap<>();
+		//map.put("result", String.valueOf(result));
+		map.put("newName", renamedFileName);
+		
+		//int result = bs.updateAttachment(attachment,attachList,oldFileName,boardNo);
+		int result = bs.insertAttachment(a);
+		//int result = bs.updateAttachment(attachment,boardNo);
+		//동적으로 directory 생성
+		File dir = new File(saveDirectory);
+		if(dir.exists() == false)
+		dir.mkdir();
+				
+				//MultipartFile객체 파일업로드 처리
+				for(MultipartFile f : upFile) {
+					if(!f.isEmpty()) {
+						//파일명 재생성
+						String originalFileName = f.getOriginalFilename();
+						String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
+						int rndNum = (int)(Math.random()*1000);
+						renamedFileName = sdf.format(new Date())+"_"+rndNum+ext;
+						
+						//서버컴퓨터에 파일저장
+						try {
+							f.transferTo(new File(saveDirectory+"/"+renamedFileName));
+						} catch (IllegalStateException e) {
+							e.printStackTrace();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						
+						Attachment attach = new Attachment();
+						attach.setOriginalFileName(originalFileName);
+						attach.setRenamedFileName(renamedFileName);
+						attachList.add(attach);
+						
+					}
+				}
+		
+		return gson.toJson(result)+"";
+	}
+	
 	@RequestMapping("/boardUpdateEnd")
 	@ResponseBody
-	public String boardUpdateEnd(Board board,HttpServletRequest request) {
+	public String boardUpdateEnd(Board board,HttpServletRequest request,@RequestParam(value="upFile", required=false) MultipartFile[] upFile) {
+		
 		int result = bs.boardUpdate(board);
-		//log.debug("boardUpdate@board", board);
 		String msg = "";
 		String loc = "/";
+		
 		if(result>0) {
-			//log.debug("게시글 수정성공!");
 			msg = "게시글 수정이 완료되었습니다.";
 			loc = "/board/boardList.do";
+		
+		
 		}else {
-			//log.debug("게시글 수정실패!");
 			msg = "게시글 수정에 실패하였습니다.";
 		}
 		
 		return result+"";
 	}
-	
+		
 	@RequestMapping("/boardDelete")
 	@ResponseBody
 	public String boardDelete(@RequestParam("boardNo") int boardNo) {
@@ -315,25 +387,6 @@ public class BoardController {
 
 		return result+"";
 	}
-	
-/*	@RequestMapping("/boardLike")
-	@ResponseBody
-	public String insertBoardReputation (@RequestParam("boardNo") int boardNo, HttpSession session,HttpServletRequest request){
-		
-		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
-		String memberId = memberLoggedIn.getMemberId();
-		log.debug("memberId={}",memberId);
-		log.debug("boardNo={}",boardNo);
-		Map<String,String> map = new HashMap<>();
-		map.put("memberId", memberId);
-		map.put("boardNo", boardNo+"");
-		
-		int result = bs.insertBoardReputation(map);
-		 
-		log.debug(result+"");
-		
-		return result+"";
-	}*/
 	
 	@RequestMapping("/boardLikeCount")
 	@ResponseBody

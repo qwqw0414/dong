@@ -7,7 +7,7 @@
 <style>
 #productList .productList img{width: 200px; height: 200px;}
 #productList .productList{position: static; display: inline-block; margin-left: 50px;}
-#productList .card{width: 201px; height: 300px; float: left;}
+#productList .card{width: 201px; height: 300px; float: left;cursor: pointer}
 #productList .card .card-body{padding: 5px 0 0 8px;}
 #productList .card .card-text{margin: 0;}
 #pageBar{position: static; display:block; }
@@ -58,6 +58,7 @@ $(()=>{
                         preTitle = preTitle.substring(0,12)+"..."
 
                     html += "<div class='card'>";
+                    html += "<input type='hidden' class='productNo' value='"+product.productNo+"'>";
                     html += "<img src='${pageContext.request.contextPath}/resources/upload/product/" + product.photo + "' class='card-img-top'>";
                     html += '<div class="card-body">';
                     html += '<p class="card-title">' + preTitle + '</p>';
@@ -76,6 +77,12 @@ $(()=>{
                 $("#pageBar a").click((e)=>{
                     pageLoad($(e.target).siblings("input").val());
                 });
+                $("#productList .card").click(function(){
+                	console.log($(this).children("input"));
+                    var productNo = $(this).children("input").val();
+                    console.log(productNo);
+                    location.href = "${pageContext.request.contextPath}/product/productView.do?productNo="+productNo;
+                  });
             }
         });
     }

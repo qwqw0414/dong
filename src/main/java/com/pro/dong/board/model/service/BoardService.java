@@ -35,10 +35,16 @@ public interface BoardService {
 	int deleteBoard(int boardNo);
 	Member getMemberByMemberId(String memberId);
 	int boardUpdate(Board board);
+	//int boardUpdate(Board board, List<Attachment> attachList);
 	int insertBoardReputation(Map<String, String> map);
 	int selectBoardLike(Map<String, String> map);
 	int deleteBoardReputation(Map<String, String> map);
 	int selectBoardLikeByMemberId(Map<String, String> map);
+	int deleteAttachment(String fileName);
+	//int updateAttachment(Map<String, String> param);
+	//int updateFile(Attachment attachment);
+	int updateAttachment(Attachment attachment, List<Attachment> attachList, String oldFileName, String boardNo);
+	int insertAttachment(Attachment a);
 	//========================== 지은 끝
 		
 	// 예찬 시작 ==========================
@@ -57,6 +63,12 @@ public interface BoardService {
 	int countComment(int boardNo);
 	int deleteLevel2(int commentNo);
 	//========================== 현규 끝
+	
+	
+	
+	
+	
+	
 
 
 

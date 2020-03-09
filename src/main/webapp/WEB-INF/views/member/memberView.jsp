@@ -7,19 +7,15 @@
 <%
 	Member memberLoggedIn = (Member) request.getSession().getAttribute("memberLoggedIn");
 	Map<String, Object> map = (Map<String, Object>) request.getAttribute("member");
-	System.out.println("memberView@map=" + map);
 %>
 
 <h1 style="text-align: center;">마이페이지</h1>
 <br>
 <hr>
 <br>
-
-
 <div id="memberView">
 	<div class="mv_content">
 		<div class="row row-cols-2">
-
 			<div class="col" id="col_left">
 				<div class="mypage_shop">
 					<div id="mypage_shop"
@@ -43,11 +39,6 @@
 								</div>
 							</div>
 						</div>
-
-
-
-
-
 					</div>
 					<div id="mypage_point"
 						class="mypage_con shadow p-3 mb-5 bg-white rounded">
@@ -56,10 +47,8 @@
 								id="godetails" style="font-size: 10px; padding: 0; background-color: transparent; border: 0; color: green; margin-left: 14px;	"
 								onclick="location.href='${pageContext.request.contextPath}/member/memberChargingDetails.do'">
 								</span>	</h4>
-						
 						<br>
 						<div class="ms_content">
-
 							<div class="row">
 								<div class="col-sm-6" id="mypntdiv">
 									<div class="card">
@@ -80,20 +69,12 @@
 									</div>
 
 								</div>
-								<!-- 								<button class="btn btn-outline-success btn-sm" -->
-								<!-- 									onclick="test1();">포인트 충전 실험</button> -->
 							</div>
-							
 							<div class="mypage_btn"></div>
 						</div>
-
-
 					</div>
-
 				</div>
 			</div>
-
-
 			<div class="col" id="col_right">
 				<div id="mypage_info"
 					class="mypage_con shadow p-3 mb-5 bg-white rounded">
@@ -118,7 +99,6 @@
 											style="font-size: 4px; padding: 0; background-color: transparent; border: 0; color: gray;; margin-left: 24px">확인</button>
 									</div>
 								</div>
-
 								<div id="ms_change">
 
 									<div class="before before_change2" style="display: block;">
@@ -126,7 +106,6 @@
 										<input type="button" id="change_btn2" value="수정" class=""
 											style="font-size: 4px; padding: 0; background-color: transparent; border: 0; color: gray; margin-left: 36px" />
 									</div>
-
 									<div class="after after_change2" style="display: none;">
 										<small>연락처: </small><input type="text" id="userphone"
 											maxlength="11" placeholder=" 변경할 연락처 (-제외)"
@@ -134,11 +113,7 @@
 										<button type="button" class="" id="button-addon2"
 											style="font-size: 10px; padding: 0; background-color: transparent; border: 0; color: gray; margin-left: 14px">확인</button>
 									</div>
-
 								</div>
-
-
-
 								<div class="ms_change">
 									<div class="before before_change3" style="display: block;">
 										<small>이메일: </small><span id="curemail">${member.EMAIL}</span>
@@ -154,7 +129,6 @@
 										<button type="button" class="btn btn-outline-success btn-sm"
 											id="button-addon3"
 											style="font-size: 10px; padding: 0; background-color: transparent; border: 0; color: gray;">인증하기</button>
-
 									</div>
 									<div class="email_authKey" style="display: none">
 										<input type="text" name="authKey" id="authKey"
@@ -165,26 +139,13 @@
 									<div class="emailMsg" style="font-size: 10px"></div>
 								</div>
 							</div>
-
-
-
-
-
-
-
-
 							<div class="col">
 								<p>성별 : ${member.GENDER=='M'?'남자':'여자' }</p>
 								<p>생년월일: ${member.BIRTH }</p>
 							</div>
 						</div>
-
-
-
 					</div>
-
 				</div>
-
 				<div id="mypage_location"
 					class="mypage_con shadow p-3 mb-5 bg-white rounded">
 					<h4>우리 동네 <img class="imgsrcs"
@@ -251,7 +212,7 @@
 
 
 <script>
-function test1(){
+function insertPoint(){
 	var pointAmount = $("#pointAmount").val();
 	console.log(pointAmount);
 	var memberId = "<%=memberLoggedIn.getMemberId()%>";
@@ -265,6 +226,9 @@ function test1(){
     		console.log(data);
     		var pointUpdated = data.resultMap.POINT;
     		$("#memberPoint").text(pointUpdated);
+    		console.log($("#pointAmount").val());
+    		$("#pointAmount").val('0');
+    		console.log($("#pointAmount").val());
     	},
     	error : (x, s, e) => {
 			console.log("ajax 요청 실패!",x,s,e);
@@ -292,52 +256,58 @@ function chargePoint(){
         pg : 'kakaopay',
         pay_method : 'card',
         merchant_uid : 'merchant_' + new Date().getTime(),
-        name : '민호마켓',
+        name : '동네한바퀴 포인트충전',
         amount : pointAmount,
-    buyer_email : email,
-    buyer_name : name,
-    buyer_tel : phone,
-    buyer_addr : addr,
-    buyer_postcode : postcode,
-//m_redirect_url : 'http://www.naver.com'
+	    buyer_email : email,
+	    buyer_name : name,
+	    buyer_tel : phone,
+	    buyer_addr : addr,
+	    buyer_postcode : postcode,
 }, function(rsp) {
-if ( rsp.success ) {
-
-    jQuery.ajax({
-        url: "", // url
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            imp_uid : rsp.imp_uid
-            //기타 필요한 데이터가 있으면 추가 전달
-        }
-    }).done(function(data) {
-        //[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
-        if ( everythings_fine ) {
-            msg = '결제가 완료되었습니다.';
-            msg += '\n고유ID : ' + rsp.imp_uid;
-            msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-            msg += '\결제 금액 : ' + rsp.paid_amount;
-            msg += '카드 승인번호 : ' + rsp.apply_num;
-
-            alert(msg);
-            test1();
-        } else {
-        }
-    });
-    //성공시 이동할 페이지
-    //ex)
-    //location.href='<%=request.getContextPath()%>/order/paySuccess?msg='+msg;
-} else {
-    msg = '결제에 실패하였습니다.';
-    msg += '에러내용 : ' + rsp.error_msg;
-    //실패시 이동할 페이지
-    //location.href="<%=request.getContextPath()%>/order/payFail";
-    alert(msg);
-}
+	console.log(rsp);
+	if ( rsp.success ) {
+		 msg = '결제가 완료되었습니다.';
+         msg += '\n고유ID : ' + rsp.imp_uid;
+         msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+         msg += '\결제 금액 : ' + rsp.paid_amount;
+         msg += '카드 승인번호 : ' + rsp.apply_num;
+         alert(msg);
+		 insertPoint();
+	  /*    $.ajax({
+	        url: "", // url
+	        type: 'POST',
+	        dataType: 'json',
+	        data: {imp_uid : rsp.imp_uid},
+	        error:(a,b,c)=>{
+	        	console.log(a,b,c);
+	        }
+	    }).done(function(data) {
+	    	console.log(data); 
+	        //[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
+	        if ( everythings_fine ) {
+	            msg = '결제가 완료되었습니다.';
+	            msg += '\n고유ID : ' + rsp.imp_uid;
+	            msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+	            msg += '\결제 금액 : ' + rsp.paid_amount;
+	            msg += '카드 승인번호 : ' + rsp.apply_num;
+	            alert(msg);
+	           // insertPoint();
+	        } else {
+	        	alert("충전오류");
+	        }
+	     }); 
+	    //성공시 이동할 페이지 */
+	    
+	} else {
+	    msg = '결제에 실패하였습니다.';
+	    msg += '에러내용 : ' + rsp.error_msg;
+	    alert(msg);
+	    //실패시 이동할 페이지
+	    
+	}
 });
     
-}
+}//end of chargePoint
 
     $(() => {
 

@@ -142,8 +142,16 @@
 		delete from board where board_no = #{boardNo}
 	</delete>
 	
-	<update id="boardUpdate" parameterType="board">
-		update board set board_contents = #{boardContents}, board_title = #{boardTitle}, category_id = #{categoryId} where board_no = #{boardNo}
+	<delete id="deleteAttachment" parameterType="map">
+		delete from board_attachment where renamedfilename = #{renamedFileName}
+	</delete>
+
+	<update id="updateAttachment" parameterType="map">
+		update board_attachment set renamedfilename = #{renamedFileName} where board_no = #{boardNo}
+	</update>	
+	
+	<update id="boardUpdate" parameterType="map">
+		update board set board_contents = #{boardContents}, board_title = #{boardTitle} where board_no = #{boardNo}
 	</update>
 	
 	<insert id="insertBoardReputation" parameterType="map">

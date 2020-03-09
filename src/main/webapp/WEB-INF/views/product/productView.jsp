@@ -15,7 +15,11 @@
 
 <h1>
 	상품 상세보기
-	<c:if test="${map.result.memberId eq map.memberLoggedIn.memberId }">
+	<c:if test="${map.result.memberId eq map.memberLoggedIn.memberId}">
+		<button type="button" class="btn btn-danger" id="productDeleteBtn">상품삭제</button>	
+	</c:if>
+	
+	<c:if test="${map.memberLoggedIn.isAdmin eq 'Y'}">
 		<button type="button" class="btn btn-danger" id="productDeleteBtn">상품삭제</button>	
 	</c:if>
 </h1>
@@ -150,11 +154,12 @@ $(()=>{
 					</button>
 				</div>
                 <div class="product-info">
-                    <h3>${map.product.title }</h3>
+            	    
+                    <h3>${map.product.title }</h3> 
                     <br>
                     <p>
-                    	<img class='png png' src="${pageContext.request.contextPath}/resources/images/zzim.PNG"/> 2&nbsp;
-                    	<img class='png png' src="${pageContext.request.contextPath}/resources/images/see.PNG"/> 49&nbsp;
+                    	<img class='png png' src="${pageContext.request.contextPath}/resources/images/zzim.PNG"/> ${map.likeCnt}&nbsp;
+                    	<img class='png png' src="${pageContext.request.contextPath}/resources/images/see.PNG"/> ${map.product.incount}&nbsp;
                     	<img class='png png' src="${pageContext.request.contextPath}/resources/images/date.PNG"/> ${map.product.regDate}
                     </p>
                     
@@ -455,7 +460,7 @@ $("#report-btn").click(()=>{
 			html+="<div class='testas'>";
 			if(data.list[i].COMMENT_LEVEL=="1"){
 			html+="<input type='hidden' value="+data.list[i].COMMENT_NO+" id='commentNo_'/>";
-			html+="<span style='margin-bottom:0px'><strong>"+data.list[i].MEMBER_ID+ "<small>[" + data.list[i].WRITE_DAY+"]</small> <br/></strong> "+data.list[i].CONTENTS+"</span>";
+			html+="<span style='margin-bottom:0px'><strong>"+data.list[i].MEMBER_ID+ "</strong><span style='font-size:3px; color:green;'>[" + data.list[i].WRITE_DAY+"]</span> <br/> "+data.list[i].CONTENTS+"</span>";
 			html+="<button id='showLevel2form' class='alcls' onclick='showLevel2form(this)'><img  src='https://assets.bunjang.co.kr/bunny_desktop/images/reply@2x.png' width='17' height='17'>답글</button>";
 				//내가쓴 level1댓글에만 삭제버튼 생성	
 				if($("[name=memberLoggedIn]").val()==data.list[i].MEMBER_ID){
@@ -475,11 +480,11 @@ $("#report-btn").click(()=>{
 					html+="<div>"
 					html+="<input type='hidden' value="+data.list[i].COMMENT_NO+" id='commentNo_'/>"
 					html+="<img class='replyIcon' style='width:50px; height:50px;' src='${pageContext.request.contextPath}/resources/images/reply.PNG'/>"
-					html+="<span style='margin-bottom:0px; padding-left:30px'><strong>"+data.list[i].MEMBER_ID+ "</strong> <small>[ " +data.list[i].WRITE_DAY + "]</small>" + data.list[i].CONTENTS;
-					html+="<button class='alcls' onclick='deleteLevel2(this);'><img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='10' height='10'></button></span></div>";
+					html+="<span style='margin-bottom:0px; padding-left:30px'><strong>"+data.list[i].MEMBER_ID+ "</strong> <span style='font-size:3px; color:green'>[ " +data.list[i].WRITE_DAY + "]</span> " + data.list[i].CONTENTS;
+					html+="<button class='alcls' onclick='deleteLevel2(this);'><img src='https://assets.bunjang.co.kr/bunny_desktop/images/trash-sm@2x.png' width='10' height='10' >삭제</button></span></div>";
 				}else{
 					html+="<div><img class='replyIcon' style='width:50px; height:50px;' src='${pageContext.request.contextPath}/resources/images/reply.PNG'/>"
-					html+="<span style='margin-bottom:0px; padding-left:30px'><strong>"+data.list[i].MEMBER_ID+ "</strong> <small>[ " +data.list[i].WRITE_DAY + "]</small>" + data.list[i].CONTENTS + "</span></div>";
+					html+="<span style='margin-bottom:0px; padding-left:30px'><strong>"+data.list[i].MEMBER_ID+ "</strong> <span style='font-size:3px; color:green'>[ " +data.list[i].WRITE_DAY + "]</span> " + data.list[i].CONTENTS + "</span></div>";
 				}
 			}
 			html+="<div id='level2Form'><hr/>";

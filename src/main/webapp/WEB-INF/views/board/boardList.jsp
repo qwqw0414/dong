@@ -48,6 +48,9 @@ url('data:image/gif;base64,R0lGODlhAQABAPAAAP///////yH5BAAAAAAALAAAAAABAAEAAAICR
   background-position: top center, top center, bottom center;
   -webkit-animation: drawBorderFromCenter 4s;
 }
+.col-md-12{
+padding-bottom: 8px;
+}
 
 .box2
 {
@@ -83,7 +86,6 @@ url('data:image/gif;base64,R0lGODlhAQABAPAAAP///////yH5BAAAAAAALAAAAAABAAEAAAICR
   background: white;
   padding: 0.1em 2.0em;
   text-align: center;
-  text-transform: uppercase;
 }
 
 
@@ -224,7 +226,7 @@ $(()=>{
 						<td id="popBoardNo" value="${list.BOARD_NO}">${list.BOARD_NO}</td>
 						<td><a href='${pageContext.request.contextPath}/board/boardView.do?boardNo=${list.BOARD_NO}'>${list.BOARD_TITLE}</a></td>
 						<td>${list.MEMBER_ID}</td>
-						<td>${list.WRITE_DATE}</td>
+						<td><fmt:formatDate value="${list.WRITE_DATE}" type="date" pattern="yyyy/MM/dd"/></td>
 						<td>${list.READ_COUNT}</td>
 						<td>${list.CNT}</td>
 					</tr>
@@ -260,7 +262,7 @@ $(()=>{
 					<option value="member_id" selected>아이디</option>
 					<option value="board_title">글제목</option>
 				</select> 
-		<input style="margin-left: 5px;" type="text" size="60" placeholder="검색어를 입력해 주세요" id="searchKeyword" placeholder="검색어를 입력하세요">
+		<input style="margin-left: 5px;" type="text" size="60" id="searchKeyword" placeholder="검색어를 입력하세요">
 		 <div class="input-group-append">
 			<button style="margin-left: 5px;" class="btn btn-primary sub-btn" id="searchBoard">검색하기</button>
 			<input type="button" value="글쓰기" id="btn-add" class="btn btn-outline-success main-btn" onclick="fn_goWriteBoard();" />

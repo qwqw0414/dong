@@ -41,6 +41,9 @@ public interface BoardDAO {
 	int deleteBoardReputation(Map<String, String> map);
 	int selectBoardLike(Map<String, String> map);
 	int selectBoardLikeByMemberId(Map<String, String> map);
+	int deleteAttachment(String fileName);
+	int updateAttachment(Map<String, String> param);
+	int updateAttachment(Attachment attachment, String oldFileName, String boardNo);
 	//========================== 지은 끝
 		
 	// 예찬 시작 ==========================
@@ -59,6 +62,8 @@ public interface BoardDAO {
 	int countComment(int boardNo);
 	int deleteLevel2(int commentNo);
 	//========================== 현규 끝
+	
+	
 
 
 }

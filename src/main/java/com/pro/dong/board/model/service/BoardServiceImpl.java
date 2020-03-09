@@ -101,6 +101,20 @@ public class BoardServiceImpl implements BoardService {
 	public int deleteBoard(int boardNo) {
 		return bd.deleteBoard(boardNo);
 	}
+	/*@Override
+	public int boardUpdate(Board board,List<Attachment> attachList) {
+		int result = 0;
+		result = bd.boardUpdate(board);
+		
+		//2. attachment 행추가
+		if(attachList.size() > 0) {
+			for(Attachment a : attachList) {
+				a.setBoardNo(board.getBoardNo());
+				result = bd.insertAttachment(a);
+			}
+		}
+		return result;
+	}*/
 	@Override
 	public int boardUpdate(Board board) {
 		return bd.boardUpdate(board);
@@ -121,6 +135,33 @@ public class BoardServiceImpl implements BoardService {
 	public int selectBoardLikeByMemberId(Map<String, String> map) {
 		return bd.selectBoardLikeByMemberId(map);
 	}
+	@Override
+	public int deleteAttachment(String fileName) {
+		return bd.deleteAttachment(fileName);
+	}
+	/*@Override
+	public int updateAttachment(Map<String, String> param) {
+		return bd.updateAttachment(param);
+	}*/
+	@Override
+	public int updateAttachment(Attachment attachment,List<Attachment> attachList,String oldFileName,String boardNo) {
+		int result = 0;
+		result = bd.updateAttachment(attachment,oldFileName,boardNo);
+		
+		//2. attachment 행추가
+		if(attachList.size() > 0) {
+			for(Attachment a : attachList) {
+				a.setBoardNo(attachment.getBoardNo());
+				result = bd.insertAttachment(a);
+			}
+		}
+		return result;
+	}
+	@Override
+	public int insertAttachment(Attachment a) {
+		return bd.insertAttachment(a);
+	}
+
 	//========================== 지은 끝
 		
 	// 예찬 시작 ==========================
@@ -160,6 +201,13 @@ public class BoardServiceImpl implements BoardService {
 		return bd.deleteLevel2(commentNo);
 	}
 	//========================== 현규 끝
+
+
+
+	
+	
+	
+	
 
 	
 }

@@ -39,6 +39,10 @@ public class ProductServiceImpl implements ProductService{
 	public int updateMemberPoint(OrderList orderList) {
 		return pd.updateMemberPoint(orderList);
 	}
+	@Override
+	public Member selectOneMember(String memberId) {
+		return pd.selectOneMember(memberId);
+	}
 	//==========================민호 끝
 		
 	//하진 시작 ==========================
@@ -54,7 +58,10 @@ public class ProductServiceImpl implements ProductService{
 	//========================== 하진 끝
 		
 	//근호 시작 ==========================
-
+	@Override
+	public int incount(int productNo) {
+		return pd.incount(productNo);
+	}
 	//========================== 근호 끝
 		
 	//지은 시작 ==========================
@@ -224,5 +231,6 @@ public class ProductServiceImpl implements ProductService{
 		return pd.deleteLevel2(commentNo);
 	}
 	//========================== 현규 끝
+	
 
 }

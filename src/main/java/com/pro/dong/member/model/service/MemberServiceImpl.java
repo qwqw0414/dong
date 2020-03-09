@@ -73,7 +73,10 @@ public class MemberServiceImpl implements MemberService{
 	public List<Map<String, String>> selectMemberIdByShopName(Map<String, String> param) {
 		return md.selectMemberIdByShopName(param);
 	}
-
+	@Override
+	public long selectPriceByproductNo(int productNo) {
+		return md.selectPriceByproductNo(productNo);
+	}
 	//==========================  민호 끝
 	
 	// 하진 시작 ==========================

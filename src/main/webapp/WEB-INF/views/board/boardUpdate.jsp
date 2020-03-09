@@ -8,13 +8,29 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-/* Board b = (Board)request.getAttribute("board"); 
+Board b = (Board)request.getAttribute("board"); 
 List<BoardCategory> list = new ArrayList<>();
-list = (List<BoardCategory>)request.getAttribute("boardCategoryList"); 
+list = (List<BoardCategory>)request.getAttribute("boardCategoryList");
+Member memberLoggedIn = (Member)request.getSession().getAttribute("memberLoggedIn");
+
+System.out.println("listt="+list);
+
 String option = "";
+option += "<option value=''/>전체</option>";
 for(BoardCategory bc: list){
-	option +=  "<option value=\""+bc.getCategoryId()+"\">"+bc.getCategoryName()+"</option>";
-}  */
+	if("Y".equals(memberLoggedIn.getIsAdmin())){
+		option += "<option value=\""+bc.getCategoryId()+"\">"+bc.getCategoryName()+"</option>";
+	}
+	else{
+		if(bc.getCategoryId().equals("A03")){
+			continue;
+		}
+		else{
+		option += "<option value=\""+bc.getCategoryId()+"\">"+bc.getCategoryName()+"</option>";
+			
+		}
+	} 
+}  
 %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <style>
@@ -137,9 +153,13 @@ div#board-container label.custom-file-label{text-align:left;}
 </style>
 
 <div class="section">
+	<%-- <form action="${pageContext.request.contextPath}/board/boardUpdateEnd.do"
+		  method="post"
+		  enctype="multipart/form-data"
+		  onsubmit="return validate();"> --%>
     <!-- head -->
     <div class="head_inflow">
-    <span id="changeSpan">제목 수정란 입니다.</span>
+    <span id="changeSpan">제목 수정</span>
         <div id="title"><strong><input type="text" class="form-control" id="inputtitle" value="${board.boardTitle}" required></strong></div>
         	<div class="profileWriter">
 			<span id="span"><img id="iconbox"
@@ -157,9 +177,16 @@ div#board-container label.custom-file-label{text-align:left;}
     <div class="cont_inflow">
 
         <div class="contents">
-       	<input type="hidden" id="boardNo" value="${board.boardNo}" >
-
-            <!-- 내용 -->
+       	
+       	<%--<span id="changeSpan">카테고리 수정</span>
+  			  <div class="input-group mb-3">
+				 <div class="input-group-prepend">
+				    <label class="input-group-text" for="inputGroupSelect01">카테고리</label>
+				 </div>
+				 <select class="custom-select" id="boardCategory" name="boardCategory" required>
+				   <%=option%> 
+				 </select>
+				</div> --%>
 			<%-- <div id="category">카테고리</div>
 			<select class="custom-select" id="boardCategory" name="boardCategory"><!-- </select> -->
             <select class="form-control" name="select" id="categoryId" style="width: 150px; display: inline-block;" required="required">
@@ -168,42 +195,46 @@ div#board-container label.custom-file-label{text-align:left;}
                <option value="A02"><c:if test="${board.categoryId eq 'A02'?'selected':''}"></c:if>홍보</option>
                <option value="A04"><c:if test="${board.categoryId eq 'A04'?'selected':''}"></c:if>정보</option> 
             </select>  --%>
-            <span id="changeSpan">내용 수정란 입니다.</span>
+            
+            <!-- 내용 -->
+            <span id="changeSpan">내용 수정</span>
             <div class="contentsBox">
                 <textarea class="form-control" name="boardContent" id="boardContent" placeholder="내용" required>${board.boardContents }</textarea>
             </div>
-    
             <!-- 이미지 -->
+            <span id="changeSpan">첨부파일 수정</span>
             <c:if test="${attachment.attachmentNo != null}"> 
-            <span id="changeSpan">첨부파일 수정란 입니다.</span>
+    	<%--  <form action="${pageContext.request.contextPath}/board/updateFile.do"
+		  method="post"
+		  enctype="multipart/form-data"
+		  onsubmit="return validate();">  --%>
+    
 			<div class="img" id="boardViewImg" style="margin:auto; width: 600px; height: 500px; overflow: hidden">
 				<img style="width: 600px; height: 500px;" src="${pageContext.request.contextPath}/resources/upload/board/${attachment.renamedFileName}"/>
+				<input type="hidden" name="renamedFileName" id="fileName" value="${attachment.renamedFileName}">
+				<input type="hidden" name="oldFileName" value="">
+				<input type="hidden" name="orininalFileName" value="${attachment.originalFileName}">
+				<input type="hidden" id="boardNo" value="${board.boardNo}" >
 				<span class="line" id="span">
 				</span>
 			</div>
+			<div class="checks"> <input type="checkbox" id="ex_chk"> <label for="ex_chk">기존파일 삭제하기</label> </div>
+			<!-- </form> -->
+		 </c:if>
 			<div class="custom-file">
 				    <input type="file" class="custom-file-input" name="upFile" id="upFile" >
-				    <label class="custom-file-label" for="upFile">파일을 선택하세요</label>
-				  </div>
-		 </c:if>
+				    <label class="custom-file-label" for="upFile">수정할 파일을 선택하세요</label>
+			</div>
         </div>
 
         <!-- 댓글 -->
         <div class="commentBox"> 
-<%--==================현규시작================ --%>
 <hr />
-
-
-
-<%--==================현규끝================ --%>
             
         </div>
 <br /><br />
 <span id="changeSpan">댓글란 입니다.</span>
     </div>
-
-    
-
 
     <!-- sideother -->
     <div class="sideOther"></div>
@@ -211,10 +242,13 @@ div#board-container label.custom-file-label{text-align:left;}
 
 <script>
 $(()=>{
+	
 	var $boardNo = $(".contents #boardNo");
 	var $boardTitle = $("#title #inputtitle");
 	var $categoryId = $("#category #categoryId");
 	var $boardContents = $(".contentsBox #boardContent");
+	var $renamedFileName = $("#boardViewImg #fileName");
+	
 		
 	/* 수정 에이작스 */
 		$("#boardUpdateBtn").click(function (){
@@ -227,7 +261,7 @@ $(()=>{
 				data: {
 					boardNo: $boardNo.val(),
 					boardTitle: $boardTitle.val(),
-					categoryId: $categoryId.val(),
+					//categoryId: $categoryId.val(),
 					boardContents: $boardContents.val()
 				},
 				dataType:"json",
@@ -253,7 +287,71 @@ $(()=>{
 			}
 			 
 		});
+	
+	
+	
+	$(".checks #ex_chk").click((e)=>{
+		deleteFile(e.target);
+	});
+	
+	
+	function deleteFile(input){
+		var $fileName = $("#fileName");
+		//var fileName = $(this).prop('files')[0].name;
+		//var $fileName = $(input).siblings("[type=hidden]");
+		$.ajax({
+			url: "${pageContext.request.contextPath}/board/deleteFile",
+			type: "post",
+			data: {fileName:$fileName.val()},
+			dataType: "json",
+			success: data =>{
+				$fileName.val('');
+			},
+			error: (a,b,c)=>{
+				console.log(a,b,c);
+			}
+		})
+	}
+	
+	/* 	$(".custom-file #upFile").change((e)=>{
+	var fileName = $(this).prop('files')[0].name;
+	
+	$(this).next(".custom-file-label").html(fileName);
+	updateFile();.
+	});  */
+
+	$(function(){
+	//파일명 노출하기
+	$("#upFile").on("change", function(){
+		var fileName = $(this).prop('files')[0].name;
 		
+		$(this).next(".custom-file-label").html(fileName);
+		//updateFile();
+		
+		/* $(this).next(".custom-file-label")
+			   .html(fileName); */
+		});
+	}); 
+
+
+	function updateFile(input) {
+		var $fileName = $("#fileName");
+
+		$.ajax({
+			url: "${pageContext.request.contextPath}/board/updateFile",
+			type: "post",
+			data:{fileName:$fileName.val()},
+			dataType:"json",
+			success: data => {
+				$fileName.val('');
+			},
+			error: (x, s, e) => {
+				console.log("실패", x, s, e);
+			}
+		});
+	}
+	  
+	 
 
 	}); 
 </script>
