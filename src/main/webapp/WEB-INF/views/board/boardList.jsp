@@ -48,6 +48,9 @@ url('data:image/gif;base64,R0lGODlhAQABAPAAAP///////yH5BAAAAAAALAAAAAABAAEAAAICR
   background-position: top center, top center, bottom center;
   -webkit-animation: drawBorderFromCenter 4s;
 }
+.col-md-12{
+padding-bottom: 8px;
+}
 
 .box2
 {
@@ -83,7 +86,6 @@ url('data:image/gif;base64,R0lGODlhAQABAPAAAP///////yH5BAAAAAAALAAAAAABAAEAAAICR
   background: white;
   padding: 0.1em 2.0em;
   text-align: center;
-  text-transform: uppercase;
 }
 
 
