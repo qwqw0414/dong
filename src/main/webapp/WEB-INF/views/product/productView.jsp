@@ -154,7 +154,7 @@ $(()=>{
                     <br>
                     <p>
                     	<img class='png png' src="${pageContext.request.contextPath}/resources/images/zzim.PNG"/> ${map.likeCnt}&nbsp;
-                    	<img class='png png' src="${pageContext.request.contextPath}/resources/images/see.PNG"/> 49&nbsp;
+                    	<img class='png png' src="${pageContext.request.contextPath}/resources/images/see.PNG"/> ${map.product.incount}&nbsp;
                     	<img class='png png' src="${pageContext.request.contextPath}/resources/images/date.PNG"/> ${map.product.regDate}
                     </p>
                     
