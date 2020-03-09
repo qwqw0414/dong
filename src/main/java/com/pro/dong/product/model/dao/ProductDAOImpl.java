@@ -49,6 +49,10 @@ public class ProductDAOImpl implements ProductDAO{
 	//근호 시작 ==========================
 
 	//========================== 근호 끝
+	@Override
+	public int incount(int productNo) {
+		return sst.update("product.updateIncount",productNo);
+	}
 		
 	//지은 시작 ==========================
 	@Override
@@ -207,4 +211,5 @@ public class ProductDAOImpl implements ProductDAO{
 		return sst.delete("product.deleteLevel2",commentNo);
 	}
 	//========================== 현규 끝
+	
 }
