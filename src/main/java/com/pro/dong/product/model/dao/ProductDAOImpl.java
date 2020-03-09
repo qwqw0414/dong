@@ -33,6 +33,10 @@ public class ProductDAOImpl implements ProductDAO{
 	public int updateMemberPoint(OrderList orderList) {
 		return sst.insert("product.updateMemberPoint", orderList);
 	}
+	@Override
+	public Member selectOneMember(String memberId) {
+		return sst.selectOne("product.selectOneMember",memberId);
+	}
 	//==========================민호 끝
 		
 	//하진 시작 ==========================
