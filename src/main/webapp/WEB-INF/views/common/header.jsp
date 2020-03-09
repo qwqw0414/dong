@@ -475,8 +475,14 @@ var _error = "";
 </script>
 
 <c:if test="${memberLoggedIn != null}">
+
 <script>
-popupDongnaeKing();
+if(sessionStorage.getItem('seenpopup')=='true'){
+	console.log(sessionStorage.getItem('seenpopup'));
+} else {
+	popupDongnaeKing();
+	sessionStorage.setItem('seenpopup','true');
+}
 //다시보지않음
 function getCookie(name) {
 	   var cookieName = name + "=";

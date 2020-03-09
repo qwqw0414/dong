@@ -7,7 +7,7 @@
 	<insert id="insertOrderList" parameterType="orderList">
 		insert into order_list values
 		(seq_order_no.nextval,#{productNo},#{memberId},#{sido},#{sigungu},#{dong},
-		#{address},#{price},'P','N','N',dproductStatusefault)
+		#{address},#{price},'P','N','N',default)
 	</insert>
 	<insert id="updateMemberPoint" parameterType="orderList">
 		insert into point_status values

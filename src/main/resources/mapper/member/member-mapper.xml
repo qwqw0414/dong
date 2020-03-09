@@ -92,6 +92,9 @@
 		on m.member_id = s.member_id 
 		where s.shop_name = #{shopName}
 	</select>
+	<select id="selectPriceByproductNo" parameterType="_int" resultType="_long">
+		select price from product where product_no = #{productNo}
+	</select>
 	<!-- ==========================  민호 끝 -->
 	
 	<!-- 하진 시작 ========================== -->

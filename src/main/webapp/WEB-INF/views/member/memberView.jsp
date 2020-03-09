@@ -262,16 +262,23 @@ function chargePoint(){
 	    buyer_addr : addr,
 	    buyer_postcode : postcode,
 }, function(rsp) {
-	insertPoint();
-	console.log("ㅎㅇ");
+	console.log(rsp);
 	if ( rsp.success ) {
-	console.log("if 속");
-	alert("충전이 완료되었습니다.");
-	     jQuery.ajax({
+		 msg = '결제가 완료되었습니다.';
+         msg += '\n고유ID : ' + rsp.imp_uid;
+         msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+         msg += '\결제 금액 : ' + rsp.paid_amount;
+         msg += '카드 승인번호 : ' + rsp.apply_num;
+         alert(msg);
+		 insertPoint();
+	  /*    $.ajax({
 	        url: "", // url
 	        type: 'POST',
 	        dataType: 'json',
-	        data: {imp_uid : rsp.imp_uid}
+	        data: {imp_uid : rsp.imp_uid},
+	        error:(a,b,c)=>{
+	        	console.log(a,b,c);
+	        }
 	    }).done(function(data) {
 	    	console.log(data); 
 	        //[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
@@ -287,7 +294,7 @@ function chargePoint(){
 	        	alert("충전오류");
 	        }
 	     }); 
-	    //성공시 이동할 페이지
+	    //성공시 이동할 페이지 */
 	    
 	} else {
 	    msg = '결제에 실패하였습니다.';
