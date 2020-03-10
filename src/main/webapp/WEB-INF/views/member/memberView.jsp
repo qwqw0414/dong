@@ -9,6 +9,12 @@
 	Map<String, Object> map = (Map<String, Object>) request.getAttribute("member");
 %>
 
+<style>
+#memberView #shopImg1{
+height:138px;
+width:138px;
+}
+</style>
 <h1 style="text-align: center;">마이페이지</h1>
 <br>
 <hr>
@@ -89,14 +95,14 @@
 									<div class="before before_change1" style="display: block;">
 										<small>이름: </small><span id="curname">${member.MEMBER_NAME}</span><input
 											type="button" id="change_btn1" class="" value="수정"
-											style="font-size: 4px; padding: 0; background-color: transparent; border: 0; color: gray; margin-left: 100px" />
+											style="font-size: 10px; padding: 0; background-color: transparent; border: 0; color: gray; margin-left: 100px" />
 									</div>
 									<div class="after after_change1" style="display: none;">
 										<small>이름: </small><input type="text" id="username"
 											placeholder="변경할 이름" style="width: 120px; font-size: 10px">
 										<button type="button" class="btn btn-outline-success btn-sm"
 											id="button-addon1" class=""
-											style="font-size: 4px; padding: 0; background-color: transparent; border: 0; color: gray;; margin-left: 24px">확인</button>
+											style="font-size: 10px; padding: 0; background-color: transparent; border: 0; color: gray;; margin-left: 24px">확인</button>
 									</div>
 								</div>
 								<div id="ms_change">
@@ -104,12 +110,12 @@
 									<div class="before before_change2" style="display: block;">
 										<small>연락처: </small><span id="curphone">${member.PHONE}</span>
 										<input type="button" id="change_btn2" value="수정" class=""
-											style="font-size: 4px; padding: 0; background-color: transparent; border: 0; color: gray; margin-left: 36px" />
+											style="font-size: 10px; padding: 0; background-color: transparent; border: 0; color: gray; margin-left: 36px" />
 									</div>
 									<div class="after after_change2" style="display: none;">
 										<small>연락처: </small><input type="text" id="userphone"
 											maxlength="11" placeholder=" 변경할 연락처 (-제외)"
-											style="font-size: 8px">
+											style="font-size: 10px">
 										<button type="button" class="" id="button-addon2"
 											style="font-size: 10px; padding: 0; background-color: transparent; border: 0; color: gray; margin-left: 14px">확인</button>
 									</div>
@@ -158,7 +164,7 @@
 						<div class="mypage_btn_more">
 							<!-- <input type="button" value="수정 바로가기" class="btn_val btn btn-outline-success btn-sm"> -->
 							<button class="btn btn-outline-success btn-sm" id="updateAddress"
-								data-toggle="modal" data-target="#addressModal">수정 바로가기</button>
+								data-toggle="modal" data-target="#addressModal" style='margin-left:50px;'>수정</button>
 						</div>
 
 					</div>
@@ -246,11 +252,6 @@ function chargePoint(){
     var phone = "${member.PHONE}";
     var addr = "${member.SIDO}"+"${member.SIGUNGU}"+"${member.DONG}";
     var postcode = '123-456';
-    console.log(email);
-    console.log(name);
-    console.log(phone);
-    console.log(addr);
-    console.log(postcode);
 
     IMP.request_pay({
         pg : 'kakaopay',
@@ -262,8 +263,9 @@ function chargePoint(){
 	    buyer_name : name,
 	    buyer_tel : phone,
 	    buyer_addr : addr,
-	    buyer_postcode : postcode,
+	    buyer_postcode : postcode
 }, function(rsp) {
+
 	console.log(rsp);
 	if ( rsp.success ) {
 		 msg = '결제가 완료되었습니다.';
@@ -273,30 +275,6 @@ function chargePoint(){
          msg += '카드 승인번호 : ' + rsp.apply_num;
          alert(msg);
 		 insertPoint();
-	  /*    $.ajax({
-	        url: "", // url
-	        type: 'POST',
-	        dataType: 'json',
-	        data: {imp_uid : rsp.imp_uid},
-	        error:(a,b,c)=>{
-	        	console.log(a,b,c);
-	        }
-	    }).done(function(data) {
-	    	console.log(data); 
-	        //[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
-	        if ( everythings_fine ) {
-	            msg = '결제가 완료되었습니다.';
-	            msg += '\n고유ID : ' + rsp.imp_uid;
-	            msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-	            msg += '\결제 금액 : ' + rsp.paid_amount;
-	            msg += '카드 승인번호 : ' + rsp.apply_num;
-	            alert(msg);
-	           // insertPoint();
-	        } else {
-	        	alert("충전오류");
-	        }
-	     }); 
-	    //성공시 이동할 페이지 */
 	    
 	} else {
 	    msg = '결제에 실패하였습니다.';
