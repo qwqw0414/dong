@@ -90,7 +90,7 @@ $(()=>{
 				console.log("ajax 요청 실패!",x,s,e);
 	    	},
 			complete: (data)=>{
-	        
+	        	$("#searchKeyword").val(searchKeyword);
 	        	$("#pageBar a").click((e)=>{
 	        		loadBoardList($(e.target).siblings("input").val());
             	});
@@ -158,8 +158,12 @@ $(()=>{
 			error : (x, s, e) => {
 				console.log("ajax 요청 실패!",x,s,e);
 	    	},
-			complete: (data)=>{
-	      	}
+	    	complete: ()=>{
+	    		
+	    		 $("#pageBar a").click((e)=>{
+	    		 	loadReportBoardList($(e.target).siblings("input").val());
+	    	});
+		}
 		});//end of ajax
 	}//end of loadBoardList();
 	
