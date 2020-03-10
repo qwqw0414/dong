@@ -125,14 +125,14 @@ public class MemberController {
 	@RequestMapping("/updateReceive")
 	@ResponseBody
 	public Map<String, Object> updateReceive(@RequestParam("orderNo")int orderNo, @RequestParam("productNo")int productNo,
-			@RequestParam("price")int price, @RequestParam("shopName")String shopName){
+			 @RequestParam("shopName")String shopName){
 		
 		Map<String, String> param = new HashMap<>();
 		param.put("shopName", shopName);
 		List<Map<String, String>> list = ms.selectMemberIdByShopName(param);
 		log.debug("list={}",list);
 		String memberId = list.get(0).get("MEMBER_ID");
-		
+		long price = ms.selectPriceByproductNo(productNo);
 		log.debug("memberId={}",memberId);
 		Map<String, Object> resultMap = new HashMap<>();
 		int result = ms.updateReceive(orderNo);
@@ -158,9 +158,11 @@ public class MemberController {
 	@RequestMapping("/updateSend")
 	@ResponseBody
 	public Map<String, Object> updateSend(@RequestParam("orderNo")int orderNo, @RequestParam("productNo")int productNo,
-			@RequestParam("price")int price, HttpSession session){
+			HttpSession session){
 		Member memberLoggedIn = (Member) session.getAttribute("memberLoggedIn");
 		String memberId = memberLoggedIn.getMemberId();
+		
+		long price = ms.selectPriceByproductNo(productNo);
 		
 		Map<String, Object> resultMap = new HashMap<>();
 		Map<String, String> param = new HashMap<>();
@@ -330,22 +332,15 @@ public class MemberController {
 		Random r = new Random();
 		int dice = r.nextInt(4589362)+49311; //인증번호 랜덤 생성
 		HttpSession session = request.getSession(true);
-//		Member m = ms.emailAuth(email);
 		String authCode = String.valueOf(dice);
 		session.setAttribute("authCode", authCode);
 		
-		log.debug("email121212={}",email);
-
 		//메일 보내기
 		EmailHandler sendMail = new EmailHandler(mailSender);
 		sendMail.setSubject("[홈페이지 이메일 인증]");
 		sendMail.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>")
 				.append("이메일 인증 번호: ["+authCode+"] 입니다.")
 				.toString());
-		/*sendMail.setText("<h1>메일인증</h1>" +
-						 "<a href='http://localhost:9090/dong/verify.do?email=" +email +
-						 "authKey="+authKey+
-						 "' target='_blank'>이메일 인증 확인</a>");*/
 		sendMail.setFrom("dhrmsghss@gmail.com", "관리자");
 		sendMail.setTo(email);
 		sendMail.send();

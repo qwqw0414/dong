@@ -38,10 +38,10 @@ $(()=>{
 	
 					html += "<tr>";
 					if(product.IS_SALE=='Y'){
-						html += "<td id='img-td'><div style:'position:relative;'><a href='${pageContext.request.contextPath}/product/productView.do?productNo="+product.PRODUCT_NO+"'><div style=' margin-left:30.5px; position:absolute; background-color:rgba(0, 0, 0, 0.65); z-index:10; height:152px; width:152px;'><p style='margin-top:64px;'>판매완료</p></div></a><img style='width:152px; height:152px; position:relative; z-index:1;' src='${pageContext.request.contextPath}/resources/upload/product/"+product.PHOTO+"'/></div></td>";
+						html += "<td class='img-td' style='width:235px;'><div style:'position:relative; width:211px; height:152px;'><a href='${pageContext.request.contextPath}/product/productView.do?productNo="+product.PRODUCT_NO+"'><div style=' margin-left:30.5px; position:absolute; background-color:rgba(0, 0, 0, 0.65); z-index:10; height:152px; width:152px;'><p style='margin-top:64px;'>판매완료</p></div></a><img style='width:152px; height:152px; position:relative; z-index:1;' src='${pageContext.request.contextPath}/resources/upload/product/"+product.PHOTO+"'/></div></td>";
 					}
 					else{
-						html += "<td id='img-td'><a href='${pageContext.request.contextPath}/product/productView.do?productNo="+product.PRODUCT_NO+"'><img style='width:152px; height:152px;' src='${pageContext.request.contextPath}/resources/upload/product/"+product.PHOTO+"'/></a></td>";
+						html += "<td class='img-td'><a href='${pageContext.request.contextPath}/product/productView.do?productNo="+product.PRODUCT_NO+"'><img style='width:152px; height:152px;' src='${pageContext.request.contextPath}/resources/upload/product/"+product.PHOTO+"'/></a></td>";
 					}
 					if(product.IS_SALE=='N'){
 						html += "<td><select class='select' class='custom-select'><option value='N' selected>판매중</option><option value='I'>거래중</option><option value='Y'>판매완료</option></select></td>"
@@ -58,10 +58,10 @@ $(()=>{
 					html += "<td>"+numberComma(product.PRICE)+"원</td>";
 					html += "<td>"+product.REG_DATE+"</td>";
 					if(product.IS_SALE=='Y'){
-						html += "<td id='btn-td'><button type='button' disabled class='btn btn-outline-success btn-sm' id='btn-update' value='"+product.PRODUCT_NO+"' style='width: 45px;'>UP</button><br/>";
+						html += "<td class='btn-td'><button type='button' disabled class='btn btn-outline-success btn-sm' id='btn-update' value='"+product.PRODUCT_NO+"' style='width: 45px;'>UP</button><br/>";
 					}
 					else{
-						html += "<td id='btn-td'><button type='button' class='btn btn-outline-success btn-sm' id='btn-update' value='"+product.PRODUCT_NO+"' style='width: 45px;'>UP</button><br/>";
+						html += "<td class='btn-td'><button type='button' class='btn btn-outline-success btn-sm' id='btn-update' value='"+product.PRODUCT_NO+"' style='width: 45px;'>UP</button><br/>";
 					}
 					
 					if(product.IS_SALE=='Y'){

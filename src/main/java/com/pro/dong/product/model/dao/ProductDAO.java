@@ -17,6 +17,7 @@ public interface ProductDAO {
 	//민호 시작 ==========================
 	int submitPurchase(OrderList orderList);
 	int updateMemberPoint(OrderList orderList);
+	Member selectOneMember(String memberId);
 	//==========================민호 끝
 		
 	//하진 시작 ==========================
@@ -25,6 +26,7 @@ public interface ProductDAO {
 	//========================== 하진 끝
 		
 	//근호 시작 ==========================
+	int incount(int productNo);
 
 	//========================== 근호 끝
 		

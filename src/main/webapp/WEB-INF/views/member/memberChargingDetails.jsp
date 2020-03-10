@@ -69,7 +69,7 @@ function showchargingDetails(cPage){
 
 			for(var i=0; i<data.list.length; i++){
 				html+="<th scope='row'>"+(i+1+((cPage-1)*10))+"</th>";				
-				html+="<td>"+data.list[i].REG_DATE+"</td>";
+				html+="<td>"+life(data.list[i].REG_DATE)+"</td>";
 				html+="<td>"+numberComma(data.list[i].POINT_AMOUNT)+"원</td>";
 				if(data.list[i].STATUS=='I'){
 				html+="<td>충전</td>";
@@ -147,7 +147,7 @@ function selectByOption(cPage){
 
 			for(var i=0; i<data.list.length; i++){
 				html+="<th scope='row'>"+(i+1+((cPage-1)*10))+"</th>";				
-				html+="<td>"+data.list[i].REG_DATE+"</td>";
+				html+="<td>"+life(data.list[i].REG_DATE)+"</td>";
 				html+="<td>"+numberComma(data.list[i].POINT_AMOUNT)+"원</td>";
 				if(data.list[i].STATUS=='I'){
 				html+="<td>충전</td>";
@@ -183,7 +183,19 @@ function selectByOption(cPage){
 function numberComma(num) {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
+  
+function life(date){
+	var preDate = new Date(date);
 
+	var year = preDate.getFullYear();
+	var month = preDate.getMonth()+1;
+	var date = preDate.getDate();
+
+	if(month < 10) month = "0"+month;
+	if(date < 10) date = "0"+date;
+
+	return year+"/"+month+"/"+date;
+}
 	
 	
 	

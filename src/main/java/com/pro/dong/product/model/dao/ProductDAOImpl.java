@@ -33,6 +33,10 @@ public class ProductDAOImpl implements ProductDAO{
 	public int updateMemberPoint(OrderList orderList) {
 		return sst.insert("product.updateMemberPoint", orderList);
 	}
+	@Override
+	public Member selectOneMember(String memberId) {
+		return sst.selectOne("product.selectOneMember",memberId);
+	}
 	//==========================민호 끝
 		
 	//하진 시작 ==========================
@@ -49,6 +53,10 @@ public class ProductDAOImpl implements ProductDAO{
 	//근호 시작 ==========================
 
 	//========================== 근호 끝
+	@Override
+	public int incount(int productNo) {
+		return sst.update("product.updateIncount",productNo);
+	}
 		
 	//지은 시작 ==========================
 	@Override
@@ -207,4 +215,5 @@ public class ProductDAOImpl implements ProductDAO{
 		return sst.delete("product.deleteLevel2",commentNo);
 	}
 	//========================== 현규 끝
+	
 }

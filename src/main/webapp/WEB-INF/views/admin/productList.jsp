@@ -42,6 +42,7 @@ $(()=>{
 				let html  = "";
 			for(var i=0; i<data.list.length;i++){
 				html  += "<div class='card'>";
+				html += "<input type='hidden' value='"+data.list[i].PRODUCT_NO+"'>";
 				html += "<img src='${pageContext.request.contextPath}/resources/upload/product/" + data.list[i].PHOTO + "' class='card-img-top'>";
 				html += '<div class="card-body">';
 		        html += '<p class="card-title">' + data.list[i].TITLE + '</p>';
@@ -61,6 +62,10 @@ $(()=>{
 	    		 $("#pageBar a").click((e)=>{
 	                    loadProductList($(e.target).siblings("input").val());
 	    	});
+	    		 $(".productList .card").click(function(){
+	    			 var productNo = $(this).children("input").val();
+	    			 location.href = "${pageContext.request.contextPath}/product/productView.do?productNo="+productNo;
+	    		 });
 		}
 		});//end of ajax
 	}//end of loadProductList();

@@ -33,10 +33,12 @@ $(function(){
 });
 </script>
 
-
 <h1>회원상세보기</h1>
-		
-	<div class="table-responsive">
+<br /><br />
+		<div class="row">
+		<div class="col-md-3"></div>
+<br />
+
 	
 		<input type="hidden" value="${m.memberId}" name="memberDelId" />
 		<table class="table col-md-5 text-center">
@@ -57,13 +59,17 @@ $(function(){
             	<td>${m.phone}</td>
             </tr>
 		</table>
-		<div>
-			<button type="button" class="btn btn-danger" id="memberDelete-btn">회원삭제</button>
-		</div>
+		
 		<br /><br /><br /><br />
+
 	</div>
-
-
+	
+	<div class="row">
+		<div class="col-md-5"></div>
+	<div>
+		<button type="button" class="btn btn-danger" id="memberDelete-btn">회원삭제</button>
+	</div>
+	</div>
 <h1>게시판 신고내역</h1>
 	<div class="table-responsive">
 	<br />

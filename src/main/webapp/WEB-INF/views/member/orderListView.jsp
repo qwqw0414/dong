@@ -134,18 +134,15 @@ $(()=>{
 		var btnReceive = $(e.target);
 		var orderNo = btnReceive.parent("td").siblings("[name=orderNo]").text();
 		var productNo = btnReceive.parent("td").siblings("input").val();
-		var price = btnReceive.parent("td").siblings("[name=price]").text();
 		var shopName = btnReceive.parent("td").siblings("[name=shopName]").text();
 		console.log(orderNo);
 		console.log(productNo);
-		console.log(price);
 		console.log(shopName);
 		if(confirm("상품을 인수하셨습니까?")){
 		$.ajax({
 			url: "${pageContext.request.contextPath}/member/updateReceive",
 			data:{orderNo:orderNo,
 				productNo:productNo,
-				price:price,
 				shopName:shopName},
 			success: data=>{
 				console.log(data);
@@ -163,18 +160,15 @@ $(()=>{
 		var btnSend = $(e.target);
 		var orderNo = btnSend.parent("td").siblings("[name=orderNo]").text();
 		var productNo = btnSend.parent("td").siblings("input").val();
-		var price = btnSend.parent("td").siblings("[name=price]").text();
 		var shopName = btnSend.parent("td").siblings("[name=shopName]").text();
 		console.log(orderNo);
 		console.log(productNo);
-		console.log(price);
 		console.log(shopName);
 		if(confirm("배송 완료하시겠습니까?")){
 		 $.ajax({
 			url: "${pageContext.request.contextPath}/member/updateSend",
 			data:{orderNo:orderNo,
-				productNo:productNo,
-				price:price},
+				productNo:productNo},
 			success: data=>{
 				console.log(data);
 				loadSaleList(1);

@@ -1210,7 +1210,6 @@ $("#shopView #up_btn").click(shopUpdateEnd);
 					html += "<p class='card-text'>"+data.shopReviewList[i].CONTENTS+"</p><br>";
 					html += "</span></div></div>";
 				}
-				console.log(html);
 				$("#shopReview-wrapper").html(html);
 				$("#shopReviewPageBar").html(data.pageBar);
 			},
