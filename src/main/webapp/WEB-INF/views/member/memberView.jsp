@@ -244,11 +244,6 @@ function chargePoint(){
     var phone = "${member.PHONE}";
     var addr = "${member.SIDO}"+"${member.SIGUNGU}"+"${member.DONG}";
     var postcode = '123-456';
-    console.log(email);
-    console.log(name);
-    console.log(phone);
-    console.log(addr);
-    console.log(postcode);
 
     IMP.request_pay({
         pg : 'kakaopay',
@@ -263,9 +258,7 @@ function chargePoint(){
 	    buyer_postcode : postcode,
 }, function(rsp) {
 	insertPoint();
-	console.log("ㅎㅇ");
 	if ( rsp.success ) {
-	console.log("if 속");
 	alert("충전이 완료되었습니다.");
 	     jQuery.ajax({
 	        url: "", // url
