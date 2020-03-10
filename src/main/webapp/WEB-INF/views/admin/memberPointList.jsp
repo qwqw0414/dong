@@ -29,12 +29,12 @@
 </div>
 
 
-
 <div class="table-responsive">
 <br /><br />
 	<table class="table text-center" id="member-pointList-tbl">
 		
 	</table>
+
 </div>
 <div id="pageBar"></div>
 
@@ -43,8 +43,9 @@ $(() => {
 	loadMemberPointList(1);
 	
 	/* 스위치 버튼 함수 */
-		$("#customSwitch1").change(function(){
+	$("#customSwitch1").change(function(){
 		var checked = $(this).prop("checked");
+			
 		if(checked == false){
 			$(this).next().html("사용내역 보기");
 			loadMemberPointList(1);
@@ -55,11 +56,12 @@ $(() => {
 		}
 	});
 
-	$("#searchMemberPoint").on("click", function (){
+	
+ 	$("#searchMemberPoint").on("click", function (){
 		var searchType = $("#searchType").val();
 		var searchKeyword = $("#searchKeyword").val();
 		var start = $("#startDate").val();
-		var end = $("#endDate").val();
+		var end = $("#endDate").val(); 
 		var checked = $("#customSwitch1").prop("checked");
 		
 		if(checked == false){
@@ -68,14 +70,9 @@ $(() => {
 		else{
 			loadMemberPointList(1);
 		}
-		$("#searchKeyword").val('');
-		
-	});	
+		$("#searchKeyword").val();
+	});	 
 	
-	$("#memberPointAll").click(function (){
-		location.reload();		
-	});
-
 
 	function loadMemberPointList(cPage){
 		var searchType = $("#searchType").val();
@@ -93,8 +90,8 @@ $(() => {
 				start: start,
 				end: end
 			},
-			dataType:"json",
-			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			//dataType:"json",
+			//contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 			success: data => {
 				console.log("memberPointList@ajax실행즁"+data);
 				let header = "<tr><th>아이디</th><th>충전금액</th><th>충전날짜</th><th>잔여포인트</th><th>상태(입/출)</th></tr>";
