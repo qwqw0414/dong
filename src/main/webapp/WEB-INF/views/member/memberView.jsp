@@ -263,7 +263,7 @@ function chargePoint(){
 	    buyer_name : name,
 	    buyer_tel : phone,
 	    buyer_addr : addr,
-	    buyer_postcode : postcode,
+	    buyer_postcode : postcode
 }, function(rsp) {
 
 	console.log(rsp);
@@ -275,8 +275,6 @@ function chargePoint(){
          msg += '카드 승인번호 : ' + rsp.apply_num;
          alert(msg);
 		 insertPoint();
-
-	    //성공시 이동할 페이지 */
 	    
 	} else {
 	    msg = '결제에 실패하였습니다.';
