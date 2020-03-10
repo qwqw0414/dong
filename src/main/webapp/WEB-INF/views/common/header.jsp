@@ -207,12 +207,9 @@ $(()=>{
             dataType: "json",
             success: data =>{
                 let html = "<ul>";
-
                 if(data !== null && data.length != 0){
-
                     data.forEach(elmt => {
                         html += "<li>";
-
 						if(keyword.substring(0,1)=="@"){
 							html += "<input type='hidden' value='@" + elmt.TITLE + "'>";
                         	html += textMark(elmt.TITLE,keyword.replace("@","")); 
@@ -223,7 +220,6 @@ $(()=>{
 						}
                         html += "</li>";
                     });
-                    
                     html += "</ul>";
                     $searchList.html(html).show().scrollTop(0);
                 }
@@ -233,16 +229,14 @@ $(()=>{
             },
             complete: ()=>{
                 var $li = $searchList.find("li");
-
                 $searchList.find("li").mousedown((e)=>{
                     var $target = $(e.target).children("input");
                     search($target.val());
                 });
-
                 $li.mouseenter((e)=>{
                     $li.removeClass("sel");
                     $(e.target).addClass("sel");
-                })
+                });
             }
         });
     });
@@ -259,7 +253,6 @@ $(()=>{
 		var $sel = $("#searchList .sel");
 
 		if (e.key == 'ArrowUp') {
-
 			if ($sel.length == 0) {
 				$list.first().addClass("sel");
 			}
@@ -268,7 +261,6 @@ $(()=>{
 			}
 			else {
 				$sel.removeClass("sel").prev().addClass("sel");
-
 				try {
 					for (var i = 0; i < $list.length; i++) {
 						if ($list.eq(i).hasClass("sel") && $list.eq(i).position().top > -1) {
@@ -277,9 +269,7 @@ $(()=>{
 							$searchList.scrollTop($list.eq(i).position().top - height + margin * 4);
 						}
 					}
-				} catch (e) {
-
-				}
+				} catch (e) {}
 			}
 		}
 		else if (e.key == 'ArrowDown') {
@@ -292,7 +282,6 @@ $(()=>{
 			}
 			else {
 				$sel.removeClass("sel").next().addClass("sel");
-
 				try {
 					for (var i = 0; i < $list.length; i++) {
 						if ($list.eq(i).hasClass("sel") && $list.eq(i).position().top > -1) {
@@ -301,9 +290,7 @@ $(()=>{
 							$searchList.scrollTop($list.eq(i).position().top - height - margin * 4);
 						}
 					}
-				} catch (e) {
-
-				}
+				} catch (e) {}
 			}
 		}
 	}).keyup((e) => {
