@@ -35,7 +35,12 @@
 	width:38px;
 	height: 40px;
 	margin-left: 20px;
+	cursor: pointer;
 }
+#a-chat{
+	cursor: pointer;
+}
+
 #kingImg{
 	max-width:38px;
 	min-height: 40px;
@@ -53,6 +58,7 @@
 	width:128px;
 	height: 21px;
 }
+
 /*푸터 css*/
 footer{margin-top: 200px; height: 200px;}
 footer .line{border: 1px rgb(95, 95, 95) solid; width: 100%;}
