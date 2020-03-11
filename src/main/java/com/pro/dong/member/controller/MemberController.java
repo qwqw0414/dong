@@ -262,7 +262,7 @@ public class MemberController {
 	String loc = "/";
 	if(m == null) {
 		msg = "존재하지 않는 아이디입니다.";
-		loc = "/";
+		mav.setViewName("common/msg");
 	}
 	else {
 		
@@ -271,9 +271,8 @@ public class MemberController {
 		log.debug("enp={}",enp);*/
 		
 		if(passwordEncoder.matches(password, m.getPassword())) {
-			msg = "로그인 성공";
 			mav.addObject("memberLoggedIn", m);
-			
+			mav.setViewName("redirect:/");
 			
 			
 			
@@ -303,7 +302,8 @@ public class MemberController {
 		}
 		else {
 			msg = "비밀번호가 틀렸습니다.";
-			loc = "/";
+			mav.setViewName("common/msg");
+			
 		}
 	}
 	log.debug("password={}",password);
@@ -311,7 +311,7 @@ public class MemberController {
 	mav.addObject("msg", msg);
 	mav.addObject("loc", loc);
 	
-	mav.setViewName("common/msg");
+	
 	
 	return mav;
 	}
