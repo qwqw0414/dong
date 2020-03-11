@@ -42,7 +42,7 @@ function loadMemberOrderList(cPage){
 		}, 
 		success: data => {
 			console.log("memberOrderList@ajax 진행!");
-			let header = "<tr><th>주문번호</th><th>회원아이디</th><th>주문내역</th><th>주소(동)</th><th>상품가격</th><th>주문날짜</th></tr>";
+			let header = "<tr><th>주문번호</th><th>회원아이디</th><th>상품번호</th><th>주소(동)</th><th>상품가격</th><th>주문날짜</th></tr>";
 			let $table = $("#member-ordeList-tbl");
 			$table.html("");
 			let html = "";
