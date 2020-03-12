@@ -150,6 +150,10 @@ div#board-container label.custom-file-label{text-align:left;}
 #changeSpan{
 	color: #28A745;
 }
+#boardContent{
+	height:500px;
+	width:600px;
+}
 </style>
 
 <div class="section">
@@ -233,7 +237,7 @@ div#board-container label.custom-file-label{text-align:left;}
             
         </div>
 <br /><br />
-<span id="changeSpan">댓글란 입니다.</span>
+<!-- <span id="changeSpan">댓글란 입니다.</span> -->
     </div>
 
     <!-- sideother -->
