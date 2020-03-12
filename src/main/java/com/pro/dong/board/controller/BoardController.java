@@ -351,10 +351,11 @@ public class BoardController {
 	@RequestMapping("/boardUpdateEnd")
 	@ResponseBody
 	public String boardUpdateEnd(Board board,HttpServletRequest request,@RequestParam(value="upFile", required=false) MultipartFile[] upFile) {
-		
+		log.info("board={}",board);
 		int result = bs.boardUpdate(board);
 		String msg = "";
 		String loc = "/";
+		log.info("result={}",result);
 		
 		if(result>0) {
 			msg = "게시글 수정이 완료되었습니다.";
