@@ -50,7 +50,7 @@
 	
 	<!-- 예찬 시작 ========================== -->
 	<select id="autocomplete" parameterType="map" resultType="map">
-		select title from product where title like '%${keyword}%' and sido = #{sido} and sigungu = #{sigungu} and dong =#{dong}
+		select distinct title from product where title like '%${keyword}%' and sido = #{sido} and sigungu = #{sigungu} and dong =#{dong}
 	</select>
 	
 	<select id="autocompleteShop" parameterType="map" resultType="map">
