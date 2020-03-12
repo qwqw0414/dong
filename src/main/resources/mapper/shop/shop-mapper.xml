@@ -54,6 +54,7 @@
 		on sr.grade_id = rg.grade_id
         join product p
         on sr.product_no = p.product_no where sr.shop_no = #{shopNo}
+        order by write_date desc
 	</select>
 	<!-- ==========================  민호 끝 -->
 	
