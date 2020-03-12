@@ -157,6 +157,7 @@ div#board-container label.custom-file-label{text-align:left;}
 </style>
 
 <div class="section">
+
 	<%-- <form action="${pageContext.request.contextPath}/board/boardUpdateEnd.do"
 		  method="post"
 		  enctype="multipart/form-data"
@@ -247,7 +248,7 @@ div#board-container label.custom-file-label{text-align:left;}
 <script>
 $(()=>{
 	
-	var $boardNo = $(".contents #boardNo");
+	var $boardNo = $("#boardNo");
 	var $boardTitle = $("#title #inputtitle");
 	var $categoryId = $("#category #categoryId");
 	var $boardContents = $(".contentsBox #boardContent");
@@ -259,11 +260,12 @@ $(()=>{
 			var result = confirm("게시글을 수정하시겠습니까?");
 			
 			if(result>0){
+			var boardNo = '${board.boardNo}';	
 			
 			$.ajax({
-				url: "${pageContext.request.contextPath}/board/boardUpdateEnd.do",
+				url: "${pageContext.request.contextPath}/board/boardUpdateEnd",
 				data: {
-					boardNo: $boardNo.val(),
+					boardNo: boardNo,
 					boardTitle: $boardTitle.val(),
 					//categoryId: $categoryId.val(),
 					boardContents: $boardContents.val()

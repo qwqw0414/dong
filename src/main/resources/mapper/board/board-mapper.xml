@@ -150,7 +150,7 @@
 		update board_attachment set renamedfilename = #{renamedFileName} where board_no = #{boardNo}
 	</update>	
 	
-	<update id="boardUpdate" parameterType="map">
+	<update id="boardUpdate" parameterType="board">
 		update board set board_contents = #{boardContents}, board_title = #{boardTitle} where board_no = #{boardNo}
 	</update>
 	
